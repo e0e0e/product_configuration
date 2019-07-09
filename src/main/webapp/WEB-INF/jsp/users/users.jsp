@@ -13,16 +13,18 @@
     <div style="background-color: red;">${errorMessage}</div>
 
 </c:if>
-
+<h1>PMS</h1>
 
 <form method="post" action="/users">
 
+    <label>Login:</label>
+    <input type="text" name="login-"><br/>
     <label>Email:</label>
     <input type="email" name="email"><br/>
     <label>Password:</label>
     <input type="password" name="password"><br/>
-    <label>Date of birth:</label>
-    <input type="date" name="dateOfBirth"><br/>
+    <label>User Name:</label>
+    <input type="text" name="userName"><br/>
     <input type="submit" value="Dodaj">
 
 

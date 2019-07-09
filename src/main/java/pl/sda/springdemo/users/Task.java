@@ -13,7 +13,7 @@ public class Task {
     private Long id;
     private String name;
     private String description;
-    private Sprint sprintId;
+    private Long sprintId;
     private Integer weight;
     private Integer storyPoints;
     private Progress progress;

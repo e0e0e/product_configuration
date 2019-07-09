@@ -1,9 +1,6 @@
 package pl.sda.springdemo.users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Project {
@@ -13,12 +10,14 @@ public class Project {
     private Long id;
     private String projectName;
     private String description;
-    private String admin;
+    @ManyToOne
+    private User user;
 
-    public Project(String projectName, String description, String admin) {
+
+    public Project(String projectName, String description, User user) {
         this.projectName = projectName;
         this.description = description;
-        this.admin = admin;
+//        this.user = user;
     }
 
     public String getProjectName() {
@@ -29,9 +28,7 @@ public class Project {
         return description;
     }
 
-    public String getAdmin() {
-        return admin;
-    }
+
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
@@ -41,7 +38,11 @@ public class Project {
         this.description = description;
     }
 
-    public void setAdmin(String admin) {
-        this.admin = admin;
+    public Long getId() {
+        return id;
     }
+
+//    public User getUser() {
+//        return user;
+//    }
 }

@@ -13,7 +13,7 @@ public class ProjectParticipants {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long projectId;
-    private List<Long> userId;
+    private Long userId;
 
 
 }

@@ -1,9 +1,7 @@
 package pl.sda.springdemo.users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -18,11 +16,16 @@ public class User {
     private String email;
     private String userName;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Project> projects;
+
+
     public User() {
     }
 
     public User(String login, String password, String email, String userName) {
         this.login = login;
+
         this.password = password;
         this.email = email;
         this.userName = userName;

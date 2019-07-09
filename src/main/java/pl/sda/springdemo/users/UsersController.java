@@ -29,20 +29,20 @@ public class UsersController {
     @PostMapping("/users")
     public String addUser(@RequestParam String password,
                           @RequestParam String email,
-                          @RequestParam String dateOfBirth,
+                          @RequestParam String login,
+                          @RequestParam String userName,
                           Model model) {
         try {
-            LocalDate datfB = LocalDate.parse(dateOfBirth);
 
             //dodanie usera
-            boolean result = userService.create(email, password, datfB);
+            boolean result = userService.create( login,  password,  email,  userName);
 
 
             model.addAttribute("createUserResult", result);
             List<User> users = userService.findAll();
             model.addAttribute("users", users);
 
-            System.out.println(email + " " + password + " " + datfB);
+            //System.out.println(email + " " + password + " " + datfB);
             return "users/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());

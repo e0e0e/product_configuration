@@ -2,6 +2,14 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<head>
+    <style>
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+    </style>
+</head>
 <body>
 <c:if test="${createUserResult==true}">
 
@@ -15,15 +23,26 @@
 </c:if>
 
 <a href="/users">Add User</a>
-
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Login</th>
+        <th>User Name</th>
+    </tr>
 <c:forEach var="user" items="${users}">
-    <div>
-            ${user.email} ${user.dateOfBirth}
-        <a href="/users/delete?userId=${user.id}">Delete</a>
-    </div>
+
+
+            <tr>
+                <td>${user.id}</td>
+           <td> ${user.email} </td><td>${user.login} </td><td>${user.userName}</td>
+                <td><a href="/users/delete?userId=${user.id}">Delete</a></td>
+        </tr>
+
 
 
 </c:forEach>
+</table>
 
 
 </body>
