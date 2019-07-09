@@ -4,42 +4,54 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String email;
+    private String login;
     private String password;
-    private LocalDate dateOfBirth;
+    private String email;
+    private String userName;
 
     public User() {
     }
 
-    public User(String email, String password, LocalDate dateOfBirth) {
-
-        this.email = email;
+    public User(String login, String password, String email, String userName) {
+        this.login = login;
         this.password = password;
-        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.userName = userName;
     }
-
 
     public String getEmail() {
         return email;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
 
     public Long getId() {
         return id;
@@ -57,7 +69,4 @@ public class User {
         this.password = password;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
 }
