@@ -18,7 +18,7 @@
 <form method="post" action="/users">
 
     <label>Login:</label>
-    <input type="text" name="login-"><br/>
+    <input type="text" name="login"><br/>
     <label>Email:</label>
     <input type="email" name="email"><br/>
     <label>Password:</label>

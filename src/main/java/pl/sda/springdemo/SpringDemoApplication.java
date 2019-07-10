@@ -10,7 +10,7 @@ public class SpringDemoApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringDemoApplication.class, args);
-		User user=new User("afd","afd","aafadf","asdf");
-		System.out.println(user.getId());
+//		User user=new User("afd","afd","aafadf","asdf");
+		System.out.println("ok>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ok>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	}
 }

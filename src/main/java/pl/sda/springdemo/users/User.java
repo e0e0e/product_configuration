@@ -72,4 +72,11 @@ public class User {
         this.password = password;
     }
 
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
 }
