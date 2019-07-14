@@ -1,7 +1,10 @@
 package pl.sda.springdemo.users;
 
 import javax.persistence.*;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -13,19 +16,44 @@ public class User {
 
     private String login;
     private String password;
+
+
+
     private String email;
     private String userName;
 
     @OneToMany(mappedBy = "user")
     private Set<Project> projects;
 
+    @ManyToMany
+    @JoinTable(
+            name = "PARTICIPANTS",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "project_id")})
+    private List<Project> projectsParticipants;
+
 
     public User() {
     }
 
+    public void setProjectsParticipants(List<Project> projectsParticipants) {
+        this.projectsParticipants = projectsParticipants;
+    }
+
+    public User(String login, String password, String email, String userName, Set<Project> projects) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.userName = userName;
+        this.projects = projects;
+    }
+
+    public List<Project> getProjectsParticipants() {
+        return projectsParticipants;
+    }
+
     public User(String login, String password, String email, String userName) {
         this.login = login;
-
         this.password = password;
         this.email = email;
         this.userName = userName;
@@ -78,5 +106,27 @@ public class User {
 
     public Set<Project> getProjects() {
         return projects;
+    }
+
+    @Override
+    public String toString() {
+
+        String str = "";
+        try {
+
+           // for (Project project : projects) {
+//                str = str.concat(project.getProjectName() + "<br/>");
+               str= projects.stream()
+                       .sorted(Comparator.comparing(o -> o.getProjectName()))
+                       .map(e->e.getProjectName())
+                        .collect(Collectors.joining(", "));
+
+//                                .forEach(e-> str.concat(e.getProjectName() + "<br/>"));
+
+           // }
+        }catch(NullPointerException e){
+            System.out.println("Concat String of projects is:"+ e.getMessage());
+        }
+        return str;
     }
 }

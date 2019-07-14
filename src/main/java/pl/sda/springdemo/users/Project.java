@@ -13,11 +13,17 @@ public class Project {
     @ManyToOne
     private User user;
 
+    public User getUser() {
+        return user;
+    }
+
+    public Project() {
+    }
 
     public Project(String projectName, String description, User user) {
         this.projectName = projectName;
         this.description = description;
-//        this.user = user;
+       this.user = user;
     }
 
     public String getProjectName() {

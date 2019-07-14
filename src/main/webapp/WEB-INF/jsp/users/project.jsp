@@ -10,8 +10,11 @@
 <html>
 <head>
     <title>Project</title>
+    <style><%@include file="css/style.css"%></style>
 </head>
 <body>
+<%@include file="navigation.jsp" %>
+
 <h1>Create Project</h1>
 
 <form method="post" action="/project">
@@ -23,7 +26,7 @@
     <label>User:</label>
     <select name="user">
         <c:forEach var="user" items="${users}">
-            <option value="${user.userName}">
+            <option value="${user.id}">
                     ${user.userName}
             </option>
         </c:forEach>
@@ -33,7 +36,6 @@
 
 
 </form>
-
 
 </body>
 </html>

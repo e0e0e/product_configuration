@@ -4,10 +4,7 @@ package pl.sda.springdemo.users;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -49,5 +46,9 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not Found"));
 
         userRepository.delete(user);
+    }
+
+    public User findById(Long userId) {
+        return userRepository.findById(userId).get();
     }
 }

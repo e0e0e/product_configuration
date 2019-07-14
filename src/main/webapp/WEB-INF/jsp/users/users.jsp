@@ -4,8 +4,10 @@
 <html>
 <head>
     <title>Users</title>
+    <style><%@include file="css/style.css"%></style>
 </head>
 <body>
+<%@include file="navigation.jsp" %>
 <h1>Create User</h1>
 
 <c:if test="${errorMessage!=null}">
@@ -13,7 +15,6 @@
     <div style="background-color: red;">${errorMessage}</div>
 
 </c:if>
-<h1>PMS</h1>
 
 <form method="post" action="/users">
 
@@ -30,7 +31,7 @@
 
 </form>
 
-<a href="/users/list">List</a>
+
 
 </body>
 </html>

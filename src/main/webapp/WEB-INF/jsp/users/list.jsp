@@ -3,14 +3,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <style>
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    }
-    </style>
+    <style><%@include file="css/style.css"%></style>
+
 </head>
 <body>
+<%@include file="navigation.jsp" %>
+
 <c:if test="${createUserResult==true}">
 
     <h2>User has been successfully created</h2>
@@ -22,13 +20,15 @@
 
 </c:if>
 
-<a href="/users">Add User</a>
+
 <table>
     <tr>
         <th>Id</th>
         <th>Email</th>
         <th>Login</th>
         <th>User Name</th>
+        <th>Operations</th>
+        <th>Admin in projects</th>
     </tr>
 <c:forEach var="user" items="${users}">
 
@@ -37,6 +37,7 @@
                 <td>${user.id}</td>
            <td> ${user.email} </td><td>${user.login} </td><td>${user.userName}</td>
                 <td><a href="/users/delete?userId=${user.id}">Delete</a></td>
+                    <td>${user.toString()}</td>
         </tr>
 
 
