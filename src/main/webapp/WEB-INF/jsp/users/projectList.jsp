@@ -18,6 +18,7 @@
         <th>Project Name</th>
         <th>description</th>
         <th>Admin Name</th>
+        <th>Participants</th>
         <th>Operation</th>
     </tr>
     <c:forEach var="project" items="${projects}">
@@ -26,7 +27,9 @@
         <tr>
             <td>${project.id}</td>
             <td> ${project.projectName} </td><td>${project.description} </td><td>${project.user.userName}</td>
-            <td><a href="/project/delete?projectId=${project.id}">Delete</a></td>
+            <td></td>
+            <td><a href="/project/delete?projectId=${project.id}">Delete</a>
+                <a href="/project/participant?projectId=${project.id}">Add participant</a></td>
 <%--            <td><a href="/users/delete?userId=${user.id}">Delete</a></td>--%>
         </tr>
 
@@ -35,5 +38,22 @@
     </c:forEach>
 </table>
 
+<c:if test="${addingToProjectID!=null}">
+<form method="post" action="/participants">
+    <h1>Adding to project ${addingToProjectID.get().projectName} User:</h1>
+    <label>Project id:</label>
+    <input type="text" name="projestID" value ="${addingToProjectID.get().id}" readonly>
+    <select name="user">
+        <option selected hidden >Choose here</option>
+        <c:forEach var="user" items="${users}">
+            <option value="${user.id}">
+                    ${user.userName}
+            </option>
+
+        </c:forEach>
+    </select><br/>
+    <input type="submit" value="Dodaj" name="">
+</form>
+</c:if>
 </body>
 </html>

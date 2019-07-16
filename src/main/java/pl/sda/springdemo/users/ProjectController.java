@@ -86,4 +86,13 @@ public class ProjectController {
         model.addAttribute("users",userService.findAll());
     return "users/participants";
     }
+
+    @GetMapping("project/participant")
+    public String addParticipantToProject(@RequestParam long projectId,
+                                          Model model){
+        model.addAttribute("addingToProjectID",projectService.findById(projectId));
+        model.addAttribute("projects", projectService.findAll());
+        model.addAttribute("users",userService.findAll());
+        return "users/projectList";
+    }
 }
