@@ -1,6 +1,9 @@
 package pl.sda.springdemo.users;
 
 import javax.persistence.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Project {
@@ -13,11 +16,22 @@ public class Project {
     @ManyToOne
     private User user;
 
+    @ManyToMany
+    private List<User> users;
+
     public User getUser() {
         return user;
     }
 
     public Project() {
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<User> getUsers() {
+        return users;
     }
 
     public Project(String projectName, String description, User user) {
@@ -48,7 +62,23 @@ public class Project {
         return id;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
+
+    public String showUsersInProject () {
+        String str = "";
+        try {
+            str= users.stream()
+                    .sorted(Comparator.comparing(o -> o.getUserName()))
+                    .map(e->e.getUserName())
+                    .collect(Collectors.joining(", "));
+
+//                                .forEach(e-> str.concat(e.getProjectName() + "<br/>"));
+
+            // }
+        }catch(NullPointerException e){
+            System.out.println("Concat String of users is:"+ e.getMessage());
+        }
+        return str;
+    }
+
+
 }

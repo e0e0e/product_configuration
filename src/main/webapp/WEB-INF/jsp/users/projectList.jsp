@@ -27,7 +27,7 @@
         <tr>
             <td>${project.id}</td>
             <td> ${project.projectName} </td><td>${project.description} </td><td>${project.user.userName}</td>
-            <td></td>
+            <td>${project.showUsersInProject()}</td>
             <td><a href="/project/delete?projectId=${project.id}">Delete</a>
                 <a href="/project/participant?projectId=${project.id}">Add participant</a></td>
 <%--            <td><a href="/users/delete?userId=${user.id}">Delete</a></td>--%>

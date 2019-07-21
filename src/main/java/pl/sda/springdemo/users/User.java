@@ -36,6 +36,7 @@ public class User {
     public User() {
     }
 
+
     public void setProjectsParticipants(List<Project> projectsParticipants) {
         this.projectsParticipants = projectsParticipants;
     }

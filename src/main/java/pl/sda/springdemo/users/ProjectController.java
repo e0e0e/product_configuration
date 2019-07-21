@@ -87,10 +87,17 @@ public class ProjectController {
     return "users/participants";
     }
 
-    @GetMapping("project/participant")
+    @PostMapping("project/participant")
     public String addParticipantToProject(@RequestParam long projectId,
+                                          @RequestParam long userId,
                                           Model model){
-        model.addAttribute("addingToProjectID",projectService.findById(projectId));
+       // model.addAttribute("addingToProjectID",projectService.findById(projectId));
+        User user=userService.findById(userId);
+        Project project=projectService.findById(projectId).get();
+        user.getProjectsParticipants().add(project);
+        project.getUsers().add(user);
+        userService.save(user);
+
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("users",userService.findAll());
         return "users/projectList";
