@@ -30,14 +30,14 @@ public class User {
             name = "PARTICIPANTS",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "project_id")})
-    private List<Project> projectsParticipants;
+    private Set<Project> projectsParticipants;
 
 
     public User() {
     }
 
 
-    public void setProjectsParticipants(List<Project> projectsParticipants) {
+    public void setProjectsParticipants(Set<Project> projectsParticipants) {
         this.projectsParticipants = projectsParticipants;
     }
 
@@ -49,7 +49,7 @@ public class User {
         this.projects = projects;
     }
 
-    public List<Project> getProjectsParticipants() {
+    public Set<Project> getProjectsParticipants() {
         return projectsParticipants;
     }
 

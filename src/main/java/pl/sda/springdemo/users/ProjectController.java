@@ -102,4 +102,10 @@ public class ProjectController {
         model.addAttribute("users",userService.findAll());
         return "users/projectList";
     }
+
+    @GetMapping("login")
+    public String loginUser(){
+
+        return "users/login";
+    }
 }
