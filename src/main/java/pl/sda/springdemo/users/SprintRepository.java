@@ -1,0 +1,11 @@
+package pl.sda.springdemo.users;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface SprintRepository extends CrudRepository<Sprint,Long> {
+    List<Sprint> findAll();
+}

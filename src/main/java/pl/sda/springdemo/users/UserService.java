@@ -10,23 +10,26 @@ import java.util.*;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final SprintRepository sprintRepository;
+    private User logged=null;
 
 
     private final static Map<String, User> usersByEmail = new HashMap<>();
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, SprintRepository sprintRepository) {
         this.userRepository = userRepository;
+        this.sprintRepository = sprintRepository;
     }
 
 
     public boolean create(String login, String password, String email, String userName) {
-        boolean isEmailTaken=userRepository.findAll().stream()
-                .anyMatch(u->u.getEmail().equals(email));
+        boolean isEmailTaken = userRepository.findAll().stream()
+                .anyMatch(u -> u.getEmail().equals(email));
 
-        if (isEmailTaken){
+        if (isEmailTaken) {
             throw new RuntimeException("Email already in use");
         }
-        User user = new User(login,password,email,userName);
+        User user = new User(login, password, email, userName);
         User created = userRepository.save(user);
 
         //usersByEmail.put(user.getEmail(), user);
@@ -55,5 +58,30 @@ public class UserService {
 
     public void save(User user) {
         userRepository.save(user);
+    }
+
+    public void login(String userName, String password) {
+      logged = userRepository.findAll().stream()
+                .filter(e -> (e.getUserName().equals(userName) && e.getPassword().equals(password)))
+                .findAny()
+                .orElse(null);
+
+       // return user;
+
+    }
+
+    public User getLogged() {
+        return logged;
+    }
+
+    public void logout() {
+        logged=null;
+    }
+
+    public void saveSprint(LocalDate from, LocalDate to, Integer storyPoints) {
+
+        Sprint sprint=new Sprint(from, to, storyPoints);
+        sprintRepository.save(sprint);
+
     }
 }

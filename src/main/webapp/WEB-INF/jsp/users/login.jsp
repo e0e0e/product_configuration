@@ -7,15 +7,19 @@
     <style><%@include file="css/style.css"%></style>
 </head>
 <body>
-<%@include file="navigation.jsp" %>
+<%--<%@include file="navigation.jsp" %>--%>
+
+<h1>Login or create account</h1>
 <form method="post" action="/login">
     <label>User name</label>
     <input type="text" name="userName"><br/>
     <label>Password</label>
-    <input type="text" name="password">
+    <input type="password" name="password">
     <br/>
-
-    <input type="submit" value="Login">
+    <input type="submit" value="Log in">
+    <br/>
+    <a href="/users">Create an account
+    </a><br/>
 </form>
 </body>
 </html>

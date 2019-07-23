@@ -1,7 +1,18 @@
-<div><a href="/login">Login</a>
-<div><a href="/users">Add User</a>
-<a href="/project">Add Project</a>
-<a href="/users/projectList">Projects List</a>
-<a href="/users/list">Users List</a>
-<a href="/participants">Add Participants</a>
+<div style="text-align: right;">
+    you're logged as: ${loggedUser.userName}
+    <br/>
+    <a href="/logout">Log out</a>
+    <br/>
 </div>
+<div>
+<ul>
+<%--    <li><a href="/login">Login</a></li>--%>
+    <%--    <li><a href="/users">Add User</a></li>--%>
+    <li><a href="/project">Add Project</a></li>
+    <li><a href="/users/projectList">Projects List</a></li>
+    <li><a href="/users/list">Users List</a></li>
+    <li><a href="/participants">Add Participants</a></li>
+    <li><a href="/sprint">Add Sprint</a></li>
+</ul>
+</div>
+<br/>

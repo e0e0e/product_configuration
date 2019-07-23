@@ -16,6 +16,7 @@ public class UsersController {
 
     private final UserService userService;
 
+
     public UsersController(UserService userService) {
         this.userService = userService;
     }
@@ -32,6 +33,7 @@ public class UsersController {
                           @RequestParam String login,
                           @RequestParam String userName,
                           Model model) {
+        model.addAttribute("loggedUser", userService.getLogged());
         try {
 
             //dodanie usera
@@ -53,18 +55,24 @@ public class UsersController {
     @GetMapping("users/delete")
     public String deleteUser(@RequestParam long userId,
                              Model model) {
-
+        if(userService.getLogged()==null){
+            return "users/login";
+        }
         userService.delete(userId);
         model.addAttribute("users", userService.findAll());
         model.addAttribute("deleteUserResults", true);
+        model.addAttribute("loggedUser", userService.getLogged());
         return "users/list";
 
     }
 
     @GetMapping("users/list")
     public String listUsers(Model model) {
+        if(userService.getLogged()==null){
+            return "users/login";
+        }
         model.addAttribute("users", userService.findAll());
-
+        model.addAttribute("loggedUser", userService.getLogged());
         return "users/list";
     }
 }
