@@ -23,7 +23,9 @@ public class UsersController {
 
     @GetMapping("/users")
     public String showUsers() {
-
+//        if (userService.getLogged() == null) {
+//            return "users/login";
+//        }
         return "users/users";
     }
 

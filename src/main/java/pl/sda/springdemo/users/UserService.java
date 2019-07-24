@@ -11,14 +11,19 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final SprintRepository sprintRepository;
-    private User logged=null;
+    private final SprintRepositoryJPA sprintRepositoryJPA;
+    private User logged = null;
 
 
     private final static Map<String, User> usersByEmail = new HashMap<>();
 
-    public UserService(UserRepository userRepository, SprintRepository sprintRepository) {
+    public UserService(UserRepository userRepository,
+                       SprintRepository sprintRepository,
+                       SprintRepositoryJPA sprintRepositoryJPA) {
+
         this.userRepository = userRepository;
         this.sprintRepository = sprintRepository;
+        this.sprintRepositoryJPA = sprintRepositoryJPA;
     }
 
 
@@ -61,12 +66,12 @@ public class UserService {
     }
 
     public void login(String userName, String password) {
-      logged = userRepository.findAll().stream()
+        logged = userRepository.findAll().stream()
                 .filter(e -> (e.getUserName().equals(userName) && e.getPassword().equals(password)))
                 .findAny()
                 .orElse(null);
 
-       // return user;
+        // return user;
 
     }
 
@@ -75,13 +80,22 @@ public class UserService {
     }
 
     public void logout() {
-        logged=null;
+        logged = null;
     }
 
     public void saveSprint(LocalDate from, LocalDate to, Integer storyPoints) {
 
-        Sprint sprint=new Sprint(from, to, storyPoints);
+        Sprint sprint = new Sprint(from, to, storyPoints);
         sprintRepository.save(sprint);
+
+    }
+
+    public List<Sprint> findAllSprints() {
+        return sprintRepository.findAll();
+    }
+
+    public User findUserByName(String name) {
+        return sprintRepositoryJPA.findUserByName(name);
 
     }
 }

@@ -16,9 +16,12 @@ public class Sprint {
     private LocalDate finishDate;
     private Integer planedStoryPoints;
 
-    public Sprint(LocalDate startDate, LocalDate finidhDate, Integer planedStoryPoints) {
+    public Sprint(){
+
+    }
+    public Sprint(LocalDate startDate, LocalDate finishDate, Integer planedStoryPoints) {
         this.startDate = startDate;
-        this.finishDate = finidhDate;
+        this.finishDate = finishDate;
         this.planedStoryPoints = planedStoryPoints;
     }
 

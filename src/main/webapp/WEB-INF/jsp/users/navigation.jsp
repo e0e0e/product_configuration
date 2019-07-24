@@ -13,6 +13,7 @@
     <li><a href="/users/list">Users List</a></li>
     <li><a href="/participants">Add Participants</a></li>
     <li><a href="/sprint">Add Sprint</a></li>
+    <li><a href="/sprintList">Sprint List</a></li>
 </ul>
 </div>
 <br/>

@@ -1,11 +1,16 @@
 package pl.sda.springdemo.users;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -134,9 +139,14 @@ public class ProjectController {
     }
 
     @GetMapping("/")
-    public String start() {
+    public String start(@CookieValue(value = "userName", defaultValue = "") String userName,
+                        @CookieValue(value = "password", defaultValue = "") String password) {
 
+        userService.login(userName,password);
         if (userService.getLogged() == null) {
+//            Cookie[] cookies = request.getCookies();
+//            System.out.println(cookies.);
+
             return "users/login";
         } else {
             return "users/projectList";
@@ -146,8 +156,14 @@ public class ProjectController {
     @PostMapping("login")
     public String loginUser(@RequestParam String userName,
                             @RequestParam String password,
+                            HttpServletResponse response,
                             Model model) {
+
         userService.login(userName, password);
+        Cookie cookie=new Cookie("userName", userName);
+        Cookie cookie2=new Cookie("password", password);
+        response.addCookie(cookie);
+        response.addCookie(cookie2);
 
         model.addAttribute("loggedUser", userService.getLogged());
         model.addAttribute("users", userService.findAll());
@@ -167,6 +183,18 @@ public class ProjectController {
 
         return "users/sprint";
     }
+    @GetMapping("sprintList")
+    public String showSprintList(Model model) {
+
+        if (userService.getLogged() == null) {
+            return "users/login";
+        }
+
+        model.addAttribute("loggedUser", userService.getLogged());
+       // System.out.println("eee user: "+userService.findUserByName("eee").getUserName());
+        model.addAttribute("sprints", userService.findAllSprints());
+        return "users/sprintList";
+    }
 
     @PostMapping("sprint")
     public String addSprint(@RequestParam String from,
@@ -179,7 +207,7 @@ public class ProjectController {
 
         model.addAttribute("loggedUser", userService.getLogged());
         userService.saveSprint(LocalDate.parse(from), LocalDate.parse(to), storyPoints);
-
+        model.addAttribute("sprints", userService.findAllSprints());
         return "users/sprintList";
     }
 }
