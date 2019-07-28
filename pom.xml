@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pl.sda</groupId>
-	<artifactId>spring-demo</artifactId>
+	<artifactId>ProjectMenagmentSystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>ProjectMenagmentSystem</name>
+	<description>Project Menagment System</description>
 	<packaging>war</packaging>
 
 	<properties>

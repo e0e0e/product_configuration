@@ -12,8 +12,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProjectController {
@@ -140,14 +142,16 @@ public class ProjectController {
 
     @GetMapping("/")
     public String start(@CookieValue(value = "userName", defaultValue = "") String userName,
-                        @CookieValue(value = "password", defaultValue = "") String password) {
+                        @CookieValue(value = "password", defaultValue = "") String password,
+                        Model model) {
 
-        userService.login(userName,password);
+
         if (userService.getLogged() == null) {
-//            Cookie[] cookies = request.getCookies();
+         userService.login(userName, password);
 //            System.out.println(cookies.);
-
-            return "users/login";
+            model.addAttribute("loggedUser", userService.getLogged());
+            model.addAttribute("users", userService.findAll());
+            return "users/list";
         } else {
             return "users/projectList";
         }
@@ -171,10 +175,16 @@ public class ProjectController {
     }
 
     @GetMapping("logout")
-    public String logoutUser(Model model) {
+    public String logoutUser(Model model,
+                             HttpServletRequest request,
+                             HttpServletResponse response) {
         userService.logout();
-
-
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+             Arrays.stream(cookies)
+                    .forEach(c -> c.setMaxAge(0));
+//            response.addCookie();
+        }
         return "users/login";
     }
 
