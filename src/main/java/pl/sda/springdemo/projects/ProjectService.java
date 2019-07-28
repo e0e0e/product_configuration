@@ -1,6 +1,7 @@
-package pl.sda.springdemo.users;
+package pl.sda.springdemo.projects;
 
 import org.springframework.stereotype.Service;
+import pl.sda.springdemo.users.User;
 
 import java.util.List;
 import java.util.Optional;

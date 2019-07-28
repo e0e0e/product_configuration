@@ -1,4 +1,4 @@
-package pl.sda.springdemo.users;
+package pl.sda.springdemo.projects;
 
 
 import org.springframework.stereotype.Controller;
@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.sda.springdemo.users.User;
+import pl.sda.springdemo.users.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class ProjectController {
@@ -31,11 +31,11 @@ public class ProjectController {
     @GetMapping("/project")
     public String ShowProjectForm(Model model) {
         if (userService.getLogged() == null) {
-            return "users/login";
+            return "user/login";
         }
         model.addAttribute("users", userService.findAll());
         model.addAttribute("loggedUser", userService.getLogged());
-        return "users/project";
+        return "project/project";
     }
 
     @PostMapping("/project")
@@ -44,7 +44,7 @@ public class ProjectController {
                              @RequestParam Long user,
                              Model model) {
         if (userService.getLogged() == null) {
-            return "users/login";
+            return "user/login";
         }
 
         model.addAttribute("loggedUser", userService.getLogged());
@@ -65,11 +65,11 @@ public class ProjectController {
             model.addAttribute("projects", projects);
 
             //System.out.println(email + " " + password + " " + datfB);
-            return "users/projectList";
+            return "project/projectList";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());
 
-            return "users/project";
+            return "user/project";
         }
 //
 //
@@ -80,14 +80,14 @@ public class ProjectController {
     @GetMapping("users/projectList")
     public String listProjects(Model model) {
         if (userService.getLogged() == null) {
-            return "users/login";
+            return "user/login";
         }
         List<Project> projects = projectService.findAll();
 
 //        System.out.println(projectList.size());
         model.addAttribute("projects", projects);
         model.addAttribute("loggedUser", userService.getLogged());
-        return "users/projectList";
+        return "project/projectList";
     }
 
     @GetMapping("project/delete")
@@ -99,19 +99,19 @@ public class ProjectController {
         model.addAttribute("deleteProjectResults", true);
         model.addAttribute("loggedUser", userService.getLogged());
 
-        return "users/projectList";
+        return "project/projectList";
 
     }
 
     @GetMapping("participants")
     public String addParticipant(Model model) {
         if (userService.getLogged() == null) {
-            return "users/login";
+            return "user/login";
         }
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("users", userService.findAll());
         model.addAttribute("loggedUser", userService.getLogged());
-        return "users/participants";
+        return "participant/participants";
     }
 
     @PostMapping("project/participant")
@@ -119,7 +119,7 @@ public class ProjectController {
                                           @RequestParam long userId,
                                           Model model) {
         if (userService.getLogged() == null) {
-            return "users/login";
+            return "user/login";
         }
         // model.addAttribute("addingToProjectID",projectService.findById(projectId));
         User user = userService.findById(userId);
@@ -131,13 +131,13 @@ public class ProjectController {
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("users", userService.findAll());
         model.addAttribute("loggedUser", userService.getLogged());
-        return "users/projectList";
+        return "project/projectList";
     }
 
     @GetMapping("login")
     public String login() {
 
-        return "users/login";
+        return "user/login";
     }
 
     @GetMapping("/")
@@ -153,7 +153,7 @@ public class ProjectController {
             model.addAttribute("users", userService.findAll());
             return "users/list";
         } else {
-            return "users/projectList";
+            return "project/projectList";
         }
     }
 
@@ -171,7 +171,7 @@ public class ProjectController {
 
         model.addAttribute("loggedUser", userService.getLogged());
         model.addAttribute("users", userService.findAll());
-        return "users/list";
+        return "user/list";
     }
 
     @GetMapping("logout")
@@ -185,25 +185,25 @@ public class ProjectController {
                     .forEach(c -> c.setMaxAge(0));
 //            response.addCookie();
         }
-        return "users/login";
+        return "user/login";
     }
 
     @GetMapping("sprint")
     public String addSprintForm() {
 
-        return "users/sprint";
+        return "sprint/sprint";
     }
     @GetMapping("sprintList")
     public String showSprintList(Model model) {
 
         if (userService.getLogged() == null) {
-            return "users/login";
+            return "user/login";
         }
 
         model.addAttribute("loggedUser", userService.getLogged());
        // System.out.println("eee user: "+userService.findUserByName("eee").getUserName());
         model.addAttribute("sprints", userService.findAllSprints());
-        return "users/sprintList";
+        return "sprint/sprintList";
     }
 
     @PostMapping("sprint")
@@ -212,12 +212,12 @@ public class ProjectController {
                             @RequestParam Integer storyPoints,
                             Model model) {
         if (userService.getLogged() == null) {
-            return "users/login";
+            return "user/login";
         }
 
         model.addAttribute("loggedUser", userService.getLogged());
         userService.saveSprint(LocalDate.parse(from), LocalDate.parse(to), storyPoints);
         model.addAttribute("sprints", userService.findAllSprints());
-        return "users/sprintList";
+        return "sprint/sprintList";
     }
 }

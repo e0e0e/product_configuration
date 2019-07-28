@@ -3,10 +3,10 @@
 <html>
 <head>
     <title>Sprint</title>
-    <style><%@include file="css/style.css"%></style>
+    <style><%@include file="../user/css/style.css"%></style>
 </head>
 <body>
-<%@include file="navigation.jsp" %>
+<%@include file="../user/navigation.jsp" %>
 
 <form method="post" action="/sprint">
 

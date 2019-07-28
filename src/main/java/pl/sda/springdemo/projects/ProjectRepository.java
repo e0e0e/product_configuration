@@ -1,4 +1,4 @@
-package pl.sda.springdemo.users;
+package pl.sda.springdemo.projects;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

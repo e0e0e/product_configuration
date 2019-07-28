@@ -1,4 +1,6 @@
-package pl.sda.springdemo.users;
+package pl.sda.springdemo.projects;
+
+import pl.sda.springdemo.users.User;
 
 import javax.persistence.*;
 import java.util.Comparator;

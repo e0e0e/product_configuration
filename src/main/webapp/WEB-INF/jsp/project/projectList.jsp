@@ -4,10 +4,10 @@
 <html>
 <head>
     <title>Project list</title>
-    <style><%@include file="css/style.css"%></style>
+    <style><%@include file="../users/css/style.css"%></style>
 </head>
 <body>
-<%@include file="navigation.jsp" %>
+<%@include file="../users/navigation.jsp" %>
 
 <c:if test="${deleteProjectResults==true}">
     <h1>Deleted Project successfull</h1>

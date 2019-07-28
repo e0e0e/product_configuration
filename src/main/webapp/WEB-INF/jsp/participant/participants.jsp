@@ -5,11 +5,11 @@
     <title>Project Participants</title>
 
     <style>
-        <%@include file="css/style.css" %>
+        <%@include file="../user/css/style.css" %>
     </style>
 </head>
 <body>
-<%@include file="navigation.jsp" %>
+<%@include file="../user/navigation.jsp" %>
 
 <form method="post" action="/project/participant">
 <label>Project:</label>
