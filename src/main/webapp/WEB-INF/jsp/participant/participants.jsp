@@ -5,7 +5,7 @@
     <title>Project Participants</title>
 
     <style>
-        <%@include file="../user/css/style.css" %>
+        <%@include file="../css/style.css" %>
     </style>
 </head>
 <body>

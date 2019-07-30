@@ -26,7 +26,7 @@ public class UsersController {
 //        if (userService.getLogged() == null) {
 //            return "users/login";
 //        }
-        return "users/users";
+        return "user/users";
     }
 
     @PostMapping("/users")
@@ -47,10 +47,10 @@ public class UsersController {
             model.addAttribute("users", users);
 
             //System.out.println(email + " " + password + " " + datfB);
-            return "users/list";
+            return "user/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());
-            return "users/users";
+            return "user/users";
         }
     }
 
@@ -58,23 +58,23 @@ public class UsersController {
     public String deleteUser(@RequestParam long userId,
                              Model model) {
         if(userService.getLogged()==null){
-            return "users/login";
+            return "user/login";
         }
         userService.delete(userId);
         model.addAttribute("users", userService.findAll());
         model.addAttribute("deleteUserResults", true);
         model.addAttribute("loggedUser", userService.getLogged());
-        return "users/list";
+        return "user/list";
 
     }
 
     @GetMapping("users/list")
     public String listUsers(Model model) {
         if(userService.getLogged()==null){
-            return "users/login";
+            return "user/login";
         }
         model.addAttribute("users", userService.findAll());
         model.addAttribute("loggedUser", userService.getLogged());
-        return "users/list";
+        return "user/list";
     }
 }

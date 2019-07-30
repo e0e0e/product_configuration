@@ -10,10 +10,10 @@
 <html>
 <head>
     <title>Project</title>
-    <style><%@include file="../users/css/style.css"%></style>
+    <style><%@include file="../css/style.css"%></style>
 </head>
 <body>
-<%@include file="../users/navigation.jsp" %>
+<%@include file="../user/navigation.jsp" %>
 
 <h1>Create Project</h1>
 

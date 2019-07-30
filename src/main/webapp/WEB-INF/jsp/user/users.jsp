@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Users</title>
-    <style><%@include file="css/style.css"%></style>
+    <style><%@include file="../css/style.css"%></style>
 </head>
 <body>
 <%@include file="navigation.jsp" %>
