@@ -1,6 +1,7 @@
 package pl.sda.springdemo.projects;
 
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -103,18 +104,19 @@ public class ProjectController {
 
     }
 
-    @GetMapping("participants")
-    public String addParticipant(Model model) {
+    @GetMapping("/participant")
+    public String addParticipant(@RequestParam long projectId,
+                                 Model model) {
         if (userService.getLogged() == null) {
             return "user/login";
         }
-        model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("projects", projectService.findById(projectId).get());
+        model.addAttribute("users", userService.findAll());/**/
         model.addAttribute("loggedUser", userService.getLogged());
         return "participant/participants";
     }
 
-    @PostMapping("project/participant")
+    @PostMapping(value = "project/participant", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addParticipantToProject(@RequestParam long projectId,
                                           @RequestParam long userId,
                                           Model model) {
@@ -129,7 +131,7 @@ public class ProjectController {
         userService.save(user);
 
         model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("users", projectService.getUsers(projectId));
         model.addAttribute("loggedUser", userService.getLogged());
         return "project/projectList";
     }
@@ -201,7 +203,7 @@ public class ProjectController {
         }
 
         model.addAttribute("loggedUser", userService.getLogged());
-       // System.out.println("eee user: "+userService.findUserByName("eee").getUserName());
+       // System.out.println("eee user: "+userService.findUserByName("eee").getUsername());
         model.addAttribute("sprints", userService.findAllSprints());
         return "sprint/sprintList";
     }

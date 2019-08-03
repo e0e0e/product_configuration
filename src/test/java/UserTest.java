@@ -17,6 +17,6 @@ public class UserTest {
         //when
 
         //then
-        assertEquals("Muzykant",user.getUserName());
+        assertEquals("Muzykant",user.getUsername());
     }
 }

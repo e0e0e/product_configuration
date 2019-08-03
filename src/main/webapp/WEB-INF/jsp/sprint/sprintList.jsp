@@ -11,6 +11,7 @@
 <head>
     <title>sprintList</title>
     <style><%@include file="../css/style.css"%></style>
+    <%@include file="../css/boot.jsp" %>
 </head>
 <body>
 <%@include file="../user/navigation.jsp" %>

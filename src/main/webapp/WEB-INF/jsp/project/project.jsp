@@ -10,7 +10,8 @@
 <html>
 <head>
     <title>Project</title>
-    <style><%@include file="../css/style.css"%></style>
+<%--    <style><%@include file="../css/style.css"%></style>--%>
+    <%@include file="../css/boot.jsp" %>
 </head>
 <body>
 <%@include file="../user/navigation.jsp" %>
@@ -27,7 +28,7 @@
     <select name="user">
         <c:forEach var="user" items="${users}">
             <option value="${user.id}">
-                    ${user.userName}
+                    ${user.username}
             </option>
         </c:forEach>
     </select><br/>

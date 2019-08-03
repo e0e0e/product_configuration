@@ -5,6 +5,7 @@
 <head>
     <title>Users</title>
     <style><%@include file="../css/style.css"%></style>
+    <%@include file="../css/boot.jsp" %>
 </head>
 <body>
 <%@include file="navigation.jsp" %>
@@ -25,11 +26,13 @@
     <label>Password:</label>
     <input type="password" name="password"><br/>
     <label>User Name:</label>
-    <input type="text" name="userName"><br/>
+    <input type="text" name="username"><br/>
     <input type="submit" value="Dodaj">
 
 
 </form>
+
+
 
 
 

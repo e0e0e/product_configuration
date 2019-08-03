@@ -1,6 +1,8 @@
 package pl.sda.springdemo.users;
 
 
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,7 @@ import java.util.List;
 public class UsersController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
 
     public UsersController(UserService userService) {
@@ -33,13 +36,13 @@ public class UsersController {
     public String addUser(@RequestParam String password,
                           @RequestParam String email,
                           @RequestParam String login,
-                          @RequestParam String userName,
+                          @RequestParam String username,
                           Model model) {
         model.addAttribute("loggedUser", userService.getLogged());
         try {
 
             //dodanie usera
-            boolean result = userService.create( login,  password,  email,  userName);
+            boolean result = userService.create( login,  passwordEncoder.encode(password),  email,  username);
 
 
             model.addAttribute("createUserResult", result);
@@ -70,9 +73,9 @@ public class UsersController {
 
     @GetMapping("users/list")
     public String listUsers(Model model) {
-        if(userService.getLogged()==null){
-            return "user/login";
-        }
+//        if(userService.getLogged()==null){
+//            return "user/login";
+//        }
         model.addAttribute("users", userService.findAll());
         model.addAttribute("loggedUser", userService.getLogged());
         return "user/list";

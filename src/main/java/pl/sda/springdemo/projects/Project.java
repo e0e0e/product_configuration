@@ -4,7 +4,6 @@ import pl.sda.springdemo.users.User;
 
 import javax.persistence.*;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -70,8 +69,8 @@ public class Project {
         String str = "";
         try {
             str= users.stream()
-                    .sorted(Comparator.comparing(o -> o.getUserName()))
-                    .map(e->e.getUserName())
+                    .sorted(Comparator.comparing(o -> o.getUsername()))
+                    .map(e->e.getUsername())
                     .collect(Collectors.joining(", "));
 
 //                                .forEach(e-> str.concat(e.getProjectName() + "<br/>"));

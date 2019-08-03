@@ -67,7 +67,7 @@ public class UserService {
 
     public void login(String userName, String password) {
         logged = userRepository.findAll().stream()
-                .filter(e -> (e.getUserName().equals(userName) && e.getPassword().equals(password)))
+                .filter(e -> (e.getUsername().equals(userName) && e.getPassword().equals(password)))
                 .findAny()
                 .orElse(null);
 
