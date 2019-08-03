@@ -1,14 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Users</title>
-    <style><%@include file="../css/style.css"%></style>
-    <%@include file="../css/boot.jsp" %>
-</head>
-<body>
-<%@include file="navigation.jsp" %>
 <h1>Create User</h1>
 
 <c:if test="${errorMessage!=null}">
@@ -31,10 +22,3 @@
 
 
 </form>
-
-
-
-
-
-</body>
-</html>

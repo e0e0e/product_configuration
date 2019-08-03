@@ -15,7 +15,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -30,12 +32,19 @@ public class ProjectController {
     }
 
     @GetMapping("/project")
-    public String ShowProjectForm(Model model) {
-        if (userService.getLogged() == null) {
-            return "user/login";
-        }
+    public String ShowProjectForm( HttpServletRequest request,
+                                   Model model) {
+
+        //request.getSession().setAttribute("username",);
+        String loggedUser=request.getRemoteUser();
+        System.out.println("you are logged as: "+ loggedUser);
         model.addAttribute("users", userService.findAll());
-        model.addAttribute("loggedUser", userService.getLogged());
+        model.addAttribute("loggedUser",loggedUser);
+        List<String> sessionVals = Collections.list(request.getSession().getAttributeNames());
+
+        sessionVals.stream().forEach(s -> System.out.println(s));
+        Object spring_security_context = request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+        System.out.println(spring_security_context);
         return "project/project";
     }
 
@@ -44,9 +53,7 @@ public class ProjectController {
                              @RequestParam String description,
                              @RequestParam Long user,
                              Model model) {
-        if (userService.getLogged() == null) {
-            return "user/login";
-        }
+
 
         model.addAttribute("loggedUser", userService.getLogged());
 
@@ -80,9 +87,7 @@ public class ProjectController {
 
     @GetMapping("users/projectList")
     public String listProjects(Model model) {
-        if (userService.getLogged() == null) {
-            return "user/login";
-        }
+
         List<Project> projects = projectService.findAll();
 
 //        System.out.println(projectList.size());
@@ -107,9 +112,7 @@ public class ProjectController {
     @GetMapping("/participant")
     public String addParticipant(@RequestParam long projectId,
                                  Model model) {
-        if (userService.getLogged() == null) {
-            return "user/login";
-        }
+
         model.addAttribute("projects", projectService.findById(projectId).get());
         model.addAttribute("users", userService.findAll());/**/
         model.addAttribute("loggedUser", userService.getLogged());
@@ -120,9 +123,7 @@ public class ProjectController {
     public String addParticipantToProject(@RequestParam long projectId,
                                           @RequestParam long userId,
                                           Model model) {
-        if (userService.getLogged() == null) {
-            return "user/login";
-        }
+
         // model.addAttribute("addingToProjectID",projectService.findById(projectId));
         User user = userService.findById(userId);
         Project project = projectService.findById(projectId).get();
@@ -142,51 +143,46 @@ public class ProjectController {
         return "user/login";
     }
 
-    @GetMapping("/")
-    public String start(@CookieValue(value = "userName", defaultValue = "") String userName,
-                        @CookieValue(value = "password", defaultValue = "") String password,
-                        Model model) {
-
-
-        if (userService.getLogged() == null) {
-         userService.login(userName, password);
-//            System.out.println(cookies.);
-            model.addAttribute("loggedUser", userService.getLogged());
-            model.addAttribute("users", userService.findAll());
-            return "users/list";
-        } else {
-            return "project/projectList";
-        }
-    }
-
-    @PostMapping("login")
-    public String loginUser(@RequestParam String userName,
-                            @RequestParam String password,
-                            HttpServletResponse response,
-                            Model model) {
-
-        userService.login(userName, password);
-        Cookie cookie=new Cookie("userName", userName);
-        Cookie cookie2=new Cookie("password", password);
-        response.addCookie(cookie);
-        response.addCookie(cookie2);
-
-        model.addAttribute("loggedUser", userService.getLogged());
-        model.addAttribute("users", userService.findAll());
-        return "user/list";
-    }
+//    @GetMapping("/")
+//    public String start(@CookieValue(value = "userName", defaultValue = "") String userName,
+//                        @CookieValue(value = "password", defaultValue = "") String password,
+//                        Model model) {
+//
+//
+//        if (userService.getLogged() == null) {
+//         userService.login(userName, password);
+////            System.out.println(cookies.);
+//            model.addAttribute("loggedUser", userService.getLogged());
+//            model.addAttribute("users", userService.findAll());
+//            return "users/list";
+//        } else {
+//            return "project/projectList";
+//        }
+//    }
+//
+//    @PostMapping("login")
+//    public String loginUser(@RequestParam String userName,
+//                            @RequestParam String password,
+//                            HttpServletResponse response,
+//                            Model model) {
+//
+//        userService.login(userName, password);
+//        Cookie cookie=new Cookie("userName", userName);
+//        Cookie cookie2=new Cookie("password", password);
+//        response.addCookie(cookie);
+//        response.addCookie(cookie2);
+//
+//        model.addAttribute("loggedUser", userService.getLogged());
+//        model.addAttribute("users", userService.findAll());
+//        return "user/list";
+//    }
 
     @GetMapping("logout")
     public String logoutUser(Model model,
                              HttpServletRequest request,
                              HttpServletResponse response) {
         userService.logout();
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-             Arrays.stream(cookies)
-                    .forEach(c -> c.setMaxAge(0));
-//            response.addCookie();
-        }
+
         return "user/login";
     }
 
@@ -198,9 +194,6 @@ public class ProjectController {
     @GetMapping("sprintList")
     public String showSprintList(Model model) {
 
-        if (userService.getLogged() == null) {
-            return "user/login";
-        }
 
         model.addAttribute("loggedUser", userService.getLogged());
        // System.out.println("eee user: "+userService.findUserByName("eee").getUsername());
@@ -213,9 +206,7 @@ public class ProjectController {
                             @RequestParam String to,
                             @RequestParam Integer storyPoints,
                             Model model) {
-        if (userService.getLogged() == null) {
-            return "user/login";
-        }
+
 
         model.addAttribute("loggedUser", userService.getLogged());
         userService.saveSprint(LocalDate.parse(from), LocalDate.parse(to), storyPoints);

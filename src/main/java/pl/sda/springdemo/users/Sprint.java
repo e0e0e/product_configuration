@@ -29,6 +29,18 @@ public class Sprint {
         return id;
     }
 
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setFinishDate(LocalDate finishDate) {
+        this.finishDate = finishDate;
+    }
+
+    public void setPlanedStoryPoints(Integer planedStoryPoints) {
+        this.planedStoryPoints = planedStoryPoints;
+    }
+
     public LocalDate getStartDate() {
         return startDate;
     }

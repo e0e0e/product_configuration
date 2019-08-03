@@ -1,5 +1,7 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <div style="text-align: right;">
-    you're logged as: ${loggedUser.username}
+    <sec:authentication var="user" property="principal" />
+    you're logged as: ${user.username}
     <br/>
     <a href="/logout">Log out</a>
     <br/>
@@ -14,7 +16,7 @@
     <li class="nav-info"><a class="nav-warning" href="/users/list">Users List</a></li>
 <%--    <li class="nav-info"><a class="nav-warning" href="/participants">Add Participants</a></li>--%>
     <li class="nav-info"><a class="nav-warning" href="/sprint">Add Sprint</a></li>
-    <li class="nav-info"><a class="nav-link" href="/sprintList">Sprint List</a></li>
+    <li class="nav-info"><a class="nav-warning" href="/sprintList">Sprint List</a></li>
 </ul>
     </nav>
 

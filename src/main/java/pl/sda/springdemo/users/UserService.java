@@ -84,7 +84,7 @@ public class UserService {
     }
 
     public void saveSprint(LocalDate from, LocalDate to, Integer storyPoints) {
-
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+1"));
         Sprint sprint = new Sprint(from, to, storyPoints);
         sprintRepository.save(sprint);
 

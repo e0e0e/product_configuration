@@ -25,11 +25,13 @@ public class UsersController {
     }
 
     @GetMapping("/users")
-    public String showUsers() {
+    public String showUsers(Model model) {
 //        if (userService.getLogged() == null) {
 //            return "users/login";
 //        }
-        return "user/users";
+        model.addAttribute("title","Users");
+        model.addAttribute("path","user/users");
+        return "main";
     }
 
     @PostMapping("/users")
@@ -42,7 +44,7 @@ public class UsersController {
         try {
 
             //dodanie usera
-            boolean result = userService.create( login,  passwordEncoder.encode(password),  email,  username);
+            boolean result = userService.create(login, passwordEncoder.encode(password), email, username);
 
 
             model.addAttribute("createUserResult", result);
@@ -60,9 +62,7 @@ public class UsersController {
     @GetMapping("users/delete")
     public String deleteUser(@RequestParam long userId,
                              Model model) {
-        if(userService.getLogged()==null){
-            return "user/login";
-        }
+
         userService.delete(userId);
         model.addAttribute("users", userService.findAll());
         model.addAttribute("deleteUserResults", true);
@@ -73,9 +73,7 @@ public class UsersController {
 
     @GetMapping("users/list")
     public String listUsers(Model model) {
-//        if(userService.getLogged()==null){
-//            return "user/login";
-//        }
+
         model.addAttribute("users", userService.findAll());
         model.addAttribute("loggedUser", userService.getLogged());
         return "user/list";

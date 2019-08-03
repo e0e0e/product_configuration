@@ -27,8 +27,8 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .mvcMatchers("/users/**").authenticated()
-            .mvcMatchers("/project/**").authenticated()
+            .mvcMatchers("/**").authenticated()
+//            .mvcMatchers("/project/**").authenticated()
 //            .mvcMatchers("/comments/**").permitAll()
 //            .mvcMatchers("/h2/**").permitAll()
             .anyRequest().permitAll()
