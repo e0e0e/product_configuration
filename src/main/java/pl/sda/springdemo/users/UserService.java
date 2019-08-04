@@ -3,27 +3,21 @@ package pl.sda.springdemo.users;
 
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-    private final SprintRepository sprintRepository;
-    private final SprintRepositoryJPA sprintRepositoryJPA;
     private User logged = null;
 
 
     private final static Map<String, User> usersByEmail = new HashMap<>();
 
-    public UserService(UserRepository userRepository,
-                       SprintRepository sprintRepository,
-                       SprintRepositoryJPA sprintRepositoryJPA) {
+    public UserService(UserRepository userRepository) {
 
         this.userRepository = userRepository;
-        this.sprintRepository = sprintRepository;
-        this.sprintRepositoryJPA = sprintRepositoryJPA;
+
     }
 
 
@@ -83,19 +77,5 @@ public class UserService {
         logged = null;
     }
 
-    public void saveSprint(LocalDate from, LocalDate to, Integer storyPoints) {
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT+1"));
-        Sprint sprint = new Sprint(from, to, storyPoints);
-        sprintRepository.save(sprint);
 
-    }
-
-    public List<Sprint> findAllSprints() {
-        return sprintRepository.findAll();
-    }
-
-    public User findUserByName(String name) {
-        return sprintRepositoryJPA.findUserByName(name);
-
-    }
 }

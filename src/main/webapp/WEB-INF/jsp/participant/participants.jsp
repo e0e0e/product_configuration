@@ -6,26 +6,17 @@
 
     <style>
         <%@include file="../css/style.css" %>
-</style>
+    </style>
     <%@include file="../css/boot.jsp" %>
 
 </head>
 <body>
-<%@include file="../user/navigation.jsp" %>
+<%@include file="../navigation.jsp" %>
 <h1>For project <b>${projects.projectName}<b/> add user:</h1>
 <form method="post" action="/project/participant?projectId=${projects.id}">
+    <%@include file="../userPicker.jsp" %>
 
-
-
-<select name="userId" value="${users[0].id}">
-<%--    <option selected hidden >Choose here</option>--%>
-    <c:forEach var="user" items="${users}">
-        <option value="${user.id}">
-                ${user.username}
-        </option>
-    </c:forEach>
-</select><br/>
-<input type="submit" value="Dodaj">
+    <input type="submit" value="Dodaj">
 </form>
 
 </body>

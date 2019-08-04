@@ -1,4 +1,4 @@
-package pl.sda.springdemo.users;
+package pl.sda.springdemo.progres;
 
 public enum Progress {
     BACKLOG,

@@ -10,13 +10,13 @@
 
 <form method="post" action="/users">
 
-    <label>Login:</label>
+    <label>Login:</label><br/>
     <input type="text" name="login"><br/>
-    <label>Email:</label>
+    <label>Email:</label><br/>
     <input type="email" name="email"><br/>
-    <label>Password:</label>
+    <label>Password:</label><br/>
     <input type="password" name="password"><br/>
-    <label>User Name:</label>
+    <label>User Name:</label><br/>
     <input type="text" name="username"><br/>
     <input type="submit" value="Dodaj">
 

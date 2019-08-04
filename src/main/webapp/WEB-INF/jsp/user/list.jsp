@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<%@include file="navigation.jsp" %>
+<%@include file="../navigation.jsp" %>
 
 <c:if test="${createUserResult==true}">
 

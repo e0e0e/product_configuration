@@ -1,11 +1,16 @@
 package pl.sda.springdemo.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @EnableWebSecurity
 class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -27,7 +32,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .mvcMatchers("/**").authenticated()
+//            .mvcMatchers("/**").authenticated()
 //            .mvcMatchers("/project/**").authenticated()
 //            .mvcMatchers("/comments/**").permitAll()
 //            .mvcMatchers("/h2/**").permitAll()
@@ -38,4 +43,17 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }
+//    @Bean
+//    WebMvcConfigurer myWebMvcConfigurer(){
+//
+//        return new WebMvcConfigurerAdapter() {
+//            @Override
+//            public void addViewControllers(ViewControllerRegistry registry) {
+//
+//
+//                ViewControllerRegistration r=registry.addViewController("/login");
+//                r.setViewName("customLogin");
+//            }
+//        }
+//    }
 }

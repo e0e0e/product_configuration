@@ -4,11 +4,12 @@
 <html>
 <head>
     <title>Project list</title>
+
 <style><%@include file="../css/style.css"%></style>
     <%@include file="../css/boot.jsp" %>
 </head>
 <body>
-<%@include file="../user/navigation.jsp" %>
+<%@include file="../navigation.jsp" %>
 
 <c:if test="${deleteProjectResults==true}">
     <h1>Deleted Project successfull</h1>
@@ -68,7 +69,9 @@
 
 <div class="container">
 
-    <h3>Projects</h3>
+    <h3>Projects<a href="/project" class="btn btn-outline-dark btn-sm">
+        <span class="glyphicon glyphicon-plus"></span></a></h3>
+
 
     <div class="row">
 <c:forEach var="project" items="${projects}">

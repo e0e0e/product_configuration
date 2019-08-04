@@ -40,12 +40,16 @@ public class ProjectController {
         System.out.println("you are logged as: "+ loggedUser);
         model.addAttribute("users", userService.findAll());
         model.addAttribute("loggedUser",loggedUser);
-        List<String> sessionVals = Collections.list(request.getSession().getAttributeNames());
+//        List<String> sessionVals = Collections.list(request.getSession().getAttributeNames());
+//
+//        sessionVals.stream().forEach(s -> System.out.println(s));
+//        Object spring_security_context = request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+//        System.out.println(spring_security_context);
 
-        sessionVals.stream().forEach(s -> System.out.println(s));
-        Object spring_security_context = request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
-        System.out.println(spring_security_context);
-        return "project/project";
+        model.addAttribute("title","Add Project");
+        model.addAttribute("path","project/project");
+
+        return "main";
     }
 
     @PostMapping("/project")
@@ -55,7 +59,7 @@ public class ProjectController {
                              Model model) {
 
 
-        model.addAttribute("loggedUser", userService.getLogged());
+       // model.addAttribute("loggedUser", userService.getLogged());
 
 
         try {
@@ -186,31 +190,5 @@ public class ProjectController {
         return "user/login";
     }
 
-    @GetMapping("sprint")
-    public String addSprintForm() {
 
-        return "sprint/sprint";
-    }
-    @GetMapping("sprintList")
-    public String showSprintList(Model model) {
-
-
-        model.addAttribute("loggedUser", userService.getLogged());
-       // System.out.println("eee user: "+userService.findUserByName("eee").getUsername());
-        model.addAttribute("sprints", userService.findAllSprints());
-        return "sprint/sprintList";
-    }
-
-    @PostMapping("sprint")
-    public String addSprint(@RequestParam String from,
-                            @RequestParam String to,
-                            @RequestParam Integer storyPoints,
-                            Model model) {
-
-
-        model.addAttribute("loggedUser", userService.getLogged());
-        userService.saveSprint(LocalDate.parse(from), LocalDate.parse(to), storyPoints);
-        model.addAttribute("sprints", userService.findAllSprints());
-        return "sprint/sprintList";
-    }
 }

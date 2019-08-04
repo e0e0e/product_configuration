@@ -14,7 +14,7 @@
     <%@include file="../css/boot.jsp" %>
 </head>
 <body>
-<%@include file="../user/navigation.jsp" %>
+<%@include file="../navigation.jsp" %>
 <table>
     <tr>
         <th>Id</th>

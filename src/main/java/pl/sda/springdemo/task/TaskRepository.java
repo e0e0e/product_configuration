@@ -1,4 +1,4 @@
-package pl.sda.springdemo.users;
+package pl.sda.springdemo.task;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SprintRepository extends CrudRepository<Sprint,Long> {
-    List<Sprint> findAll();
+public interface TaskRepository extends CrudRepository<Task,Long> {
+
+    List<Task> findAll();
 }

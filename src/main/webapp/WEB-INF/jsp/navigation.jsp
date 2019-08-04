@@ -1,22 +1,28 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<div style="text-align: right;">
-    <sec:authentication var="user" property="principal" />
-    you're logged as: ${user.username}
-    <br/>
-    <a href="/logout">Log out</a>
-    <br/>
-</div>
+
+
+<%--<div style="text-align: right;">--%>
+<%--    <sec:authentication var="user" property="principal" />--%>
+<%--    you're logged as: ${user.username}--%>
+<%--    <br/>--%>
+<%--    <a href="/logout">Log out</a>--%>
+<%--    <br/>--%>
+<%--</div>--%>
+
+
+
 <div>
     <nav class="navbar navbar-expand-md navbar-dark bg-info">
 <ul class="d-flex w-50 order-0">
 <%--    <li><a href="/login">Login</a></li>--%>
-    <%--    <li><a href="/users">Add User</a></li>--%>
+        <li><a href="/users">Add User</a></li>
     <li class="navbar-toggler"><a class="nav-warning" href="/project">Add Project</a></li>
     <li class="navbar-info"><a class="nav-warning" href="/users/projectList">Projects List</a></li>
     <li class="nav-info"><a class="nav-warning" href="/users/list">Users List</a></li>
 <%--    <li class="nav-info"><a class="nav-warning" href="/participants">Add Participants</a></li>--%>
     <li class="nav-info"><a class="nav-warning" href="/sprint">Add Sprint</a></li>
     <li class="nav-info"><a class="nav-warning" href="/sprintList">Sprint List</a></li>
+    <li class="nav-info"><a class="nav-warning" href="/tasks">Add task</a></li>
 </ul>
     </nav>
 

@@ -1,9 +1,8 @@
-package pl.sda.springdemo.users;
+package pl.sda.springdemo.sprint;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import pl.sda.springdemo.task.Task;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -15,6 +14,21 @@ public class Sprint {
     private LocalDate startDate;
     private LocalDate finishDate;
     private Integer planedStoryPoints;
+
+    @OneToOne
+    private Task task;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
 
     public Sprint(){
 

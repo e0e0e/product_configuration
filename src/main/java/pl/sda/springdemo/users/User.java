@@ -1,6 +1,7 @@
 package pl.sda.springdemo.users;
 
 import pl.sda.springdemo.projects.Project;
+import pl.sda.springdemo.task.Task;
 
 import javax.persistence.*;
 import java.util.Comparator;
@@ -26,6 +27,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Project> projects;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Task> tasks;
 
     @ManyToMany
     @JoinTable(
@@ -150,5 +154,13 @@ public class User {
             System.out.println("Concat String of projects is:"+ e.getMessage());
         }
         return str;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }
