@@ -79,7 +79,10 @@
 
             <div class="card text-dark bg-warning m-1">
 
-                <div class="card-header bg-info text-left text-light"><h4>${project.projectName} </h4></div>
+                <div class="card-header bg-info text-left text-light">
+                    <a href="/project/show?projectId=${project.id}" class="nav-link text-light font-weight-bold">
+                            ${project.projectName}</a>
+                </div>
 
                 <div class="card-body ">
 

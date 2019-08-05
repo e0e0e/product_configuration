@@ -32,22 +32,22 @@ public class ProjectController {
     }
 
     @GetMapping("/project")
-    public String ShowProjectForm( HttpServletRequest request,
-                                   Model model) {
+    public String ShowProjectForm(HttpServletRequest request,
+                                  Model model) {
 
         //request.getSession().setAttribute("username",);
-        String loggedUser=request.getRemoteUser();
-        System.out.println("you are logged as: "+ loggedUser);
+        String loggedUser = request.getRemoteUser();
+        System.out.println("you are logged as: " + loggedUser);
         model.addAttribute("users", userService.findAll());
-        model.addAttribute("loggedUser",loggedUser);
+        model.addAttribute("loggedUser", loggedUser);
 //        List<String> sessionVals = Collections.list(request.getSession().getAttributeNames());
 //
 //        sessionVals.stream().forEach(s -> System.out.println(s));
 //        Object spring_security_context = request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
 //        System.out.println(spring_security_context);
 
-        model.addAttribute("title","Add Project");
-        model.addAttribute("path","project/project");
+        model.addAttribute("title", "Add Project");
+        model.addAttribute("path", "project/project");
 
         return "main";
     }
@@ -59,7 +59,7 @@ public class ProjectController {
                              Model model) {
 
 
-       // model.addAttribute("loggedUser", userService.getLogged());
+        // model.addAttribute("loggedUser", userService.getLogged());
 
 
         try {
@@ -190,5 +190,14 @@ public class ProjectController {
         return "user/login";
     }
 
+    @GetMapping("/project/show")
+    public String showProject(@RequestParam Long projectId,
+                              Model model) {
+        Project project = projectService.findById(projectId).get();
+        model.addAttribute("project", project);
+        model.addAttribute("title", "Show Project");
+        model.addAttribute("path", "project/showProject");
+        return "main";
+    }
 
 }

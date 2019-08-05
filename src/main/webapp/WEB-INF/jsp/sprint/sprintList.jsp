@@ -30,6 +30,7 @@
             <td> ${sprint.startDate} </td>
             <td>${sprint.finishDate} </td>
             <td>${sprint.planedStoryPoints}</td>
+            <td>${sprint.planedStoryPoints}</td>
 <%--            <td><a href="/users/delete?userId=${user.id}">Delete</a></td>--%>
 <%--            <td>${sprint.toString()}</td>--%>
         </tr>

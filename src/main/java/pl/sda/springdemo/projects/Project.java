@@ -1,5 +1,6 @@
 package pl.sda.springdemo.projects;
 
+import pl.sda.springdemo.task.Task;
 import pl.sda.springdemo.users.User;
 
 import javax.persistence.*;
@@ -20,6 +21,25 @@ public class Project {
 
     @ManyToMany
     private Set<User> users;
+
+    @OneToMany(mappedBy = "project")
+    private Set<Task> task;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Task> getTask() {
+        return task;
+    }
+
+    public void setTask(Set<Task> task) {
+        this.task = task;
+    }
 
     public User getUser() {
         return user;

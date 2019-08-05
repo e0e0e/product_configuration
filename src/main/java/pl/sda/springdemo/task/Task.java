@@ -1,6 +1,7 @@
 package pl.sda.springdemo.task;
 
 import pl.sda.springdemo.progres.Progress;
+import pl.sda.springdemo.projects.Project;
 import pl.sda.springdemo.sprint.Sprint;
 import pl.sda.springdemo.users.User;
 
@@ -26,16 +27,22 @@ public class Task {
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private Project project;
+
     public Task() {
     }
 
-    public Task(String name, String description, Sprint sprint, Integer weight, User user) {
+
+
+    public Task(String name, String description, Sprint sprint, Integer weight, User user, Project project) {
         this.name = name;
         this.description = description;
         this.sprint = sprint;
         this.weight = weight;
 
         this.user = user;
+        this.project = project;
     }
 
     public Long getId() {
@@ -79,6 +86,13 @@ public class Task {
     }
 
 
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
     public Progress getProgress() {
         return progress;
