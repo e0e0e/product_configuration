@@ -109,4 +109,16 @@ public class Task {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", sprint=" + sprint +
+                ", weight=" + weight +
+                ", progress=" + progress +
+                ", user=" + user +
+                '}';
+    }
 }

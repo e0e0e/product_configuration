@@ -59,7 +59,7 @@ public class Project {
     public Project(String projectName, String description, User user) {
         this.projectName = projectName;
         this.description = description;
-       this.user = user;
+        this.user = user;
     }
 
     public String getProjectName() {
@@ -69,7 +69,6 @@ public class Project {
     public String getDescription() {
         return description;
     }
-
 
 
     public void setProjectName(String projectName) {
@@ -85,19 +84,19 @@ public class Project {
     }
 
 
-    public String showUsersInProject () {
+    public String showUsersInProject() {
         String str = "";
         try {
-            str= users.stream()
+            str = users.stream()
                     .sorted(Comparator.comparing(o -> o.getUsername()))
-                    .map(e->e.getUsername())
+                    .map(e -> e.getUsername())
                     .collect(Collectors.joining(", "));
 
 //                                .forEach(e-> str.concat(e.getProjectName() + "<br/>"));
 
             // }
-        }catch(NullPointerException e){
-            System.out.println("Concat String of users is:"+ e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("Concat String of users is:" + e.getMessage());
         }
         return str;
     }

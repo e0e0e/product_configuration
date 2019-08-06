@@ -6,6 +6,7 @@ import pl.sda.springdemo.projects.ProjectRepository;
 import pl.sda.springdemo.sprint.Sprint;
 import pl.sda.springdemo.sprint.SprintRepositoryJPA;
 import pl.sda.springdemo.users.User;
+import pl.sda.springdemo.users.UserRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,11 +17,13 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final SprintRepositoryJPA sprintRepositoryJPA;
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
-    public TaskService(TaskRepository taskRepository, SprintRepositoryJPA sprintRepositoryJPA, ProjectRepository projectRepository) {
+    public TaskService(TaskRepository taskRepository, SprintRepositoryJPA sprintRepositoryJPA, ProjectRepository projectRepository, UserRepository userRepository) {
         this.taskRepository = taskRepository;
         this.sprintRepositoryJPA = sprintRepositoryJPA;
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -33,10 +36,11 @@ public class TaskService {
         sprint.setTask(task);
         //
         user.getTasks().add(task);
+
         Task created = taskRepository.save(task);
         project.getTask().add(task);
-        Project createdProject=projectRepository.save(project);
-
+        Project createdProject = projectRepository.save(project);
+        User createUser = userRepository.save(user);
 
 
         return created.getId() != null;
