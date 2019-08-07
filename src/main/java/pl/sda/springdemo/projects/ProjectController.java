@@ -1,6 +1,7 @@
 package pl.sda.springdemo.projects;
 
 
+import org.apache.logging.log4j.util.PropertySource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.sda.springdemo.sprint.Sprint;
+import pl.sda.springdemo.task.Task;
 import pl.sda.springdemo.users.User;
 import pl.sda.springdemo.users.UserService;
 
@@ -15,10 +18,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.time.Period;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProjectController {
@@ -194,6 +196,23 @@ public class ProjectController {
     public String showProject(@RequestParam Long projectId,
                               Model model) {
         Project project = projectService.findById(projectId).get();
+
+        List<Integer> numberOfDeys = project.getTask().stream().map(e ->
+                Math.abs(Period.between(e.getSprint().getStartDate(), e.getSprint().getFinishDate()).getDays()))
+                .collect(Collectors.toList());
+
+                project.getTask().stream()
+                        .collect(Collectors.toMap(x->x.getId(),x->x.getSprint().getStartDate()));
+        LocalDate maxFinishDate = project.getTask().stream().max(Comparator.comparing(e -> e.getSprint().getFinishDate())).get().getSprint().getFinishDate();
+        LocalDate minStartDate = project.getTask().stream().min(Comparator.comparing(e -> e.getSprint().getStartDate())).get().getSprint().getStartDate();
+//        timeTable(minStartDate,start,finish,fromStartToFinish)
+
+        // project.getTask().stream().m;
+//        (e-> System.out.println(
+//                Period.between(e.getSprint().getFinishDate(),e.getSprint().getStartDate()).getDays()));
+
+        model.addAttribute("maxFinishDate", maxFinishDate);
+        model.addAttribute("minStartDate", minStartDate);
         model.addAttribute("project", project);
         model.addAttribute("title", "Show Project");
         model.addAttribute("path", "project/showProject");

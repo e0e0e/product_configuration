@@ -14,7 +14,7 @@
 
     <label>From:</label><br/>
     <input type="date" name="from" class="text-dark"
-           value="<fmt:formatDate type="date" value="${now}" pattern="yyyy-MM-dd"/>"><br/>
+           value="C"><br/>
     <label>To:</label><br/>
     <input type="date" name="to" class="text-dark"
            value="<fmt:formatDate type="date" value="${now}" pattern="yyyy-MM-dd"/>"><br/>
