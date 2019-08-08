@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<div class="container bg-info">
 <form method="post" action="/tasks?projectId=${project.id}" class="bg-info m-5 p-5 text-light">
     <h1>Add Tasks for project <b>${project.projectName}</b></h1>
     <label>Task name:</label><br/>
@@ -38,6 +39,7 @@
 
 
 </form>
+</div>
 <%--private Long id;--%>
 
 <%--private String name;--%>
