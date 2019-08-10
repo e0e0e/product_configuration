@@ -17,7 +17,7 @@ public class Task {
     private String name;
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Sprint sprint;
 
     private Integer weight;
@@ -35,12 +35,12 @@ public class Task {
 
 
 
-    public Task(String name, String description, Sprint sprint, Integer weight, User user, Project project) {
+    public Task(String name, String description, Sprint sprint, Integer weight, User user,Progress progress, Project project) {
         this.name = name;
         this.description = description;
         this.sprint = sprint;
         this.weight = weight;
-
+        this.progress=progress;
         this.user = user;
         this.project = project;
     }

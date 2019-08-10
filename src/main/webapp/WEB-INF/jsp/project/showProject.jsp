@@ -8,19 +8,20 @@
                 ${project.projectName}</a>
             
 <%--            <div class="bg-info text-right text-danger" style="display: inline-block;">--%>
-                <a href="/project/delete?projectId=${project.id}" class="btn btn-outline-light btn-sm text-right" style="float: right">
+                <a href="/project/delete?projectId=${project.id}" class="btn btn-outline-light btn-sm text-right" style="float: right;">
                     <span class="glyphicon glyphicon-trash"></span></a>
 
-                <form action="/participant?projectId=${project.id}" method="post" style="display: inline-block;float: right;">
-                    <button type="submit" value="your_value" class="btn btn-outline-light" >
+                <form action="/participant?projectId=${project.id}" method="post" style="float: right;">
+                    <button type="submit" value="your_value" class="btn btn-outline-light">
                         <span class="glyphicon glyphicon-user"></span></button>
                 </form>
                 <a href="/tasks?projectId=${project.id}" class="btn btn-outline-light btn-sm" style="float: right;">
                     <span class="glyphicon glyphicon-time"></span></a>
 
-                <a href="/project/edit?projectId=${project.id}" class="btn btn-outline-light btn-sm" style="float: right;">
-                    <span class="glyphicon glyphicon-edit"></span></a>
-<%--            </div>--%>
+<%--            !!!!!!!!!!!!!!!!!!!!1111--%>
+<%--                <a href="/project/edit?projectId=${project.id}" class="btn btn-outline-light btn-sm" style="float: right;">--%>
+<%--                    <span class="glyphicon glyphicon-edit"></span></a>--%>
+
         </div>
 
 
@@ -37,7 +38,7 @@
             <div class="text-light">
                 admin: ${project.user.username}
             </div>
-            <div class="btn btn-outline-light btn-sm">
+            <div class="text-light">
                 In Project: ${project.showUsersInProject()}
             </div>
 

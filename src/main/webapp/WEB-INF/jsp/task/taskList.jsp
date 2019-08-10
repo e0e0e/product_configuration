@@ -14,6 +14,8 @@
             <th>Finish Date</th>
             <th>Story points</th>
             <th>Responsible user</th>
+            <th>Progress</th>
+            <th>Edit</th>
         </tr>
         <c:forEach var="task" items="${project.task}">
 
@@ -25,6 +27,14 @@
                 <td>${task.sprint.finishDate} </td>
                 <td>${task.sprint.planedStoryPoints} </td>
                 <td>${task.user.username} </td>
+                <td>${task.progress}
+                    <a href="/task/progressChange?taskId=${task.id}" class="btn btn-outline-light btn-sm text-right">
+                        <span class="glyphicon glyphicon-edit"></span></a>
+
+
+                </td>
+                <td><a href="/task/delete?taskId=${task.id}&projectId=${param.projectId}" class="btn btn-outline-light btn-sm text-right">
+                    <span class="glyphicon glyphicon-trash"></span></a></td>
             </tr>
 
         </c:forEach>
@@ -32,6 +42,7 @@
 
     </table>
 </div>
+
 <%--<div class="progress">--%>
 <%--<c:forEach begin="1" end="12" varStatus="loop">--%>
 
@@ -63,7 +74,7 @@
                 </div>
                 <div class="progress-bar progress-bar-success" role="progressbar"
                      style="width:${(table.value.daysToFinish-table.value.daysToStart)*35}px">
-                        ${table.value.task.name} ${table.value.numberOfDays}
+                        ${table.value.task.name}
 
                 </div>
 

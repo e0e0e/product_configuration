@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.sda.springdemo.progres.Progress;
 import pl.sda.springdemo.sprint.TimeTable;
 import pl.sda.springdemo.task.Task;
+import pl.sda.springdemo.task.TaskService;
 import pl.sda.springdemo.users.User;
 import pl.sda.springdemo.users.UserService;
 
@@ -20,17 +22,19 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 public class ProjectController {
     private final UserService userService;
     private final ProjectService projectService;
+    private final TaskService taskService;
 
 
-    public ProjectController(UserService userService, ProjectService projectService) {
+
+    public ProjectController(UserService userService, ProjectService projectService, TaskService taskService) {
         this.userService = userService;
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @GetMapping("/project")
@@ -162,28 +166,7 @@ public class ProjectController {
         return "main";
     }
 
-//    @PostMapping(value = "project/participant/filter", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-//    public String addParticipantToProject(@RequestParam long projectId,
-//                                          @RequestParam long userId,
-//                                          @RequestParam String search,
-//                                          Model model) {
-//
-//        // model.addAttribute("addingToProjectID",projectService.findById(projectId));
-//        User user = userService.findById(userId);
-//        Project project = projectService.findById(projectId).get();
-//        user.getProjectsParticipants().add(project);
-//        project.getUsers().add(user);
-//        userService.save(user);
-//
-//        model.addAttribute("projects", projectService.findAll());
-//        model.addAttribute("users", projectService.getUsers(projectId));
-//        model.addAttribute("loggedUser", userService.getLogged());
-//
-//
-//        model.addAttribute("title", "Project List");
-//        model.addAttribute("path", "project/projectList");
-//        return "main";
-//    }
+
 
     @GetMapping("login")
     public String login() {
@@ -191,39 +174,7 @@ public class ProjectController {
         return "user/login";
     }
 
-//    @GetMapping("/")
-//    public String start(@CookieValue(value = "userName", defaultValue = "") String userName,
-//                        @CookieValue(value = "password", defaultValue = "") String password,
-//                        Model model) {
-//
-//
-//        if (userService.getLogged() == null) {
-//         userService.login(userName, password);
-////            System.out.println(cookies.);
-//            model.addAttribute("loggedUser", userService.getLogged());
-//            model.addAttribute("users", userService.findAll());
-//            return "users/list";
-//        } else {
-//            return "project/projectList";
-//        }
-//    }
-//
-//    @PostMapping("login")
-//    public String loginUser(@RequestParam String userName,
-//                            @RequestParam String password,
-//                            HttpServletResponse response,
-//                            Model model) {
-//
-//        userService.login(userName, password);
-//        Cookie cookie=new Cookie("userName", userName);
-//        Cookie cookie2=new Cookie("password", password);
-//        response.addCookie(cookie);
-//        response.addCookie(cookie2);
-//
-//        model.addAttribute("loggedUser", userService.getLogged());
-//        model.addAttribute("users", userService.findAll());
-//        return "user/list";
-//    }
+
 
     @GetMapping("logout")
     public String logoutUser(Model model,

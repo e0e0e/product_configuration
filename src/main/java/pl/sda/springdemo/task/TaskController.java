@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.sda.springdemo.progres.Progress;
 import pl.sda.springdemo.projects.ProjectService;
 import pl.sda.springdemo.sprint.SprintService;
 import pl.sda.springdemo.users.UserService;
@@ -37,7 +38,7 @@ public class TaskController {
 
         model.addAttribute("project", projectService.findById(projectId).get());
         model.addAttribute("users", userService.findAll());
-        model.addAttribute("sprints", sprintService.findAllSprints());
+       // model.addAttribute("sprints", sprintService.findAllSprints());
         model.addAttribute("title", "Task form");
         model.addAttribute("path", "task/task");
         return "main";
@@ -61,11 +62,11 @@ public class TaskController {
                 storyPoints, weight,
                 userService.findById(userId),
                 projectService.findById(projectId).get()
-                );
+        );
 
         model.addAttribute("createUserResult", tastCreated);
 
-        return "redirect:/taskList";
+        return "redirect:/project/show?projectId=" + projectId;
     }
 
     @GetMapping("/taskList")
@@ -76,6 +77,57 @@ public class TaskController {
         model.addAttribute("path", "task/taskList");
         return "main";
 
+    }
+
+    @GetMapping("/task/progressChange")
+    public String changeProgress(@RequestParam Long taskId,
+                                 Model model) {
+
+        Task task = taskService.findById(taskId);
+        model.addAttribute("progress", Progress.values());
+        model.addAttribute("task", task);
+        model.addAttribute("title", "Change Progress");
+        model.addAttribute("path", "task/changeProgress");
+        return "main";
+    }
+
+    @PostMapping("/task/progressChange")
+    private String changeProgress(@RequestParam Long taskId,
+                                  @RequestParam String progress,
+                                  Model model) {
+
+        taskService.changeProgress(taskId, progress);
+
+//        model.addAttribute("project", taskService.findById(taskId).getProject());
+        model.addAttribute("title", "Show Project");
+        model.addAttribute("path", "project/showProject");
+
+        return "redirect:/project/show?projectId=" + taskService.findById(taskId).getProject().getId();
+    }
+
+    @GetMapping("/task/delete")
+    public String deleteTask(@RequestParam long taskId,
+                             @RequestParam long projectId) {
+
+        taskService.DeleteTask(taskId);
+
+        return "redirect:/project/show?projectId=" + projectId;
+
+    }
+
+    @GetMapping("/taskWall")
+    private String showWall(Model model){
+
+        List<Task> taskList=taskService.findAll();
+        List<Task> tasksToDo=taskService.findToDo();
+
+
+        model.addAttribute("tasksToDo",tasksToDo);
+        model.addAttribute("tasks", taskList);
+
+        model.addAttribute("title", "Wall");
+        model.addAttribute("path", "task/taskWall");
+        return "main";
     }
 
 

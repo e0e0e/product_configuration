@@ -22,7 +22,7 @@ public class Project {
     @ManyToMany
     private Set<User> users;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
     private Set<Task> task;
 
     public void setId(Long id) {
