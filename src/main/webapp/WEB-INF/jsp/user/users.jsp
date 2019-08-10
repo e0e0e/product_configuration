@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<div class="container bg-info text-light">
 <h1>Create User</h1>
 
 <c:if test="${errorMessage!=null}">
@@ -11,14 +11,15 @@
 <form method="post" action="/users">
 
     <label>Login:</label><br/>
-    <input type="text" name="login"><br/>
+    <input type="text"  class="text-dark" name="login"><br/>
     <label>Email:</label><br/>
-    <input type="email" name="email"><br/>
+    <input type="email"  class="text-dark" name="email"><br/>
     <label>Password:</label><br/>
-    <input type="password" name="password"><br/>
+    <input type="password" class="text-dark" name="password"><br/>
     <label>User Name:</label><br/>
-    <input type="text" name="username"><br/>
-    <input type="submit" value="Dodaj">
+    <input type="text"  class="text-dark" name="username"><br/>
+    <input type="submit" class="text-dark" value="Dodaj">
 
 
 </form>
+</div>

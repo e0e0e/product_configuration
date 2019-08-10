@@ -14,33 +14,7 @@
 <c:if test="${deleteProjectResults==true}">
     <h1>Deleted Project successfull</h1>
 </c:if>
-<%--<table>--%>
-<%--    <tr>--%>
-<%--        <th>Id</th>--%>
-<%--        <th>Project Name</th>--%>
-<%--        <th>description</th>--%>
-<%--        <th>Admin Name</th>--%>
-<%--        <th>Participants</th>--%>
-<%--        <th>Operation</th>--%>
-<%--    </tr>--%>
-<%--    <c:forEach var="project" items="${projects}">--%>
 
-
-<%--        <tr>--%>
-<%--            <td>${project.id}</td>--%>
-<%--            <td> ${project.projectName} </td>--%>
-<%--            <td>${project.description} </td>--%>
-<%--            <td>${project.user.username}</td>--%>
-<%--            <td>${project.showUsersInProject()}</td>--%>
-<%--            <td><a href="/project/delete?projectId=${project.id}">Delete</a>--%>
-<%--                <a href="/project/delete?projectId=${project.id}"><span class="glyphicon glyphicon-trash"></span></a>--%>
-<%--                <a href="/project/participant?projectId=${project.id}">Add participant</a></td>--%>
-<%--                &lt;%&ndash;            <td><a href="/users/delete?userId=${user.id}">Delete</a></td>&ndash;%&gt;--%>
-<%--        </tr>--%>
-
-
-<%--    </c:forEach>--%>
-<%--</table>--%>
 
 <c:if test="${addingToProjectID!=null}">
 <form method="post" action="/participants">

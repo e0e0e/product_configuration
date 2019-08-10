@@ -2,31 +2,36 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
-<table>
-    <tr>
-        <%--        <th>Id</th>--%>
-        <th class="col-sm-4 bg-primary">task Name</th>
-        <%--        <th>User Name</th>--%>
-        <th>Start Date</th>
-        <th>Finish Date</th>
-        <th>Story points</th>
-    </tr>
-    <c:forEach var="task" items="${project.task}">
-
-
+<br/>
+<div class="container">
+    <table class="table table-dark">
         <tr>
-            <td class="bg-primary"> ${task.name} </td>
-            <td>${task.sprint.startDate} </td>
-            <td class="bg-primary">${task.sprint.finishDate} </td>
-            <td>${task.sprint.planedStoryPoints} </td>
+            <%--        <th>Id</th>--%>
+            <th>task Name</th>
+            <th>Description</th>
+            <%--        <th>User Name</th>--%>
+            <th>Start Date</th>
+            <th>Finish Date</th>
+            <th>Story points</th>
+            <th>Responsible user</th>
         </tr>
-
-    </c:forEach>
-
+        <c:forEach var="task" items="${project.task}">
 
 
-</table>
+            <tr>
+                <td>${task.name} </td>
+                <td>${task.description} </td>
+                <td>${task.sprint.startDate} </td>
+                <td>${task.sprint.finishDate} </td>
+                <td>${task.sprint.planedStoryPoints} </td>
+                <td>${task.user.username} </td>
+            </tr>
+
+        </c:forEach>
+
+
+    </table>
+</div>
 <%--<div class="progress">--%>
 <%--<c:forEach begin="1" end="12" varStatus="loop">--%>
 
@@ -36,41 +41,37 @@
 <%--        </div>--%>
 
 
-
-
-
 <%--</c:forEach>--%>
 <%--</div>--%>
-<div class="container">
+<div class="container-fluid float-left ">
+    <div class="flex-nowrap">
+        <div class="progress" style="width:${timeLine.size()*35}px">
+            <c:forEach var="date" items="${timeLine}">
+                <div class="progress-bar progress-bar-white" role="progressbar"
+                     style="width:${(1/timeLine.size())*100}%">
+                        ${date}
+                </div>
+            </c:forEach>
+        </div>
 
-    <div class="progress">
-        <c:forEach var="date" items="${timeLine}">
-            <div class="progress-bar progress-bar-white" role="progressbar"
-                 style="width:${(1/timeLine.size())*100}%">
-                    ${date}
+
+        <c:forEach var="table" items="${timeTableMap}">
+            <div class="progress" style="width:${timeLine.size()*35}px">
+                <div class="progress-bar progress-bar" role="progressbar"
+                     style="width:${table.value.daysToStart*35}px; background-color: #f4eee9">
+
+                </div>
+                <div class="progress-bar progress-bar-success" role="progressbar"
+                     style="width:${(table.value.daysToFinish-table.value.daysToStart)*35}px">
+                        ${table.value.task.name} ${table.value.numberOfDays}
+
+                </div>
+
             </div>
+
+
         </c:forEach>
     </div>
-
-
-
-
-<c:forEach var="table" items="${timeTableMap}">
-    <div class="progress">
-        <div class="progress-bar progress-bar" role="progressbar"
-             style="width:${(table.value.daysToStart/table.value.numberOfDays)*100}%; background-color: #f4eee9">
-
-        </div>
-        <div class="progress-bar progress-bar-success" role="progressbar"
-             style="width:${((table.value.daysToFinish-table.value.daysToStart)/table.value.numberOfDays)*100}%">
-                ${table.value.task.name} ${table.value.numberOfDays}
-
-        </div>
-
-    </div>
-
-
-</c:forEach>
 </div>
 
 

@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div>
+<div class="container">
 
     <div class="card text-dark bg-warning m-1">
 
@@ -33,8 +33,7 @@
         </div>
 
     </div>
-
+</div>
         <%@include file="../task/taskList.jsp" %>
 
 
-</div>

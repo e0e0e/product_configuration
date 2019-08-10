@@ -8,9 +8,9 @@ import java.util.List;
 public class TimeTable {
 
     private LocalDate startDate;
-    private Integer daysToStart;
-    private Integer daysToFinish;
-    private Integer numberOfDays;
+    private long daysToStart;
+    private long daysToFinish;
+    private long numberOfDays;
     private Long sprintId;
     private Task task;
 
@@ -22,7 +22,7 @@ public class TimeTable {
         this.task = task;
     }
 
-    public TimeTable(LocalDate startDate, Integer daysToStart, Integer daysToFinish, Integer numberOfDays, Long sprintId, Task task) {
+    public TimeTable(LocalDate startDate, long daysToStart, long daysToFinish, long numberOfDays, Long sprintId, Task task) {
         this.startDate = startDate;
         this.daysToStart = daysToStart;
         this.daysToFinish = daysToFinish;
@@ -61,7 +61,7 @@ public class TimeTable {
         this.startDate = startDate;
     }
 
-    public Integer getDaysToStart() {
+    public long getDaysToStart() {
         return daysToStart;
     }
 
@@ -69,7 +69,7 @@ public class TimeTable {
         this.daysToStart = daysToStart;
     }
 
-    public Integer getDaysToFinish() {
+    public long getDaysToFinish() {
         return daysToFinish;
     }
 
@@ -77,7 +77,7 @@ public class TimeTable {
         this.daysToFinish = daysToFinish;
     }
 
-    public Integer getNumberOfDays() {
+    public long getNumberOfDays() {
         return numberOfDays;
     }
 
