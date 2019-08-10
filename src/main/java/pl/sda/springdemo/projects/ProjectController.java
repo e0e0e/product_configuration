@@ -79,7 +79,9 @@ public class ProjectController {
             model.addAttribute("projects", projects);
 
             //System.out.println(email + " " + password + " " + datfB);
-            return "project/projectList";
+            model.addAttribute("title", "Project List");
+            model.addAttribute("path", "project/projectList");
+            return "main";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());
 
@@ -99,7 +101,9 @@ public class ProjectController {
 //        System.out.println(projectList.size());
         model.addAttribute("projects", projects);
         model.addAttribute("loggedUser", userService.getLogged());
-        return "project/projectList";
+        model.addAttribute("title", "Project List");
+        model.addAttribute("path", "project/projectList");
+        return "main";
     }
 
     @GetMapping("project/delete")
@@ -111,19 +115,30 @@ public class ProjectController {
         model.addAttribute("deleteProjectResults", true);
         model.addAttribute("loggedUser", userService.getLogged());
 
-        return "project/projectList";
+        model.addAttribute("title", "Project List");
+        model.addAttribute("path", "project/projectList");
+        return "main";
 
     }
 
-    @GetMapping("/participant")
+    @PostMapping("/participant")
     public String addParticipant(@RequestParam long projectId,
+                                 @RequestParam(required = false) String filterUserByEmail,
                                  Model model) {
 
         model.addAttribute("projects", projectService.findById(projectId).get());
-        model.addAttribute("users", userService.findAll());/**/
-        model.addAttribute("loggedUser", userService.getLogged());
-        return "participant/participants";
+        if(filterUserByEmail==null) {
+            model.addAttribute("users", userService.findAll());/**/
+        }else{
+            model.addAttribute("users",userService.findUsersByEmail(filterUserByEmail));
+        }
+//        model.addAttribute("loggedUser", userService.getLogged());
+
+        model.addAttribute("title", "Participants");
+        model.addAttribute("path", "participant/participants");
+        return "main";
     }
+
 
     @PostMapping(value = "project/participant", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addParticipantToProject(@RequestParam long projectId,
@@ -140,8 +155,35 @@ public class ProjectController {
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("users", projectService.getUsers(projectId));
         model.addAttribute("loggedUser", userService.getLogged());
-        return "project/projectList";
+
+
+        model.addAttribute("title", "Project List");
+        model.addAttribute("path", "project/projectList");
+        return "main";
     }
+
+//    @PostMapping(value = "project/participant/filter", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+//    public String addParticipantToProject(@RequestParam long projectId,
+//                                          @RequestParam long userId,
+//                                          @RequestParam String search,
+//                                          Model model) {
+//
+//        // model.addAttribute("addingToProjectID",projectService.findById(projectId));
+//        User user = userService.findById(userId);
+//        Project project = projectService.findById(projectId).get();
+//        user.getProjectsParticipants().add(project);
+//        project.getUsers().add(user);
+//        userService.save(user);
+//
+//        model.addAttribute("projects", projectService.findAll());
+//        model.addAttribute("users", projectService.getUsers(projectId));
+//        model.addAttribute("loggedUser", userService.getLogged());
+//
+//
+//        model.addAttribute("title", "Project List");
+//        model.addAttribute("path", "project/projectList");
+//        return "main";
+//    }
 
     @GetMapping("login")
     public String login() {

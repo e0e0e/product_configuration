@@ -78,4 +78,9 @@ public class UserService {
     }
 
 
+    public List<User> findUsersByEmail(String filterUserByEmail) {
+
+
+        return userRepository.findUsersByEmail(filterUserByEmail);
+    }
 }

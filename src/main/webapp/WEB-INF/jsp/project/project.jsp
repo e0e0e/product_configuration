@@ -7,7 +7,7 @@
     <label>Project Name:</label><br/>
     <input type="text" class="text-dark" name="projectName"><br/>
     <label>Project Description:</label><br/>
-    <input type="text" class="text-dark" name="description"><br/>
+    <textarea rows="4" columns="50" class="text-dark" name="description">Description ...</textarea><br/>
     <label>User:</label><br/>
     <select name="user" class="text-dark">
         <c:forEach var="user" items="${users}">

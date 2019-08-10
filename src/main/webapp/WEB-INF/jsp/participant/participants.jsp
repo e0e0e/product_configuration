@@ -1,25 +1,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Project Participants</title>
 
-    <style>
-        <%@include file="../css/style.css" %>
-    </style>
-    <%@include file="../css/boot.jsp" %>
+<div class="container bg-info">
+    <h1>For project <b>${projects.projectName}<b/> add user:</h1>
+    <%--    <input method="post" action="/userSearch">--%>
 
-</head>
-<body>
-<%@include file="../navigation.jsp" %>
-<h1>For project <b>${projects.projectName}<b/> add user:</h1>
-<h1>Search user by email: </h1><br/>
-<input type="text" name="search">
-<form method="post" action="/project/participant?projectId=${projects.id}">
-    <%@include file="../userPicker.jsp" %>
+    <h2>Filter user by email: </h2>
+    <form method="post" action="/participant?projectId=${param.projectId}">
+    <input type="text" name="filterUserByEmail" class="m-3">
+    <input type="submit" value="Filter">
+    <%--    <a href="/userSearch" class="btn btn-outline-dark btn-sm">--%>
+    <%--    <span class="glyphicon glyphicon-search"></span></a>--%>
+    </form>
 
-    <input type="submit" value="Dodaj">
-</form>
 
-</body>
-</html>
+    <form method="post" class="text-white bg-primary p-10" action="/project/participant?projectId=${projects.id}">
+        <%--        <%@include file="../userPicker.jsp" %>--%>
+        <c:forEach var="user" items="${users}">
+            <input type="radio" name="userId" class="m-2" value="${user.id}"><span
+                class="p-5">${user.username}, email: ${user.email}</span><br/>
+        </c:forEach>
+        <input type="submit" class="text-dark" value="Add User">
+    </form>
+
+</div>
