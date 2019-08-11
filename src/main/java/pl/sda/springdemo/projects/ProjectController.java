@@ -42,15 +42,17 @@ public class ProjectController {
                                   Model model) {
 
         //request.getSession().setAttribute("username",);
-        String loggedUser = request.getRemoteUser();
-        System.out.println("you are logged as: " + loggedUser);
+//        String loggedUser = request.getRemoteUser();
+//        System.out.println("you are logged as: " + loggedUser);
         model.addAttribute("users", userService.findAll());
-        model.addAttribute("loggedUser", loggedUser);
-//        List<String> sessionVals = Collections.list(request.getSession().getAttributeNames());
-//
-//        sessionVals.stream().forEach(s -> System.out.println(s));
-//        Object spring_security_context = request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
-//        System.out.println(spring_security_context);
+//        model.addAttribute("loggedUser", loggedUser);
+
+
+        List<String> sessionVals = Collections.list(request.getSession().getAttributeNames());
+
+        sessionVals.stream().forEach(s -> System.out.println(s));
+        Object spring_security_context = request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+        System.out.println(spring_security_context);
 
         model.addAttribute("title", "Add Project");
         model.addAttribute("path", "project/project");
@@ -61,17 +63,17 @@ public class ProjectController {
     @PostMapping("/project")
     public String addProject(@RequestParam String projectName,
                              @RequestParam String description,
-                             @RequestParam Long user,
+                             @RequestParam String username,
                              Model model) {
 
 
         // model.addAttribute("loggedUser", userService.getLogged());
-
+        User user=userService.findUserByname(username);
 
         try {
 
             //dodanie usera
-            boolean result = projectService.create(projectName, description, userService.findById(user));
+            boolean result = projectService.create(projectName, description, user);
 
 
             model.addAttribute("createProjectResult", result);
@@ -98,15 +100,33 @@ public class ProjectController {
     }
 
     @GetMapping("users/projectList")
-    public String listProjects(Model model) {
+    public String listProjects(HttpServletRequest request,
+                               Model model) {
+
+        String loggedUserName=request.getRemoteUser();
+
+        List<Project> projects = projectService.findAllWhereAdmin(loggedUserName);
+        List<Project> projectsWhereParticipate = projectService.findAllWhereParticipate(loggedUserName);
+
+        model.addAttribute("projectsWhereParticipate", projectsWhereParticipate);
+        model.addAttribute("projects", projects);
+
+        model.addAttribute("title", "Project List");
+        model.addAttribute("path", "project/projectList");
+        return "main";
+    }
+
+    @GetMapping("users/allProjectList")
+    public String listAllProjects(
+                               Model model) {
 
         List<Project> projects = projectService.findAll();
 
-//        System.out.println(projectList.size());
+
         model.addAttribute("projects", projects);
-        model.addAttribute("loggedUser", userService.getLogged());
-        model.addAttribute("title", "Project List");
-        model.addAttribute("path", "project/projectList");
+
+         model.addAttribute("title", "Project List");
+        model.addAttribute("path", "project/allProjectList");
         return "main";
     }
 
@@ -117,7 +137,7 @@ public class ProjectController {
         projectService.delete(projectId);
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("deleteProjectResults", true);
-        model.addAttribute("loggedUser", userService.getLogged());
+//        model.addAttribute("loggedUser", userService.getLogged());
 
         model.addAttribute("title", "Project List");
         model.addAttribute("path", "project/projectList");
@@ -128,13 +148,16 @@ public class ProjectController {
     @PostMapping("/participant")
     public String addParticipant(@RequestParam long projectId,
                                  @RequestParam(required = false) String filterUserByEmail,
+                                 HttpServletRequest request,
                                  Model model) {
+
+        String loggedUserName=request.getRemoteUser();
 
         model.addAttribute("projects", projectService.findById(projectId).get());
         if(filterUserByEmail==null) {
-            model.addAttribute("users", userService.findAll());/**/
+            model.addAttribute("users", userService.findAllWithException(loggedUserName));/**/
         }else{
-            model.addAttribute("users",userService.findUsersByEmail(filterUserByEmail));
+            model.addAttribute("users",userService.findUsersByEmailWithException(filterUserByEmail,loggedUserName));
         }
 //        model.addAttribute("loggedUser", userService.getLogged());
 
@@ -158,7 +181,7 @@ public class ProjectController {
 
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("users", projectService.getUsers(projectId));
-        model.addAttribute("loggedUser", userService.getLogged());
+//        model.addAttribute("loggedUser", userService.getLogged());
 
 
         model.addAttribute("title", "Project List");
@@ -180,7 +203,7 @@ public class ProjectController {
     public String logoutUser(Model model,
                              HttpServletRequest request,
                              HttpServletResponse response) {
-        userService.logout();
+//        userService.logout();
 
         return "user/login";
     }
@@ -188,16 +211,16 @@ public class ProjectController {
     @GetMapping("/project/show")
     public String showProject(@RequestParam Long projectId,
                               Model model) {
+
         Project project = projectService.findById(projectId).get();
+
         Set<Task> taskList = project.getTask();
 
-        List<Integer> numberOfDays = project.getTask().stream().map(e ->
-                Math.abs(Period.between(e.getSprint().getStartDate(), e.getSprint().getFinishDate()).getDays()))
-                .collect(Collectors.toList());
+//        List<Integer> numberOfDays = project.getTask().stream().map(e ->
+//                Math.abs(Period.between(e.getSprint().getStartDate(), e.getSprint().getFinishDate()).getDays()))
+//                .collect(Collectors.toList());
 
 
-//        project.getTask().stream()
-//                .collect(Collectors.toMap(x -> x.getId(), x -> x.getSprint().getStartDate()));
         if (project.getTask().size() > 0) {
 
 
@@ -261,4 +284,24 @@ public class ProjectController {
 
         return null;
     }
+
+    @GetMapping("project/taskWall")
+    private String showProjectWall(Model model){
+
+        List<Task> taskList=taskService.findAll();
+        List<Task> tasksToDo=taskService.findToDo();
+        List<Task> tasksInProgress=taskService.findInProgress();
+        List<Task> tasksDone=taskService.findDone();
+
+
+        model.addAttribute("tasksToDo",tasksToDo);
+        model.addAttribute("tasksInProgress",tasksInProgress);
+        model.addAttribute("tasksDone",tasksDone);
+        model.addAttribute("tasks", taskList);
+
+        model.addAttribute("title", "Wall");
+        model.addAttribute("path", "project/taskWall");
+        return "main";
+    }
+
 }

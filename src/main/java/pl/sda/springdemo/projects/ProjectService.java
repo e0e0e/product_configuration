@@ -40,4 +40,14 @@ public class ProjectService {
     public Set<User> getUsers(long projectId) {
         return projectRepository.findById(projectId).get().getUsers();
     }
+
+    public List<Project> findAllWhereAdmin(String loggedUserName) {
+
+        return projectRepository.finaAllWhereAdmin(loggedUserName);
+    }
+
+
+    public List<Project> findAllWhereParticipate(String loggedUserName) {
+        return projectRepository.findAllWhereParticipate(loggedUserName);
+    }
 }

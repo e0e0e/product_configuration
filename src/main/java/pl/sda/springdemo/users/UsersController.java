@@ -40,7 +40,7 @@ public class UsersController {
                           @RequestParam String login,
                           @RequestParam String username,
                           Model model) {
-        model.addAttribute("loggedUser", userService.getLogged());
+//        model.addAttribute("loggedUser", userService.getLogged());
         try {
 
             //dodanie usera
@@ -66,7 +66,7 @@ public class UsersController {
         userService.delete(userId);
         model.addAttribute("users", userService.findAll());
         model.addAttribute("deleteUserResults", true);
-        model.addAttribute("loggedUser", userService.getLogged());
+//        model.addAttribute("loggedUser", userService.getLogged());
         return "user/list";
 
     }
@@ -75,7 +75,7 @@ public class UsersController {
     public String listUsers(Model model) {
 
         model.addAttribute("users", userService.findAll());
-        model.addAttribute("loggedUser", userService.getLogged());
+//        model.addAttribute("loggedUser", userService.getLogged());
         return "user/list";
     }
 }

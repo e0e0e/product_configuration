@@ -77,6 +77,14 @@ public class TaskService {
        return taskRepository.findToDO();
     }
 
+    public List<Task> findInProgress() {
+        return taskRepository.findInProgress();
+    }
+
+    public List<Task> findDone() {
+        return taskRepository.findDone();
+    }
+
 //    public List<String> ProgresStates() {
 //
 //        return Pro

@@ -11,10 +11,10 @@
                 <a href="/project/delete?projectId=${project.id}" class="btn btn-outline-light btn-sm text-right" style="float: right;">
                     <span class="glyphicon glyphicon-trash"></span></a>
 
-                <form action="/participant?projectId=${project.id}" method="post" style="float: right;">
-                    <button type="submit" value="your_value" class="btn btn-outline-light">
-                        <span class="glyphicon glyphicon-user"></span></button>
-                </form>
+<%--                <form action="/participant?projectId=${project.id}" method="post" style="float: right;">--%>
+<%--                    <button type="submit" value="your_value" class="btn btn-outline-light">--%>
+<%--                        <span class="glyphicon glyphicon-user"></span></button>--%>
+<%--                </form>--%>
                 <a href="/tasks?projectId=${project.id}" class="btn btn-outline-light btn-sm" style="float: right;">
                     <span class="glyphicon glyphicon-time"></span></a>
 

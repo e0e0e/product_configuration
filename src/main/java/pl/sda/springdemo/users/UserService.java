@@ -9,7 +9,7 @@ import java.util.*;
 public class UserService {
 
     private final UserRepository userRepository;
-    private User logged = null;
+//    private User logged = null;
 
 
     private final static Map<String, User> usersByEmail = new HashMap<>();
@@ -59,28 +59,44 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void login(String userName, String password) {
-        logged = userRepository.findAll().stream()
-                .filter(e -> (e.getUsername().equals(userName) && e.getPassword().equals(password)))
-                .findAny()
-                .orElse(null);
-
-        // return user;
-
-    }
-
-    public User getLogged() {
-        return logged;
-    }
-
-    public void logout() {
-        logged = null;
-    }
+//    public void login(String userName, String password) {
+//        logged = userRepository.findAll().stream()
+//                .filter(e -> (e.getUsername().equals(userName) && e.getPassword().equals(password)))
+//                .findAny()
+//                .orElse(null);
+//
+//        // return user;
+//
+//    }
+//
+//    public User getLogged() {
+//        return logged;
+//    }
+//
+//    public void logout() {
+//        logged = null;
+//    }
 
 
     public List<User> findUsersByEmail(String filterUserByEmail) {
 
 
         return userRepository.findUsersByEmail(filterUserByEmail);
+    }
+
+    public User findUserByname(String username) {
+
+        return userRepository.findByUsername(username).get();
+    }
+
+    public List<User> findAllWithException(String loggedUserName) {
+
+        return userRepository.findAllWithException(loggedUserName);
+    }
+
+    public List<User> findUsersByEmailWithException(String filterUserByEmail, String loggedUserName) {
+
+    return userRepository
+            .findUsersByEmailWithException(filterUserByEmail,loggedUserName);
     }
 }

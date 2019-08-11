@@ -24,21 +24,28 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
-        throws Exception {
+            throws Exception {
         auth.userDetailsService(dbUserDetailsService)
-            .passwordEncoder(passwordEncoder);
+                .passwordEncoder(passwordEncoder);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//            .mvcMatchers("/**").authenticated()
+                .mvcMatchers("/**").authenticated()
 //            .mvcMatchers("/project/**").authenticated()
 //            .mvcMatchers("/comments/**").permitAll()
 //            .mvcMatchers("/h2/**").permitAll()
-            .anyRequest().permitAll()
-            .and()
-            .formLogin();
+                .anyRequest().permitAll()
+                .and()
+                .formLogin()
+                .and()
+                .logout().deleteCookies("JSESSIONID")
+
+                .logoutSuccessUrl("/users/projectList")
+
+                .and()
+                .rememberMe().key("uniqueAndSecret");
 
         http.csrf().disable();
         http.headers().frameOptions().disable();

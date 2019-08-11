@@ -14,6 +14,13 @@ public interface UserRepository extends CrudRepository<User,Long> {
 
 
     Optional<User> findByUsername(String username);
+
     @Query(value = "SELECT * FROM user WHERE email like %?1%", nativeQuery = true)
     List<User> findUsersByEmail(String filterUserByEmail);
+
+    @Query(value = "SELECT * FROM user WHERE username != ?1", nativeQuery = true)
+    List<User> findAllWithException(String loggedUserName);
+
+    @Query(value = "SELECT * FROM user WHERE email like %?1% and username Not like ?2", nativeQuery = true)
+    List<User> findUsersByEmailWithException(String filterUserByEmail, String loggedUserName);
 }

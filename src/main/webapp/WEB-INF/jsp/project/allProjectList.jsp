@@ -28,24 +28,12 @@
     <h3>Projects<a href="/project" class="btn btn-outline-dark btn-sm">
         <span class="glyphicon glyphicon-plus"></span></a></h3>
 
-    <div class="row bg-light m-3">
-        <div class="col p-3 m-2 bg-info">
-            Admin projects
-        </div>
-
-        <div class="col p-3 m-2 bg-info">
-            Take part Projects
-        </div>
-
-    </div>
 
     <div class="row">
-        <div class="col-6">
-                <div class="row">
-            <c:forEach var="project" items="${projects}">
-                            <div class="col-sm-6">
+        <c:forEach var="project" items="${projects}">
+            <div class="col-sm-4">
 
-                <div class="card text-dark bg-warning m-2">
+                <div class="card text-dark bg-warning m-1">
 
                     <div class="card-header bg-info text-left text-light">
                         <a href="/project/show?projectId=${project.id}" class="nav-link text-light font-weight-bold">
@@ -72,51 +60,11 @@
 
                 </div>
 
-                            </div>
-            </c:forEach>
+            </div>
+        </c:forEach>
 
 
-                </div>
-        </div>
-
-        <div class="col-6">
-                <div class="row">
-            <c:forEach var="project" items="${projectsWhereParticipate}">
-                            <div class="col-sm-6">
-
-                <div class="card text-dark bg-warning m-2">
-
-                    <div class="card-header bg-info text-left text-light">
-                        <a href="/project/show?projectId=${project.id}" class="nav-link text-light font-weight-bold">
-                                ${project.projectName}</a>
-                    </div>
-
-                    <div class="card-body ">
-
-                            <%--                    <h5 class="card-title">Services Title 1</h5>--%>
-
-                        <p class="card-text text-left">${project.description} </p>
-
-                    </div>
-
-                    <div class="card-footer bg-info text-right text-light">
-                        <div>
-                            admin: ${project.user.username}
-                        </div>
-                        <div>
-                            In Project: ${project.showUsersInProject()}
-                        </div>
-
-                    </div>
-
-                </div>
-
-                            </div>
-            </c:forEach>
-
-
-                </div>
-        </div>
     </div>
+
 </div>
 
