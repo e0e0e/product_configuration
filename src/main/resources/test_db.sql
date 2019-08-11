@@ -1,4 +1,5 @@
 
-use pmc;
-SELECT * FROM user WHERE user_name = 'eee';
+use `pms-db`;
+SELECT * FROM user WHERE email like '%aa%';
+
 

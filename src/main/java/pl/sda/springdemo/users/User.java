@@ -1,6 +1,7 @@
 package pl.sda.springdemo.users;
 
 import pl.sda.springdemo.projects.Project;
+import pl.sda.springdemo.task.Task;
 
 import javax.persistence.*;
 import java.util.Comparator;
@@ -22,10 +23,13 @@ public class User {
 
 
     private String email;
-    private String userName;
+    private String username;
 
     @OneToMany(mappedBy = "user")
     private Set<Project> projects;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Task> tasks;
 
     @ManyToMany
     @JoinTable(
@@ -43,11 +47,11 @@ public class User {
         this.projectsParticipants = projectsParticipants;
     }
 
-    public User(String login, String password, String email, String userName, Set<Project> projects) {
+    public User(String login, String password, String email, String username, Set<Project> projects) {
         this.login = login;
         this.password = password;
         this.email = email;
-        this.userName = userName;
+        this.username = username;
         this.projects = projects;
     }
 
@@ -55,11 +59,11 @@ public class User {
         return projectsParticipants;
     }
 
-    public User(String login, String password, String email, String userName) {
+    public User(String login, String password, String email, String username) {
         this.login = login;
         this.password = password;
         this.email = email;
-        this.userName = userName;
+        this.username = username;
     }
 
     public String getEmail() {
@@ -70,16 +74,16 @@ public class User {
         this.login = login;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
@@ -120,14 +124,14 @@ public class User {
                 Objects.equals(login, user.login) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(userName, user.userName) &&
+                Objects.equals(username, user.username) &&
                 Objects.equals(projects, user.projects) &&
                 Objects.equals(projectsParticipants, user.projectsParticipants);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, email, userName, projects, projectsParticipants);
+        return Objects.hash(id, login, password, email, username, projects, projectsParticipants);
     }
 
     @Override
@@ -150,5 +154,13 @@ public class User {
             System.out.println("Concat String of projects is:"+ e.getMessage());
         }
         return str;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }

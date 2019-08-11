@@ -1,6 +1,8 @@
 package pl.sda.springdemo.users;
 
 
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,7 @@ import java.util.List;
 public class UsersController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
 
     public UsersController(UserService userService) {
@@ -22,24 +25,26 @@ public class UsersController {
     }
 
     @GetMapping("/users")
-    public String showUsers() {
+    public String showUsers(Model model) {
 //        if (userService.getLogged() == null) {
 //            return "users/login";
 //        }
-        return "users/users";
+        model.addAttribute("title","Users");
+        model.addAttribute("path","user/users");
+        return "main";
     }
 
     @PostMapping("/users")
     public String addUser(@RequestParam String password,
                           @RequestParam String email,
                           @RequestParam String login,
-                          @RequestParam String userName,
+                          @RequestParam String username,
                           Model model) {
-        model.addAttribute("loggedUser", userService.getLogged());
+//        model.addAttribute("loggedUser", userService.getLogged());
         try {
 
             //dodanie usera
-            boolean result = userService.create( login,  password,  email,  userName);
+            boolean result = userService.create(login, passwordEncoder.encode(password), email, username);
 
 
             model.addAttribute("createUserResult", result);
@@ -47,34 +52,30 @@ public class UsersController {
             model.addAttribute("users", users);
 
             //System.out.println(email + " " + password + " " + datfB);
-            return "users/list";
+            return "user/list";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());
-            return "users/users";
+            return "user/users";
         }
     }
 
     @GetMapping("users/delete")
     public String deleteUser(@RequestParam long userId,
                              Model model) {
-        if(userService.getLogged()==null){
-            return "users/login";
-        }
+
         userService.delete(userId);
         model.addAttribute("users", userService.findAll());
         model.addAttribute("deleteUserResults", true);
-        model.addAttribute("loggedUser", userService.getLogged());
-        return "users/list";
+//        model.addAttribute("loggedUser", userService.getLogged());
+        return "user/list";
 
     }
 
     @GetMapping("users/list")
     public String listUsers(Model model) {
-        if(userService.getLogged()==null){
-            return "users/login";
-        }
+
         model.addAttribute("users", userService.findAll());
-        model.addAttribute("loggedUser", userService.getLogged());
-        return "users/list";
+//        model.addAttribute("loggedUser", userService.getLogged());
+        return "user/list";
     }
 }

@@ -1,13 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Users</title>
-    <style><%@include file="css/style.css"%></style>
-</head>
-<body>
-<%@include file="navigation.jsp" %>
+<div class="container bg-info text-light">
 <h1>Create User</h1>
 
 <c:if test="${errorMessage!=null}">
@@ -18,20 +10,16 @@
 
 <form method="post" action="/users">
 
-    <label>Login:</label>
-    <input type="text" name="login"><br/>
-    <label>Email:</label>
-    <input type="email" name="email"><br/>
-    <label>Password:</label>
-    <input type="password" name="password"><br/>
-    <label>User Name:</label>
-    <input type="text" name="userName"><br/>
-    <input type="submit" value="Dodaj">
+    <label>Login:</label><br/>
+    <input type="text"  class="text-dark" name="login"><br/>
+    <label>Email:</label><br/>
+    <input type="email"  class="text-dark" name="email"><br/>
+    <label>Password:</label><br/>
+    <input type="password" class="text-dark" name="password"><br/>
+    <label>User Name:</label><br/>
+    <input type="text"  class="text-dark" name="username"><br/>
+    <input type="submit" class="text-dark" value="Dodaj">
 
 
 </form>
-
-
-
-</body>
-</html>
+</div>

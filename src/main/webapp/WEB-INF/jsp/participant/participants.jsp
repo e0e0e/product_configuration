@@ -1,37 +1,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Project Participants</title>
 
-    <style>
-        <%@include file="../user/css/style.css" %>
-    </style>
-</head>
-<body>
-<%@include file="../user/navigation.jsp" %>
+<div class="container bg-info">
+    <h1>For project <b>${projects.projectName}<b/> add user:</h1>
+    <%--    <input method="post" action="/userSearch">--%>
 
-<form method="post" action="/project/participant">
-<label>Project:</label>
-<select name="projectId" value="${projects[0].projectName}">
-<%--    <option selected hidden>Choose here</option>--%>
-    <c:forEach var="project" items="${projects}">
-        <option value="${project.id}">
-                ${project.projectName}
-        </option>
-    </c:forEach>
-</select><br/>
+    <h2>Filter user by email: </h2>
+    <form method="post" action="/participant?projectId=${param.projectId}">
+    <input type="text" name="filterUserByEmail" class="m-3">
+    <input type="submit" value="Filter">
+    <%--    <a href="/userSearch" class="btn btn-outline-dark btn-sm">--%>
+    <%--    <span class="glyphicon glyphicon-search"></span></a>--%>
+    </form>
 
-<label>User:</label>
-<select name="userId" value="${users[0].id}">
-<%--    <option selected hidden >Choose here</option>--%>
-    <c:forEach var="user" items="${users}">
-        <option value="${user.id}">
-                ${user.userName}
-        </option>
-    </c:forEach>
-</select><br/>
-<input type="submit" value="Dodaj">
 
-</body>
-</html>
+    <form method="post" class="text-white bg-primary p-10" action="/project/participant?projectId=${projects.id}">
+        <%--        <%@include file="../userPicker.jsp" %>--%>
+        <c:forEach var="user" items="${users}">
+            <input type="radio" name="userId" class="m-2" value="${user.id}"><span
+                class="p-5">${user.username}, email: ${user.email}</span><br/>
+        </c:forEach>
+        <input type="submit" class="text-dark" value="Add User">
+    </form>
+
+</div>

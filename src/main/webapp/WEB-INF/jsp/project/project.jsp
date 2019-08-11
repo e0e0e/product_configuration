@@ -1,41 +1,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: grzes
-  Date: 10.07.19
-  Time: 23:50
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Project</title>
-    <style><%@include file="../users/css/style.css"%></style>
-</head>
-<body>
-<%@include file="../users/navigation.jsp" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<div class="container bg-info text-light">
 <h1>Create Project</h1>
+    <sec:authentication var="loggedUser" property="principal"/>
+<%--    you're logged as: ${loggedUser.username}--%>
+<form method="post" action="/project?username=${loggedUser.username}">
 
-<form method="post" action="/project">
+    <label>Project Name:</label><br/>
+    <input type="text" class="text-dark" name="projectName"><br/>
+    <label>Project Description:</label><br/>
+    <textarea rows="4" columns="80" class="text-dark" name="description"></textarea><br/>
+<%--    <label>User:</label><br/>--%>
 
-    <label>Project Name:</label>
-    <input type="text" name="projectName"><br/>
-    <label>Project Description:</label>
-    <input type="text" name="description"><br/>
-    <label>User:</label>
-    <select name="user">
-        <c:forEach var="user" items="${users}">
-            <option value="${user.id}">
-                    ${user.userName}
-            </option>
-        </c:forEach>
+
+
+<%--    <select name="user" class="text-dark">--%>
+<%--        <c:forEach var="user" items="${users}">--%>
+<%--            <option value="${user.id}">--%>
+<%--                    ${user.username}--%>
+<%--            </option>--%>
+<%--        </c:forEach>--%>
     </select><br/>
-    <input type="submit" value="Dodaj">
+
+    <input type="submit" class="text-dark" value="Dodaj">
 
 
 
 </form>
-
-</body>
-</html>
+</div>

@@ -1,0 +1,1 @@
+<input type="number" name="storyPoints" class="text-dark" min="1" max="500" VALUE="1"><br/>

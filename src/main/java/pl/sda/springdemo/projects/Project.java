@@ -1,10 +1,10 @@
 package pl.sda.springdemo.projects;
 
+import pl.sda.springdemo.task.Task;
 import pl.sda.springdemo.users.User;
 
 import javax.persistence.*;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +21,25 @@ public class Project {
 
     @ManyToMany
     private Set<User> users;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private Set<Task> task;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Task> getTask() {
+        return task;
+    }
+
+    public void setTask(Set<Task> task) {
+        this.task = task;
+    }
 
     public User getUser() {
         return user;
@@ -40,7 +59,7 @@ public class Project {
     public Project(String projectName, String description, User user) {
         this.projectName = projectName;
         this.description = description;
-       this.user = user;
+        this.user = user;
     }
 
     public String getProjectName() {
@@ -50,7 +69,6 @@ public class Project {
     public String getDescription() {
         return description;
     }
-
 
 
     public void setProjectName(String projectName) {
@@ -66,19 +84,19 @@ public class Project {
     }
 
 
-    public String showUsersInProject () {
+    public String showUsersInProject() {
         String str = "";
         try {
-            str= users.stream()
-                    .sorted(Comparator.comparing(o -> o.getUserName()))
-                    .map(e->e.getUserName())
+            str = users.stream()
+                    .sorted(Comparator.comparing(o -> o.getUsername()))
+                    .map(e -> e.getUsername())
                     .collect(Collectors.joining(", "));
 
 //                                .forEach(e-> str.concat(e.getProjectName() + "<br/>"));
 
             // }
-        }catch(NullPointerException e){
-            System.out.println("Concat String of users is:"+ e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("Concat String of users is:" + e.getMessage());
         }
         return str;
     }

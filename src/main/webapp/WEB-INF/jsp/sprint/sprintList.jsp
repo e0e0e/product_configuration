@@ -10,10 +10,11 @@
 <html>
 <head>
     <title>sprintList</title>
-    <style><%@include file="../user/css/style.css"%></style>
+    <style><%@include file="../css/style.css"%></style>
+    <%@include file="../css/boot.jsp" %>
 </head>
 <body>
-<%@include file="../user/navigation.jsp" %>
+<%@include file="../navigation.jsp" %>
 <table>
     <tr>
         <th>Id</th>
@@ -28,6 +29,7 @@
             <td>${sprint.id}</td>
             <td> ${sprint.startDate} </td>
             <td>${sprint.finishDate} </td>
+            <td>${sprint.planedStoryPoints}</td>
             <td>${sprint.planedStoryPoints}</td>
 <%--            <td><a href="/users/delete?userId=${user.id}">Delete</a></td>--%>
 <%--            <td>${sprint.toString()}</td>--%>
