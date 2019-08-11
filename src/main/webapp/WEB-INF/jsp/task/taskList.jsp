@@ -17,7 +17,7 @@
             <th>Progress</th>
             <th>Edit</th>
         </tr>
-        <c:forEach var="task" items="${project.task}">
+        <c:forEach var="task" items="${tasks}">
 
 
             <tr>

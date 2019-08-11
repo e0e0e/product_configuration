@@ -3,6 +3,7 @@ package pl.sda.springdemo.projects;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import pl.sda.springdemo.task.Task;
 
 import java.util.List;
 

@@ -85,6 +85,13 @@ public class TaskService {
         return taskRepository.findDone();
     }
 
+    public List<Task> findTasksToDo(Long projectId, int status) {
+
+        return taskRepository.findTasksToDo(projectId, status);
+    }
+
+
+
 //    public List<String> ProgresStates() {
 //
 //        return Pro

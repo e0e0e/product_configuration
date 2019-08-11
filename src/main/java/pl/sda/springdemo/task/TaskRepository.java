@@ -18,4 +18,9 @@ public interface TaskRepository extends CrudRepository<Task,Long> {
     List<Task> findInProgress();
     @Query(value = "SELECT * FROM task WHERE progress like 2", nativeQuery = true)
     List<Task> findDone();
+
+    @Query(value = "SELECT * FROM task WHERE progress like ?2 and project_id like ?1", nativeQuery = true)
+    List<Task> findTasksToDo(Long projectId, int status);
+
+
 }

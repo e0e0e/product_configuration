@@ -45,6 +45,58 @@
         </div>
 
     </div>
+    <br/>
+        <div class="row">
+            <div class="col-4 bg-info border">
+                To Do
+            </div>
+            <div class="col-4 bg-primary border">
+                In Progress
+            </div>
+            <div class="col-4 bg-info border">
+                Done
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-4 bg-info border">
+                <c:forEach var="task" items="${tasksToDo}">
+                    ${task.name} ${task.progress}
+                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS" class="btn btn-outline-dark btn-sm">
+                        <span class="glyphicon glyphicon-triangle-right"></span></a><br/>
+                </c:forEach>
+
+            </div>
+            <div class="col-4 bg-primary border">
+
+                <c:forEach var="task" items="${tasksInProgress}">
+                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO" class="btn btn-outline-dark btn-sm">
+                        <span class="glyphicon glyphicon-triangle-left"></span></a>
+                    ${task.name} ${task.progress}
+                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE" class="btn btn-outline-dark btn-sm">
+                        <span class="glyphicon glyphicon-triangle-right"></span></a><br/>
+                </c:forEach>
+
+
+            </div>
+            <div class="col-4 bg-info bg-info border">
+                <c:forEach var="task" items="${tasksDone}">
+                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS" class="btn btn-outline-dark btn-sm">
+                        <span class="glyphicon glyphicon-triangle-left"></span></a>
+                    ${task.name} ${task.progress}<br/>
+
+                </c:forEach>
+
+            </div>
+
+
+        </div>
+
+
+
 </div>
 <%@include file="../task/taskList.jsp" %>
 

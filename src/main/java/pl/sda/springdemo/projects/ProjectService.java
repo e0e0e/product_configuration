@@ -1,6 +1,7 @@
 package pl.sda.springdemo.projects;
 
 import org.springframework.stereotype.Service;
+import pl.sda.springdemo.task.Task;
 import pl.sda.springdemo.users.User;
 
 import java.util.List;
@@ -50,4 +51,5 @@ public class ProjectService {
     public List<Project> findAllWhereParticipate(String loggedUserName) {
         return projectRepository.findAllWhereParticipate(loggedUserName);
     }
+
 }

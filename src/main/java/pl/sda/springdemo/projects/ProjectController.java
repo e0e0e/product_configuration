@@ -214,18 +214,23 @@ public class ProjectController {
 
         Project project = projectService.findById(projectId).get();
 
-        Set<Task> taskList = project.getTask();
-
+//       // Set<Task> taskSet = project.getTask();
+        List<Task> taskList= project.getTask().stream()
+                .sorted(Comparator.comparing(e -> e.getSprint().getStartDate()))
+                        .collect(Collectors.toList());
+//       new ArrayList(new TreeSet(project.getTask()));
+//
 //        List<Integer> numberOfDays = project.getTask().stream().map(e ->
 //                Math.abs(Period.between(e.getSprint().getStartDate(), e.getSprint().getFinishDate()).getDays()))
 //                .collect(Collectors.toList());
 
 
-        if (project.getTask().size() > 0) {
+        if (taskList.size() > 0) {
 
 
             LocalDate maxFinishDate = project.getTask().stream().max(Comparator.comparing(e ->
                     e.getSprint().getFinishDate())).get().getSprint().getFinishDate().plusDays(1);
+
             LocalDate minStartDate = project.getTask().stream().min(Comparator.comparing(e ->
                     e.getSprint().getStartDate())).get().getSprint().getStartDate().plusDays(-1);
 
@@ -272,6 +277,14 @@ public class ProjectController {
             model.addAttribute("minStartDate", minStartDate);
 
         }
+        List<Task> tasksToDo=taskService.findTasksToDo(projectId,0);
+        List<Task> tasksInProgress=taskService.findTasksToDo(projectId,1);
+        List<Task> tasksDone=taskService.findTasksToDo(projectId,2);
+
+        model.addAttribute("tasksToDo",tasksToDo);
+        model.addAttribute("tasksInProgress",tasksInProgress);
+        model.addAttribute("tasksDone",tasksDone);
+        model.addAttribute("tasks", taskList);
 
         model.addAttribute("project", project);
         model.addAttribute("title", "Show Project");
@@ -285,23 +298,23 @@ public class ProjectController {
         return null;
     }
 
-    @GetMapping("project/taskWall")
-    private String showProjectWall(Model model){
-
-        List<Task> taskList=taskService.findAll();
-        List<Task> tasksToDo=taskService.findToDo();
-        List<Task> tasksInProgress=taskService.findInProgress();
-        List<Task> tasksDone=taskService.findDone();
-
-
-        model.addAttribute("tasksToDo",tasksToDo);
-        model.addAttribute("tasksInProgress",tasksInProgress);
-        model.addAttribute("tasksDone",tasksDone);
-        model.addAttribute("tasks", taskList);
-
-        model.addAttribute("title", "Wall");
-        model.addAttribute("path", "project/taskWall");
-        return "main";
-    }
+//    @GetMapping("project/taskWall")
+//    private String showProjectWall(Model model){
+//
+//        List<Task> taskList=taskService.findAll();
+//        List<Task> tasksToDo=taskService.findToDo();
+//        List<Task> tasksInProgress=taskService.findInProgress();
+//        List<Task> tasksDone=taskService.findDone();
+//
+//
+//        model.addAttribute("tasksToDo",tasksToDo);
+//        model.addAttribute("tasksInProgress",tasksInProgress);
+//        model.addAttribute("tasksDone",tasksDone);
+//        model.addAttribute("tasks", taskList);
+//
+//        model.addAttribute("title", "Wall");
+//        model.addAttribute("path", "project/taskWall");
+//        return "main";
+//    }
 
 }
