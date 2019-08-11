@@ -10,7 +10,7 @@
     <input type="text" class="text-dark" name="projectName"><br/>
     <label>Project Description:</label><br/>
     <textarea rows="4" columns="80" class="text-dark" name="description"></textarea><br/>
-    <label>User:</label><br/>
+<%--    <label>User:</label><br/>--%>
 
 
 
