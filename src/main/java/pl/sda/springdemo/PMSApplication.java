@@ -10,6 +10,6 @@ public class PMSApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(PMSApplication.class, args);
 //		User user=new User("afd","afd","aafadf","asdf");
-		System.out.println("ok>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ok>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ok>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	}
 }

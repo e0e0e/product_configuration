@@ -14,7 +14,9 @@ import pl.sda.springdemo.users.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class TaskController {
@@ -146,13 +148,24 @@ public class TaskController {
     }
 
     @GetMapping("/taskWall")
-    private String showWall(Model model){
+    private String showWall(@RequestParam(required = false) Integer weekNumber,
+                            Model model){
 
         List<Task> taskList=taskService.findAll();
         List<Task> tasksToDo=taskService.findToDo();
         List<Task> tasksInProgress=taskService.findInProgress();
         List<Task> tasksDone=taskService.findDone();
 
+        LocalDate dateNow=LocalDate.now();
+        WeekFields weekFields = WeekFields.ISO;
+        if(weekNumber==null) {
+            weekNumber = dateNow.get(weekFields.weekOfWeekBasedYear());
+        }
+        //        int weekNumber = 30;
+
+//        model.addAttribute("projects",projectService.findAll());
+        model.addAttribute("projects",projectService.findAllInWeek(weekNumber));
+        model.addAttribute("weekNumber",weekNumber);
 
         model.addAttribute("tasksToDo",tasksToDo);
         model.addAttribute("tasksInProgress",tasksInProgress);
