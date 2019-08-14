@@ -52,7 +52,5 @@ public class ProjectService {
         return projectRepository.findAllWhereParticipate(loggedUserName);
     }
 
-    public List<Project> findAllInWeek(int weekNumber) {
-        return projectRepository.findAllInWeek(weekNumber);
-    }
+
 }

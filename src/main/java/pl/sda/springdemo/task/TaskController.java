@@ -15,8 +15,8 @@ import pl.sda.springdemo.users.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class TaskController {
@@ -164,7 +164,25 @@ public class TaskController {
         //        int weekNumber = 30;
 
 //        model.addAttribute("projects",projectService.findAll());
-        model.addAttribute("projects",projectService.findAllInWeek(weekNumber));
+        List<Task> tasksInWeek=taskService.findAllInWeek(weekNumber);
+        Map<Project, List<Task>> projectsInWeek=new HashMap<>();
+        for(Task task:tasksInWeek){
+            if(projectsInWeek.containsKey(task.getProject())){
+                projectsInWeek.get(task.getProject()).add(task);
+            }else{
+                List<Task> listForProject=new ArrayList<>();
+                listForProject.add(task);
+                projectsInWeek.put(task.getProject(),listForProject);
+            }
+        }
+        TreeMap<Project, List<Task>> projectsInWeekSorted = new TreeMap<>(projectsInWeek);
+
+
+//        projectsInWeek= projectsInWeek.keySet().stream()
+//                .sorted(Comparator.comparing(Project::getId))
+//                .collect(Collectors.toMap(x->x.getProjectName(),x->x.));
+
+        model.addAttribute("projectsInWeek",projectsInWeekSorted);
         model.addAttribute("weekNumber",weekNumber);
 
         model.addAttribute("tasksToDo",tasksToDo);

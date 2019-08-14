@@ -56,9 +56,9 @@ public class TaskService {
     }
 
     public void changeProgress(Long taskId, String progress) {
-        Task task=taskRepository.findById(taskId).get();
-        for(Progress p:Progress.values()){
-            if(p.toString().equals(progress)){
+        Task task = taskRepository.findById(taskId).get();
+        for (Progress p : Progress.values()) {
+            if (p.toString().equals(progress)) {
                 task.setProgress(p);
                 taskRepository.save(task);
             }
@@ -74,7 +74,7 @@ public class TaskService {
 
     public List<Task> findToDo() {
 
-       return taskRepository.findToDO();
+        return taskRepository.findToDO();
     }
 
     public List<Task> findInProgress() {
@@ -91,9 +91,9 @@ public class TaskService {
     }
 
 
+    public List<Task> findAllInWeek(int weekNumber) {
+        return taskRepository.findAllInWeek(weekNumber);
+    }
 
-//    public List<String> ProgresStates() {
-//
-//        return Pro
-//    }
+
 }

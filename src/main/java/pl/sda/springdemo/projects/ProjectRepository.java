@@ -22,8 +22,5 @@ public interface ProjectRepository extends CrudRepository<Project,Long> {
 //    @Query(value = "Select * from task inner join project ON project.id=task.project_id " +
 //            "inner join sprint ON task.sprint_id=sprint.id " +
 //            "WHERE WEEK(sprint.start_date)=?1", nativeQuery = true)
-    @Query(value = "Select * from project inner join task ON project.id=task.project_id " +
-            "inner join sprint ON task.sprint_id=sprint.id " +
-            "WHERE (WEEK(sprint.start_date)+1)=?1", nativeQuery = true)
-    List<Project> findAllInWeek(int weekNumber);
+
 }

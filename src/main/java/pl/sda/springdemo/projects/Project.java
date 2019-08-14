@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-public class Project {
+public class Project implements Comparable<Project> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -102,4 +102,8 @@ public class Project {
     }
 
 
+    @Override
+    public int compareTo(Project project) {
+        return (int)(this.id - project.getId());
+    }
 }
