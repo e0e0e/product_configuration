@@ -29,8 +29,8 @@ public class UsersController {
 //        if (userService.getLogged() == null) {
 //            return "users/login";
 //        }
-        model.addAttribute("title","Users");
-        model.addAttribute("path","user/users");
+        model.addAttribute("title", "Users");
+        model.addAttribute("path", "user/users");
         return "main";
     }
 
@@ -77,5 +77,16 @@ public class UsersController {
         model.addAttribute("users", userService.findAll());
 //        model.addAttribute("loggedUser", userService.getLogged());
         return "user/list";
+    }
+
+    @GetMapping("/userProfile")
+    public String MyProfile(@RequestParam long userId,
+                            Model model) {
+
+        model.addAttribute("user", userService.findById(userId));
+
+        model.addAttribute("title", "User Profile");
+        model.addAttribute("path", "user/userProfile");
+        return "main";
     }
 }

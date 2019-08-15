@@ -28,7 +28,7 @@
         </div>
         <div style="text-align: right;display: inline-block" class="text-white m-2 p-2">
             <sec:authentication var="user" property="principal"/>
-            you're logged as: ${user.username}
+            you're logged as: <a href="/userProfile?userId=" class="btn btn-outline-light btn-sm"> ${user.username}</a>
             <br/>
             <a href="/logout">Log out</a>
             <br/>

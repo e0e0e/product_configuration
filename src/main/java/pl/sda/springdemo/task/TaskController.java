@@ -116,23 +116,29 @@ public class TaskController {
         taskService.changeProgress(taskId, progress);
 
 //        model.addAttribute("project", taskService.findById(taskId).getProject());
-        model.addAttribute("title", "Show Project");
-        model.addAttribute("path", "project/showProject");
+//        model.addAttribute("title", "Show Project");
+//        model.addAttribute("path", "project/showProject");
 
         return "redirect:/project/show?projectId=" + taskService.findById(taskId).getProject().getId();
     }
     @GetMapping("/task/progressToNextChange")
     private String changeToNextProgress(@RequestParam Long taskId,
                                   @RequestParam String progress,
+                                  @RequestParam(required = false) Integer backToWall,
                                   Model model) {
 
         taskService.changeProgress(taskId, progress);
 
 //        model.addAttribute("project", taskService.findById(taskId).getProject());
-        model.addAttribute("title", "Show Project");
-        model.addAttribute("path", "project/showProject");
+//        model.addAttribute("title", "Show Project");
+//        model.addAttribute("path", "project/showProject");
 
-        return "redirect:/project/show?projectId=" + taskService.findById(taskId).getProject().getId();
+        if(backToWall!=null){
+            return "redirect:/taskWall?weekNumber=" + backToWall;
+
+        }else{
+            return "redirect:/project/show?projectId=" + taskService.findById(taskId).getProject().getId();
+        }
     }
 
 
