@@ -9,16 +9,16 @@
     <a href="/taskWall?weekNumber=${weekNumber+1}" class="btn btn-outline-info btn-sm">
         <span class="glyphicon glyphicon-triangle-right"></span></a>
     <div class="row">
-        <div class="col-3 bg-primary sm-2 m-1">
+        <div class="col-3 bg-light border sm-2 m-1">
             Project Name
         </div>
-        <div class="col bg-info sm-2 m-1">
+        <div class="col bg-light border sm-2 m-1">
             To Do
         </div>
-        <div class="col bg-primary sm-2 m-1">
+        <div class="col bg-light border sm-2 m-1">
             In Progress
         </div>
-        <div class="col bg-info sm-2 m-1">
+        <div class="col bg-light border sm-2 m-1">
             Done
         </div>
 
@@ -31,9 +31,10 @@
 
             <div class="col-3">
 
-                <div class="card bg-info m-2 text-center p-1">
-                        ${project.key.projectName}
+                <div class="card bg-light text-center h-100 ">
+                    <a href="/project/show?projectId=${project.key.id}" class="my-auto">${project.key.projectName}</a>
 
+                    </span>
                 </div>
             </div>
                 <%--            <div class="col">--%>
@@ -44,7 +45,7 @@
                         <c:forEach var="task" items="${project.value}">
 
                             <c:if test="${task.progress=='TO_DO'}">
-                                <div class="card bg-primary m-2 text-center p-1">
+                                <div class="card bg-secondary m-2 text-center p-1">
                                     <div>
                                             ${task.name}
                                         <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${weekNumber}"
@@ -52,7 +53,8 @@
                                             <span class="glyphicon glyphicon-triangle-right"></span></a>
                                     </div>
                                     <div class="card-footer">
-                                        responsible: <a href="/userProfile?userId=${task.user.id}" class="btn btn-outline-light btn-sm"> ${task.user.username}</a>
+                                        responsible: <a href="/userProfile?userId=${task.user.id}"
+                                                        class="btn btn-outline-light"> ${task.user.username}</a>
                                     </div>
 
                                 </div>
@@ -77,7 +79,8 @@
                                         <span class="glyphicon glyphicon-triangle-right"></span></a>
                                     </div>
                                     <div class="card-footer">
-                                        responsible: ${task.user.username}
+                                        responsible: <a href="/userProfile?userId=${task.user.id}"
+                                                        class="btn btn-outline-light"> ${task.user.username}</a>
                                     </div>
                                 </div>
                             </c:if>
@@ -90,7 +93,7 @@
                         <c:forEach var="task" items="${project.value}">
 
                             <c:if test="${task.progress=='DONE'}">
-                                <div class="card bg-primary m-2 text-center p-1">
+                                <div class="card bg-success m-2 text-center p-1">
 
                                     <div>
                                         <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${weekNumber}"
@@ -100,7 +103,8 @@
 
                                     </div>
                                     <div class="card-footer">
-                                        responsible: ${task.user.username}
+                                        responsible: <a href="/userProfile?userId=${task.user.id}"
+                                                        class="btn btn-outline-light"> ${task.user.username}</a>
                                     </div>
                                 </div>
                             </c:if>

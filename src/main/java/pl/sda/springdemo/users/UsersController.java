@@ -29,9 +29,9 @@ public class UsersController {
 //        if (userService.getLogged() == null) {
 //            return "users/login";
 //        }
-        model.addAttribute("title", "Users");
-        model.addAttribute("path", "user/users");
-        return "main";
+//        model.addAttribute("title", "Users");
+//        model.addAttribute("path", "user/users");
+        return "user/users";
     }
 
     @PostMapping("/users")
@@ -80,11 +80,15 @@ public class UsersController {
     }
 
     @GetMapping("/userProfile")
-    public String MyProfile(@RequestParam long userId,
+    public String MyProfile(@RequestParam(required = false) Long userId,
+                            @RequestParam(required = false) String username,
                             Model model) {
 
-        model.addAttribute("user", userService.findById(userId));
-
+        if (username != null) {
+            model.addAttribute("user", userService.findUserByname(username));
+        } else {
+            model.addAttribute("user", userService.findById(userId));
+        }
         model.addAttribute("title", "User Profile");
         model.addAttribute("path", "user/userProfile");
         return "main";

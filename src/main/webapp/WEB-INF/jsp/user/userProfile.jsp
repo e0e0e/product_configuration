@@ -1,7 +1,6 @@
 <div class="card text-dark bg-warning m-1">
 
-    <div class="card-header bg-info text-left text-light"><h4>User name: ${user.username}<br/>
-        login:${user.login}</h4></div>
+    <div class="card-header bg-info text-left text-light"><h4>User name: ${user.username}</h4></div>
 
     <div class="card-body ">
 

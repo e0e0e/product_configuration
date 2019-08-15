@@ -26,11 +26,10 @@
                 </ul>
             </div>
         </div>
-        <div style="text-align: right;display: inline-block" class="text-white m-2 p-2">
+        <div style="display: inline-block" class="text-white">
             <sec:authentication var="user" property="principal"/>
-            you're logged as: <a href="/userProfile?userId=" class="btn btn-outline-light btn-sm"> ${user.username}</a>
-            <br/>
-            <a href="/logout">Log out</a>
+            logged as: <a href="/userProfile?username=${user.username}" class="btn btn-outline-light"> ${user.username}</a>
+            <a href="/logout"><span class="glyphicon glyphicon-log-out" style="color:white;"></span></a>
             <br/>
         </div>
     </nav>
