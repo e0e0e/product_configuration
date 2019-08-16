@@ -34,6 +34,12 @@ public class UsersController {
         return "user/users";
     }
 
+    @GetMapping("/")
+    public String index(){
+
+        return "redirect:/taskWall";
+    }
+
     @PostMapping("/users")
     public String addUser(@RequestParam String password,
                           @RequestParam String email,
@@ -52,7 +58,7 @@ public class UsersController {
             model.addAttribute("users", users);
 
             //System.out.println(email + " " + password + " " + datfB);
-            return "user/list";
+            return "redirect:/taskWall";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());
             return "user/users";

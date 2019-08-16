@@ -85,9 +85,10 @@ public class ProjectController {
             model.addAttribute("projects", projects);
 
             //System.out.println(email + " " + password + " " + datfB);
-            model.addAttribute("title", "Project List");
-            model.addAttribute("path", "project/projectList");
-            return "main";
+//            model.addAttribute("title", "Project List");
+//            model.addAttribute("path", "project/projectList");
+//            return "main";
+            return "redirect:users/projectList";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());
 

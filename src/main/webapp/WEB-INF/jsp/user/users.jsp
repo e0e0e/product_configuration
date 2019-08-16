@@ -18,7 +18,7 @@
 <body>
 
 <div class="container bg-info text-light">
-<h1>Create User</h1>
+<h1>Create Account</h1>
 
 <c:if test="${errorMessage!=null}">
 

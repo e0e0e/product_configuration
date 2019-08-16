@@ -8,7 +8,7 @@
     <input type="text" class="text-dark" name="name"><br/>
     <label>Description:</label><br/>
     <input type="text" class="text-dark" name="description"><br/>
-    <label>Sprint:</label><br/>
+
 
     <c:set var="now" value="<%= new java.util.Date()%>"/>
     <%--    <p>Formatted Date (2): <fmt:formatDate type="date" value="${now}" pattern="mm-dd-yyyy"/></p>--%>

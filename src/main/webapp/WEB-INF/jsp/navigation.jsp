@@ -14,7 +14,7 @@
             </button>
             <div class="navbar-collapse collapse show" id="navbar11" style="">
                 <ul class="navbar-nav mr-auto bg-info">
-                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users">Add User</a></li>
+<%--                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users">Add User</a></li>--%>
                     <%--                    <li class="nav-item"> <a class="nav-link text-light font-weight-bold" href="/project">Add Project</a> </li>--%>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users/projectList">My Projects</a></li>
                     <li class="nav-item"><a class="nav-link text-primary font-weight-bold" href="/users/allProjectList">All Projects</a></li>
