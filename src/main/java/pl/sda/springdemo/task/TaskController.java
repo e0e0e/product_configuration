@@ -14,7 +14,9 @@ import pl.sda.springdemo.users.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.util.List;
+import java.time.temporal.WeekFields;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class TaskController {
@@ -114,23 +116,29 @@ public class TaskController {
         taskService.changeProgress(taskId, progress);
 
 //        model.addAttribute("project", taskService.findById(taskId).getProject());
-        model.addAttribute("title", "Show Project");
-        model.addAttribute("path", "project/showProject");
+//        model.addAttribute("title", "Show Project");
+//        model.addAttribute("path", "project/showProject");
 
         return "redirect:/project/show?projectId=" + taskService.findById(taskId).getProject().getId();
     }
     @GetMapping("/task/progressToNextChange")
     private String changeToNextProgress(@RequestParam Long taskId,
                                   @RequestParam String progress,
+                                  @RequestParam(required = false) Integer backToWall,
                                   Model model) {
 
         taskService.changeProgress(taskId, progress);
 
 //        model.addAttribute("project", taskService.findById(taskId).getProject());
-        model.addAttribute("title", "Show Project");
-        model.addAttribute("path", "project/showProject");
+//        model.addAttribute("title", "Show Project");
+//        model.addAttribute("path", "project/showProject");
 
-        return "redirect:/project/show?projectId=" + taskService.findById(taskId).getProject().getId();
+        if(backToWall!=null){
+            return "redirect:/taskWall?weekNumber=" + backToWall;
+
+        }else{
+            return "redirect:/project/show?projectId=" + taskService.findById(taskId).getProject().getId();
+        }
     }
 
 
@@ -146,13 +154,46 @@ public class TaskController {
     }
 
     @GetMapping("/taskWall")
-    private String showWall(Model model){
+    private String showWall(@RequestParam(required = false) Integer weekNumber,
+                            Model model){
 
         List<Task> taskList=taskService.findAll();
         List<Task> tasksToDo=taskService.findToDo();
         List<Task> tasksInProgress=taskService.findInProgress();
         List<Task> tasksDone=taskService.findDone();
 
+        LocalDate dateNow=LocalDate.now();
+        WeekFields weekFields = WeekFields.ISO;
+        if(weekNumber==null) {
+            weekNumber = dateNow.get(weekFields.weekOfWeekBasedYear());
+        }
+        //        int weekNumber = 30;
+
+//        model.addAttribute("projects",projectService.findAll());
+       // List<Task> tasksInWeek=taskService.findAllInWeek(weekNumber);
+        List<Task> tasksInWeek=taskService.findAllBeforeWeek(weekNumber);
+
+
+        Map<Project, List<Task>> projectsInWeek=new HashMap<>();
+        for(Task task:tasksInWeek){
+            if(projectsInWeek.containsKey(task.getProject())){
+                projectsInWeek.get(task.getProject()).add(task);
+            }else{
+                List<Task> listForProject=new ArrayList<>();
+                listForProject.add(task);
+                projectsInWeek.put(task.getProject(),listForProject);
+            }
+        }
+        TreeMap<Project, List<Task>> projectsInWeekSorted = new TreeMap<>(projectsInWeek);
+
+
+//        projectsInWeek= projectsInWeek.keySet().stream()
+//                .sorted(Comparator.comparing(Project::getId))
+//                .collect(Collectors.toMap(x->x.getProjectName(),x->x.));
+
+        model.addAttribute("projectsInWeek",projectsInWeekSorted);
+//        model.addAttribute("projectsInWeek",projectsBeforeWeekSorted);
+        model.addAttribute("weekNumber",weekNumber);
 
         model.addAttribute("tasksToDo",tasksToDo);
         model.addAttribute("tasksInProgress",tasksInProgress);

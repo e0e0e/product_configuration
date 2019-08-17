@@ -26,12 +26,14 @@ public class UsersController {
 
     @GetMapping("/users")
     public String showUsers(Model model) {
-//        if (userService.getLogged() == null) {
-//            return "users/login";
-//        }
-        model.addAttribute("title","Users");
-        model.addAttribute("path","user/users");
-        return "main";
+
+        return "user/users";
+    }
+
+    @GetMapping("/")
+    public String index() {
+
+        return "redirect:/taskWall";
     }
 
     @PostMapping("/users")
@@ -40,19 +42,15 @@ public class UsersController {
                           @RequestParam String login,
                           @RequestParam String username,
                           Model model) {
-//        model.addAttribute("loggedUser", userService.getLogged());
         try {
-
             //dodanie usera
             boolean result = userService.create(login, passwordEncoder.encode(password), email, username);
-
-
             model.addAttribute("createUserResult", result);
             List<User> users = userService.findAll();
             model.addAttribute("users", users);
 
             //System.out.println(email + " " + password + " " + datfB);
-            return "user/list";
+            return "redirect:/taskWall";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());
             return "user/users";
@@ -77,5 +75,20 @@ public class UsersController {
         model.addAttribute("users", userService.findAll());
 //        model.addAttribute("loggedUser", userService.getLogged());
         return "user/list";
+    }
+
+    @GetMapping("/userProfile")
+    public String MyProfile(@RequestParam(required = false) Long userId,
+                            @RequestParam(required = false) String username,
+                            Model model) {
+
+        if (username != null) {
+            model.addAttribute("user", userService.findUserByname(username));
+        } else {
+            model.addAttribute("user", userService.findById(userId));
+        }
+        model.addAttribute("title", "User Profile");
+        model.addAttribute("path", "user/userProfile");
+        return "main";
     }
 }

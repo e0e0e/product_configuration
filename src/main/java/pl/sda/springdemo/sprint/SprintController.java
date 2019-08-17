@@ -1,5 +1,6 @@
 package pl.sda.springdemo.sprint;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,14 +35,14 @@ public class SprintController {
     }
 
     @PostMapping("sprint")
-    public String addSprint(@RequestParam String from,
-                            @RequestParam String to,
+    public String addSprint(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate from,
+                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate to,
                             @RequestParam Integer storyPoints,
                             Model model) {
 
 
 
-        sprintService.saveSprint(LocalDate.parse(from), LocalDate.parse(to), storyPoints);
+        sprintService.saveSprint(from, to, storyPoints);
         model.addAttribute("sprints", sprintService.findAllSprints());
         return "sprint/sprintList";
     }

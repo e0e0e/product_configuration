@@ -30,7 +30,6 @@ public class ProjectController {
     private final TaskService taskService;
 
 
-
     public ProjectController(UserService userService, ProjectService projectService, TaskService taskService) {
         this.userService = userService;
         this.projectService = projectService;
@@ -38,22 +37,8 @@ public class ProjectController {
     }
 
     @GetMapping("/project")
-    public String ShowProjectForm(HttpServletRequest request,
-                                  Model model) {
-
-        //request.getSession().setAttribute("username",);
-//        String loggedUser = request.getRemoteUser();
-//        System.out.println("you are logged as: " + loggedUser);
+    public String ShowProjectForm(Model model) {
         model.addAttribute("users", userService.findAll());
-//        model.addAttribute("loggedUser", loggedUser);
-
-
-        List<String> sessionVals = Collections.list(request.getSession().getAttributeNames());
-
-        sessionVals.stream().forEach(s -> System.out.println(s));
-        Object spring_security_context = request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
-        System.out.println(spring_security_context);
-
         model.addAttribute("title", "Add Project");
         model.addAttribute("path", "project/project");
 
@@ -68,7 +53,7 @@ public class ProjectController {
 
 
         // model.addAttribute("loggedUser", userService.getLogged());
-        User user=userService.findUserByname(username);
+        User user = userService.findUserByname(username);
 
         try {
 
@@ -85,9 +70,10 @@ public class ProjectController {
             model.addAttribute("projects", projects);
 
             //System.out.println(email + " " + password + " " + datfB);
-            model.addAttribute("title", "Project List");
-            model.addAttribute("path", "project/projectList");
-            return "main";
+//            model.addAttribute("title", "Project List");
+//            model.addAttribute("path", "project/projectList");
+//            return "main";
+            return "redirect:users/projectList";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());
 
@@ -103,7 +89,7 @@ public class ProjectController {
     public String listProjects(HttpServletRequest request,
                                Model model) {
 
-        String loggedUserName=request.getRemoteUser();
+        String loggedUserName = request.getRemoteUser();
 
         List<Project> projects = projectService.findAllWhereAdmin(loggedUserName);
         List<Project> projectsWhereParticipate = projectService.findAllWhereParticipate(loggedUserName);
@@ -118,14 +104,14 @@ public class ProjectController {
 
     @GetMapping("users/allProjectList")
     public String listAllProjects(
-                               Model model) {
+            Model model) {
 
         List<Project> projects = projectService.findAll();
 
 
         model.addAttribute("projects", projects);
 
-         model.addAttribute("title", "Project List");
+        model.addAttribute("title", "Project List");
         model.addAttribute("path", "project/allProjectList");
         return "main";
     }
@@ -151,13 +137,13 @@ public class ProjectController {
                                  HttpServletRequest request,
                                  Model model) {
 
-        String loggedUserName=request.getRemoteUser();
+        String loggedUserName = request.getRemoteUser();
 
         model.addAttribute("projects", projectService.findById(projectId).get());
-        if(filterUserByEmail==null) {
+        if (filterUserByEmail == null) {
             model.addAttribute("users", userService.findAllWithException(loggedUserName));/**/
-        }else{
-            model.addAttribute("users",userService.findUsersByEmailWithException(filterUserByEmail,loggedUserName));
+        } else {
+            model.addAttribute("users", userService.findUsersByEmailWithException(filterUserByEmail, loggedUserName));
         }
 //        model.addAttribute("loggedUser", userService.getLogged());
 
@@ -190,13 +176,11 @@ public class ProjectController {
     }
 
 
-
     @GetMapping("login")
     public String login() {
 
         return "user/login";
     }
-
 
 
     @GetMapping("logout")
@@ -215,9 +199,9 @@ public class ProjectController {
         Project project = projectService.findById(projectId).get();
 
 //       // Set<Task> taskSet = project.getTask();
-        List<Task> taskList= project.getTask().stream()
+        List<Task> taskList = project.getTask().stream()
                 .sorted(Comparator.comparing(e -> e.getSprint().getStartDate()))
-                        .collect(Collectors.toList());
+                .collect(Collectors.toList());
 //       new ArrayList(new TreeSet(project.getTask()));
 //
 //        List<Integer> numberOfDays = project.getTask().stream().map(e ->
@@ -263,7 +247,7 @@ public class ProjectController {
 //                        Math.abs(Period.between(e.getSprint().getStartDate(), e.getSprint().getFinishDate()).getDays()),
 //                        e.getId()))
 //                        //.forEach(r-> System.out.println(r.toString()));
-//                        .collect(Collectors.toMap(x -> x.getSprintId, x -> x));
+//                        .collect(Collectors.toMap(x -> x.getSprintId(), x -> x));
 
             //        TimeTable(minStartDate,start,end,fromStartToFinish)
 
@@ -277,13 +261,13 @@ public class ProjectController {
             model.addAttribute("minStartDate", minStartDate);
 
         }
-        List<Task> tasksToDo=taskService.findTasksToDo(projectId,0);
-        List<Task> tasksInProgress=taskService.findTasksToDo(projectId,1);
-        List<Task> tasksDone=taskService.findTasksToDo(projectId,2);
+        List<Task> tasksToDo = taskService.findTasksToDo(projectId, 0);
+        List<Task> tasksInProgress = taskService.findTasksToDo(projectId, 1);
+        List<Task> tasksDone = taskService.findTasksToDo(projectId, 2);
 
-        model.addAttribute("tasksToDo",tasksToDo);
-        model.addAttribute("tasksInProgress",tasksInProgress);
-        model.addAttribute("tasksDone",tasksDone);
+        model.addAttribute("tasksToDo", tasksToDo);
+        model.addAttribute("tasksInProgress", tasksInProgress);
+        model.addAttribute("tasksDone", tasksDone);
         model.addAttribute("tasks", taskList);
 
         model.addAttribute("project", project);

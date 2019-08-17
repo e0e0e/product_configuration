@@ -14,7 +14,7 @@
             </button>
             <div class="navbar-collapse collapse show" id="navbar11" style="">
                 <ul class="navbar-nav mr-auto bg-info">
-                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users">Add User</a></li>
+<%--                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users">Add User</a></li>--%>
                     <%--                    <li class="nav-item"> <a class="nav-link text-light font-weight-bold" href="/project">Add Project</a> </li>--%>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users/projectList">My Projects</a></li>
                     <li class="nav-item"><a class="nav-link text-primary font-weight-bold" href="/users/allProjectList">All Projects</a></li>
@@ -26,11 +26,10 @@
                 </ul>
             </div>
         </div>
-        <div style="text-align: right;display: inline-block" class="text-white m-2 p-2">
+        <div style="display: inline-block" class="text-white">
             <sec:authentication var="user" property="principal"/>
-            you're logged as: ${user.username}
-            <br/>
-            <a href="/logout">Log out</a>
+            logged as: <a href="/userProfile?username=${user.username}" class="btn btn-outline-light"> ${user.username}</a>
+            <a href="/logout"><span class="glyphicon glyphicon-log-out" style="color:white;"></span></a>
             <br/>
         </div>
     </nav>

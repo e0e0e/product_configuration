@@ -32,13 +32,16 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .mvcMatchers("/users").permitAll()
+                .mvcMatchers("/h2/**").permitAll()
                 .mvcMatchers("/**").authenticated()
 //            .mvcMatchers("/project/**").authenticated()
-//            .mvcMatchers("/comments/**").permitAll()
 //            .mvcMatchers("/h2/**").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
+                .loginPage("/my-login")
+                .permitAll(true)
                 .and()
                 .logout().deleteCookies("JSESSIONID")
 
@@ -50,17 +53,17 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }
-//    @Bean
-//    WebMvcConfigurer myWebMvcConfigurer(){
-//
-//        return new WebMvcConfigurerAdapter() {
-//            @Override
-//            public void addViewControllers(ViewControllerRegistry registry) {
-//
-//
-//                ViewControllerRegistration r=registry.addViewController("/login");
-//                r.setViewName("customLogin");
-//            }
-//        }
-//    }
+    @Bean
+    WebMvcConfigurer myWebMvcConfigurer(){
+
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addViewControllers(ViewControllerRegistry registry) {
+
+
+                ViewControllerRegistration r=registry.addViewController("/my-login");
+                r.setViewName("user/pmsLogin");
+            }
+        };
+    }
 }
