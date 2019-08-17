@@ -29,42 +29,58 @@
     <%--    <c:set var="currentProject" value="${''}"/>--%>
     <c:forEach var="project" items="${projectsInWeek}">
         <%--        <br/>--%>
-        <div class="row border mt-1">
+    <div class="row border mt-1">
 
-            <div class="col-3">
+        <div class="col-3">
 
-                <div class="card bg-light text-center h-100 ">
-                    <a href="/project/show?projectId=${project.key.id}" class="my-auto">${project.key.projectName}</a>
+            <div class="card bg-light text-center h-100 ">
+                <a href="/project/show?projectId=${project.key.id}" class="my-auto">${project.key.projectName}</a>
 
-                    </span>
-                </div>
+                </span>
             </div>
-                <%--            <div class="col">--%>
-            <div class="col">
-                <div class="row">
-                    <div class="col">
+        </div>
+            <%--            <div class="col">--%>
+        <div class="col">
+            <div class="row">
+                <div class="col">
 
-                        <c:forEach var="task" items="${project.value}">
+                    <c:forEach var="task" items="${project.value}">
 
-                            <c:if test="${task.progress=='TO_DO'}">
-                                <div class="card bg-secondary m-2 text-center p-1">
-                                    <div>
-                                            ${task.name}
-                                        <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${weekNumber}"
-                                           class="btn btn-outline-light btn-sm">
-                                            <span class="glyphicon glyphicon-triangle-right"></span></a>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div><span
-                                                class="glyphicon glyphicon-star"></span>${task.sprint.planedStoryPoints}
+                    <c:if test="${task.progress=='TO_DO'}">
 
-                                            responsible: <a href="/userProfile?userId=${task.user.id}"
-                                                            class="btn btn-outline-light"> ${task.user.username}</a>
-                                        </div>
-                                    </div>
+                    <fmt:parseDate value="${task.sprint.startDate}" type="date"
+                                   pattern="yyyy-MM-dd" var="parsedDate"/>
+                    <fmt:formatDate value="${parsedDate}" type="date" pattern="w"
+                                    var="week"/>
+
+                    <c:if test="${week<weekNumber}">
+                    <div class="card bg-warning m-2 text-center p-1">
+                        </c:if>
+                        <c:if test="${!(week<weekNumber)}">
+                        <div class="card bg-secondary m-2 text-center p-1">
+                            </c:if>
+
+                            <div>
+                                    ${task.name}
+                                <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${weekNumber}"
+                                   class="btn btn-outline-light btn-sm">
+                                    <span class="glyphicon glyphicon-triangle-right"></span></a>
+                            </div>
+                            <div class="card-footer">
+                                <div><span
+                                        class="glyphicon glyphicon-star"></span>${task.sprint.planedStoryPoints}
+
+                                    responsible: <a href="/userProfile?userId=${task.user.id}"
+                                                    class="btn btn-outline-light"> ${task.user.username}</a>
+
 
                                 </div>
-                            </c:if>
+                            </div>
+
+                        </div>
+
+
+                        </c:if>
 
                         </c:forEach>
 
@@ -91,6 +107,8 @@
 
                                             responsible: <a href="/userProfile?userId=${task.user.id}"
                                                             class="btn btn-outline-light"> ${task.user.username}</a>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -119,20 +137,9 @@
 
                                             responsible: <a href="/userProfile?userId=${task.user.id}"
                                                             class="btn btn-outline-light"> ${task.user.username}</a>
-<%--                                            <div>${task.sprint.startDate}</div>--%>
+                                                <%--                                            <div>${task.sprint.startDate}</div>--%>
 
-                                            <div>--<fmt:parseDate value="${task.sprint.startDate}" type="date"
-                                                                  pattern="yyyy-MM-dd" var="parsedDate"/>
-                                                <fmt:formatDate value="${parsedDate}" type="date" pattern="w"
-                                                                var="week"/>
-                                                <p>Parsed Date: <c:out value="${week}"/></p>-${week}==${weekNumber}
-<%--                                                <c:if test="${week<=weekNumber && task.pogress!='DONE'}">--%>
-                                                <c:if test="${week<=weekNumber}">
-                                                    OPÓŻNIONY
 
-                                                </c:if>
-
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -160,7 +167,7 @@
         </div>
 
 
-        <%--        </div>--%>
-    </c:forEach>
+            <%--        </div>--%>
+        </c:forEach>
 
-</div>
+    </div>

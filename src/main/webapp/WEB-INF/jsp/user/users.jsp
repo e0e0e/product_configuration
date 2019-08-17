@@ -25,7 +25,7 @@
 </c:if>
 
 <c:if test="${user=='anonymousUser'}">
-    <%--    ${user.username}--%>
+<%--        ${user.username}--%>
 
 
 

@@ -33,6 +33,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .mvcMatchers("/users").permitAll()
+                .mvcMatchers("/h2/**").permitAll()
                 .mvcMatchers("/**").authenticated()
 //            .mvcMatchers("/project/**").authenticated()
 //            .mvcMatchers("/h2/**").permitAll()
