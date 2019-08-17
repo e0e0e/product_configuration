@@ -25,7 +25,7 @@
     </c:if>
 
 
-    <h3>Projects<a href="/project" class="btn btn-outline-dark btn-sm">
+    <h3>Projects<a href="/project" class="btn btn-outline-info btn-sm">
         <span class="glyphicon glyphicon-plus"></span></a></h3>
 
 

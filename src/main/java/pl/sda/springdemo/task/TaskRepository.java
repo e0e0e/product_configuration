@@ -29,4 +29,10 @@ public interface TaskRepository extends CrudRepository<Task,Long> {
             "            WHERE (WEEK(sprint.start_date)+1)=?1 order by project.id", nativeQuery = true)
     List<Task> findAllInWeek(int weekNumber);
 
+    @Query(value = "Select * from task\n" +
+            "             inner join project ON project.id=task.project_id\n" +
+            "            inner join sprint ON task.sprint_id=sprint.id\n" +
+            "            WHERE (WEEK(sprint.start_date)+1)<=?1 order by project.id", nativeQuery = true)
+    List<Task> findAllBeforeWeek(int weekNumber);
+
 }

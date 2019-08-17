@@ -96,4 +96,7 @@ public class TaskService {
     }
 
 
+    public List<Task> findAllBeforeWeek(int weekNumber) {
+        return taskRepository.findAllBeforeWeek(weekNumber);
+    }
 }

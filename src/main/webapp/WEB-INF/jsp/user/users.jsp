@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -16,8 +17,20 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<sec:authentication var="user" property="principal"/>
+<c:if test="${user!='anonymousUser'}">
+    You are logged as: <a href="/userProfile?username=${user.username}" class="btn btn-outline-info"> ${user.username}</a>
+    <a href="/logout" class="btn btn-outline-info"><span class="glyphicon glyphicon-log-out" ></span></a>
+
+</c:if>
+
+<c:if test="${user=='anonymousUser'}">
+    <%--    ${user.username}--%>
+
+
 
 <div class="container bg-info text-light">
+    <a href="/my-login" class="btn btn-outline-light">Login</a>
 <h1>Create Account</h1>
 
 <c:if test="${errorMessage!=null}">
@@ -41,5 +54,7 @@
 
 </form>
 </div>
+
+</c:if>
 </body>
 </html>

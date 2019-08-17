@@ -26,16 +26,12 @@ public class UsersController {
 
     @GetMapping("/users")
     public String showUsers(Model model) {
-//        if (userService.getLogged() == null) {
-//            return "users/login";
-//        }
-//        model.addAttribute("title", "Users");
-//        model.addAttribute("path", "user/users");
+
         return "user/users";
     }
 
     @GetMapping("/")
-    public String index(){
+    public String index() {
 
         return "redirect:/taskWall";
     }
@@ -46,13 +42,9 @@ public class UsersController {
                           @RequestParam String login,
                           @RequestParam String username,
                           Model model) {
-//        model.addAttribute("loggedUser", userService.getLogged());
         try {
-
             //dodanie usera
             boolean result = userService.create(login, passwordEncoder.encode(password), email, username);
-
-
             model.addAttribute("createUserResult", result);
             List<User> users = userService.findAll();
             model.addAttribute("users", users);

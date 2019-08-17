@@ -170,7 +170,10 @@ public class TaskController {
         //        int weekNumber = 30;
 
 //        model.addAttribute("projects",projectService.findAll());
-        List<Task> tasksInWeek=taskService.findAllInWeek(weekNumber);
+       // List<Task> tasksInWeek=taskService.findAllInWeek(weekNumber);
+        List<Task> tasksInWeek=taskService.findAllBeforeWeek(weekNumber);
+
+
         Map<Project, List<Task>> projectsInWeek=new HashMap<>();
         for(Task task:tasksInWeek){
             if(projectsInWeek.containsKey(task.getProject())){
@@ -189,6 +192,7 @@ public class TaskController {
 //                .collect(Collectors.toMap(x->x.getProjectName(),x->x.));
 
         model.addAttribute("projectsInWeek",projectsInWeekSorted);
+//        model.addAttribute("projectsInWeek",projectsBeforeWeekSorted);
         model.addAttribute("weekNumber",weekNumber);
 
         model.addAttribute("tasksToDo",tasksToDo);

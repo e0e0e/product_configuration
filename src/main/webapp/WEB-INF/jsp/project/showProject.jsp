@@ -16,7 +16,7 @@
 <%--                        <span class="glyphicon glyphicon-user"></span></button>--%>
 <%--                </form>--%>
                 <a href="/tasks?projectId=${project.id}" class="btn btn-outline-light btn-sm" style="float: right;">
-                    <span class="glyphicon glyphicon-time"></span></a>
+                    <span class="glyphicon glyphicon-plus"><span class="glyphicon glyphicon-briefcase"></span></a>
 
 <%--            !!!!!!!!!!!!!!!!!!!!1111--%>
 <%--                <a href="/project/edit?projectId=${project.id}" class="btn btn-outline-light btn-sm" style="float: right;">--%>

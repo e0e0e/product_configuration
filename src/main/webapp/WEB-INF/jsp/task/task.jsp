@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container bg-info">
 <form method="post" action="/tasks?projectId=${project.id}" class="bg-info m-5 p-5 text-light">
-    <h1>Add Tasks for project <b>${project.projectName}</b></h1>
+    <h1>Add Tasks to project <b>${project.projectName}</b></h1>
     <label>Task name:</label><br/>
     <input type="text" class="text-dark" name="name"><br/>
     <label>Description:</label><br/>

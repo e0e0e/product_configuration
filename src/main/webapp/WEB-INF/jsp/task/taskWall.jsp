@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
 <div class="container">
@@ -53,8 +55,12 @@
                                             <span class="glyphicon glyphicon-triangle-right"></span></a>
                                     </div>
                                     <div class="card-footer">
-                                        responsible: <a href="/userProfile?userId=${task.user.id}"
-                                                        class="btn btn-outline-light"> ${task.user.username}</a>
+                                        <div><span
+                                                class="glyphicon glyphicon-star"></span>${task.sprint.planedStoryPoints}
+
+                                            responsible: <a href="/userProfile?userId=${task.user.id}"
+                                                            class="btn btn-outline-light"> ${task.user.username}</a>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -79,8 +85,13 @@
                                         <span class="glyphicon glyphicon-triangle-right"></span></a>
                                     </div>
                                     <div class="card-footer">
-                                        responsible: <a href="/userProfile?userId=${task.user.id}"
-                                                        class="btn btn-outline-light"> ${task.user.username}</a>
+                                        <div><span
+                                                class="glyphicon glyphicon-star"></span>${task.sprint.planedStoryPoints}
+
+
+                                            responsible: <a href="/userProfile?userId=${task.user.id}"
+                                                            class="btn btn-outline-light"> ${task.user.username}</a>
+                                        </div>
                                     </div>
                                 </div>
                             </c:if>
@@ -103,8 +114,26 @@
 
                                     </div>
                                     <div class="card-footer">
-                                        responsible: <a href="/userProfile?userId=${task.user.id}"
-                                                        class="btn btn-outline-light"> ${task.user.username}</a>
+                                        <div><span
+                                                class="glyphicon glyphicon-star"></span>${task.sprint.planedStoryPoints}
+
+                                            responsible: <a href="/userProfile?userId=${task.user.id}"
+                                                            class="btn btn-outline-light"> ${task.user.username}</a>
+<%--                                            <div>${task.sprint.startDate}</div>--%>
+
+                                            <div>--<fmt:parseDate value="${task.sprint.startDate}" type="date"
+                                                                  pattern="yyyy-MM-dd" var="parsedDate"/>
+                                                <fmt:formatDate value="${parsedDate}" type="date" pattern="w"
+                                                                var="week"/>
+                                                <p>Parsed Date: <c:out value="${week}"/></p>-${week}==${weekNumber}
+<%--                                                <c:if test="${week<=weekNumber && task.pogress!='DONE'}">--%>
+                                                <c:if test="${week<=weekNumber}">
+                                                    OPÓŻNIONY
+
+                                                </c:if>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </c:if>
