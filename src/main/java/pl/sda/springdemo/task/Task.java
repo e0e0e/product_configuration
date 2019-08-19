@@ -2,10 +2,10 @@ package pl.sda.springdemo.task;
 
 import pl.sda.springdemo.progres.Progress;
 import pl.sda.springdemo.projects.Project;
-import pl.sda.springdemo.sprint.Sprint;
 import pl.sda.springdemo.users.User;
 
 import javax.persistence.*;
+import java.util.Calendar;
 
 @Entity
 public class Task {
@@ -17,14 +17,33 @@ public class Task {
     private String name;
     private String description;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
-    private Sprint sprint;
 
 
+    private int week;
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    private int year;
+
+    private Integer storyPoints;
 
     private Integer weight;
 
     private Progress progress;
+
+    public int getWeek() {
+        return week;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
+    }
 
     @ManyToOne
     private User user;
@@ -36,13 +55,22 @@ public class Task {
     }
 
 
+    public Integer getStoryPoints() {
+        return storyPoints;
+    }
 
-    public Task(String name, String description, Sprint sprint, Integer weight, User user,Progress progress, Project project) {
+    public void setStoryPoints(Integer storyPoints) {
+        this.storyPoints = storyPoints;
+    }
+
+    public Task(String name, String description, int week,int year, Integer storyPoints, Integer weight, User user, Progress progress, Project project) {
         this.name = name;
         this.description = description;
-        this.sprint = sprint;
+        this.week=week;
+        this.year=year;
+        this.storyPoints = storyPoints;
         this.weight = weight;
-        this.progress=progress;
+        this.progress = progress;
         this.user = user;
         this.project = project;
     }
@@ -71,13 +99,7 @@ public class Task {
         this.description = description;
     }
 
-    public Sprint getSprint() {
-        return sprint;
-    }
 
-    public void setSprint(Sprint sprint) {
-        this.sprint = sprint;
-    }
 
     public Integer getWeight() {
         return weight;
@@ -117,7 +139,7 @@ public class Task {
         return "Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", sprint=" + sprint +
+                ", week=" + week +
                 ", weight=" + weight +
                 ", progress=" + progress +
                 ", user=" + user +
