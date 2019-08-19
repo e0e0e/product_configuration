@@ -20,6 +20,8 @@ public class Task {
     @OneToOne(cascade = CascadeType.REMOVE)
     private Sprint sprint;
 
+
+
     private Integer weight;
 
     private Progress progress;

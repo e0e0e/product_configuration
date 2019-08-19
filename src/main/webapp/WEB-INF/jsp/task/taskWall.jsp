@@ -53,6 +53,7 @@
                     <fmt:formatDate value="${parsedDate}" type="date" pattern="w"
                                     var="week"/>
 
+                        ---${week}---${weekNumber}---
                     <c:if test="${week<weekNumber}">
                     <div class="card bg-warning m-2 text-center p-1">
                         </c:if>
@@ -61,7 +62,7 @@
                             </c:if>
 
                             <div>
-                                    ${task.name}
+                                <a href="/task/show?taskId=${task.id}" >${task.name}</a>
                                 <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${weekNumber}"
                                    class="btn btn-outline-light btn-sm">
                                     <span class="glyphicon glyphicon-triangle-right"></span></a>
