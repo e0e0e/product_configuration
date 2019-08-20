@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.sda.springdemo.progres.Progress;
-import pl.sda.springdemo.sprint.TimeTable;
 import pl.sda.springdemo.task.Task;
 import pl.sda.springdemo.task.TaskService;
 import pl.sda.springdemo.users.User;
@@ -196,81 +195,66 @@ public class ProjectController {
     public String showProject(@RequestParam Long projectId,
                               Model model) {
 
-        Project project = projectService.findById(projectId).get();
-
-//       // Set<Task> taskSet = project.getTask();
+       Project project = projectService.findById(projectId).get();
+//
         List<Task> taskList = project.getTask().stream()
                 .sorted(Comparator.comparing(e -> e.getSprint().getStartDate()))
                 .collect(Collectors.toList());
-//       new ArrayList(new TreeSet(project.getTask()));
+
+//        for(Task t:project.getTask()){
 //
-//        List<Integer> numberOfDays = project.getTask().stream().map(e ->
-//                Math.abs(Period.between(e.getSprint().getStartDate(), e.getSprint().getFinishDate()).getDays()))
-//                .collect(Collectors.toList());
-
-
-        if (taskList.size() > 0) {
-
-
-            LocalDate maxFinishDate = project.getTask().stream().max(Comparator.comparing(e ->
-                    e.getSprint().getFinishDate())).get().getSprint().getFinishDate().plusDays(1);
-
-            LocalDate minStartDate = project.getTask().stream().min(Comparator.comparing(e ->
-                    e.getSprint().getStartDate())).get().getSprint().getStartDate().plusDays(-1);
-
-            List<String> timeLine = new ArrayList<>();
-            for (LocalDate date = minStartDate; date.isBefore(maxFinishDate); date = date.plusDays(1)) {
-                timeLine.add(date.format(DateTimeFormatter.ofPattern("MM/dd")));
-            }
-
-
-            Map<Long, TimeTable> timeTableMap = new HashMap<>();
-            for (Task e : taskList) {
-                long daysToStart = Math.abs(ChronoUnit.DAYS.between(e.getSprint().getStartDate(), minStartDate));
-                long daysToFinish = Math.abs(ChronoUnit.DAYS.between(minStartDate, e.getSprint().getFinishDate()) + 1);
-                long duration = Math.abs(ChronoUnit.DAYS.between(minStartDate, maxFinishDate));
-
-
-                TimeTable timetable = new TimeTable(minStartDate, daysToStart, daysToFinish, duration, e.getId(), e);
-                timeTableMap.put(timetable.getSprintId(), timetable);
-                // System.out.println(daysToStart);
-
-            }
-            ;
-
-
-//        Map<Long, TimeTable> sprintTable =
-//                project.getTask().stream()
-//                .map(e -> TimeTable(minStartDate,
-//                        Math.abs(Period.between(e.getSprint().getStartDate(), minStartDate).getDays()),
-//                        Math.abs(Period.between(e.getSprint().getFinishDate(), minStartDate).getDays()),
-//                        Math.abs(Period.between(e.getSprint().getStartDate(), e.getSprint().getFinishDate()).getDays()),
-//                        e.getId()))
-//                        //.forEach(r-> System.out.println(r.toString()));
-//                        .collect(Collectors.toMap(x -> x.getSprintId(), x -> x));
-
-            //        TimeTable(minStartDate,start,end,fromStartToFinish)
-
-            // project.getTask().stream().m;
-//        (e-> System.out.println(
-//                Period.between(e.getSprint().getFinishDate(),e.getSprint().getStartDate()).getDays()));
-//        timeLine.forEach(x -> System.out.println(x));
-            model.addAttribute("timeLine", timeLine);
-            model.addAttribute("timeTableMap", timeTableMap);
-            model.addAttribute("maxFinishDate", maxFinishDate);
-            model.addAttribute("minStartDate", minStartDate);
-
-        }
+//            int w=t.getWeek().getWeekYear();
+//        }
+//
+//
+//
+//        if (taskList.size() > 0) {
+//
+//
+//            LocalDate maxFinishDate = project.getTask().stream().max(Comparator.comparing(e ->
+//                    e.getWeek().getWeekYear())).get().getSprint().getFinishDate().plusDays(1);
+//
+//            LocalDate minStartDate = project.getTask().stream().min(Comparator.comparing(e ->
+//                    e.getSprint().getStartDate())).get().getSprint().getStartDate().plusDays(-1);
+//
+//            List<String> timeLine = new ArrayList<>();
+//            for (LocalDate date = minStartDate; date.isBefore(maxFinishDate); date = date.plusDays(1)) {
+//                timeLine.add(date.format(DateTimeFormatter.ofPattern("MM/dd")));
+//            }
+//
+//
+//            Map<Long, TimeTable> timeTableMap = new HashMap<>();
+//            for (Task e : taskList) {
+//                long daysToStart = Math.abs(ChronoUnit.DAYS.between(e.getSprint().getStartDate(), minStartDate));
+//                long daysToFinish = Math.abs(ChronoUnit.DAYS.between(minStartDate, e.getSprint().getFinishDate()) + 1);
+//                long duration = Math.abs(ChronoUnit.DAYS.between(minStartDate, maxFinishDate));
+//
+//
+//                TimeTable timetable = new TimeTable(minStartDate, daysToStart, daysToFinish, duration, e.getId(), e);
+//                timeTableMap.put(timetable.getSprintId(), timetable);
+//
+//
+//            }
+//
+//
+//
+//
+//            model.addAttribute("timeLine", timeLine);
+//            model.addAttribute("timeTableMap", timeTableMap);
+//            model.addAttribute("maxFinishDate", maxFinishDate);
+//            model.addAttribute("minStartDate", minStartDate);
+//
+//        }
         List<Task> tasksToDo = taskService.findTasksToDo(projectId, 0);
         List<Task> tasksInProgress = taskService.findTasksToDo(projectId, 1);
         List<Task> tasksDone = taskService.findTasksToDo(projectId, 2);
-
+//
         model.addAttribute("tasksToDo", tasksToDo);
         model.addAttribute("tasksInProgress", tasksInProgress);
         model.addAttribute("tasksDone", tasksDone);
         model.addAttribute("tasks", taskList);
-
-        model.addAttribute("project", project);
+//
+      model.addAttribute("project", project);
         model.addAttribute("title", "Show Project");
         model.addAttribute("path", "project/showProject");
         return "main";

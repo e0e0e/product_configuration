@@ -4,6 +4,7 @@ import pl.sda.springdemo.task.Task;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Sprint {
@@ -15,19 +16,19 @@ public class Sprint {
     private LocalDate finishDate;
     private Integer planedStoryPoints;
 
-    @OneToOne
-    private Task task;
+    @OneToMany(mappedBy = "sprint", cascade = CascadeType.REMOVE)
+    private Set<Task> tasks;
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Task getTask() {
-        return task;
+    public Set<Task> getTasks() {
+        return tasks;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public Sprint(){

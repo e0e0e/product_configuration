@@ -10,6 +10,8 @@ import pl.sda.springdemo.users.User;
 import pl.sda.springdemo.users.UserRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -28,13 +30,18 @@ public class TaskService {
     }
 
 
-    public boolean create(String name, String description, LocalDate startDate, LocalDate finishDate,
+    public boolean create(String name, String description, int week,int year,
                           Integer storyPoints, Integer weight, User user, Project project) {
-        Sprint sprint = new Sprint(startDate, finishDate, storyPoints);
+
+        LocalDate startDate =LocalDateFromWeekYearAndWeek(year,week,2);
+        LocalDate finishDate =LocalDateFromWeekYearAndWeek(year,week,6);
+
+
+        Sprint sprint= new Sprint(startDate, finishDate, storyPoints);
 
         sprintRepositoryJPA.save(sprint);
         Task task = new Task(name, description, sprint, weight, user, Progress.TO_DO, project);
-        sprint.setTask(task);
+        sprint.getTasks().add(task);
 
         user.getTasks().add(task);
 
@@ -45,6 +52,17 @@ public class TaskService {
 
 
         return created.getId() != null;
+    }
+
+    public static LocalDate LocalDateFromWeekYearAndWeek(int weekYear,
+                                                         int weekOfWeekYear,
+                                                         int day)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setWeekDate(weekYear,weekOfWeekYear,day);
+        LocalDate localDate = LocalDateTime.ofInstant(cal.toInstant(), cal.getTimeZone().toZoneId()).toLocalDate();
+
+        return localDate;
     }
 
     public List<Task> findAll() {

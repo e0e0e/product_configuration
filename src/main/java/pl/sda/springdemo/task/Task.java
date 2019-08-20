@@ -17,7 +17,7 @@ public class Task {
     private String name;
     private String description;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne()
     private Sprint sprint;
 
 

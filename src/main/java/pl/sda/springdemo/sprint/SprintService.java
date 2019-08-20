@@ -32,4 +32,9 @@ public class SprintService {
         return sprintRepositoryJPA.findUserByName(name);
 
     }
+
+    public void deleteSprint(long sprintId) {
+
+         sprintRepositoryJPA.deleteById(sprintId);
+    }
 }
