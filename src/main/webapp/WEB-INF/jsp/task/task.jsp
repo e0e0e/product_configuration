@@ -10,17 +10,15 @@
         <input type="text" class="text-dark" name="description"><br/>
 
 
-        <c:set var="now" value="<%= new java.util.Date()%>"/>
-        <br/>
-        <label>To be done in week: </label>
-        <input type="number" class="text-dark p-2" name="week" min="1" max="52"
-               VALUE="<fmt:formatDate type="date" value="${now}" pattern="w"/>">
-        <label>Year:</label>
-        <input type="number" class="text-dark p-2" name="year"
-               min="<fmt:formatDate type="date" value="${now}" pattern="YYYY"/>" max="2050"
-               VALUE="<fmt:formatDate type="date" value="${now}" pattern="YYYY"/>"><br/>
-
-
+<label>Sprint:</label><br/>
+    <select name="sprintId" class="text-dark" value="${sprints}">
+        <%--    <option selected hidden >Choose here</option>--%>
+        <c:forEach var="sprint" items="${sprints}">
+            <option value="${sprint.id}">
+                    ${sprint.startDate} - ${sprint.finishDate}
+            </option>
+        </c:forEach>
+    </select><br/>
 
 
         <label>Story points:</label><br/>

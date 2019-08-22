@@ -8,27 +8,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.sda.springdemo.progres.Progress;
 import pl.sda.springdemo.projects.Project;
 import pl.sda.springdemo.projects.ProjectService;
+import pl.sda.springdemo.sprint.Sprint;
+import pl.sda.springdemo.sprint.SprintService;
 import pl.sda.springdemo.users.User;
 import pl.sda.springdemo.users.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class TaskController {
     private final UserService userService;
     private final TaskService taskService;
     private final ProjectService projectService;
+    private final SprintService sprintService;
 
-    public TaskController(UserService userService,  TaskService taskService, ProjectService projectService) {
+    public TaskController(UserService userService, TaskService taskService, ProjectService projectService, SprintService sprintService) {
         this.userService = userService;
 
 
         this.taskService = taskService;
         this.projectService = projectService;
+        this.sprintService = sprintService;
     }
 //    private final TaskService taskService;
 
@@ -37,9 +41,12 @@ public class TaskController {
     public String taskForm(@RequestParam(required = false) Long projectId,
                            HttpServletRequest request,
                            Model model) {
-
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY")
+//        List<Sprint> sprintList=sprintService.findAllSprints();
+//        sprintList.get(0).getStartDate().format(formatter.format())
         String loggedUserName = request.getRemoteUser();
         model.addAttribute("project", projectService.findById(projectId).get());
+        model.addAttribute("sprints", sprintService.findAllSprints());
         model.addAttribute("users", userService.findAllWithException(loggedUserName));
         model.addAttribute("title", "Task form");
         model.addAttribute("path", "task/task");
@@ -49,8 +56,7 @@ public class TaskController {
     @PostMapping("/tasks")
     public String addTask(@RequestParam String name,
                           @RequestParam String description,
-                          @RequestParam int week,
-                          @RequestParam int year,
+                          @RequestParam long sprintId,
                           @RequestParam Integer storyPoints,
                           @RequestParam Integer weight,
                           @RequestParam Long userId,
@@ -62,10 +68,8 @@ public class TaskController {
         Project project = projectService.findById(projectId).get();
 
 
-
         boolean tastCreated = taskService.create(name, description,
-                week,
-                year,
+                sprintId,
                 storyPoints, weight,
                 user,
                 project
@@ -178,14 +182,16 @@ public class TaskController {
 //                .sorted(Comparator.comparing(Project::getId))
 //                .collect(Collectors.toMap(x->x.getProjectName(),x->x.));
 
-        model.addAttribute("projectsInWeek", projectsInWeekSorted);
+//        model.addAttribute("projectsInWeek", projectsInWeekSorted);
+        model.addAttribute("sprint", sprintService.getSprint() );
+        model.addAttribute("sprints", sprintService.findAllSprints() );
 //        model.addAttribute("projectsInWeek",projectsBeforeWeekSorted);
-        model.addAttribute("weekNumber", weekNumber);
+//        model.addAttribute("weekNumber", weekNumber);
 
-        model.addAttribute("tasksToDo", tasksToDo);
-        model.addAttribute("tasksInProgress", tasksInProgress);
-        model.addAttribute("tasksDone", tasksDone);
-        model.addAttribute("tasks", taskList);
+//        model.addAttribute("tasksToDo", tasksToDo);
+//        model.addAttribute("tasksInProgress", tasksInProgress);
+//        model.addAttribute("tasksDone", tasksDone);
+//        model.addAttribute("tasks", taskList);
 
         model.addAttribute("title", "Wall");
         model.addAttribute("path", "task/taskWall");

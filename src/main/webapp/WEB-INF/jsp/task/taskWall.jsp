@@ -4,12 +4,18 @@
 
 
 <div class="container">
-    Week number is:
-    <a href="/taskWall?weekNumber=${weekNumber-1}" class="btn btn-outline-info btn-sm">
-        <span class="glyphicon glyphicon-triangle-left"></span></a>
-    ${weekNumber}
-    <a href="/taskWall?weekNumber=${weekNumber+1}" class="btn btn-outline-info btn-sm">
-        <span class="glyphicon glyphicon-triangle-right"></span></a>
+
+    <label>Sprint:</label><br/>
+    <select name="sprintId" class="text-dark" value="${sprints}">
+        <%--    <option selected hidden >Choose here</option>--%>
+        <c:forEach var="sprint" items="${sprints}">
+            <option value="${sprint.id}">
+                    ${sprint.startDate} - ${sprint.finishDate}
+            </option>
+        </c:forEach>
+    </select><br/>
+
+
     <div class="row">
         <div class="col-3 bg-light border sm-2 m-1">
             Project Name
@@ -27,7 +33,7 @@
 
     </div>
     <%--    <c:set var="currentProject" value="${''}"/>--%>
-    <c:forEach var="project" items="${projectsInWeek}">
+    <c:forEach var="task" items="${sprint.tasks}">
         <%--        <br/>--%>
     <div class="row border mt-1">
 

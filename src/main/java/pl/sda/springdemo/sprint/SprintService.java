@@ -37,4 +37,8 @@ public class SprintService {
 
          sprintRepositoryJPA.deleteById(sprintId);
     }
+
+    public Sprint getSprint() {
+       return sprintRepositoryJPA.getSprint();
+    }
 }

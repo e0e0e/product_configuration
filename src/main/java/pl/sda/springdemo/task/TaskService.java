@@ -30,16 +30,15 @@ public class TaskService {
     }
 
 
-    public boolean create(String name, String description, int week,int year,
+    public boolean create(String name, String description, long sprintId,
                           Integer storyPoints, Integer weight, User user, Project project) {
 
-        LocalDate startDate =LocalDateFromWeekYearAndWeek(year,week,2);
-        LocalDate finishDate =LocalDateFromWeekYearAndWeek(year,week,6);
 
 
-        Sprint sprint= new Sprint(startDate, finishDate, storyPoints);
 
-        sprintRepositoryJPA.save(sprint);
+        Sprint sprint= sprintRepositoryJPA.findById(sprintId).get();
+
+       // sprintRepositoryJPA.save(sprint);
         Task task = new Task(name, description, sprint, weight, user, Progress.TO_DO, project);
         sprint.getTasks().add(task);
 

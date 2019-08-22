@@ -11,11 +11,11 @@
 
 
         <tr>
-            <td>${sprint.id}</td>
-            <td> ${sprint.startDate} </td>
-            <td>${sprint.finishDate} </td>
-            <td>${sprint.planedStoryPoints}</td>
-            <td><a href="/sprint/delete?sprintId=${sprint.id}"><span class="glyphicon glyphicon-trash"></span></a></td>
+            <td class="p-2">${sprint.id}</td>
+            <td class="p-2"> ${sprint.startDate} </td>
+            <td class="p-2">${sprint.finishDate} </td>
+            <td class="p-2">${sprint.planedStoryPoints}</td>
+            <td class="p-2"><a href="/sprint/delete?sprintId=${sprint.id}"><span class="glyphicon glyphicon-trash"></span></a></td>
 <%--            <td>${sprint.toString()}</td>--%>
         </tr>
 
