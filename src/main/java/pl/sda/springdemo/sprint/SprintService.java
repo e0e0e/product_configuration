@@ -25,7 +25,7 @@ public class SprintService {
     }
 
     public List<Sprint> findAllSprints() {
-        return sprintRepositoryJPA.findAll();
+        return sprintRepositoryJPA.findAllSprintsSorted();
     }
 
     public User findUserByName(String name) {
@@ -40,5 +40,9 @@ public class SprintService {
 
     public Sprint getSprint() {
        return sprintRepositoryJPA.getSprint();
+    }
+
+    public long findNextSprint(long sprintId) {
+        return sprintRepositoryJPA.findNextSprint(sprintId);
     }
 }

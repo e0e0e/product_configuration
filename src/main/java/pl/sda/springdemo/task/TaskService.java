@@ -39,7 +39,7 @@ public class TaskService {
         Sprint sprint= sprintRepositoryJPA.findById(sprintId).get();
 
        // sprintRepositoryJPA.save(sprint);
-        Task task = new Task(name, description, sprint, weight, user, Progress.TO_DO, project);
+        Task task = new Task(name, description, sprint, storyPoints, weight, user, Progress.TO_DO, project);
         sprint.getTasks().add(task);
 
         user.getTasks().add(task);
@@ -115,5 +115,20 @@ public class TaskService {
 
     public List<Task> findAllBeforeWeek(int weekNumber) {
         return taskRepository.findAllBeforeWeek(weekNumber);
+    }
+
+    public Long getPresentSprint() {
+
+        Long result=taskRepository.getPresentSprint();
+
+        if(result==null){
+            result=taskRepository.getNearestSprint();
+
+        }
+        return result;
+    }
+
+    public List<Task> findAllFromSprint(Long sprintId) {
+        return taskRepository.findAllFromSprint(sprintId);
     }
 }

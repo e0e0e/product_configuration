@@ -35,4 +35,13 @@ public interface TaskRepository extends CrudRepository<Task,Long> {
             "            WHERE (WEEK(sprint.start_date)+1)<=?1 order by project.id", nativeQuery = true)
     List<Task> findAllBeforeWeek(int weekNumber);
 
+
+    @Query(value = "Select id from sprint WHERE start_date<=CURRENT_DATE() and finish_date>=CURRENT_DATE()", nativeQuery = true)
+    Long getPresentSprint();
+
+    @Query(value = "Select * from task WHERE sprint_id like ?1", nativeQuery = true)
+    List<Task> findAllFromSprint(Long sprintId);
+
+    @Query(value = "Select top 1 * from sprint WHERE finish_date<CURRENT_DATE() order by datediff(day , CURRENT_DATE(), finish_date)", nativeQuery = true)
+    Long getNearestSprint();
 }

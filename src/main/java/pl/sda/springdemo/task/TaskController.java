@@ -80,6 +80,7 @@ public class TaskController {
         project.getUsers().add(user);
         userService.save(user);
 
+
         model.addAttribute("createUserResult", tastCreated);
 
         return "redirect:/project/show?projectId=" + projectId;
@@ -126,7 +127,7 @@ public class TaskController {
         taskService.changeProgress(taskId, progress);
 
         if (backToWall != null) {
-            return "redirect:/taskWall?weekNumber=" + backToWall;
+            return "redirect:/taskWall?sprintId=" + backToWall;
 
         } else {
             return "redirect:/project/show?projectId=" + taskService.findById(taskId).getProject().getId();
@@ -143,26 +144,36 @@ public class TaskController {
         return "redirect:/project/show?projectId=" + projectId;
 
     }
+    @GetMapping("/taskWallNext")
+    public String nextSprint(@RequestParam long sprintId){
+
+        long id=sprintService.findNextSprint(sprintId);
+
+        return "redirect:/taskWall?sprintId=" + id;
+    }
 
     @GetMapping("/taskWall")
-    private String showWall(@RequestParam(required = false) Integer weekNumber,
+    private String showWall(@RequestParam(required = false) Long sprintId,
                             Model model) {
 
-        List<Task> taskList = taskService.findAll();
+        if (sprintId == null) {
+            sprintId = taskService.getPresentSprint();
+        }
+
+        List<Task> taskList = taskService.findAllFromSprint(sprintId);
         List<Task> tasksToDo = taskService.findToDo();
         List<Task> tasksInProgress = taskService.findInProgress();
         List<Task> tasksDone = taskService.findDone();
 
         LocalDate dateNow = LocalDate.now();
         WeekFields weekFields = WeekFields.ISO;
-        if (weekNumber == null) {
-            weekNumber = dateNow.get(weekFields.weekOfWeekBasedYear());
-        }
+
         //        int weekNumber = 30;
 
 //        model.addAttribute("projects",projectService.findAll());
         // List<Task> tasksInWeek=taskService.findAllInWeek(weekNumber);
-        List<Task> tasksInWeek = taskService.findAllBeforeWeek(weekNumber);
+//        List<Task> tasksInWeek = taskService.findAllBeforeWeek(weekNumber);
+        List<Task> tasksInWeek = taskList;
 
 
         Map<Project, List<Task>> projectsInWeek = new HashMap<>();
@@ -182,16 +193,16 @@ public class TaskController {
 //                .sorted(Comparator.comparing(Project::getId))
 //                .collect(Collectors.toMap(x->x.getProjectName(),x->x.));
 
-//        model.addAttribute("projectsInWeek", projectsInWeekSorted);
-        model.addAttribute("sprint", sprintService.getSprint() );
+        model.addAttribute("projectsInWeek", projectsInWeekSorted);
+//        model.addAttribute("sprint", sprintService.getSprint() );
         model.addAttribute("sprints", sprintService.findAllSprints() );
 //        model.addAttribute("projectsInWeek",projectsBeforeWeekSorted);
 //        model.addAttribute("weekNumber", weekNumber);
 
-//        model.addAttribute("tasksToDo", tasksToDo);
-//        model.addAttribute("tasksInProgress", tasksInProgress);
-//        model.addAttribute("tasksDone", tasksDone);
-//        model.addAttribute("tasks", taskList);
+        model.addAttribute("tasksToDo", tasksToDo);
+        model.addAttribute("tasksInProgress", tasksInProgress);
+        model.addAttribute("tasksDone", tasksDone);
+        model.addAttribute("tasks", taskList);
 
         model.addAttribute("title", "Wall");
         model.addAttribute("path", "task/taskWall");

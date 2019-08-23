@@ -2,12 +2,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container bg-info">
-    <form method="post" action="/tasks?projectId=${project.id}" class="bg-info m-5 p-5 text-light">
-        <h1>Add Tasks to project <b>${project.projectName}</b></h1>
-        <label>Task name:</label><br/>
-        <input type="text" class="text-dark" name="name"><br/>
-        <label>Description:</label><br/>
-        <input type="text" class="text-dark" name="description"><br/>
+<form method="post" action="/tasks?projectId=${project.id}" class="bg-info m-5 p-5 text-light">
+    <h1>Add Tasks to project <b>${project.projectName}</b></h1>
+    <label>Task name:</label><br/>
+    <input type="text" class="text-dark" name="name"><br/>
+    <label>Description:</label><br/>
+    <input type="text" class="text-dark" name="description"><br/>
 
 
 <label>Sprint:</label><br/>
@@ -28,14 +28,12 @@
         <label>Weight (1-5):</label><br/>
         <input type="number" class="text-dark p-2" name="weight" min="1" max="5" VALUE="1"><br/>
 
+    <label>User:</label><br/>
+    <%@include file="../userPicker.jsp" %>
+
+    <input type="submit" class="text-dark" value="Dodaj">
 
 
-
-        <label>User:</label><br/>
-        <%@include file="../userPicker.jsp" %>
-
-        <input type="submit" class="text-dark" value="Dodaj">
-
-
-    </form>
+</form>
 </div>
+

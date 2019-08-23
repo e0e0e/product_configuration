@@ -15,12 +15,12 @@
 <%--    <p>Formatted Date (2): <fmt:formatDate type="date" value="${now}" /></p>--%>
 
     <label>From:</label>
-        <input type="date" name="from" value="<fmt:formatDate type="date" value="${now}" pattern="yyyy-MM-dd"/>"><br/>
+        <input type="date" name="from" value="<fmt:formatDate type="date" value="${now}" pattern="yyyy-MM-dd"/>">
     <label>To:</label>
     <input type="date" name="to" value="<fmt:formatDate type="date" value="${now}" pattern="yyyy-MM-dd"/>"><br/>
     <label>Story points:</label>
 <%--    <input type="number" name="storyPoints" min="1" max="5" VALUE="1"><br/>--%>
-    <%@include file="../pointsPicker.jsp" %>
+    <input type="number" name="storyPoints" class="text-dark" min="1" max="500" VALUE="10"><br/>
     <input type="submit" value="Dodaj">
 
 

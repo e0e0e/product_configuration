@@ -198,7 +198,7 @@ public class ProjectController {
        Project project = projectService.findById(projectId).get();
 //
         List<Task> taskList = project.getTask().stream()
-                .sorted(Comparator.comparing(e -> e.getWeek()))
+                .sorted(Comparator.comparing(e -> e.getSprint().getStartDate()))
                 .collect(Collectors.toList());
 
 //        for(Task t:project.getTask()){
