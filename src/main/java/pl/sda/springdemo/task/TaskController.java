@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.sda.springdemo.Wall;
 import pl.sda.springdemo.progres.Progress;
 import pl.sda.springdemo.projects.Project;
 import pl.sda.springdemo.projects.ProjectService;
@@ -160,6 +161,8 @@ public class TaskController {
             sprintId = taskService.getPresentSprint();
         }
 
+        Map<String, Wall> wallMap=taskService.getWall(sprintId);
+
         List<Task> taskList = taskService.findAllFromSprint(sprintId);
         List<Task> tasksToDo = taskService.findToDo();
         List<Task> tasksInProgress = taskService.findInProgress();
@@ -193,16 +196,16 @@ public class TaskController {
 //                .sorted(Comparator.comparing(Project::getId))
 //                .collect(Collectors.toMap(x->x.getProjectName(),x->x.));
 
-        model.addAttribute("projectsInWeek", projectsInWeekSorted);
+        model.addAttribute("projectsInWeek", projectsInWeekSorted);//
 //        model.addAttribute("sprint", sprintService.getSprint() );
-        model.addAttribute("sprints", sprintService.findAllSprints() );
+        model.addAttribute("sprints", sprintService.findAllSprints() );//
 //        model.addAttribute("projectsInWeek",projectsBeforeWeekSorted);
 //        model.addAttribute("weekNumber", weekNumber);
 
-        model.addAttribute("tasksToDo", tasksToDo);
-        model.addAttribute("tasksInProgress", tasksInProgress);
-        model.addAttribute("tasksDone", tasksDone);
-        model.addAttribute("tasks", taskList);
+//        model.addAttribute("tasksToDo", tasksToDo);
+//        model.addAttribute("tasksInProgress", tasksInProgress);
+//        model.addAttribute("tasksDone", tasksDone);
+        model.addAttribute("tasks", taskList);//
 
         model.addAttribute("title", "Wall");
         model.addAttribute("path", "task/taskWall");

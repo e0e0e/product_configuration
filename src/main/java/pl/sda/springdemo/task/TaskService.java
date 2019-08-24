@@ -1,6 +1,7 @@
 package pl.sda.springdemo.task;
 
 import org.springframework.stereotype.Service;
+import pl.sda.springdemo.Wall;
 import pl.sda.springdemo.progres.Progress;
 import pl.sda.springdemo.projects.Project;
 import pl.sda.springdemo.projects.ProjectRepository;
@@ -11,8 +12,7 @@ import pl.sda.springdemo.users.UserRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TaskService {
@@ -34,11 +34,9 @@ public class TaskService {
                           Integer storyPoints, Integer weight, User user, Project project) {
 
 
+        Sprint sprint = sprintRepositoryJPA.findById(sprintId).get();
 
-
-        Sprint sprint= sprintRepositoryJPA.findById(sprintId).get();
-
-       // sprintRepositoryJPA.save(sprint);
+        // sprintRepositoryJPA.save(sprint);
         Task task = new Task(name, description, sprint, storyPoints, weight, user, Progress.TO_DO, project);
         sprint.getTasks().add(task);
 
@@ -55,10 +53,9 @@ public class TaskService {
 
     public static LocalDate LocalDateFromWeekYearAndWeek(int weekYear,
                                                          int weekOfWeekYear,
-                                                         int day)
-    {
+                                                         int day) {
         Calendar cal = Calendar.getInstance();
-        cal.setWeekDate(weekYear,weekOfWeekYear,day);
+        cal.setWeekDate(weekYear, weekOfWeekYear, day);
         LocalDate localDate = LocalDateTime.ofInstant(cal.toInstant(), cal.getTimeZone().toZoneId()).toLocalDate();
 
         return localDate;
@@ -119,10 +116,10 @@ public class TaskService {
 
     public Long getPresentSprint() {
 
-        Long result=taskRepository.getPresentSprint();
+        Long result = taskRepository.getPresentSprint();
 
-        if(result==null){
-            result=taskRepository.getNearestSprint();
+        if (result == null) {
+            result = taskRepository.getNearestSprint();
 
         }
         return result;
@@ -130,5 +127,28 @@ public class TaskService {
 
     public List<Task> findAllFromSprint(Long sprintId) {
         return taskRepository.findAllFromSprint(sprintId);
+    }
+
+    public Map<String, Wall> getWall(Long sprintId) {
+        Map<String, Wall> wallMap = new HashMap<>();
+
+        List<Task> tasksFromSprint = taskRepository.findBySprintId(sprintId);
+        List<Task> tasksRemining = taskRepository.findReminingTasks(sprintId);
+        //tasksRemining.get(0).getProject().getProjectName();
+
+        for (Task taskfromSprint : tasksFromSprint) {
+            if (taskfromSprint.getProgress().equals(0)) {
+                if (!wallMap.containsKey(taskfromSprint.getProject().getProjectName())) {
+                    wallMap.put(taskfromSprint.getProject().getProjectName(), new Wall());
+
+
+                }
+                wallMap.get(taskfromSprint.getProject().getProjectName())
+                        .getRemainingTasksDone().add(taskfromSprint);
+            }
+        }
+
+
+        return wallMap;
     }
 }

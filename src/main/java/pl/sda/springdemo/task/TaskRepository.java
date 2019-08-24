@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import pl.sda.springdemo.projects.Project;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface TaskRepository extends CrudRepository<Task,Long> {
@@ -44,4 +45,11 @@ public interface TaskRepository extends CrudRepository<Task,Long> {
 
     @Query(value = "Select top 1 * from sprint WHERE finish_date<CURRENT_DATE() order by datediff(day , CURRENT_DATE(), finish_date)", nativeQuery = true)
     Long getNearestSprint();
+
+    @Query(value = "Select * from task inner join sprint on sprint.ID=task.SPRINT_ID WHERE SPRINT_ID like ?1 order by task.PROGRESS", nativeQuery = true)
+    List<Task> findBySprintId(Long sprintId);
+
+
+    @Query(value = "Select * from task inner join sprint on sprint.ID=task.SPRINT_ID WHERE sprint.START_DATE<(Select sprint.START_DATE from sprint where id=?1) and task.progress<2 order by task.PROGRESS", nativeQuery = true)
+    List<Task> findReminingTasks(Long sprintId);
 }
