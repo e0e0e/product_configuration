@@ -7,7 +7,7 @@ import java.util.List;
 public class Wall {
 
 
-    private List<Task> tasksToDo;
+    public List<Task> tasksToDo;
     private List<Task> tasksInProgress;
     private List<Task> tasksDone;
     private List<Task> remainingTasksToDo;

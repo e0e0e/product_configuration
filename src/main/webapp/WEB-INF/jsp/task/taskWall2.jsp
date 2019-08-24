@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<div class="container">
+<div class="container bg-warning">
 
     <label>Sprint:</label>
     <div style="display: inline-block">
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div style="display: inline-block"><a href="/taskWallNext?sprintId=${tasks[0].sprint.id}"
-            class="btn btn-outline-info btn-sm">
+                                          class="btn btn-outline-info btn-sm">
         <span class="glyphicon glyphicon-triangle-right"></span></a></div>
 
 
@@ -45,6 +45,13 @@
 
     </div>
     <%--    <c:set var="currentProject" value="${''}"/>--%>
+    <c:forEach var="project" items="${wallMap}">
+    <c:forEach var="task" items="${project.value.tasksToDo}">
+<%--    <c:forEach var="taskToDo" items="${wall.tasksToDo}">--%>
+    <div>${task.name}</div>
+    </c:forEach>
+<%--    </c:forEach>--%>
+    </c:forEach>
     <c:forEach var="project" items="${projectsInWeek}">
         <%--        <br/>--%>
     <div class="row border mt-1">
@@ -189,5 +196,3 @@
         </c:forEach>
 
     </div>
-
-<jsp:include page="taskWall2.jsp"></jsp:include>

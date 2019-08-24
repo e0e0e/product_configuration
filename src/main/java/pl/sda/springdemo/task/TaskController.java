@@ -161,7 +161,7 @@ public class TaskController {
             sprintId = taskService.getPresentSprint();
         }
 
-        Map<String, Wall> wallMap=taskService.getWall(sprintId);
+        Map<Project, Wall> wallMap=taskService.getWall(sprintId);
 
         List<Task> taskList = taskService.findAllFromSprint(sprintId);
         List<Task> tasksToDo = taskService.findToDo();
@@ -206,6 +206,7 @@ public class TaskController {
 //        model.addAttribute("tasksInProgress", tasksInProgress);
 //        model.addAttribute("tasksDone", tasksDone);
         model.addAttribute("tasks", taskList);//
+        model.addAttribute("wallMap", wallMap);//
 
         model.addAttribute("title", "Wall");
         model.addAttribute("path", "task/taskWall");
