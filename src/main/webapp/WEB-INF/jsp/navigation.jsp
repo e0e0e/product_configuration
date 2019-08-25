@@ -1,4 +1,5 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<jsp:useBean id="now" class="java.util.Date"/>
 
 <div>
 

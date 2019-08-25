@@ -59,4 +59,7 @@ public interface TaskRepository extends CrudRepository<Task,Long> {
     @Query(value = "Select * from project inner join task on PROJECT.ID=task.project_id\n" +
             "    inner join sprint on sprint.id=task.sprint_id WHERE task.SPRINT_ID like ?1", nativeQuery = true)
     List<Project> projectsInSprint(Long sprintId);
+
+    @Query(value = "Select * from task inner join sprint on sprint.ID=task.SPRINT_ID  WHERE sprint_id like ?1 or (sprint.FINISH_DATE<CURRENT_DATE() and task.PROGRESS<2)", nativeQuery = true)
+    List<Task> findAllFromSprintAndBeforeNotFinished(Long sprintId);
 }

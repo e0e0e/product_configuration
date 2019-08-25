@@ -150,8 +150,25 @@ public class TaskController {
 
         long id=sprintService.findNextSprint(sprintId);
 
-        return "redirect:/taskWall?sprintId=" + id;
+        if(id>=0){
+            return "redirect:/taskWall?sprintId=" + id;
+        }
+
+        return "redirect:/taskWall?sprintId=" + sprintId;
     }
+
+    @GetMapping("/taskWallPrevious")
+    public String previousSprint(@RequestParam long sprintId){
+
+        long id=sprintService.findPreviousSprint(sprintId);
+
+        if(id>=0){
+            return "redirect:/taskWall?sprintId=" + id;
+        }
+
+        return "redirect:/taskWall?sprintId=" + sprintId;
+    }
+
 
     @GetMapping("/taskWall")
     private String showWall(@RequestParam(required = false) Long sprintId,
@@ -162,19 +179,9 @@ public class TaskController {
         }
 
 
-        List<Task> taskList = taskService.findAllFromSprint(sprintId);
-//        List<Task> tasksToDo = taskService.findToDo();
-//        List<Task> tasksInProgress = taskService.findInProgress();
-//        List<Task> tasksDone = taskService.findDone();
-//
-//        LocalDate dateNow = LocalDate.now();
-//        WeekFields weekFields = WeekFields.ISO;
+//        List<Task> taskList = taskService.findAllFromSprint(sprintId);
+        List<Task> taskList = taskService.findAllFromSprintAndBeforeNotFinished(sprintId);
 
-        //        int weekNumber = 30;
-
-//        model.addAttribute("projects",projectService.findAll());
-        // List<Task> tasksInWeek=taskService.findAllInWeek(weekNumber);
-//        List<Task> tasksInWeek = taskService.findAllBeforeWeek(weekNumber);
         List<Task> tasksInWeek = taskList;
 
 
@@ -186,24 +193,15 @@ public class TaskController {
                 List<Task> listForProject = new ArrayList<>();
                 listForProject.add(task);
                 projectsInWeek.put(task.getProject(), listForProject);
+
             }
         }
         TreeMap<Project, List<Task>> projectsInWeekSorted = new TreeMap<>(projectsInWeek);
 
 
-//        projectsInWeek= projectsInWeek.keySet().stream()
-//                .sorted(Comparator.comparing(Project::getId))
-//                .collect(Collectors.toMap(x->x.getProjectName(),x->x.));
-
         model.addAttribute("projectsInWeek", projectsInWeekSorted);//
-//        model.addAttribute("sprint", sprintService.getSprint() );
         model.addAttribute("sprints", sprintService.findAllSprints() );//
-//        model.addAttribute("projectsInWeek",projectsBeforeWeekSorted);
-//        model.addAttribute("weekNumber", weekNumber);
 
-//        model.addAttribute("tasksToDo", tasksToDo);
-//        model.addAttribute("tasksInProgress", tasksInProgress);
-//        model.addAttribute("tasksDone", tasksDone);
         model.addAttribute("tasks", taskList);
         model.addAttribute("now", LocalDate.now());
 

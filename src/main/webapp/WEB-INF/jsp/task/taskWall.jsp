@@ -1,18 +1,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
+<%--<jsp:useBean id="chrono" class="java.time.temporal.ChronoUnit"/>--%>
+<%@ page import="java.time.temporal.ChronoUnit"%>
 
 <div class="container">
 
     <label>Sprint:</label>
+    <div style="display: inline-block"><a href="/taskWallPrevious?sprintId=${tasks[0].sprint.id}"
+                                          class="btn btn-outline-info btn-sm">
+        <span class="glyphicon glyphicon-triangle-left"></span></a></div>
+
     <div style="display: inline-block">
         <div class="dropdown" style="display: inline-block">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                 ${tasks[0].sprint.startDate} - ${tasks[0].sprint.finishDate}
+
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <c:forEach var="sprint" items="${sprints}">
@@ -23,7 +28,7 @@
         </div>
     </div>
     <div style="display: inline-block"><a href="/taskWallNext?sprintId=${tasks[0].sprint.id}"
-            class="btn btn-outline-info btn-sm">
+                                          class="btn btn-outline-info btn-sm">
         <span class="glyphicon glyphicon-triangle-right"></span></a></div>
 
 
@@ -68,19 +73,17 @@
                     <c:if test="${task.progress=='TO_DO'}">
 
 
-
-
-
-
                     <c:if test="${task.sprint.finishDate<now}">
-                    <div class="card bg-warning m-2 text-center p-1">
-                        Too late task.sprint.finishDate
-                        </c:if>
+                    <div class="card bg-danger m-2 text-center p-1">
+                        Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,now)} days from ${task.sprint.finishDate}
+
+                    </c:if>
                         <c:if test="${!(task.sprint.finishDate<now)}">
                         <div class="card bg-secondary m-2 text-center p-1">
                             </c:if>
 
                             <div>
+
                                     ${task.name}
                                 <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}"
                                    class="btn btn-outline-light btn-sm">
@@ -110,20 +113,27 @@
                         <c:forEach var="task" items="${project.value}">
 
                             <c:if test="${task.progress=='IN_PROGRESS'}">
-                                <div class="card bg-primary m-2 text-center p-1">
+                            <c:if test="${task.sprint.finishDate<now}">
+                            <div class="card bg-warning m-2 text-center p-1">
+                                Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,now)} days from ${task.sprint.finishDate}
+                                </c:if>
+                                <c:if test="${!(task.sprint.finishDate<now)}">
+                                <div class="card bg-secondary m-2 text-center p-1">
+                                    </c:if>
+
                                     <div>
                                         <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}"
                                            class="btn btn-outline-light btn-sm">
                                             <span class="glyphicon glyphicon-triangle-left"></span></a>
-                                            ${task.name}<a
-                                            href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}"
-                                            class="btn btn-outline-light btn-sm">
-                                        <span class="glyphicon glyphicon-triangle-right"></span></a>
+
+                                            ${task.name}
+                                        <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}"
+                                           class="btn btn-outline-light btn-sm">
+                                            <span class="glyphicon glyphicon-triangle-right"></span></a>
                                     </div>
                                     <div class="card-footer">
                                         <div><span
                                                 class="glyphicon glyphicon-star"></span>${task.storyPoints}
-
 
                                             responsible: <a href="/userProfile?userId=${task.user.id}"
                                                             class="btn btn-outline-light"> ${task.user.username}</a>
@@ -131,6 +141,7 @@
 
                                         </div>
                                     </div>
+
                                 </div>
                             </c:if>
 

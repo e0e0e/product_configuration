@@ -70,6 +70,7 @@ public class TaskService {
     }
 
     public void changeProgress(Long taskId, String progress) {
+
         Task task = taskRepository.findById(taskId).get();
         for (Progress p : Progress.values()) {
             if (p.toString().equals(progress)) {
@@ -130,4 +131,8 @@ public class TaskService {
     }
 
 
+    public List<Task> findAllFromSprintAndBeforeNotFinished(Long sprintId) {
+
+            return taskRepository.findAllFromSprintAndBeforeNotFinished(sprintId);
+    }
 }
