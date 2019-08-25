@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
+
 <div class="container">
 
     <label>Sprint:</label>
@@ -66,15 +67,16 @@
 
                     <c:if test="${task.progress=='TO_DO'}">
 
-                    <fmt:parseDate value="${task.sprint.startDate}" type="date"
-                                   pattern="yyyy-MM-dd" var="parsedDate"/>
-                    <fmt:formatDate value="${parsedDate}" type="date" pattern="w"
-                                    var="week"/>
 
-                    <c:if test="${week<weekNumber}">
+
+
+
+
+                    <c:if test="${task.sprint.finishDate<now}">
                     <div class="card bg-warning m-2 text-center p-1">
+                        Too late task.sprint.finishDate
                         </c:if>
-                        <c:if test="${!(week<weekNumber)}">
+                        <c:if test="${!(task.sprint.finishDate<now)}">
                         <div class="card bg-secondary m-2 text-center p-1">
                             </c:if>
 
@@ -190,4 +192,3 @@
 
     </div>
 
-<jsp:include page="taskWall2.jsp"></jsp:include>

@@ -161,15 +161,14 @@ public class TaskController {
             sprintId = taskService.getPresentSprint();
         }
 
-        Map<Project, Wall> wallMap=taskService.getWall(sprintId);
 
         List<Task> taskList = taskService.findAllFromSprint(sprintId);
-        List<Task> tasksToDo = taskService.findToDo();
-        List<Task> tasksInProgress = taskService.findInProgress();
-        List<Task> tasksDone = taskService.findDone();
-
-        LocalDate dateNow = LocalDate.now();
-        WeekFields weekFields = WeekFields.ISO;
+//        List<Task> tasksToDo = taskService.findToDo();
+//        List<Task> tasksInProgress = taskService.findInProgress();
+//        List<Task> tasksDone = taskService.findDone();
+//
+//        LocalDate dateNow = LocalDate.now();
+//        WeekFields weekFields = WeekFields.ISO;
 
         //        int weekNumber = 30;
 
@@ -205,8 +204,8 @@ public class TaskController {
 //        model.addAttribute("tasksToDo", tasksToDo);
 //        model.addAttribute("tasksInProgress", tasksInProgress);
 //        model.addAttribute("tasksDone", tasksDone);
-        model.addAttribute("tasks", taskList);//
-        model.addAttribute("wallMap", wallMap);//
+        model.addAttribute("tasks", taskList);
+        model.addAttribute("now", LocalDate.now());
 
         model.addAttribute("title", "Wall");
         model.addAttribute("path", "task/taskWall");

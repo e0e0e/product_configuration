@@ -7,7 +7,7 @@
             <%--            <a class="navbar-brand" href="#">--%>
             <%--            <i class="fa d-inline fa-lg fa-circle-o"></i>--%>
             <b class="navbar-brand">PMC</b>
-            </a>
+
             <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse"
                     data-target="#navbar11" aria-expanded="true">
                 <span class="navbar-toggler-icon"></span>

@@ -129,24 +129,5 @@ public class TaskService {
         return taskRepository.findAllFromSprint(sprintId);
     }
 
-    public Map<Project, Wall> getWall(Long sprintId) {
-        Map<Project, Wall> wallMap = new HashMap<>();
 
-        List<Project> projectsInSprint=taskRepository.projectsInSprint(sprintId);
-
-        List<Task> tasksFromSprint = taskRepository.findBySprintId(sprintId);
-        List<Task> tasksRemining = taskRepository.findReminingTasks(sprintId);
-
-        List<Task> tasksToDo=taskRepository.findBySprintTaskToDo(sprintId,0);
-//
-//        public List<Task> tasksToDo;
-//        private List<Task> tasksInProgress;
-//        private List<Task> tasksDone;
-//        private List<Task> remainingTasksToDo;
-//        private List<Task> remainingTasksInProgress;
-//        private List<Task> remainingTasksDone;
-
-
-        return wallMap;
-    }
 }
