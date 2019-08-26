@@ -7,7 +7,7 @@
 <div class="container">
 
     <label>Sprint:</label>
-    <div style="display: inline-block"><a href="/taskWallPrevious?sprintId=${tasks[0].sprint.id}"
+    <div style="display: inline-block"><a href="/taskWallPrevious?sprintId=${theSprint.id}"
                                           class="btn btn-outline-info btn-sm">
         <span class="glyphicon glyphicon-triangle-left"></span></a></div>
 
@@ -16,7 +16,7 @@
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                ${tasks[0].sprint.startDate} - ${tasks[0].sprint.finishDate}
+                ${theSprint.startDate} - ${theSprint.finishDate}
 
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -27,12 +27,12 @@
             </div>
         </div>
     </div>
-    <div style="display: inline-block"><a href="/taskWallNext?sprintId=${tasks[0].sprint.id}"
+    <div style="display: inline-block"><a href="/taskWallNext?sprintId=${theSprint.id}"
                                           class="btn btn-outline-info btn-sm">
         <span class="glyphicon glyphicon-triangle-right"></span></a></div>
 
 
-    <div>Story Points: ${tasks[0].sprint.planedStoryPoints}</div>
+    <div>Story Points: ${theSprint.planedStoryPoints}</div>
 
     <div class="row">
         <div class="col-3 bg-light border sm-2 m-1">
@@ -50,9 +50,7 @@
 
 
     </div>
-    <%--    <c:set var="currentProject" value="${''}"/>--%>
     <c:forEach var="project" items="${projectsInWeek}">
-        <%--        <br/>--%>
     <div class="row border mt-1">
 
         <div class="col-3">
@@ -63,7 +61,6 @@
                 </span>
             </div>
         </div>
-            <%--            <div class="col">--%>
         <div class="col">
             <div class="row">
                 <div class="col">

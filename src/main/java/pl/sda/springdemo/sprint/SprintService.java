@@ -60,4 +60,8 @@ public class SprintService {
         }
         return result;
     }
+
+    public Sprint findById(Long sprintId) {
+        return sprintRepositoryJPA.findById(sprintId).get();
+    }
 }

@@ -201,6 +201,8 @@ public class TaskController {
 
         model.addAttribute("projectsInWeek", projectsInWeekSorted);//
         model.addAttribute("sprints", sprintService.findAllSprints() );//
+        model.addAttribute("theSprint", sprintService.findById(sprintId) );//
+
 
         model.addAttribute("tasks", taskList);
         model.addAttribute("now", LocalDate.now());

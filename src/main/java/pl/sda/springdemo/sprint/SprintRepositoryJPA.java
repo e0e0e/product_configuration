@@ -19,9 +19,9 @@ public interface SprintRepositoryJPA extends JpaRepository<Sprint,Long> {
     @Query(value = "SELECT * FROM sprint order by start_date", nativeQuery = true)
     List<Sprint> findAllSprintsSorted();
 
-    @Query(value = "SELECT top 1 id FROM sprint where start_date>(Select start_date from sprint where id like ?1) order by start_date", nativeQuery = true)
+    @Query(value = "SELECT top 1 id FROM sprint where start_date>(Select start_date from sprint where id like ?1) order by start_date asc ", nativeQuery = true)
     Long findNextSprint(long sprintId);
 
-    @Query(value = "SELECT top 1 id FROM sprint where start_date<(Select start_date from sprint where id like ?1) order by start_date", nativeQuery = true)
+    @Query(value = "SELECT top 1 id FROM sprint where start_date<(Select start_date from sprint where id like ?1) order by start_date desc", nativeQuery = true)
     Long findPreviousSprint(long sprintId);
 }
