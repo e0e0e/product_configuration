@@ -28,10 +28,12 @@ public class SprintController {
     public String showSprintList(Model model) {
 
 
-//        model.addAttribute("loggedUser", userService.getLogged());
-        // System.out.println("eee user: "+userService.findUserByName("eee").getUsername());
         model.addAttribute("sprints", sprintService.findAllSprints());
-        return "sprint/sprintList";
+
+        model.addAttribute("title","Sprint List");
+        model.addAttribute("path","sprint/sprintList");
+
+        return "main";
     }
 
     @PostMapping("sprint")
@@ -44,6 +46,17 @@ public class SprintController {
 
         sprintService.saveSprint(from, to, storyPoints);
         model.addAttribute("sprints", sprintService.findAllSprints());
-        return "sprint/sprintList";
+        model.addAttribute("title","Sprint List");
+        model.addAttribute("path","sprint/sprintList");
+
+        return "main";
+    }
+
+    @GetMapping("sprint/delete")
+    public String deleteSprint(@RequestParam long sprintId,
+                               Model model){
+        sprintService.deleteSprint(sprintId);
+
+        return "redirect: sprintList";
     }
 }

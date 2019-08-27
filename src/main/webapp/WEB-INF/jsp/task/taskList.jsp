@@ -25,7 +25,7 @@
                 <td>${task.description} </td>
                 <td>${task.sprint.startDate} </td>
                 <td>${task.sprint.finishDate} </td>
-                <td>${task.sprint.planedStoryPoints} </td>
+                <td>${task.storyPoints} </td>
                 <td>${task.user.username} </td>
                 <td>${task.progress}
                     <a href="/task/progressChange?taskId=${task.id}" class="btn btn-outline-light btn-sm text-right">

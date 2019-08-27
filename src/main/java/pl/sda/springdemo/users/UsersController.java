@@ -43,13 +43,11 @@ public class UsersController {
                           @RequestParam String username,
                           Model model) {
         try {
-            //dodanie usera
             boolean result = userService.create(login, passwordEncoder.encode(password), email, username);
             model.addAttribute("createUserResult", result);
             List<User> users = userService.findAll();
             model.addAttribute("users", users);
 
-            //System.out.println(email + " " + password + " " + datfB);
             return "redirect:/taskWall";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());
@@ -64,7 +62,6 @@ public class UsersController {
         userService.delete(userId);
         model.addAttribute("users", userService.findAll());
         model.addAttribute("deleteUserResults", true);
-//        model.addAttribute("loggedUser", userService.getLogged());
         return "user/list";
 
     }
@@ -73,7 +70,6 @@ public class UsersController {
     public String listUsers(Model model) {
 
         model.addAttribute("users", userService.findAll());
-//        model.addAttribute("loggedUser", userService.getLogged());
         return "user/list";
     }
 

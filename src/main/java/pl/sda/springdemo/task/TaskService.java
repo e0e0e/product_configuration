@@ -1,6 +1,7 @@
 package pl.sda.springdemo.task;
 
 import org.springframework.stereotype.Service;
+import pl.sda.springdemo.Wall;
 import pl.sda.springdemo.progres.Progress;
 import pl.sda.springdemo.projects.Project;
 import pl.sda.springdemo.projects.ProjectRepository;
@@ -10,7 +11,8 @@ import pl.sda.springdemo.users.User;
 import pl.sda.springdemo.users.UserRepository;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class TaskService {
@@ -28,13 +30,15 @@ public class TaskService {
     }
 
 
-    public boolean create(String name, String description, LocalDate startDate, LocalDate finishDate,
+    public boolean create(String name, String description, long sprintId,
                           Integer storyPoints, Integer weight, User user, Project project) {
-        Sprint sprint = new Sprint(startDate, finishDate, storyPoints);
 
-        sprintRepositoryJPA.save(sprint);
-        Task task = new Task(name, description, sprint, weight, user, Progress.TO_DO, project);
-        sprint.setTask(task);
+
+        Sprint sprint = sprintRepositoryJPA.findById(sprintId).get();
+
+        // sprintRepositoryJPA.save(sprint);
+        Task task = new Task(name, description, sprint, storyPoints, weight, user, Progress.TO_DO, project);
+        sprint.getTasks().add(task);
 
         user.getTasks().add(task);
 
@@ -47,6 +51,16 @@ public class TaskService {
         return created.getId() != null;
     }
 
+    public static LocalDate LocalDateFromWeekYearAndWeek(int weekYear,
+                                                         int weekOfWeekYear,
+                                                         int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.setWeekDate(weekYear, weekOfWeekYear, day);
+        LocalDate localDate = LocalDateTime.ofInstant(cal.toInstant(), cal.getTimeZone().toZoneId()).toLocalDate();
+
+        return localDate;
+    }
+
     public List<Task> findAll() {
         return taskRepository.findAll();
     }
@@ -56,6 +70,7 @@ public class TaskService {
     }
 
     public void changeProgress(Long taskId, String progress) {
+
         Task task = taskRepository.findById(taskId).get();
         for (Progress p : Progress.values()) {
             if (p.toString().equals(progress)) {
@@ -98,5 +113,53 @@ public class TaskService {
 
     public List<Task> findAllBeforeWeek(int weekNumber) {
         return taskRepository.findAllBeforeWeek(weekNumber);
+    }
+
+    public Long getPresentSprint() {
+
+        Long result = taskRepository.getPresentSprint();
+
+        if (result == null) {
+            result = taskRepository.getNearestSprint();
+
+        }
+        return result;
+    }
+
+    public List<Task> findAllFromSprint(Long sprintId) {
+        return taskRepository.findAllFromSprint(sprintId);
+    }
+
+
+    public List<Task> findAllFromSprintAndBeforeNotFinished(Long sprintId) {
+
+            return taskRepository.findAllFromSprintAndBeforeNotFinished(sprintId);
+    }
+
+    public Wall prepareTaskWall(Long sprintId) {
+        if (sprintId == null) {
+            sprintId = getPresentSprint();
+        }
+
+
+        List<Task> taskList = findAllFromSprintAndBeforeNotFinished(sprintId);
+
+        List<Task> tasksInWeek = taskList;
+
+
+        Map<Project, List<Task>> projectsInWeek = new HashMap<>();
+        for (Task task : tasksInWeek) {
+            if (projectsInWeek.containsKey(task.getProject())) {
+                projectsInWeek.get(task.getProject()).add(task);
+            } else {
+                List<Task> listForProject = new ArrayList<>();
+                listForProject.add(task);
+                projectsInWeek.put(task.getProject(), listForProject);
+
+            }
+        }
+        TreeMap<Project, List<Task>> projectsInWeekSorted = new TreeMap<>(projectsInWeek);
+
+        return new Wall(projectsInWeekSorted, sprintRepositoryJPA.findAllSprintsSorted(),sprintRepositoryJPA.findById(sprintId).get());
     }
 }

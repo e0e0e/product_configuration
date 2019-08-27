@@ -17,8 +17,18 @@ public class Task {
     private String name;
     private String description;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne()
     private Sprint sprint;
+
+    public Integer getStoryPoints() {
+        return storyPoints;
+    }
+
+    public void setStoryPoints(Integer storyPoints) {
+        this.storyPoints = storyPoints;
+    }
+
+    private Integer storyPoints;
 
     private Integer weight;
 
@@ -35,10 +45,11 @@ public class Task {
 
 
 
-    public Task(String name, String description, Sprint sprint, Integer weight, User user,Progress progress, Project project) {
+    public Task(String name, String description, Sprint sprint, Integer storyPoints, Integer weight, User user,Progress progress, Project project) {
         this.name = name;
         this.description = description;
         this.sprint = sprint;
+        this.storyPoints=storyPoints;
         this.weight = weight;
         this.progress=progress;
         this.user = user;
