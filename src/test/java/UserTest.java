@@ -1,5 +1,5 @@
 import org.junit.Test;
-import pl.sda.springdemo.users.User;
+import pl.sda.pms.users.User;
 
 import static org.junit.Assert.assertEquals;
 

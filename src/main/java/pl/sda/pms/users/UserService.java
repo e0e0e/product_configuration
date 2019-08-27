@@ -1,4 +1,4 @@
-package pl.sda.springdemo.users;
+package pl.sda.pms.users;
 
 
 import org.springframework.stereotype.Service;

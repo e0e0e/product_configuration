@@ -1,9 +1,9 @@
-package pl.sda.springdemo.task;
+package pl.sda.pms.task;
 
-import pl.sda.springdemo.progres.Progress;
-import pl.sda.springdemo.projects.Project;
-import pl.sda.springdemo.sprint.Sprint;
-import pl.sda.springdemo.users.User;
+import pl.sda.pms.progres.Progress;
+import pl.sda.pms.projects.Project;
+import pl.sda.pms.sprint.Sprint;
+import pl.sda.pms.users.User;
 
 import javax.persistence.*;
 

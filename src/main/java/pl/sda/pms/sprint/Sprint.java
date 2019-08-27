@@ -1,6 +1,6 @@
-package pl.sda.springdemo.sprint;
+package pl.sda.pms.sprint;
 
-import pl.sda.springdemo.task.Task;
+import pl.sda.pms.task.Task;
 
 import javax.persistence.*;
 import java.time.LocalDate;

@@ -1,11 +1,11 @@
-package pl.sda.springdemo.config;
+package pl.sda.pms.config;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import pl.sda.springdemo.users.User;
-import pl.sda.springdemo.users.UserRepository;
+import pl.sda.pms.users.User;
+import pl.sda.pms.users.UserRepository;
 
 
 import java.util.Collections;

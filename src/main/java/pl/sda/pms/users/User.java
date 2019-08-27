@@ -1,7 +1,7 @@
-package pl.sda.springdemo.users;
+package pl.sda.pms.users;
 
-import pl.sda.springdemo.projects.Project;
-import pl.sda.springdemo.task.Task;
+import pl.sda.pms.projects.Project;
+import pl.sda.pms.task.Task;
 
 import javax.persistence.*;
 import java.util.Comparator;

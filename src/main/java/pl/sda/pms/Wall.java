@@ -1,8 +1,8 @@
-package pl.sda.springdemo;
+package pl.sda.pms;
 
-import pl.sda.springdemo.projects.Project;
-import pl.sda.springdemo.sprint.Sprint;
-import pl.sda.springdemo.task.Task;
+import pl.sda.pms.projects.Project;
+import pl.sda.pms.sprint.Sprint;
+import pl.sda.pms.task.Task;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,4 +1,4 @@
-package pl.sda.springdemo.sprint;
+package pl.sda.pms.sprint;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package pl.sda.springdemo.projects;
+package pl.sda.pms.projects;
 
 
 import org.springframework.http.MediaType;
@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pl.sda.springdemo.task.Task;
-import pl.sda.springdemo.task.TaskService;
-import pl.sda.springdemo.users.User;
-import pl.sda.springdemo.users.UserService;
+import pl.sda.pms.task.Task;
+import pl.sda.pms.task.TaskService;
+import pl.sda.pms.users.User;
+import pl.sda.pms.users.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
