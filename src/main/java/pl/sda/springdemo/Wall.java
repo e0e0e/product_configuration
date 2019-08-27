@@ -1,71 +1,53 @@
 package pl.sda.springdemo;
 
+import pl.sda.springdemo.projects.Project;
+import pl.sda.springdemo.sprint.Sprint;
 import pl.sda.springdemo.task.Task;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.TreeMap;
 
 public class Wall {
 
 
-    public List<Task> tasksToDo;
-    private List<Task> tasksInProgress;
-    private List<Task> tasksDone;
-    private List<Task> remainingTasksToDo;
-    private List<Task> remainingTasksInProgress;
-    private List<Task> remainingTasksDone;
+     private TreeMap<Project, List<Task>> projectsInWeek;
+     private List<Sprint> sprints;
+     private Sprint theSprint;
+     private LocalDate now;
 
-
-    public Wall() {
+    public Wall(TreeMap<Project, List<Task>> projectsInWeek, List<Sprint> sprints, Sprint theSprint) {
+        this.projectsInWeek = projectsInWeek;
+        this.sprints = sprints;
+        this.theSprint = theSprint;
+        this.now = LocalDate.now();
     }
 
-    public List<Task> getRemainingTasksToDo() {
-        return remainingTasksToDo;
+    public LocalDate getNow() {
+        return now;
     }
 
-    public void setRemainingTasksToDo(List<Task> remainingTasksToDo) {
-        this.remainingTasksToDo = remainingTasksToDo;
+    public TreeMap<Project, List<Task>> getprojectsInWeek() {
+        return projectsInWeek;
     }
 
-    public List<Task> getRemainingTasksInProgress() {
-        return remainingTasksInProgress;
+    public void setprojectsInWeek(TreeMap<Project, List<Task>> projectsInWeekSorted) {
+        this.projectsInWeek = projectsInWeekSorted;
     }
 
-    public void setRemainingTasksInProgress(List<Task> remainingTasksInProgress) {
-        this.remainingTasksInProgress = remainingTasksInProgress;
+    public List<Sprint> getSprints() {
+        return sprints;
     }
 
-    public List<Task> getRemainingTasksDone() {
-        return remainingTasksDone;
+    public void setSprints(List<Sprint> sprints) {
+        this.sprints = sprints;
     }
 
-    public void setRemainingTasksDone(List<Task> remainingTasksDone) {
-        this.remainingTasksDone = remainingTasksDone;
+    public Sprint getTheSprint() {
+        return theSprint;
     }
 
-
-
-
-    public List<Task> getTasksToDo() {
-        return tasksToDo;
-    }
-
-    public void setTasksToDo(List<Task> tasksToDo) {
-        this.tasksToDo = tasksToDo;
-    }
-
-    public List<Task> getTasksInProgress() {
-        return tasksInProgress;
-    }
-
-    public void setTasksInProgress(List<Task> tasksInProgress) {
-        this.tasksInProgress = tasksInProgress;
-    }
-
-    public List<Task> getTasksDone() {
-        return tasksDone;
-    }
-
-    public void setTasksDone(List<Task> tasksDone) {
-        this.tasksDone = tasksDone;
+    public void setTheSprint(Sprint theSprint) {
+        this.theSprint = theSprint;
     }
 }

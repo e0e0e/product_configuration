@@ -135,4 +135,31 @@ public class TaskService {
 
             return taskRepository.findAllFromSprintAndBeforeNotFinished(sprintId);
     }
+
+    public Wall prepareTaskWall(Long sprintId) {
+        if (sprintId == null) {
+            sprintId = getPresentSprint();
+        }
+
+
+        List<Task> taskList = findAllFromSprintAndBeforeNotFinished(sprintId);
+
+        List<Task> tasksInWeek = taskList;
+
+
+        Map<Project, List<Task>> projectsInWeek = new HashMap<>();
+        for (Task task : tasksInWeek) {
+            if (projectsInWeek.containsKey(task.getProject())) {
+                projectsInWeek.get(task.getProject()).add(task);
+            } else {
+                List<Task> listForProject = new ArrayList<>();
+                listForProject.add(task);
+                projectsInWeek.put(task.getProject(), listForProject);
+
+            }
+        }
+        TreeMap<Project, List<Task>> projectsInWeekSorted = new TreeMap<>(projectsInWeek);
+
+        return new Wall(projectsInWeekSorted, sprintRepositoryJPA.findAllSprintsSorted(),sprintRepositoryJPA.findById(sprintId).get());
+    }
 }

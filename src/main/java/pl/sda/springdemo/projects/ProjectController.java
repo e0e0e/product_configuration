@@ -110,7 +110,6 @@ public class ProjectController {
         projectService.delete(projectId);
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("deleteProjectResults", true);
-//        model.addAttribute("loggedUser", userService.getLogged());
 
         model.addAttribute("title", "Project List");
         model.addAttribute("path", "project/projectList");

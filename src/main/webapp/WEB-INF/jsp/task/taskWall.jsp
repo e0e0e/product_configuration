@@ -7,7 +7,7 @@
 <div class="container">
 
     <label>Sprint:</label>
-    <div style="display: inline-block"><a href="/taskWallPrevious?sprintId=${theSprint.id}"
+    <div style="display: inline-block"><a href="/taskWallPrevious?sprintId=${wall.theSprint.id}"
                                           class="btn btn-outline-info btn-sm">
         <span class="glyphicon glyphicon-triangle-left"></span></a></div>
 
@@ -16,23 +16,23 @@
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                ${theSprint.startDate} - ${theSprint.finishDate}
+                ${wall.theSprint.startDate} - ${wall.theSprint.finishDate}
 
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <c:forEach var="sprint" items="${sprints}">
+                <c:forEach var="sprint" items="${wall.sprints}">
                     <a class="dropdown-item" href="/taskWall?sprintId=${sprint.id}">${sprint.startDate}
                         - ${sprint.finishDate}</a>
                 </c:forEach>
             </div>
         </div>
     </div>
-    <div style="display: inline-block"><a href="/taskWallNext?sprintId=${theSprint.id}"
+    <div style="display: inline-block"><a href="/taskWallNext?sprintId=${wall.theSprint.id}"
                                           class="btn btn-outline-info btn-sm">
         <span class="glyphicon glyphicon-triangle-right"></span></a></div>
 
 
-    <div>Story Points: ${theSprint.planedStoryPoints}</div>
+    <div>Story Points: ${wall.theSprint.planedStoryPoints}</div>
 
     <div class="row">
         <div class="col-3 bg-light border sm-2 m-1">
@@ -50,7 +50,7 @@
 
 
     </div>
-    <c:forEach var="project" items="${projectsInWeek}">
+    <c:forEach var="project" items="${wall.projectsInWeek}">
     <div class="row border mt-1">
 
         <div class="col-3">
@@ -70,12 +70,12 @@
                     <c:if test="${task.progress=='TO_DO'}">
 
 
-                    <c:if test="${task.sprint.finishDate<now}">
+                    <c:if test="${task.sprint.finishDate<wall.now}">
                     <div class="card bg-danger m-2 text-center p-1">
-                        Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,now)} days from ${task.sprint.finishDate}
+                        Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days from ${task.sprint.finishDate}
 
                     </c:if>
-                        <c:if test="${!(task.sprint.finishDate<now)}">
+                        <c:if test="${!(task.sprint.finishDate<wall.now)}">
                         <div class="card bg-secondary m-2 text-center p-1">
                             </c:if>
 
@@ -110,11 +110,11 @@
                         <c:forEach var="task" items="${project.value}">
 
                             <c:if test="${task.progress=='IN_PROGRESS'}">
-                            <c:if test="${task.sprint.finishDate<now}">
+                            <c:if test="${task.sprint.finishDate<wall.now}">
                             <div class="card bg-warning m-2 text-center p-1">
-                                Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,now)} days from ${task.sprint.finishDate}
+                                Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days from ${task.sprint.finishDate}
                                 </c:if>
-                                <c:if test="${!(task.sprint.finishDate<now)}">
+                                <c:if test="${!(task.sprint.finishDate<wall.now)}">
                                 <div class="card bg-secondary m-2 text-center p-1">
                                     </c:if>
 
@@ -163,7 +163,7 @@
                                         <div><span
                                                 class="glyphicon glyphicon-star"></span>${task.storyPoints}
 
-                                            responsible: <a href="/userProfile?userId=${task.user.id}"
+                                            responsible: <a href="F/userProfile?userId=${task.user.id}"
                                                             class="btn btn-outline-light"> ${task.user.username}</a>
                                                 <%--                                            <div>${task.sprint.startDate}</div>--%>
 
