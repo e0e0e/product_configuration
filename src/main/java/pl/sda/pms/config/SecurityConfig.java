@@ -1,4 +1,4 @@
-package pl.sda.springdemo.config;
+package pl.sda.pms.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

@@ -1,4 +1,4 @@
-package pl.sda.springdemo;
+package pl.sda.pms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

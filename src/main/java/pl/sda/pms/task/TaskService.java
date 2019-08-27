@@ -1,14 +1,14 @@
-package pl.sda.springdemo.task;
+package pl.sda.pms.task;
 
 import org.springframework.stereotype.Service;
-import pl.sda.springdemo.Wall;
-import pl.sda.springdemo.progres.Progress;
-import pl.sda.springdemo.projects.Project;
-import pl.sda.springdemo.projects.ProjectRepository;
-import pl.sda.springdemo.sprint.Sprint;
-import pl.sda.springdemo.sprint.SprintRepositoryJPA;
-import pl.sda.springdemo.users.User;
-import pl.sda.springdemo.users.UserRepository;
+import pl.sda.pms.Wall;
+import pl.sda.pms.progres.Progress;
+import pl.sda.pms.projects.Project;
+import pl.sda.pms.projects.ProjectRepository;
+import pl.sda.pms.sprint.Sprint;
+import pl.sda.pms.sprint.SprintRepositoryJPA;
+import pl.sda.pms.users.User;
+import pl.sda.pms.users.UserRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

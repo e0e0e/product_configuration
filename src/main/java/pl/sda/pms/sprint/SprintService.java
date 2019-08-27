@@ -1,7 +1,7 @@
-package pl.sda.springdemo.sprint;
+package pl.sda.pms.sprint;
 
 import org.springframework.stereotype.Service;
-import pl.sda.springdemo.users.User;
+import pl.sda.pms.users.User;
 
 import java.time.LocalDate;
 import java.util.List;

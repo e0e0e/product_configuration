@@ -1,17 +1,17 @@
-package pl.sda.springdemo.task;
+package pl.sda.pms.task;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.sda.springdemo.progres.Progress;
-import pl.sda.springdemo.projects.Project;
-import pl.sda.springdemo.projects.ProjectService;
+import pl.sda.pms.progres.Progress;
+import pl.sda.pms.projects.Project;
+import pl.sda.pms.projects.ProjectService;
 
-import pl.sda.springdemo.sprint.SprintService;
-import pl.sda.springdemo.users.User;
-import pl.sda.springdemo.users.UserService;
+import pl.sda.pms.sprint.SprintService;
+import pl.sda.pms.users.User;
+import pl.sda.pms.users.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;

@@ -1,12 +1,11 @@
-package pl.sda.springdemo.task;
+package pl.sda.pms.task;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pl.sda.springdemo.projects.Project;
+import pl.sda.pms.projects.Project;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface TaskRepository extends CrudRepository<Task,Long> {

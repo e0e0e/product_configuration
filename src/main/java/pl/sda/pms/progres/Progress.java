@@ -1,4 +1,4 @@
-package pl.sda.springdemo.progres;
+package pl.sda.pms.progres;
 
 public enum Progress {
     TO_DO,

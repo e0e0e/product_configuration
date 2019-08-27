@@ -1,6 +1,6 @@
-package pl.sda.springdemo.projects;
+package pl.sda.pms.projects;
 
-import pl.sda.springdemo.users.User;
+import pl.sda.pms.users.User;
 
 import javax.persistence.*;
 import java.util.Set;

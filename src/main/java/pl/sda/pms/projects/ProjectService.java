@@ -1,8 +1,7 @@
-package pl.sda.springdemo.projects;
+package pl.sda.pms.projects;
 
 import org.springframework.stereotype.Service;
-import pl.sda.springdemo.task.Task;
-import pl.sda.springdemo.users.User;
+import pl.sda.pms.users.User;
 
 import java.util.List;
 import java.util.Optional;

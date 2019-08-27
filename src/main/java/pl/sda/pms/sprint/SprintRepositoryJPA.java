@@ -1,9 +1,9 @@
-package pl.sda.springdemo.sprint;
+package pl.sda.pms.sprint;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import pl.sda.springdemo.users.User;
+import pl.sda.pms.users.User;
 
 import java.util.List;
 
