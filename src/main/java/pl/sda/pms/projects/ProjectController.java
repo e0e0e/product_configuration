@@ -1,20 +1,22 @@
 package pl.sda.pms.projects;
 
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import pl.sda.pms.task.Task;
 import pl.sda.pms.task.TaskService;
 import pl.sda.pms.users.User;
 import pl.sda.pms.users.UserService;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,7 +25,7 @@ public class ProjectController {
     private final UserService userService;
     private final ProjectService projectService;
     private final TaskService taskService;
-
+private ServletContext servletContext;
 
     public ProjectController(UserService userService, ProjectService projectService, TaskService taskService) {
         this.userService = userService;
@@ -204,6 +206,13 @@ public class ProjectController {
     public String editProject(@RequestParam Long projectId) {
 
         return null;
+    }
+
+    @RequestMapping(value = "/image", method = RequestMethod.GET)
+    public void getImageAsByteArray(HttpServletResponse response) throws IOException {
+        final InputStream in = servletContext.getResourceAsStream("/resources/images/icons/png/boy.png");
+        response.setContentType(MediaType.IMAGE_PNG_VALUE);
+        IOUtils.copy(in, response.getOutputStream());
     }
 
 

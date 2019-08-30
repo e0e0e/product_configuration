@@ -1,29 +1,46 @@
 package pl.sda.pms.sprint;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 
 @Controller
 public class SprintController {
     private SprintService sprintService;
+    private ServletContext servletContext;
 
     public SprintController(SprintService sprintService) {
         this.sprintService = sprintService;
     }
 
     @GetMapping("sprint")
-    public String addSprintForm(Model model) {
+    public String addSprintForm(HttpServletRequest request,
+                                Model model) {
+
+
         model.addAttribute("title","Add Sprint");
         model.addAttribute("path","sprint/sprint");
 
         return "main";
     }
+
+    @RequestMapping(value = "/avatar", method = RequestMethod.GET)
+    public void getImageAsByteArray(HttpServletResponse response) throws IOException {
+        InputStream in = servletContext.getResourceAsStream("/WEB-INF/jsp/resources/images/icons/png.boy.png");
+        response.setContentType(MediaType.IMAGE_PNG_VALUE);
+        IOUtils.copy(in, response.getOutputStream());
+    }
+
     @GetMapping("sprintList")
     public String showSprintList(Model model) {
 

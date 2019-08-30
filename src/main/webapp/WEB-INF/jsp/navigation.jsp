@@ -22,6 +22,7 @@
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/sprint">Sprint</a></li>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/sprintList">Sprint List</a></li>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/taskWall">Wall</a></li>
+                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/avatars">avatars</a></li>
                     <%--                    <li class="nav-item"> <a class="nav-link text-light font-weight-bold" href="/tasks">Add Task</a> </li>--%>
                     <%--                    <li class="nav-item"> <a class="nav-link text-light font-weight-bold" href="/taskList">Task List</a> </li>--%>
                 </ul>
