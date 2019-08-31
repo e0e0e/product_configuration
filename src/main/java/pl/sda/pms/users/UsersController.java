@@ -95,8 +95,7 @@ public class UsersController {
 
     @GetMapping("/avatars")
     public String showAvatars(Model model) throws IOException {
-        Set<String> filesList=listFilesUsingFileWalk("src/main/webapp/resources/images/icons/png/");
-
+        Set<String> filesList = listFilesUsingFileWalk("src/main/webapp/resources/images/icons/png/");
 
 
         model.addAttribute("fileList", filesList);
@@ -105,19 +104,14 @@ public class UsersController {
         return "main";
     }
 
-    public Set<String> listFilesUsingFileWalkAndVisitor(String dir) throws IOException {
-        Set<String> fileList = new HashSet<>();
-        Files.walkFileTree(Paths.get(dir), new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
-                    throws IOException {
-                if (!Files.isDirectory(file)) {
-                    fileList.add(file.getFileName().toString());
-                }
-                return FileVisitResult.CONTINUE;
-            }
-        });
-        return fileList;
+    @GetMapping("/users/addAvatars")
+    public String addAvatar(@RequestParam String image,
+                            @RequestParam long userId,
+                            Model model) {
+
+
+        userService.addAvatar(userId,image);
+        return "redirect:/userProfile?userId="+userId;
     }
 
     public Set<String> listFilesUsingFileWalk(String dir) throws IOException {

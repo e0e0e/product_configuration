@@ -3,8 +3,8 @@
 <div class="row">
 <c:forEach var="file" items="${fileList}">
     <div class="col-2">
-        <a href="/users/addAvatars?image=${file}">
-            <img class="img-circle bg-dark p-1 m-1" src="/resources/images/icons/png/${file}" height="100"/>
+        <a href="/users/addAvatars?image=${file}&userId=${param.userId}">
+            <img class="img-circle bg-dark p-1 m-1" src="${resourcePath}${file}" height="100" width="100"/>
         </a>
     </div>
 </c:forEach>

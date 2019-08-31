@@ -24,30 +24,6 @@
 </c:if>
 
 
-<%--<table>--%>
-<%--    <tr>--%>
-<%--        <th>Id</th>--%>
-<%--        <th>Email</th>--%>
-<%--        <th>Login</th>--%>
-<%--        <th>User Name</th>--%>
-<%--        <th>Operations</th>--%>
-<%--        <th>Admin in projects</th>--%>
-<%--    </tr>--%>
-<%--    <c:forEach var="user" items="${users}">--%>
-
-
-<%--        <tr>--%>
-<%--            <td>${user.id}</td>--%>
-<%--            <td> ${user.email} </td>--%>
-<%--            <td>${user.login} </td>--%>
-<%--            <td>${user.username}</td>--%>
-<%--            <td><a href="/users/delete?userId=${user.id}">Delete</a></td>--%>
-<%--            <td>${user.toString()}</td>--%>
-<%--        </tr>--%>
-
-
-<%--    </c:forEach>--%>
-<%--</table>--%>
 
 <div class="container">
 

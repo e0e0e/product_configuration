@@ -13,6 +13,7 @@ import pl.sda.pms.users.User;
 import pl.sda.pms.users.UserService;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -76,9 +77,11 @@ private ServletContext servletContext;
 
     @GetMapping("users/projectList")
     public String listProjects(HttpServletRequest request,
+                               HttpServletResponse  response,
                                Model model) {
 
         String loggedUserName = request.getRemoteUser();
+        //response.addCookie(new Cookie("afadfa","asdf"));
 
         List<Project> projects = projectService.findAllWhereAdmin(loggedUserName);
         List<Project> projectsWhereParticipate = projectService.findAllWhereParticipate(loggedUserName);
@@ -208,12 +211,12 @@ private ServletContext servletContext;
         return null;
     }
 
-    @RequestMapping(value = "/image", method = RequestMethod.GET)
-    public void getImageAsByteArray(HttpServletResponse response) throws IOException {
-        final InputStream in = servletContext.getResourceAsStream("/resources/images/icons/png/boy.png");
-        response.setContentType(MediaType.IMAGE_PNG_VALUE);
-        IOUtils.copy(in, response.getOutputStream());
-    }
+//    @RequestMapping(value = "/image", method = RequestMethod.GET)
+//    public void getImageAsByteArray(HttpServletResponse response) throws IOException {
+//        final InputStream in = servletContext.getResourceAsStream("/resources/images/icons/png/boy.png");
+//        response.setContentType(MediaType.IMAGE_PNG_VALUE);
+//        IOUtils.copy(in, response.getOutputStream());
+//    }
 
 
 }

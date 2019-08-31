@@ -1,6 +1,13 @@
 <div class="card text-dark bg-warning m-1">
 
-    <div class="card-header bg-info text-left text-light"><h4>User name: ${user.username}</h4></div>
+    <div class="card-header bg-info text-left text-light"><h4>User name: ${user.username}</h4>
+<div>
+    <img class="img-circle bg-dark p-1 m-1" src="${resourcePath}${user.avatar}" height="100" width="100"/>
+</div>
+        <div>
+            <a class="nav-link text-light font-weight-bold" href="/avatars?userId=${user.id}">Edit Avatar</a>
+        </div>
+    </div>
 
     <div class="card-body ">
 
@@ -12,14 +19,14 @@
 
     </div>
 
-<%--    <div class="card-footer bg-info text-right text-danger">--%>
+    <%--    <div class="card-footer bg-info text-right text-danger">--%>
 
-<%--        <a href="/project/user?projectId=${user.id}" class="btn btn-outline-light btn-sm">--%>
-<%--            <span class="glyphicon glyphicon-trash"></span></a>--%>
+    <%--        <a href="/project/user?projectId=${user.id}" class="btn btn-outline-light btn-sm">--%>
+    <%--            <span class="glyphicon glyphicon-trash"></span></a>--%>
 
-<%--        <a href="/project/edit?projectId=${user.id}" class="btn btn-outline-light btn-sm">--%>
-<%--            <span class="glyphicon glyphicon-edit"></span></a>--%>
+    <%--        <a href="/project/edit?projectId=${user.id}" class="btn btn-outline-light btn-sm">--%>
+    <%--            <span class="glyphicon glyphicon-edit"></span></a>--%>
 
-<%--    </div>--%>
+    <%--    </div>--%>
 
 </div>

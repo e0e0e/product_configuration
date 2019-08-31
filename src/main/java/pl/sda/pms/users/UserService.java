@@ -99,4 +99,8 @@ public class UserService {
     return userRepository
             .findUsersByEmailWithException(filterUserByEmail,loggedUserName);
     }
+
+    public void addAvatar(long userId, String image) {
+        userRepository.addAvatar(userId,image);
+    }
 }

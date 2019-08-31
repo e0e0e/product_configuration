@@ -25,8 +25,14 @@ class DbUserDetailsService implements UserDetailsService {
             .orElseThrow(() -> new IllegalArgumentException("Invalid username"));
 
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-            Collections.emptyList());
+//        MyUserDetails myUserDetails=new MyUserDetails();
+//        myUserDetails.setUser(user);
+
+
+        //       return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+//            Collections.emptyList());
+      return new MyUserDetails(user);
+        }
     }
-}
+
 /**/

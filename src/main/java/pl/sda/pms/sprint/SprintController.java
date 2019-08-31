@@ -34,12 +34,12 @@ public class SprintController {
         return "main";
     }
 
-    @RequestMapping(value = "/avatar", method = RequestMethod.GET)
-    public void getImageAsByteArray(HttpServletResponse response) throws IOException {
-        InputStream in = servletContext.getResourceAsStream("/WEB-INF/jsp/resources/images/icons/png.boy.png");
-        response.setContentType(MediaType.IMAGE_PNG_VALUE);
-        IOUtils.copy(in, response.getOutputStream());
-    }
+//    @RequestMapping(value = "/avatar", method = RequestMethod.GET)
+//    public void getImageAsByteArray(HttpServletResponse response) throws IOException {
+//        InputStream in = servletContext.getResourceAsStream("/WEB-INF/jsp/resources/images/icons/png.boy.png");
+//        response.setContentType(MediaType.IMAGE_PNG_VALUE);
+//        IOUtils.copy(in, response.getOutputStream());
+//    }
 
     @GetMapping("sprintList")
     public String showSprintList(Model model) {

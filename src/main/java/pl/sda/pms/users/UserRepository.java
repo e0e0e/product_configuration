@@ -1,8 +1,10 @@
 package pl.sda.pms.users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,4 +25,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query(value = "SELECT * FROM user WHERE email like %?1% and username Not like ?2", nativeQuery = true)
     List<User> findUsersByEmailWithException(String filterUserByEmail, String loggedUserName);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE user set avatar=?2 where id like ?1", nativeQuery = true)
+    void addAvatar(long userId, String image);
+
 }

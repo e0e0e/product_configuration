@@ -38,6 +38,16 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Set<Project> projectsParticipants;
 
+    @Column(columnDefinition = "varchar(255) default 'default.png'")
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public User() {
     }

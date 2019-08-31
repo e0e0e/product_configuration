@@ -22,8 +22,8 @@
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/sprint">Sprint</a></li>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/sprintList">Sprint List</a></li>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/taskWall">Wall</a></li>
-                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/avatars">avatars</a></li>
-                    <%--                    <li class="nav-item"> <a class="nav-link text-light font-weight-bold" href="/tasks">Add Task</a> </li>--%>
+    <%--                 <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/avatars">avatars</a></li>--%>
+             <%--                    <li class="nav-item"> <a class="nav-link text-light font-weight-bold" href="/tasks">Add Task</a> </li>--%>
                     <%--                    <li class="nav-item"> <a class="nav-link text-light font-weight-bold" href="/taskList">Task List</a> </li>--%>
                 </ul>
             </div>
@@ -31,6 +31,7 @@
         <div style="display: inline-block" class="text-white">
             <sec:authentication var="user" property="principal"/>
             logged as: <a href="/userProfile?username=${user.username}" class="btn btn-outline-light"> ${user.username}</a>
+            <img class="img-circle bg-dark p-1 m-1" src="${resourcePath}${user.avatar}" height="40" width="40"/>
             <a href="/logout"><span class="glyphicon glyphicon-log-out" style="color:white;"></span></a>
             <br/>
         </div>
