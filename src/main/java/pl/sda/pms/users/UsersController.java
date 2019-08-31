@@ -1,6 +1,8 @@
 package pl.sda.pms.users;
 
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -8,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.sda.pms.config.MyUserDetails;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -107,11 +112,16 @@ public class UsersController {
     @GetMapping("/users/addAvatars")
     public String addAvatar(@RequestParam String image,
                             @RequestParam long userId,
+                            HttpServletResponse response,
+                            HttpServletRequest request,
                             Model model) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
+        myUserDetails.setAvatar(image);
 
-        userService.addAvatar(userId,image);
-        return "redirect:/userProfile?userId="+userId;
+        userService.addAvatar(userId, image);
+        return "redirect:/userProfile?userId=" + userId;
     }
 
     public Set<String> listFilesUsingFileWalk(String dir) throws IOException {

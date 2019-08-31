@@ -68,4 +68,8 @@ public class MyUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void setAvatar(String image) {
+        user.setAvatar(image);
+    }
 }
