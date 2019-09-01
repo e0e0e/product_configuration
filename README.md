@@ -1,6 +1,5 @@
 # PMS
-> It is serwis that allowes menaging projectd, it was made for Software Deweloment Academy on Java from Scratch  course.
-
+> It is servis that allows managing projects.
 ## Table of contents
 * [General info](#general-info)
 * [Screenshots](#screenshots)
@@ -12,15 +11,14 @@
 * [Contact](#contact)
 
 ## General info
-Add more general information about project. What the purpose of the project is? Motivation?
-
+Project was made at the end of Java from scratch course, that I took in Software Development Academy.
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+![Example screenshot](./img/screenshot_1.png)
 
 ## Technologies
-* Tech 1 - version 1.0
-* Tech 2 - version 2.0
-* Tech 3 - version 3.0
+* Java
+* Spring
+* HTML
 
 ## Setup
 Describe how to install / setup your local environement / add link to demo version.
