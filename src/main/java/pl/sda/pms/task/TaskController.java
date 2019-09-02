@@ -116,12 +116,13 @@ public class TaskController {
     private String changeToNextProgress(@RequestParam Long taskId,
                                         @RequestParam String progress,
                                         @RequestParam(required = false) Integer backToWall,
+                                        @RequestParam(required = false) String previous,
                                         Model model) {
 
         taskService.changeProgress(taskId, progress);
 
         if (backToWall != null) {
-            return "redirect:/taskWall?sprintId=" + backToWall;
+            return "redirect:/taskWall?sprintId=" + backToWall+"&previous="+previous;
 
         } else {
             return "redirect:/project/show?projectId=" + taskService.findById(taskId).getProject().getId();
@@ -140,36 +141,49 @@ public class TaskController {
     }
 
     @GetMapping("/taskWallNext")
-    public String nextSprint(@RequestParam long sprintId) {
+    public String nextSprint(@RequestParam long sprintId,
+                             @RequestParam(required = false) String previous) {
+
+//        if(previous==null){
+//
+//        }
 
         long id = sprintService.findNextSprint(sprintId);
 
         if (id >= 0) {
-            return "redirect:/taskWall?sprintId=" + id;
+            return "redirect:/taskWall?sprintId=" + id+"&previous="+previous;
         }
 
-        return "redirect:/taskWall?sprintId=" + sprintId;
+        return "redirect:/taskWall?sprintId=" + sprintId+"&previous="+previous;
     }
 
     @GetMapping("/taskWallPrevious")
-    public String previousSprint(@RequestParam long sprintId) {
+    public String previousSprint(@RequestParam long sprintId,
+                                 @RequestParam(required = false) String previous) {
 
         long id = sprintService.findPreviousSprint(sprintId);
 
         if (id >= 0) {
-            return "redirect:/taskWall?sprintId=" + id;
+            return "redirect:/taskWall?sprintId=" + id+"&previous="+previous;
         }
 
-        return "redirect:/taskWall?sprintId=" + sprintId;
+        return "redirect:/taskWall?sprintId=" + sprintId+"&previous="+previous;
     }
 
 
     @GetMapping("/taskWall")
     private String showWall(@RequestParam(required = false) Long sprintId,
+                            @RequestParam(required = false) String previous,
                             Model model) {
 
+        if (previous == null) {
 
-        model.addAttribute("wall", taskService.prepareTaskWall(sprintId));
+            model.addAttribute("wall", taskService.prepareTaskWall(sprintId, "unfinished"));
+
+        } else {
+
+            model.addAttribute("wall", taskService.prepareTaskWall(sprintId, previous));
+        }
 
         model.addAttribute("title", "Wall");
         model.addAttribute("path", "task/taskWall");

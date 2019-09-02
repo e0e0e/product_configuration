@@ -81,7 +81,6 @@ private ServletContext servletContext;
                                Model model) {
 
         String loggedUserName = request.getRemoteUser();
-        //response.addCookie(new Cookie("afadfa","asdf"));
 
         List<Project> projects = projectService.findAllWhereAdmin(loggedUserName);
         List<Project> projectsWhereParticipate = projectService.findAllWhereParticipate(loggedUserName);

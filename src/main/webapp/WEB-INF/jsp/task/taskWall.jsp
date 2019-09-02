@@ -2,12 +2,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--<jsp:useBean id="chrono" class="java.time.temporal.ChronoUnit"/>--%>
-<%@ page import="java.time.temporal.ChronoUnit"%>
+<%@ page import="java.time.temporal.ChronoUnit" %>
 
 <div class="container">
 
     <label>Sprint:</label>
-    <div style="display: inline-block"><a href="/taskWallPrevious?sprintId=${wall.theSprint.id}"
+    <div style="display: inline-block"><a href="/taskWallPrevious?sprintId=${wall.theSprint.id}&previous=${param.previous}"
                                           class="btn btn-outline-info btn-sm">
         <span class="glyphicon glyphicon-triangle-left"></span></a></div>
 
@@ -21,15 +21,28 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <c:forEach var="sprint" items="${wall.sprints}">
-                    <a class="dropdown-item" href="/taskWall?sprintId=${sprint.id}">${sprint.startDate}
+                    <a class="dropdown-item" href="/taskWall?sprintId=${sprint.id}&previous=${param.previous}">${sprint.startDate}
                         - ${sprint.finishDate}</a>
                 </c:forEach>
             </div>
         </div>
     </div>
-    <div style="display: inline-block"><a href="/taskWallNext?sprintId=${wall.theSprint.id}"
+    <div style="display: inline-block"><a href="/taskWallNext?sprintId=${wall.theSprint.id}&previous=${param.previous}"
                                           class="btn btn-outline-info btn-sm">
         <span class="glyphicon glyphicon-triangle-right"></span></a></div>
+
+    <div class="float-right">
+        <c:if test="${param.previous=='unfinished' or empty param.previous}">
+            <a href="/taskWall?sprintId=${wall.theSprint.id}&previous=current"><span
+                    class="glyphicon glyphicon-eye-close"></span> unfinished</a>
+        </c:if>
+        <c:if test="${param.previous=='current'}">
+            <a href="/taskWall?sprintId=${wall.theSprint.id}&previous=unfinished"><span
+                    class="glyphicon glyphicon-eye-open"></span>
+                unfinished</a>
+        </c:if>
+
+    </div>
 
 
     <div>Story Points: ${wall.theSprint.planedStoryPoints}</div>
@@ -72,9 +85,10 @@
 
                     <c:if test="${task.sprint.finishDate<wall.now}">
                     <div class="card bg-danger m-2 text-center p-1">
-                        Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days from ${task.sprint.finishDate}
+                        Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days
+                        from ${task.sprint.finishDate}
 
-                    </c:if>
+                        </c:if>
                         <c:if test="${!(task.sprint.finishDate<wall.now)}">
                         <div class="card bg-secondary m-2 text-center p-1">
                             </c:if>
@@ -109,94 +123,95 @@
 
                         <c:forEach var="task" items="${project.value}">
 
-                            <c:if test="${task.progress=='IN_PROGRESS'}">
-                            <c:if test="${task.sprint.finishDate<wall.now}">
-                            <div class="card bg-warning m-2 text-center p-1">
-                                Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days from ${task.sprint.finishDate}
+                        <c:if test="${task.progress=='IN_PROGRESS'}">
+                        <c:if test="${task.sprint.finishDate<wall.now}">
+                        <div class="card bg-warning m-2 text-center p-1">
+                            Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days
+                            from ${task.sprint.finishDate}
+                            </c:if>
+                            <c:if test="${!(task.sprint.finishDate<wall.now)}">
+                            <div class="card bg-primary m-2 text-center p-1">
                                 </c:if>
-                                <c:if test="${!(task.sprint.finishDate<wall.now)}">
-                                <div class="card bg-secondary m-2 text-center p-1">
-                                    </c:if>
 
-                                    <div>
-                                        <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}"
-                                           class="btn btn-outline-light btn-sm">
-                                            <span class="glyphicon glyphicon-triangle-left"></span></a>
+                                <div>
+                                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}"
+                                       class="btn btn-outline-light btn-sm">
+                                        <span class="glyphicon glyphicon-triangle-left"></span></a>
 
-                                            ${task.name}
-                                        <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}"
-                                           class="btn btn-outline-light btn-sm">
-                                            <span class="glyphicon glyphicon-triangle-right"></span></a>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div><span
-                                                class="glyphicon glyphicon-star"></span>${task.storyPoints}
-
-                                            responsible: <a href="/userProfile?userId=${task.user.id}"
-                                                            class="btn btn-outline-light"> ${task.user.username}</a>
-
-
-                                        </div>
-                                    </div>
-
+                                        ${task.name}
+                                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}"
+                                       class="btn btn-outline-light btn-sm">
+                                        <span class="glyphicon glyphicon-triangle-right"></span></a>
                                 </div>
-                            </c:if>
+                                <div class="card-footer">
+                                    <div><span
+                                            class="glyphicon glyphicon-star"></span>${task.storyPoints}
 
-                        </c:forEach>
-
-                    </div>
-                    <div class="col">
-
-                        <c:forEach var="task" items="${project.value}">
-
-                            <c:if test="${task.progress=='DONE'}">
-                                <div class="card bg-success m-2 text-center p-1">
-
-                                    <div>
-                                        <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}"
-                                           class="btn btn-outline-light btn-sm">
-                                            <span class="glyphicon glyphicon-triangle-left"></span></a>
-                                            ${task.name}
-
-                                    </div>
-                                    <div class="card-footer">
-                                        <div><span
-                                                class="glyphicon glyphicon-star"></span>${task.storyPoints}
-
-                                            responsible: <a href="F/userProfile?userId=${task.user.id}"
-                                                            class="btn btn-outline-light"> ${task.user.username}</a>
-                                                <%--                                            <div>${task.sprint.startDate}</div>--%>
+                                        responsible: <a href="/userProfile?userId=${task.user.id}"
+                                                        class="btn btn-outline-light"> ${task.user.username}</a>
 
 
-                                        </div>
                                     </div>
                                 </div>
+
+                            </div>
                             </c:if>
 
-                        </c:forEach>
+                            </c:forEach>
 
+                        </div>
+                        <div class="col">
+
+                            <c:forEach var="task" items="${project.value}">
+
+                                <c:if test="${task.progress=='DONE'}">
+                                    <div class="card bg-success m-2 text-center p-1">
+
+                                        <div>
+                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}"
+                                               class="btn btn-outline-light btn-sm">
+                                                <span class="glyphicon glyphicon-triangle-left"></span></a>
+                                                ${task.name}
+
+                                        </div>
+                                        <div class="card-footer">
+                                            <div><span
+                                                    class="glyphicon glyphicon-star"></span>${task.storyPoints}
+
+                                                responsible: <a href="F/userProfile?userId=${task.user.id}"
+                                                                class="btn btn-outline-light"> ${task.user.username}</a>
+                                                    <%--                                            <div>${task.sprint.startDate}</div>--%>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
+
+                            </c:forEach>
+
+                        </div>
+                            <%--                <div class="col bg-primary  m-1">--%>
+                            <%--                    <c:if test="${task.progress=='IN_PROGRESS'}">--%>
+                            <%--                        ${task.name}<br/>--%>
+                            <%--                    </c:if>--%>
+
+                            <%--                </div>--%>
+
+                            <%--                <div class="col bg-info  m-1">--%>
+                            <%--                    <c:if test="${task.progress=='DONE'}">--%>
+                            <%--                        ${task.name}<br/>--%>
+                            <%--                    </c:if>--%>
+
+                            <%--                </div>--%>
                     </div>
-                        <%--                <div class="col bg-primary  m-1">--%>
-                        <%--                    <c:if test="${task.progress=='IN_PROGRESS'}">--%>
-                        <%--                        ${task.name}<br/>--%>
-                        <%--                    </c:if>--%>
 
-                        <%--                </div>--%>
-
-                        <%--                <div class="col bg-info  m-1">--%>
-                        <%--                    <c:if test="${task.progress=='DONE'}">--%>
-                        <%--                        ${task.name}<br/>--%>
-                        <%--                    </c:if>--%>
-
-                        <%--                </div>--%>
                 </div>
-
             </div>
+
+
+                <%--        </div>--%>
+            </c:forEach>
+
         </div>
-
-
-            <%--        </div>--%>
-        </c:forEach>
-
-    </div>
 

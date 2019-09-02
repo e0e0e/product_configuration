@@ -29,6 +29,15 @@ public class TaskService {
         this.userRepository = userRepository;
     }
 
+    public static LocalDate LocalDateFromWeekYearAndWeek(int weekYear,
+                                                         int weekOfWeekYear,
+                                                         int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.setWeekDate(weekYear, weekOfWeekYear, day);
+        LocalDate localDate = LocalDateTime.ofInstant(cal.toInstant(), cal.getTimeZone().toZoneId()).toLocalDate();
+
+        return localDate;
+    }
 
     public boolean create(String name, String description, long sprintId,
                           Integer storyPoints, Integer weight, User user, Project project) {
@@ -49,16 +58,6 @@ public class TaskService {
 
 
         return created.getId() != null;
-    }
-
-    public static LocalDate LocalDateFromWeekYearAndWeek(int weekYear,
-                                                         int weekOfWeekYear,
-                                                         int day) {
-        Calendar cal = Calendar.getInstance();
-        cal.setWeekDate(weekYear, weekOfWeekYear, day);
-        LocalDate localDate = LocalDateTime.ofInstant(cal.toInstant(), cal.getTimeZone().toZoneId()).toLocalDate();
-
-        return localDate;
     }
 
     public List<Task> findAll() {
@@ -131,18 +130,28 @@ public class TaskService {
     }
 
 
-    public List<Task> findAllFromSprintAndBeforeNotFinished(Long sprintId) {
+//    public List<Task> findAllFromSprintAndBeforeNotFinished(Long sprintId) {
+//
+//        return taskRepository.findAllFromSprintAndBeforeNotFinished(sprintId);
+//    }
 
-            return taskRepository.findAllFromSprintAndBeforeNotFinished(sprintId);
-    }
-
-    public Wall prepareTaskWall(Long sprintId) {
+    public Wall prepareTaskWall(Long sprintId, String filter) {
         if (sprintId == null) {
             sprintId = getPresentSprint();
         }
 
+        List<Task> taskList=new ArrayList<>();
+        switch (filter) {
+            case "unfinished":
+                taskList = taskRepository.findAllFromSprintAndBeforeNotFinished(sprintId);
+                break;
+            case "current":
+                taskList = findAllFromSprint(sprintId);
+                break;
+            default:
+                taskList = findAllFromSprint(sprintId);
+        }
 
-        List<Task> taskList = findAllFromSprintAndBeforeNotFinished(sprintId);
 
         List<Task> tasksInWeek = taskList;
 
@@ -160,6 +169,6 @@ public class TaskService {
         }
         TreeMap<Project, List<Task>> projectsInWeekSorted = new TreeMap<>(projectsInWeek);
 
-        return new Wall(projectsInWeekSorted, sprintRepositoryJPA.findAllSprintsSorted(),sprintRepositoryJPA.findById(sprintId).get());
+        return new Wall(projectsInWeekSorted, sprintRepositoryJPA.findAllSprintsSorted(), sprintRepositoryJPA.findById(sprintId).get());
     }
 }
