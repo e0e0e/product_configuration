@@ -96,7 +96,7 @@
                             <div>
 
                                     ${task.name}
-                                <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}"
+                                <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}&previous=${param.previous}"
                                    class="btn btn-outline-light btn-sm">
                                     <span class="glyphicon glyphicon-triangle-right"></span></a>
                             </div>
@@ -134,12 +134,12 @@
                                 </c:if>
 
                                 <div>
-                                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}"
+                                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}&previous=${param.previous}"
                                        class="btn btn-outline-light btn-sm">
                                         <span class="glyphicon glyphicon-triangle-left"></span></a>
 
                                         ${task.name}
-                                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}"
+                                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}&previous=${param.previous}"
                                        class="btn btn-outline-light btn-sm">
                                         <span class="glyphicon glyphicon-triangle-right"></span></a>
                                 </div>
@@ -168,7 +168,7 @@
                                     <div class="card bg-success m-2 text-center p-1">
 
                                         <div>
-                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}"
+                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}&previous=${param.previous}"
                                                class="btn btn-outline-light btn-sm">
                                                 <span class="glyphicon glyphicon-triangle-left"></span></a>
                                                 ${task.name}
