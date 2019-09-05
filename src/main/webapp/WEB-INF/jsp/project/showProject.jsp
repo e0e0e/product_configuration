@@ -7,20 +7,14 @@
             <a href="/project/show?projectId=${project.id}" class="nav-link text-light font-weight-bold">
                 ${project.projectName}</a>
             
-<%--            <div class="bg-info text-right text-danger" style="display: inline-block;">--%>
                 <a href="/project/delete?projectId=${project.id}" class="btn btn-outline-light btn-sm text-right" style="float: right;">
                     <span class="glyphicon glyphicon-trash"></span></a>
 
-<%--                <form action="/participant?projectId=${project.id}" method="post" style="float: right;">--%>
-<%--                    <button type="submit" value="your_value" class="btn btn-outline-light">--%>
-<%--                        <span class="glyphicon glyphicon-user"></span></button>--%>
-<%--                </form>--%>
                 <a href="/tasks?projectId=${project.id}" class="btn btn-outline-light btn-sm" style="float: right;">
-                    <span class="glyphicon glyphicon-plus"><span class="glyphicon glyphicon-briefcase"></span></a>
+                    <span class="glyphicon glyphicon-plus"></span><span class="glyphicon glyphicon-briefcase"></span></a>
 
-<%--            !!!!!!!!!!!!!!!!!!!!1111--%>
-<%--                <a href="/project/edit?projectId=${project.id}" class="btn btn-outline-light btn-sm" style="float: right;">--%>
-<%--                    <span class="glyphicon glyphicon-edit"></span></a>--%>
+            <a href="/project/edit?projectId=${project.id}" class="btn btn-outline-light btn-sm text-right" style="float: right;">
+                <span class="glyphicon glyphicon-edit"></span></a>
 
         </div>
 

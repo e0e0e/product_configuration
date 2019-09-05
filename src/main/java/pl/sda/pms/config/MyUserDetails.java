@@ -15,7 +15,6 @@ public class MyUserDetails implements UserDetails {
     private User user;
 
 
-
     public MyUserDetails(User user) {
         this.user = user;
     }
@@ -39,10 +38,21 @@ public class MyUserDetails implements UserDetails {
         return user.getPassword();
     }
 
-    public String getAvatar(){
+    public String getAvatar() {
         return user.getAvatar();
     }
 
+    public void setAvatar(String image) {
+        user.setAvatar(image);
+    }
+
+    public long getId() {
+        return user.getId();
+    }
+
+    public void setId(Long id) {
+        user.setId(id);
+    }
 
     @Override
     public String getUsername() {
@@ -67,9 +77,5 @@ public class MyUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setAvatar(String image) {
-        user.setAvatar(image);
     }
 }

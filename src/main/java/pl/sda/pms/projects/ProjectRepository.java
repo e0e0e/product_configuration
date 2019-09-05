@@ -1,8 +1,10 @@
 package pl.sda.pms.projects;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,12 +16,17 @@ public interface ProjectRepository extends CrudRepository<Project,Long> {
     @Query(value = "SELECT * FROM project WHERE user_id like (Select id from user where username like ?1)", nativeQuery = true)
     List<Project> finaAllWhereAdmin(String loggedUserName);
 
+    @Query(value = "SELECT * FROM project WHERE project_name like ?1)", nativeQuery = true)
+    List<Project> findIfProjectNameExists(String projectName);
 
     @Query(value = "Select * from project inner join participants ON project.id=participants.project_id  WHERE participants.user_id like (Select id from user where username like ?1) group by project_name", nativeQuery = true)
     List<Project> findAllWhereParticipate(String loggedUserName);
 
-//    @Query(value = "Select * from task inner join project ON project.id=task.project_id " +
-//            "inner join sprint ON task.sprint_id=sprint.id " +
-//            "WHERE WEEK(sprint.start_date)=?1", nativeQuery = true)
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE project set project_name=?2,description=?3 where id like ?1", nativeQuery = true)
+    void updateProject(long projectId, String projectName, String description);
+
 
 }

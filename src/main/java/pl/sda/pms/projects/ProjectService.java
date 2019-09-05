@@ -22,8 +22,13 @@ public class ProjectService {
 
     public boolean create(String projectName, String description, User user) {
 
-        Project created = projectRepository.save(new Project(projectName, description, user));
-        return created.getId() != null;
+      // if(projectRepository.findIfProjectNameExists(projectName).size()<0){
+           Project created = projectRepository.save(new Project(projectName, description, user));
+           return created.getId() != null;
+      // }
+
+      // return false;
+
     }
 
     public void delete(long projectId) {
@@ -52,4 +57,9 @@ public class ProjectService {
     }
 
 
+    public void updateProject(long projectId, String projectName, String description) {
+
+        projectRepository.updateProject(projectId, projectName, description);
+
+    }
 }

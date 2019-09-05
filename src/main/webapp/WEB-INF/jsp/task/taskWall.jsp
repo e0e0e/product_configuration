@@ -139,9 +139,11 @@
                                         <span class="glyphicon glyphicon-triangle-left"></span></a>
 
                                         ${task.name}
+                                    <c:if test="${user.username==task.user}">
                                     <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}&previous=${param.previous}"
                                        class="btn btn-outline-light btn-sm">
                                         <span class="glyphicon glyphicon-triangle-right"></span></a>
+                                    </c:if>
                                 </div>
                                 <div class="card-footer">
                                     <div><span

@@ -26,7 +26,7 @@ public class ProjectController {
     private final UserService userService;
     private final ProjectService projectService;
     private final TaskService taskService;
-private ServletContext servletContext;
+    private ServletContext servletContext;
 
     public ProjectController(UserService userService, ProjectService projectService, TaskService taskService) {
         this.userService = userService;
@@ -50,7 +50,6 @@ private ServletContext servletContext;
                              Model model) {
 
 
-
         User user = userService.findUserByname(username);
 
         try {
@@ -60,7 +59,6 @@ private ServletContext servletContext;
 
             model.addAttribute("createProjectResult", result);
             List<Project> projects = projectService.findAll();
-
 
 
             model.addAttribute("projects", projects);
@@ -77,7 +75,7 @@ private ServletContext servletContext;
 
     @GetMapping("users/projectList")
     public String listProjects(HttpServletRequest request,
-                               HttpServletResponse  response,
+                               HttpServletResponse response,
                                Model model) {
 
         String loggedUserName = request.getRemoteUser();
@@ -157,7 +155,6 @@ private ServletContext servletContext;
         model.addAttribute("users", projectService.getUsers(projectId));
 
 
-
         model.addAttribute("title", "Project List");
         model.addAttribute("path", "project/projectList");
         return "main";
@@ -205,17 +202,30 @@ private ServletContext servletContext;
     }
 
     @GetMapping("/project/edit")
-    public String editProject(@RequestParam Long projectId) {
+    public String editProject(@RequestParam Long projectId,
+                              Model model) {
 
-        return null;
+        model.addAttribute("project", projectService.findById(projectId).get());
+
+        model.addAttribute("title", "Edit Project");
+        model.addAttribute("path", "project/edit");
+        return "main";
     }
 
-//    @RequestMapping(value = "/image", method = RequestMethod.GET)
-//    public void getImageAsByteArray(HttpServletResponse response) throws IOException {
-//        final InputStream in = servletContext.getResourceAsStream("/resources/images/icons/png/boy.png");
-//        response.setContentType(MediaType.IMAGE_PNG_VALUE);
-//        IOUtils.copy(in, response.getOutputStream());
-//    }
+    @PostMapping("/projectChange")
+    public String addProject(@RequestParam long userId,
+                             @RequestParam long projectId,
+                             @RequestParam String description,
+                             @RequestParam String projectName,
+                             Model model) {
+
+        projectService.updateProject(projectId,projectName,description);
+
+        return "redirect:project/show?projectId="+projectId;
+    }
+
+
+
 
 
 }
