@@ -45,10 +45,10 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().deleteCookies("JSESSIONID")
 
-                .logoutSuccessUrl("/users/projectList")
+                .logoutSuccessUrl("/")
 
                 .and()
-                .rememberMe().key("uniqueAndSecret");
+                .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400);
 
         http.csrf().disable();
         http.headers().frameOptions().disable();

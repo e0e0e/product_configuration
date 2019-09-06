@@ -60,7 +60,7 @@ public class UsersController {
 
             return "redirect:/taskWall";
         } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getLocalizedMessage());
+            model.addAttribute("    errorMessage", e.getLocalizedMessage());
             return "user/users";
         }
     }

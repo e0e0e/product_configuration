@@ -4,7 +4,11 @@
     <h1>Edit Project</h1>
     <sec:authentication var="loggedUser" property="principal"/>
     <form method="post" action="/projectChange?userId=${loggedUser.id}&projectId=${param.projectId}">
+        <c:if test="${errorMessage!=null}">
 
+            <p style="background-color: red;">${errorMessage}</p>
+
+        </c:if>
         <label>Project Name:</label><br/>
         <input type="text" class="text-dark" name="projectName" value="${project.projectName}"><br/>
         <label>Project Description:</label><br/>

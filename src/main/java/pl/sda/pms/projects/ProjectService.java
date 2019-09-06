@@ -22,13 +22,13 @@ public class ProjectService {
 
     public boolean create(String projectName, String description, User user) {
 
-      // if(projectRepository.findIfProjectNameExists(projectName).size()<0){
-           Project created = projectRepository.save(new Project(projectName, description, user));
-           return created.getId() != null;
-      // }
+        if (projectRepository.findIfProjectNameExists(projectName) > 0) {
+            throw new RuntimeException("Project name already in use");
+        }
 
-      // return false;
+        Project created = projectRepository.save(new Project(projectName, description, user));
 
+        return created.getId() != null;
     }
 
     public void delete(long projectId) {
@@ -46,19 +46,21 @@ public class ProjectService {
         return projectRepository.findById(projectId).get().getUsers();
     }
 
-    public List<Project> findAllWhereAdmin(String loggedUserName) {
+    public List<Project> findAllWhereAdmin(Long userId) {
 
-        return projectRepository.finaAllWhereAdmin(loggedUserName);
+        return projectRepository.finaAllWhereAdmin(userId);
     }
 
 
-    public List<Project> findAllWhereParticipate(String loggedUserName) {
-        return projectRepository.findAllWhereParticipate(loggedUserName);
+    public List<Project> findAllWhereParticipate(Long userId) {
+        return projectRepository.findAllWhereParticipate(userId);
     }
 
 
     public void updateProject(long projectId, String projectName, String description) {
-
+        if (projectRepository.findIfProjectNameExists(projectName) > 0) {//if not same projectId
+            throw new RuntimeException("Project name already in use");
+        }
         projectRepository.updateProject(projectId, projectName, description);
 
     }

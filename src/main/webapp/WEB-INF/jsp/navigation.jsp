@@ -1,6 +1,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:useBean id="now" class="java.util.Date"/>
-
+<sec:authentication var="user" property="principal"/>
 <div>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-info">
@@ -17,7 +17,7 @@
                 <ul class="navbar-nav mr-auto bg-info">
 <%--                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users">Add User</a></li>--%>
                     <%--                    <li class="nav-item"> <a class="nav-link text-light font-weight-bold" href="/project">Add Project</a> </li>--%>
-                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users/projectList">My Projects</a></li>
+                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users/projectList?userId=${user.id}">My Projects</a></li>
                     <li class="nav-item"><a class="nav-link text-primary font-weight-bold" href="/users/allProjectList">All Projects</a></li>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/sprint">Sprint</a></li>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/sprintList">Sprint List</a></li>
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div style="display: inline-block" class="text-white">
-            <sec:authentication var="user" property="principal"/>
+
             logged as: <a href="/userProfile?username=${user.username}" class="btn btn-outline-light"> ${user.username}</a>
             <img class="img-circle bg-dark p-1 m-1" src="${resourcePath}${user.avatar}" height="40" width="40"/>
             <a href="/logout"><span class="glyphicon glyphicon-log-out" style="color:white;"></span></a>

@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication var="user" property="principal"/>
 <div class="container">
 
     <div class="card text-dark bg-warning m-1">
@@ -7,7 +9,7 @@
             <a href="/project/show?projectId=${project.id}" class="nav-link text-light font-weight-bold">
                 ${project.projectName}</a>
             
-                <a href="/project/delete?projectId=${project.id}" class="btn btn-outline-light btn-sm text-right" style="float: right;">
+                <a href="/project/delete?projectId=${project.id}&userId=${user.id}" class="btn btn-outline-light btn-sm text-right" style="float: right;">
                     <span class="glyphicon glyphicon-trash"></span></a>
 
                 <a href="/tasks?projectId=${project.id}" class="btn btn-outline-light btn-sm" style="float: right;">

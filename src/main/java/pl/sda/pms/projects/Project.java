@@ -14,6 +14,8 @@ public class Project implements Comparable<Project> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(unique = true)
     private String projectName;
     private String description;
     @ManyToOne

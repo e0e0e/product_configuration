@@ -46,42 +46,45 @@ public class ProjectController {
     @PostMapping("/project")
     public String addProject(@RequestParam String projectName,
                              @RequestParam String description,
-                             @RequestParam String username,
+                             @RequestParam long userId,
                              Model model) {
 
 
-        User user = userService.findUserByname(username);
+        User user = userService.findById(userId);
 
         try {
 
-            boolean result = projectService.create(projectName, description, user);
+            boolean isCreated = projectService.create(projectName, description, user);
 
 
-            model.addAttribute("createProjectResult", result);
-            List<Project> projects = projectService.findAll();
+//            model.addAttribute("createProjectResult", newProjectId);
+//            List<Project> projects = projectService.findAll();
+//
+//
+//            model.addAttribute("projects", projects);
 
 
-            model.addAttribute("projects", projects);
-
-
-            return "redirect:users/projectList";
         } catch (Exception e) {
+            // System.out.println(e.getLocalizedMessage());
             model.addAttribute("errorMessage", e.getLocalizedMessage());
+            model.addAttribute("title", "Add project");
+            model.addAttribute("path", "project/project");
+            return "main";
 
-            return "user/project";
         }
 
+
+        return "redirect:users/projectList?userId=" + userId;
     }
 
     @GetMapping("users/projectList")
-    public String listProjects(HttpServletRequest request,
-                               HttpServletResponse response,
+    public String listProjects(@RequestParam Long userId,
                                Model model) {
 
-        String loggedUserName = request.getRemoteUser();
+//        String loggedUserName = request.getRemoteUser();
 
-        List<Project> projects = projectService.findAllWhereAdmin(loggedUserName);
-        List<Project> projectsWhereParticipate = projectService.findAllWhereParticipate(loggedUserName);
+        List<Project> projects = projectService.findAllWhereAdmin(userId);
+        List<Project> projectsWhereParticipate = projectService.findAllWhereParticipate(userId);
 
         model.addAttribute("projectsWhereParticipate", projectsWhereParticipate);
         model.addAttribute("projects", projects);
@@ -107,15 +110,17 @@ public class ProjectController {
 
     @GetMapping("project/delete")
     public String deleteProject(@RequestParam long projectId,
+                                @RequestParam long userId,
                                 Model model) {
 
         projectService.delete(projectId);
-        model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("deleteProjectResults", true);
+//        model.addAttribute("projects", projectService.findAll());
+//        model.addAttribute("deleteProjectResults", true);
 
-        model.addAttribute("title", "Project List");
-        model.addAttribute("path", "project/projectList");
-        return "main";
+        return "redirect:/users/projectList?userId=" + userId;
+//        model.addAttribute("title", "Project List");
+//        model.addAttribute("path", "project/projectList");
+//        return "main";
 
     }
 
@@ -218,14 +223,18 @@ public class ProjectController {
                              @RequestParam String description,
                              @RequestParam String projectName,
                              Model model) {
+        try {
+            projectService.updateProject(projectId, projectName, description);
+        } catch (Exception e) {
 
-        projectService.updateProject(projectId,projectName,description);
-
-        return "redirect:project/show?projectId="+projectId;
+            model.addAttribute("errorMessage", e.getLocalizedMessage());
+            model.addAttribute("project", projectService.findById(projectId).get());
+            model.addAttribute("title", "Edit Project");
+            model.addAttribute("path", "project/edit");
+            return "main";
+        }
+        return "redirect:project/show?projectId=" + projectId;
     }
-
-
-
 
 
 }
