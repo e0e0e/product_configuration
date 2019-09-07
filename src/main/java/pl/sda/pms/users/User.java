@@ -25,6 +25,7 @@ public class User {
     private String email;
 
 
+
     private String username;
 
     @OneToMany(mappedBy = "user")
@@ -40,8 +41,7 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Set<Project> projectsParticipants;
 
-    @Column(columnDefinition = "varchar(255) default 'default.png'")
-    private String avatar;
+    private String avatar="default.png";
 
     public String getAvatar() {
         return avatar;

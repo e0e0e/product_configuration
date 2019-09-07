@@ -29,7 +29,6 @@
         <span class="glyphicon glyphicon-plus"></span></a></h3>
 
 
-
     <div class="row">
 
         <div class="col-6">
@@ -61,12 +60,23 @@
 
                             </div>
 
-                            <div class="card-footer bg-info text-right text-light">
+                            <div class="card-footer bg-info text-left text-light">
                                 <div>
                                     admin: ${project.user.username}
                                 </div>
-                                <div>
-                                    In Project: ${project.showUsersInProject()}
+                                <div>In Project:</div>
+                                <div class="row">
+
+
+                                    <c:forEach var="user" items="${project.users}">
+                                        <div class="col text-center float-right">
+
+                                            <img class="img-circle bg-dark p-1 m-1 d-inline-block" src="${resourcePath}${user.avatar}"
+                                                 height="40" width="40"/>
+                                            <div class="d-inline-block">${user.username}</div>
+                                        </div>
+                                    </c:forEach>
+
                                 </div>
 
                             </div>

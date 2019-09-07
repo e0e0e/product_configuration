@@ -22,8 +22,7 @@ public class UserService {
 
 
     public boolean create(String login, String password, String email, String userName) {
-        boolean isEmailTaken = userRepository.findAll().stream()
-                .anyMatch(u -> u.getEmail().equals(email));
+        boolean isEmailTaken = userRepository.isEmailTaken(email)>0;
 
         if (isEmailTaken) {
             throw new RuntimeException("Email already in use");
@@ -31,7 +30,6 @@ public class UserService {
         User user = new User(login, password, email, userName);
         User created = userRepository.save(user);
 
-        //usersByEmail.put(user.getEmail(), user);
 
         return created.getId() != null;
     }

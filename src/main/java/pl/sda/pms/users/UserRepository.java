@@ -31,4 +31,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query(value = "UPDATE user set avatar=?2 where id like ?1", nativeQuery = true)
     void addAvatar(long userId, String image);
 
+
+    @Query(value = "SELECT count(email) FROM user WHERE EMAIL like ?1", nativeQuery = true)
+    int isEmailTaken(String email);
 }
