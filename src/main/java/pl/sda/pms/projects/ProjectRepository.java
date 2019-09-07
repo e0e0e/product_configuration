@@ -28,5 +28,6 @@ public interface ProjectRepository extends CrudRepository<Project,Long> {
     @Query(value = "UPDATE project set project_name=?2,description=?3 where id like ?1", nativeQuery = true)
     void updateProject(long projectId, String projectName, String description);
 
-
+    @Query(value = "SELECT count(ID) FROM project WHERE PROJECT_NAME=?2 and id !=?1", nativeQuery = true)
+    int findIfProjectNameExistsExceptThis(long projectId, String projectName);
 }

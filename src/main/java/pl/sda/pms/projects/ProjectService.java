@@ -58,7 +58,7 @@ public class ProjectService {
 
 
     public void updateProject(long projectId, String projectName, String description) {
-        if (projectRepository.findIfProjectNameExists(projectName) > 0) {//if not same projectId
+        if (projectRepository.findIfProjectNameExistsExceptThis(projectId, projectName) > 0) {//if not same projectId
             throw new RuntimeException("Project name already in use");
         }
         projectRepository.updateProject(projectId, projectName, description);
