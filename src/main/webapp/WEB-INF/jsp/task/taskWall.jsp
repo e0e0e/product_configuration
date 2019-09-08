@@ -6,31 +6,43 @@
 
 <div class="container">
 
-    <label>Sprint:</label>
-    <div style="display: inline-block"><a href="/taskWallPrevious?sprintId=${wall.theSprint.id}&previous=${param.previous}"
-                                          class="btn btn-outline-info btn-sm">
-        <span class="glyphicon glyphicon-triangle-left"></span></a></div>
+    <div>
+        <div class="float-left">
+            <label>Sprint:</label>
+            <div style="display: inline-block"><a
+                    href="/taskWallPrevious?sprintId=${wall.theSprint.id}&previous=${param.previous}"
+                    class="btn btn-outline-info btn-sm">
+                <span class="glyphicon glyphicon-triangle-left"></span></a></div>
 
-    <div style="display: inline-block">
-        <div class="dropdown" style="display: inline-block">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                ${wall.theSprint.startDate} - ${wall.theSprint.finishDate}
+            <div style="display: inline-block">
+                <div class="dropdown" style="display: inline-block">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        ${wall.theSprint.startDate} - ${wall.theSprint.finishDate}
 
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <c:forEach var="sprint" items="${wall.sprints}">
-                    <a class="dropdown-item" href="/taskWall?sprintId=${sprint.id}&previous=${param.previous}">${sprint.startDate}
-                        - ${sprint.finishDate}</a>
-                </c:forEach>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <c:forEach var="sprint" items="${wall.sprints}">
+                            <a class="dropdown-item"
+                               href="/taskWall?sprintId=${sprint.id}&previous=${param.previous}">${sprint.startDate}
+                                - ${sprint.finishDate}</a>
+                        </c:forEach>
+                        <a class="dropdown-item" href="/sprint">Add sprint</a>
+                    </div>
+                </div>
             </div>
+            <div style="display: inline-block"><a
+                    href="/taskWallNext?sprintId=${wall.theSprint.id}&previous=${param.previous}"
+                    class="btn btn-outline-info btn-sm">
+                <span class="glyphicon glyphicon-triangle-right"></span></a></div>
+        </div>
+        <div>
+            <a href="/sprint"><span
+                    class="glyphicon glyphicon-plus p-1 m-1">Sprint</span></a>
         </div>
     </div>
-    <div style="display: inline-block"><a href="/taskWallNext?sprintId=${wall.theSprint.id}&previous=${param.previous}"
-                                          class="btn btn-outline-info btn-sm">
-        <span class="glyphicon glyphicon-triangle-right"></span></a></div>
-
+    <br/>
     <div class="float-right">
         <c:if test="${param.previous=='unfinished' or empty param.previous}">
             <a href="/taskWall?sprintId=${wall.theSprint.id}&previous=current"><span
@@ -43,6 +55,7 @@
         </c:if>
 
     </div>
+    <br/>
 
 
     <div>Story Points: ${wall.theSprint.planedStoryPoints}</div>
@@ -101,13 +114,19 @@
                                     <span class="glyphicon glyphicon-triangle-right"></span></a>
                             </div>
                             <div class="card-footer">
-                                <div><span
-                                        class="glyphicon glyphicon-star"></span>${task.storyPoints}
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="glyphicon glyphicon-star p-2"></span>${task.storyPoints}
 
-                                    responsible: <a href="/userProfile?userId=${task.user.id}"
-                                                    class="btn btn-outline-light"> ${task.user.username}</a>
+                                    </div>
+                                    <div class="col text-center float-right">
+                                        <img class="img-circle bg-dark p-1"
+                                             src="${resourcePath}${task.user.avatar}"
+                                             height="40" width="40"/>
+                                        <a href="/userProfile?userId=${task.user.id}"
+                                           class="btn btn-outline-light d-block"> ${task.user.username}</a>
 
-
+                                    </div>
                                 </div>
                             </div>
 
@@ -139,20 +158,26 @@
                                         <span class="glyphicon glyphicon-triangle-left"></span></a>
 
                                         ${task.name}
-<%--                                    <c:if test="${user.username==task.user}">--%>
+                                        <%--                                    <c:if test="${user.username==task.user}">--%>
                                     <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}&previous=${param.previous}"
                                        class="btn btn-outline-light btn-sm">
                                         <span class="glyphicon glyphicon-triangle-right"></span></a>
-<%--                                    </c:if>--%>
+                                        <%--                                    </c:if>--%>
                                 </div>
                                 <div class="card-footer">
-                                    <div><span
-                                            class="glyphicon glyphicon-star"></span>${task.storyPoints}
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="glyphicon glyphicon-star p-2"></span>${task.storyPoints}
 
-                                        responsible: <a href="/userProfile?userId=${task.user.id}"
-                                                        class="btn btn-outline-light"> ${task.user.username}</a>
+                                        </div>
+                                        <div class="col text-center float-right">
+                                            <img class="img-circle bg-dark p-1"
+                                                 src="${resourcePath}${task.user.avatar}"
+                                                 height="40" width="40"/>
+                                            <a href="/userProfile?userId=${task.user.id}"
+                                               class="btn btn-outline-light"> ${task.user.username}</a>
 
-
+                                        </div>
                                     </div>
                                 </div>
 
@@ -177,15 +202,22 @@
 
                                         </div>
                                         <div class="card-footer">
-                                            <div><span
-                                                    class="glyphicon glyphicon-star"></span>${task.storyPoints}
 
-                                                responsible: <a href="F/userProfile?userId=${task.user.id}"
-                                                                class="btn btn-outline-light"> ${task.user.username}</a>
-                                                    <%--                                            <div>${task.sprint.startDate}</div>--%>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="glyphicon glyphicon-star p-2"></span>${task.storyPoints}
 
+                                                </div>
+                                                <div class="col text-center float-right">
+                                                    <img class="img-circle bg-dark p-1"
+                                                         src="${resourcePath}${task.user.avatar}"
+                                                         height="40" width="40"/>
+                                                    <a href="/userProfile?userId=${task.user.id}"
+                                                       class="btn btn-outline-light"> ${task.user.username}</a>
 
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </c:if>

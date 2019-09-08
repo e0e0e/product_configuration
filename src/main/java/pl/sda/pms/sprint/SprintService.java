@@ -19,10 +19,19 @@ public class SprintService {
 
     public void saveSprint(LocalDate from, LocalDate to, Integer storyPoints) {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT+1"));
+        if (sprintRepositoryJPA.findIfDateAvalible(from.toString(), to.toString()) > 0) {
+            throw new RuntimeException("Data range overlaps");
+        }
+        if(to.isBefore(from)){
+            throw new RuntimeException("Date 'To' should be after 'from' ");
+        }
         Sprint sprint = new Sprint(from, to, storyPoints);
         sprintRepositoryJPA.save(sprint);
 
+
     }
+
+
 
     public List<Sprint> findAllSprints() {
         return sprintRepositoryJPA.findAllSprintsSorted();

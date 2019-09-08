@@ -11,8 +11,13 @@
 
 
 <div class="container bg-info" style="border-style: dotted;">
-<%--    <img class="img-circle bg-secondary" src="<c:url value="/resources/images/icons/png/boy.png" />" height="200"/>--%>
-<form method="post" action="/sprint" >
+
+    <c:if test="${errorMessage!=null}">
+
+        <div style="background-color: red;">${errorMessage}</div>
+
+    </c:if>
+    <form method="post" action="/sprint" >
 
 
     <label>From:</label>

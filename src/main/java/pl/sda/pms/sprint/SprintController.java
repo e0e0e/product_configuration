@@ -34,12 +34,6 @@ public class SprintController {
         return "main";
     }
 
-//    @RequestMapping(value = "/avatar", method = RequestMethod.GET)
-//    public void getImageAsByteArray(HttpServletResponse response) throws IOException {
-//        InputStream in = servletContext.getResourceAsStream("/WEB-INF/jsp/resources/images/icons/png.boy.png");
-//        response.setContentType(MediaType.IMAGE_PNG_VALUE);
-//        IOUtils.copy(in, response.getOutputStream());
-//    }
 
     @GetMapping("sprintList")
     public String showSprintList(Model model) {
@@ -60,8 +54,16 @@ public class SprintController {
                             Model model) {
 
 
+try {
+    sprintService.saveSprint(from, to, storyPoints);
+}catch (Exception e){
 
-        sprintService.saveSprint(from, to, storyPoints);
+    model.addAttribute("errorMessage", e.getLocalizedMessage());
+    model.addAttribute("title","Add Sprint");
+    model.addAttribute("path","sprint/sprint");
+
+    return "main";
+}
         model.addAttribute("sprints", sprintService.findAllSprints());
         model.addAttribute("title","Sprint List");
         model.addAttribute("path","sprint/sprintList");
