@@ -18,7 +18,8 @@
                     ${sprint.startDate} - ${sprint.finishDate}
             </option>
         </c:forEach>
-    </select><br/>
+
+    </select><a href="/sprint"><span class="glyphicon glyphicon-plus text-light p-1 m-1">Sprint</span></a><br/>
 
 
         <label>Story points:</label><br/>

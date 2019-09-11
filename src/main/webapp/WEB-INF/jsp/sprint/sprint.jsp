@@ -21,11 +21,11 @@
 
 
     <label>From:</label>
-        <input type="date" name="from" value="<fmt:formatDate type="date" value="${now}" pattern="yyyy-MM-dd"/>">
+        <input type="date" class="p-2" name="from" value="<fmt:formatDate type="date" value="${now}" pattern="yyyy-MM-dd"/>">
     <label>To:</label>
-    <input type="date" name="to" value="<fmt:formatDate type="date" value="${now}" pattern="yyyy-MM-dd"/>"><br/>
+    <input type="date" class="p-2" name="to" value="<fmt:formatDate type="date" value="${now}" pattern="yyyy-MM-dd"/>"><br/>
     <label>Story points:</label>
-   <input type="number" name="storyPoints" class="text-dark" min="1" max="500" VALUE="10"><br/>
+   <input type="number" name="storyPoints" class="text-dark p-2" min="1" max="500" VALUE="10"><br/>
     <input type="submit" value="Dodaj">
 
 

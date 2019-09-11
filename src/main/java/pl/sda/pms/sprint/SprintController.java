@@ -76,6 +76,6 @@ try {
                                Model model){
         sprintService.deleteSprint(sprintId);
 
-        return "redirect: sprintList";
+        return "redirect:/sprintList";
     }
 }

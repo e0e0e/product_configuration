@@ -177,13 +177,14 @@ public class TaskController {
                             Model model) {
 
         if (previous == null) {
+            previous="unfinished";
+//            model.addAttribute("previous","unfinished");
+           // model.addAttribute("wall", taskService.prepareTaskWall(sprintId, "unfinished"));
 
-            model.addAttribute("wall", taskService.prepareTaskWall(sprintId, "unfinished"));
-
-        } else {
+        }
 
             model.addAttribute("wall", taskService.prepareTaskWall(sprintId, previous));
-        }
+
 
         model.addAttribute("title", "Wall");
         model.addAttribute("path", "task/taskWall");
