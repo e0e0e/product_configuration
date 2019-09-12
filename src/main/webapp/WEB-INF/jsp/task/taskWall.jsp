@@ -83,8 +83,6 @@
 
             <div class="card bg-light text-center h-100 ">
                 <a href="/project/show?projectId=${project.key.id}" class="my-auto">${project.key.projectName}</a>
-
-                </span>
             </div>
         </div>
         <div class="col">
@@ -152,18 +150,30 @@
                             <div class="card bg-primary m-2 text-center p-1">
                                 </c:if>
 
-                                <div>
-                                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}&previous=${param.previous}"
-                                       class="btn btn-outline-light btn-sm">
-                                        <span class="glyphicon glyphicon-triangle-left"></span></a>
+                                    <div class="row">
+                                        <div class="col float-left">
 
-                                        ${task.name}
+                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}&previous=${param.previous}"
+                                               class="btn btn-outline-light btn-sm">
+                                                <span class="glyphicon glyphicon-triangle-left"></span></a>
+                                        </div>
+                                        <div class="col float-none">
+<%--                                            <a href="#" data-toggle="popover"--%>
+<%--                                               title="${task.description}">${task.name}</a>--%>
+
+                                            <a href="/task/show?taskId=${task.id}" data-toggle="popover" title="${task.name}" data-content="${task.description}">${task.name}</a>
+
+
                                         <%--                                    <c:if test="${user.username==task.user}">--%>
-                                    <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}&previous=${param.previous}"
-                                       class="btn btn-outline-light btn-sm">
-                                        <span class="glyphicon glyphicon-triangle-right"></span></a>
-                                        <%--                                    </c:if>--%>
-                                </div>
+                                        </div>
+                                        <div class="col float-right">
+                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}&previous=${param.previous}"
+                                               class="btn btn-outline-light btn-sm">
+                                                <span class="glyphicon glyphicon-triangle-right"></span></a>
+                                        </div>
+                                            <%--                                    </c:if>--%>
+                                    </div>
+
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col">
