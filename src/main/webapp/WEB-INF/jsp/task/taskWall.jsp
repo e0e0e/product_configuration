@@ -150,29 +150,35 @@
                             <div class="card bg-primary m-2 text-center p-1">
                                 </c:if>
 
-                                    <div class="row">
-                                        <div class="col float-left">
+                                <div class="row">
+                                    <div class="col float-left">
 
-                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}&previous=${param.previous}"
-                                               class="btn btn-outline-light btn-sm">
-                                                <span class="glyphicon glyphicon-triangle-left"></span></a>
-                                        </div>
-                                        <div class="col float-none">
-<%--                                            <a href="#" data-toggle="popover"--%>
-<%--                                               title="${task.description}">${task.name}</a>--%>
-
-                                            <a href="/task/show?taskId=${task.id}" data-toggle="popover" title="${task.name}" data-content="${task.description}">${task.name}</a>
-
-
-                                        <%--                                    <c:if test="${user.username==task.user}">--%>
-                                        </div>
-                                        <div class="col float-right">
-                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}&previous=${param.previous}"
-                                               class="btn btn-outline-light btn-sm">
-                                                <span class="glyphicon glyphicon-triangle-right"></span></a>
-                                        </div>
-                                            <%--                                    </c:if>--%>
+                                        <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}&previous=${param.previous}"
+                                           class="btn btn-outline-light btn-sm">
+                                            <span class="glyphicon glyphicon-triangle-left"></span></a>
                                     </div>
+                                    <div class="col float-none">
+                                            <%--                                            <a href="#" data-toggle="popover"--%>
+                                            <%--                                               title="${task.description}">${task.name}</a>--%>
+
+
+                                        <a tabindex="0" class="m-1" data-placement="bottom"
+                                           role="button" data-toggle="popover" data-trigger="focus" title="${task.name}"
+                                           data-content="${task.description}">${task.name}</a>
+                                            <%--                                            <button type="button" data-toggle="popover" title="${task.name}"  data-content="${task.description}">${task.name}</button>--%>
+                                        <a href="/task/show?taskId=${task.id}"><span
+                                                class="glyphicon glyphicon glyphicon-info-sign"></span></a>
+
+
+                                            <%--                                    <c:if test="${user.username==task.user}">--%>
+                                    </div>
+                                    <div class="col float-right">
+                                        <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}&previous=${param.previous}"
+                                           class="btn btn-outline-light btn-sm">
+                                            <span class="glyphicon glyphicon-triangle-right"></span></a>
+                                    </div>
+                                        <%--                                    </c:if>--%>
+                                </div>
 
                                 <div class="card-footer">
                                     <div class="row">

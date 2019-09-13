@@ -197,7 +197,7 @@ public class TaskController {
 
         model.addAttribute("task", taskService.findById(taskId));
         model.addAttribute("title", "Task");
-        model.addAttribute("path", "task/show");
+        model.addAttribute("path", "task/showTask");
 
         return "main";
     }
