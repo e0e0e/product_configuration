@@ -31,10 +31,39 @@ public class TaskController {
         this.projectService = projectService;
         this.sprintService = sprintService;
     }
+    @GetMapping("/task/edit")
+    public String editTask(@RequestParam long taskId,
+                           HttpServletRequest request,
+                           Model model){
 
+        String loggedUserName = request.getRemoteUser();
+        model.addAttribute("sprints", sprintService.findAllSprints());
+        model.addAttribute("task", taskService.findById(taskId));
+        model.addAttribute("users", userService.findAllWithException(loggedUserName));
+        model.addAttribute("title", "Task edit");
+        model.addAttribute("path", "task/edit");
+        return "main";
+    }
+
+    @PostMapping("/taskChange")
+    public String taskChange(@RequestParam long taskId,
+                             @RequestParam String name,
+                             @RequestParam String description,
+                             @RequestParam long sprintId,
+                             @RequestParam Integer storyPoints,
+                             @RequestParam Integer weight,
+                             @RequestParam Long userId,
+                             @RequestParam Long projectId,
+                             Model model){
+
+        taskService.updateTask(taskId, name, description, sprintId, storyPoints, weight, userId, projectId);
+
+        return "redirect:/task/show?taskId="+taskId;
+    }
 
     @GetMapping("/tasks")
     public String taskForm(@RequestParam(required = false) Long projectId,
+                           @RequestParam(required = false) long taskId,
                            HttpServletRequest request,
                            Model model) {
 

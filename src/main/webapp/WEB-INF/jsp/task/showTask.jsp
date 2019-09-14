@@ -25,12 +25,14 @@
                 <%--                                               title="${task.description}">${task.name}</a>--%>
 
             <h1>${task.name}</h1>
+                    <a href="/task/edit?taskId=${task.id}" class="btn btn-outline-light btn-sm text-right" style="float: right;">
+                        <span class="glyphicon glyphicon-edit"></span></a>
             <div>${task.description}
 
 
                     <%--                                    <c:if test="${user.username==task.user}">--%>
             </div><br/>
-                    <div class="text-secondary">${task.progress}</div>
+                    <div>${task.progress}</div>
                 <%--        <div class="col float-right">--%>
                 <%--            <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}&previous=${param.previous}"--%>
                 <%--               class="btn btn-outline-light btn-sm">--%>

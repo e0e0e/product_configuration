@@ -61,4 +61,8 @@ public interface TaskRepository extends CrudRepository<Task,Long> {
 
     @Query(value = "Select * from task inner join sprint on sprint.ID=task.SPRINT_ID  WHERE sprint_id like ?1 or (sprint.FINISH_DATE<(Select sprint.FINISH_DATE from sprint where SPRINT.id=?1) and task.PROGRESS<2)", nativeQuery = true)
     List<Task> findAllFromSprintAndBeforeNotFinished(Long sprintId);
+
+    void updateTask(String name, String description, long sprintId, Integer storyPoints, Integer weight, Long userId, long projectId);
+
+    boolean findIfTaskNameExistsExceptThis(long taskId, String name);
 }
