@@ -2,12 +2,18 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container bg-info">
+    <c:if test="${errorMessage!=null}">
+
+        <div style="background-color: red;">${errorMessage}</div>
+
+    </c:if>
+
     <form method="post" action="/taskChange?taskId=${task.id}" class="bg-info m-5 p-5 text-light">
         <h1>Edit Tasks from project <b>${task.project.projectName}</b></h1>
         <label>Task name:</label><br/>
         <input type="text" class="text-dark" name="name" value="${task.name}"><br/>
         <label>Description:</label><br/>
-        <input type="text" class="text-dark" name="description" value="${task.description}"><br/>
+        <textarea rows="4" columns="80" class="text-dark" name="description">${task.description}</textarea><br/>
 
 
         <label>Sprint:</label><br/>

@@ -174,11 +174,12 @@ public class TaskService {
 
     public void updateTask(long taskId, String name, String description,
                            long sprintId, Integer storyPoints, Integer weight,
-                           Long userId, long projectId) {
+                           Long userId) {
 
-        if (taskRepository.findIfTaskNameExistsExceptThis(taskId, name) > 0) {//if not same projectId
-            throw new RuntimeException("Task name already in use");
+        if (taskRepository.findIfTaskNameExistsInProjectExceptThis(taskId, name,taskRepository.findById(taskId).get().getProject().getId()) > 0) {//if not same projectId
+            throw new RuntimeException("Task name already in use in this project");
         }
-        taskRepository.updateTask(name,description,sprintId,storyPoints,weight,userId, projectId);
+        taskRepository.updateTask(name,description,sprintId,storyPoints,weight,userId, taskId);
     }
 }
+

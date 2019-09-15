@@ -1,14 +1,16 @@
 package pl.sda.pms.task;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.sda.pms.projects.Project;
 
 import java.util.List;
 
 @Repository
-public interface TaskRepository extends CrudRepository<Task,Long> {
+public interface TaskRepository extends CrudRepository<Task, Long> {
 
     List<Task> findAll();
 
@@ -17,6 +19,7 @@ public interface TaskRepository extends CrudRepository<Task,Long> {
 
     @Query(value = "SELECT * FROM task WHERE progress like 1", nativeQuery = true)
     List<Task> findInProgress();
+
     @Query(value = "SELECT * FROM task WHERE progress like 2", nativeQuery = true)
     List<Task> findDone();
 
@@ -62,7 +65,11 @@ public interface TaskRepository extends CrudRepository<Task,Long> {
     @Query(value = "Select * from task inner join sprint on sprint.ID=task.SPRINT_ID  WHERE sprint_id like ?1 or (sprint.FINISH_DATE<(Select sprint.FINISH_DATE from sprint where SPRINT.id=?1) and task.PROGRESS<2)", nativeQuery = true)
     List<Task> findAllFromSprintAndBeforeNotFinished(Long sprintId);
 
-    void updateTask(String name, String description, long sprintId, Integer storyPoints, Integer weight, Long userId, long projectId);
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE task set task.NAME=?1,description=?2,sprint_id=?3, STORY_POINTS=?4, weight=?5, user_id=?6 where id like ?7", nativeQuery = true)
+    void updateTask(String name, String description, long sprintId, Integer storyPoints, Integer weight, Long userId, long taskId);
 
-    boolean findIfTaskNameExistsExceptThis(long taskId, String name);
+    @Query(value = "Select count(id) from task WHERE NAME like ?2 and id not like ?1 and PROJECT_ID like ?3", nativeQuery = true)
+    int findIfTaskNameExistsInProjectExceptThis(long taskId, String name, long projectId);
 }

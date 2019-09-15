@@ -53,11 +53,21 @@ public class TaskController {
                              @RequestParam Integer storyPoints,
                              @RequestParam Integer weight,
                              @RequestParam Long userId,
-                             @RequestParam Long projectId,
+                             HttpServletRequest request,
                              Model model){
 
-        taskService.updateTask(taskId, name, description, sprintId, storyPoints, weight, userId, projectId);
-
+        try {
+            taskService.updateTask(taskId, name, description, sprintId, storyPoints, weight, userId);
+        }catch (Exception e){
+            String loggedUserName = request.getRemoteUser();
+            model.addAttribute("sprints", sprintService.findAllSprints());
+            model.addAttribute("task", taskService.findById(taskId));
+            model.addAttribute("users", userService.findAllWithException(loggedUserName));
+            model.addAttribute("errorMessage",e.getLocalizedMessage());
+            model.addAttribute("title", "Task edit");
+            model.addAttribute("path", "task/edit");
+            return "main";
+        }
         return "redirect:/task/show?taskId="+taskId;
     }
 
