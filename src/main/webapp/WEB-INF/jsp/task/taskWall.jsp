@@ -69,7 +69,6 @@
         <c:forEach var="status" items="${Progress.values()}">
             <div class="col bg-light border sm-2 m-1">
                     ${status}
-                ${status.length}
             </div>
         </c:forEach>
 
@@ -141,15 +140,17 @@
                         <c:forEach var="task" items="${project.value}">
 
                         <c:if test="${task.progress==status}">
-                        <c:if test="${task.sprint.finishDate<wall.now}">
+                        <c:if test="${task.sprint.finishDate<wall.now && task.progress!='DONE'}">
                         <div class="card bg-warning m-2 text-center p-1">
                             <div class="border">Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days
                                 from ${task.sprint.finishDate}</div>
                             </c:if>
-                            <c:if test="${!(task.sprint.finishDate<wall.now)}">
+                            <c:if test="${!(task.sprint.finishDate<wall.now) && task.progress!='DONE'}">
                             <div class="card bg-primary m-2 text-center p-1">
                                 </c:if>
-
+                                    <c:if test="${task.progress=='DONE'}">
+                                    <div class="card bg-secondary m-2 text-center p-1">
+                                        </c:if>
                                 <div class="row">
                                     <div class="col float-left ">
 
