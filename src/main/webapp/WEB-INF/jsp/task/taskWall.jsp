@@ -1,8 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--<jsp:useBean id="chrono" class="java.time.temporal.ChronoUnit"/>--%>
 <%@ page import="java.time.temporal.ChronoUnit" %>
+<%@ page import="pl.sda.pms.progres.Progress" %>
 
 <div class="container">
 
@@ -64,15 +66,12 @@
         <div class="col-3 bg-light border sm-2 m-1">
             Project
         </div>
-        <div class="col bg-light border sm-2 m-1">
-            To Do
-        </div>
-        <div class="col bg-light border sm-2 m-1">
-            In Progress
-        </div>
-        <div class="col bg-light border sm-2 m-1">
-            Done
-        </div>
+        <c:forEach var="status" items="${Progress.values()}">
+            <div class="col bg-light border sm-2 m-1">
+                    ${status}
+                ${status.length}
+            </div>
+        </c:forEach>
 
 
     </div>
@@ -87,87 +86,86 @@
         </div>
         <div class="col">
             <div class="row">
-                <div class="col">
+<%--                <div class="col">--%>
 
-                    <c:forEach var="task" items="${project.value}">
+                        <%--                    <c:forEach var="task" items="${project.value}">--%>
 
-                    <c:if test="${task.progress=='TO_DO'}">
-
-
-                    <c:if test="${task.sprint.finishDate<wall.now}">
-                    <div class="card bg-danger m-2 text-center p-1">
-                        Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days
-                        from ${task.sprint.finishDate}
-
-                        </c:if>
-                        <c:if test="${!(task.sprint.finishDate<wall.now)}">
-                        <div class="card bg-secondary m-2 text-center p-1">
-                            </c:if>
-
-                            <div>
-
-                                    ${task.name}
-                                <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}&previous=${param.previous}"
-                                   class="btn btn-outline-light btn-sm">
-                                    <span class="glyphicon glyphicon-triangle-right"></span></a>
-                            </div>
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="glyphicon glyphicon-star p-2"></span>${task.storyPoints}
-
-                                    </div>
-                                    <div class="col text-center float-right">
-                                        <img class="img-circle bg-dark p-1"
-                                             src="${resourcePath}${task.user.avatar}"
-                                             height="40" width="40"/>
-                                        <a href="/userProfile?userId=${task.user.id}"
-                                           class="btn btn-outline-light d-block"> ${task.user.username}</a>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                        <%--                    <c:if test="${task.progress=='TO_DO'}">--%>
 
 
-                        </c:if>
+                        <%--                    <c:if test="${task.sprint.finishDate<wall.now}">--%>
+                        <%--                    <div class="card bg-danger m-2 text-center p-1">--%>
+                        <%--                        Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days--%>
+                        <%--                        from ${task.sprint.finishDate}--%>
 
-                        </c:forEach>
+                        <%--                        </c:if>--%>
+                        <%--                        <c:if test="${!(task.sprint.finishDate<wall.now)}">--%>
+                        <%--                        <div class="card bg-secondary m-2 text-center p-1">--%>
+                        <%--                            </c:if>--%>
 
-                    </div>
+                        <%--                            <div>--%>
+
+                        <%--                                    ${task.name}--%>
+                        <%--                                <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}&previous=${param.previous}"--%>
+                        <%--                                   class="btn btn-outline-light btn-sm">--%>
+                        <%--                                    <span class="glyphicon glyphicon-triangle-right"></span></a>--%>
+                        <%--                            </div>--%>
+                        <%--                            <div class="card-footer">--%>
+                        <%--                                <div class="row">--%>
+                        <%--                                    <div class="col">--%>
+                        <%--                                        <span class="glyphicon glyphicon-star p-2"></span>${task.storyPoints}--%>
+
+                        <%--                                    </div>--%>
+                        <%--                                    <div class="col text-center float-right">--%>
+                        <%--                                        <img class="img-circle bg-dark p-1"--%>
+                        <%--                                             src="${resourcePath}${task.user.avatar}"--%>
+                        <%--                                             height="40" width="40"/>--%>
+                        <%--                                        <a href="/userProfile?userId=${task.user.id}"--%>
+                        <%--                                           class="btn btn-outline-light d-block"> ${task.user.username}</a>--%>
+
+                        <%--                                    </div>--%>
+                        <%--                                </div>--%>
+                        <%--                            </div>--%>
+
+                        <%--                        </div>--%>
+
+
+                        <%--                        </c:if>--%>
+
+                        <%--                        </c:forEach>--%>
+
+                        <%--                    </div>--%>
+                    <c:forEach var="status" items="${Progress.values()}">
                     <div class="col">
 
                         <c:forEach var="task" items="${project.value}">
 
-                        <c:if test="${task.progress=='IN_PROGRESS'}">
+                        <c:if test="${task.progress==status}">
                         <c:if test="${task.sprint.finishDate<wall.now}">
                         <div class="card bg-warning m-2 text-center p-1">
-                            Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days
-                            from ${task.sprint.finishDate}
+                            <div class="border">Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,wall.now)} days
+                                from ${task.sprint.finishDate}</div>
                             </c:if>
                             <c:if test="${!(task.sprint.finishDate<wall.now)}">
                             <div class="card bg-primary m-2 text-center p-1">
                                 </c:if>
 
                                 <div class="row">
-                                    <div class="col float-left">
+                                    <div class="col float-left ">
 
                                         <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}&previous=${param.previous}"
                                            class="btn btn-outline-light btn-sm">
                                             <span class="glyphicon glyphicon-triangle-left"></span></a>
                                     </div>
                                     <div class="col float-none">
-                                            <%--                                            <a href="#" data-toggle="popover"--%>
-                                            <%--                                               title="${task.description}">${task.name}</a>--%>
 
 
-                                        <a tabindex="0" class="m-1" data-placement="bottom"
+                                        <a tabindex="0" class="m-1 text-dark " data-placement="bottom"
                                            role="button" data-toggle="popover" data-trigger="focus" title="${task.name}"
                                            data-content="${task.description}">${task.name}</a>
                                             <%--                                            <button type="button" data-toggle="popover" title="${task.name}"  data-content="${task.description}">${task.name}</button>--%>
                                         <a href="/task/show?taskId=${task.id}"><span
-                                                class="glyphicon glyphicon glyphicon-info-sign"></span></a>
+                                                class="glyphicon glyphicon glyphicon-info-sign text-dark"></span></a>
 
 
                                             <%--                                    <c:if test="${user.username==task.user}">--%>
@@ -203,44 +201,45 @@
                             </c:forEach>
 
                         </div>
-                        <div class="col">
+                        </c:forEach>
+<%--                        <div class="col">--%>
 
-                            <c:forEach var="task" items="${project.value}">
+<%--                            <c:forEach var="task" items="${project.value}">--%>
 
-                                <c:if test="${task.progress=='DONE'}">
-                                    <div class="card bg-success m-2 text-center p-1">
+<%--                                <c:if test="${task.progress=='DONE'}">--%>
+<%--                                    <div class="card bg-success m-2 text-center p-1">--%>
 
-                                        <div>
-                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}&previous=${param.previous}"
-                                               class="btn btn-outline-light btn-sm">
-                                                <span class="glyphicon glyphicon-triangle-left"></span></a>
-                                                ${task.name}
+<%--                                        <div>--%>
+<%--                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=IN_PROGRESS&backToWall=${task.sprint.id}&previous=${param.previous}"--%>
+<%--                                               class="btn btn-outline-light btn-sm">--%>
+<%--                                                <span class="glyphicon glyphicon-triangle-left"></span></a>--%>
+<%--                                                ${task.name}--%>
 
-                                        </div>
-                                        <div class="card-footer">
+<%--                                        </div>--%>
+<%--                                        <div class="card-footer">--%>
 
-                                            <div class="row">
-                                                <div class="col">
-                                                    <span class="glyphicon glyphicon-star p-2"></span>${task.storyPoints}
+<%--                                            <div class="row">--%>
+<%--                                                <div class="col">--%>
+<%--                                                    <span class="glyphicon glyphicon-star p-2"></span>${task.storyPoints}--%>
 
-                                                </div>
-                                                <div class="col text-center float-right">
-                                                    <img class="img-circle bg-dark p-1"
-                                                         src="${resourcePath}${task.user.avatar}"
-                                                         height="40" width="40"/>
-                                                    <a href="/userProfile?userId=${task.user.id}"
-                                                       class="btn btn-outline-light"> ${task.user.username}</a>
+<%--                                                </div>--%>
+<%--                                                <div class="col text-center float-right">--%>
+<%--                                                    <img class="img-circle bg-dark p-1"--%>
+<%--                                                         src="${resourcePath}${task.user.avatar}"--%>
+<%--                                                         height="40" width="40"/>--%>
+<%--                                                    <a href="/userProfile?userId=${task.user.id}"--%>
+<%--                                                       class="btn btn-outline-light"> ${task.user.username}</a>--%>
 
-                                                </div>
-                                            </div>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
 
-                                        </div>
-                                    </div>
-                                </c:if>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </c:if>--%>
 
-                            </c:forEach>
+<%--                            </c:forEach>--%>
 
-                        </div>
+<%--                        </div>--%>
                             <%--                <div class="col bg-primary  m-1">--%>
                             <%--                    <c:if test="${task.progress=='IN_PROGRESS'}">--%>
                             <%--                        ${task.name}<br/>--%>

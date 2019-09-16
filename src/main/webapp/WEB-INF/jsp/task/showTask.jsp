@@ -3,7 +3,7 @@
 <%@ page import="java.time.temporal.ChronoUnit" %>
 <c:set var="now" value="${LocalDate.now()}"/>
 
-<c:if test="${task.progress=='IN_PROGRESS'}">
+
     <c:if test="${task.sprint.finishDate<now}">
         <div class="card bg-warning m-2 text-center p-1">
         Delayed ${ChronoUnit.DAYS.between(task.sprint.finishDate,now)} days
@@ -27,7 +27,7 @@
             <h1>${task.name}</h1>
                     <a href="/task/edit?taskId=${task.id}" class="btn btn-outline-light btn-sm text-right" style="float: right;">
                         <span class="glyphicon glyphicon-edit"></span></a>
-            <div>${task.description}
+            <div style="width:60%;margin: auto;" class="border p-5">${task.description}
 
 
                     <%--                                    <c:if test="${user.username==task.user}">--%>
@@ -61,7 +61,7 @@
 
     </div>
     </div>
-</c:if>
+
 
 
 
