@@ -73,7 +73,7 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public String taskForm(@RequestParam(required = false) Long projectId,
-                           @RequestParam(required = false) long taskId,
+                           @RequestParam(required = false) Long taskId,
                            HttpServletRequest request,
                            Model model) {
 

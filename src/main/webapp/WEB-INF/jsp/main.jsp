@@ -21,12 +21,20 @@
     <script>
         $(document).ready(function(){
             $('[data-toggle="popover"]').popover();
-        });
-        $('.popover-dismiss').popover({
-            trigger: 'focus'
-        })
-    </script>
+            $('.popover-dismiss').popover({
+                trigger: 'focus'
+            });
+            $('.popover-title').css("background-color", "#9FC53B");
+            $('.popover').css("background-color", "red");
 
+        });
+
+    </script>
+<style>
+ .popover-title{
+     background-color: #9FC53B;
+}
+</style>
 </head>
 <body>
 
