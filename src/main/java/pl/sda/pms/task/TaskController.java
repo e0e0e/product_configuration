@@ -144,9 +144,10 @@ public class TaskController {
     @PostMapping("/task/progressChange")
     private String changeProgress(@RequestParam Long taskId,
                                   @RequestParam String progress,
+                                  @RequestParam boolean next,
                                   Model model) {
 
-        taskService.changeProgress(taskId, progress);
+        taskService.changeProgress(taskId, progress, next);
 
         return "redirect:/project/show?projectId=" + taskService.findById(taskId).getProject().getId();
     }
@@ -154,11 +155,12 @@ public class TaskController {
     @GetMapping("/task/progressToNextChange")
     private String changeToNextProgress(@RequestParam Long taskId,
                                         @RequestParam String progress,
+                                        @RequestParam boolean next,
                                         @RequestParam(required = false) Integer backToWall,
                                         @RequestParam(required = false) String previous,
                                         Model model) {
 
-        taskService.changeProgress(taskId, progress);
+        taskService.changeProgress(taskId, progress,next);
 
         if (backToWall != null) {
             return "redirect:/taskWall?sprintId=" + backToWall+"&previous="+previous;

@@ -68,13 +68,22 @@ public class TaskService {
         return taskRepository.findById(taskId).get();
     }
 
-    public void changeProgress(Long taskId, String progress) {
+    public void changeProgress(Long taskId, String progress, boolean next) {
+
 
         Task task = taskRepository.findById(taskId).get();
         for (Progress p : Progress.values()) {
             if (p.toString().equals(progress)) {
-                task.setProgress(p);
-                taskRepository.save(task);
+                if(next) {
+                    task.setProgress(p.getNext());
+                }else{
+                    task.setProgress(p.getPrevious());
+                }
+
+                if (task.getProgress()!=null){
+
+                    taskRepository.save(task);
+                }
             }
         }
 

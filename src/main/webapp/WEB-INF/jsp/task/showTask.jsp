@@ -14,31 +14,17 @@
     </c:if>
 
     <div class="row">
-            <%--        <div class="col float-left">--%>
 
-            <%--            <a href="/task/progressToNextChange?taskId=${task.id}&progress=TO_DO&backToWall=${task.sprint.id}&previous=${param.previous}"--%>
-            <%--               class="btn btn-outline-light btn-sm">--%>
-            <%--                <span class="glyphicon glyphicon-triangle-left"></span></a>--%>
-            <%--        </div>--%>
         <div class="col float-none">
-                <%--                                            <a href="#" data-toggle="popover"--%>
-                <%--                                               title="${task.description}">${task.name}</a>--%>
 
             <h1>${task.name}</h1>
                     <a href="/task/edit?taskId=${task.id}" class="btn btn-outline-light btn-sm text-right" style="float: right;">
                         <span class="glyphicon glyphicon-edit"></span></a>
             <div style="width:60%;margin: auto;" class="border p-5">${task.description}
 
-
-                    <%--                                    <c:if test="${user.username==task.user}">--%>
             </div><br/>
                     <div>${task.progress}</div>
-                <%--        <div class="col float-right">--%>
-                <%--            <a href="/task/progressToNextChange?taskId=${task.id}&progress=DONE&backToWall=${task.sprint.id}&previous=${param.previous}"--%>
-                <%--               class="btn btn-outline-light btn-sm">--%>
-                <%--                <span class="glyphicon glyphicon-triangle-right"></span></a>--%>
-                <%--        </div>--%>
-                <%--                                    </c:if>--%>
+
         </div>
         </div>
 

@@ -5,6 +5,7 @@ public enum Progress {
     IN_PROGRESS(1),
     DONE(2);
 
+
     public int getValue() {
         return value;
     }
@@ -15,5 +16,11 @@ public enum Progress {
         this.value=value;
     }
 
+    public Progress getNext() {
+        return this.ordinal() < Progress.values().length - 1 ? Progress.values()[this.ordinal() + 1] : null;
+    }
+    public Progress getPrevious() {
+        return this.ordinal() > 0 ? Progress.values()[this.ordinal() - 1] : null;
+    }
 
 }

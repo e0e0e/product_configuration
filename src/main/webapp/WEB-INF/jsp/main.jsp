@@ -19,29 +19,27 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('[data-toggle="popover"]').popover();
             $('.popover-dismiss').popover({
                 trigger: 'focus'
             });
-            $('.popover-title').css("background-color", "#9FC53B");
-            $('.popover').css("background-color", "red");
-
         });
 
     </script>
-<style>
- .popover-title{
-     background-color: #9FC53B;
-}
-</style>
+    <style>
+        .popover {
+            background-color: #9FC53B;
+        }
+    </style>
 </head>
 <body>
 
 <%@include file="navigation.jsp" %>
 <jsp:include page="${path}.jsp"></jsp:include>
 <footer class="page-footer font-small blue pt-4 text-center mt-5" style=" position:initial; bottom:0;font-size:10px;">
-    <p class="wysiwyg-text-align-center"><strong><em>Avatars icons made by </em></strong><a href="https://www.freepik.com/home"><strong><em>Freepik</em></strong></a><strong><em>
+    <p class="wysiwyg-text-align-center"><strong><em>Avatars icons made by </em></strong><a
+            href="https://www.freepik.com/home"><strong><em>Freepik</em></strong></a><strong><em>
         from </em></strong><strong><em><a href="http://www.flaticon.com/">www.flaticon.com</a></em></strong></p>
 </footer>
 </body>
