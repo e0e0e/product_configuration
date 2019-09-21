@@ -1,5 +1,6 @@
 package pl.sda.pms.projects;
 
+
 import pl.sda.pms.task.Task;
 import pl.sda.pms.users.User;
 
@@ -9,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+
 public class Project implements Comparable<Project> {
 
     @Id

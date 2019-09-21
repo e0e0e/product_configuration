@@ -1,5 +1,9 @@
 package pl.sda.pms.task;
 
+
+
+
+import org.hibernate.envers.Audited;
 import pl.sda.pms.progres.Progress;
 import pl.sda.pms.projects.Project;
 import pl.sda.pms.sprint.Sprint;
@@ -14,6 +18,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+   @Audited
     private String name;
 
     @Column(length = 2000)
