@@ -1,12 +1,12 @@
 package pl.sda.pms.users;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import pl.sda.pms.projects.Project;
 import pl.sda.pms.task.Task;
 
 import javax.persistence.*;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -42,6 +42,8 @@ public class User {
     private Set<Project> projectsParticipants;
 
     private String avatar="default.png";
+    private String authorities;
+
 
     public String getAvatar() {
         return avatar;
@@ -49,6 +51,16 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+
+
+    public String getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(String authorities) {
+        this.authorities=authorities;
     }
 
     public User() {

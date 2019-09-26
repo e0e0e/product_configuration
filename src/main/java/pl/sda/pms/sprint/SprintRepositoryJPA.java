@@ -28,4 +28,7 @@ public interface SprintRepositoryJPA extends JpaRepository<Sprint, Long> {
 
     @Query(value = "SELECT count(id) FROM sprint where (?1 between START_DATE and FINISH_DATE) or (?2 between START_DATE and FINISH_DATE) or (START_DATE between ?1 and ?2) or (FINISH_DATE between ?1 and ?2)", nativeQuery = true)
     int findIfDateAvalible(String from,String to);
+
+    @Query(value = "SELECT count(id) FROM sprint where (start_date like ?1 and FINISH_DATE like ?2)", nativeQuery = true)
+    int findIfExists(LocalDate startDate1, LocalDate startDate2);
 }

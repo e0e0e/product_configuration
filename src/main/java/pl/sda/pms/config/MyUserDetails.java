@@ -29,8 +29,15 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        final List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("User"));
-        return authorities;
+        if(user.getAuthorities()!=null){
+            final List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getAuthorities()));
+            return authorities;
+
+        }else {
+            final List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("USER"));
+            return authorities;
+        }
+
     }
 
     @Override

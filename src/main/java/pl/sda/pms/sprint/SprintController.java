@@ -28,8 +28,8 @@ public class SprintController {
                                 Model model) {
 
 
-        model.addAttribute("title","Add Sprint");
-        model.addAttribute("path","sprint/sprint");
+        model.addAttribute("title", "Add Sprint");
+        model.addAttribute("path", "sprint/sprint");
 
         return "main";
     }
@@ -41,8 +41,8 @@ public class SprintController {
 
         model.addAttribute("sprints", sprintService.findAllSprints());
 
-        model.addAttribute("title","Sprint List");
-        model.addAttribute("path","sprint/sprintList");
+        model.addAttribute("title", "Sprint List");
+        model.addAttribute("path", "sprint/sprintList");
 
         return "main";
     }
@@ -54,26 +54,26 @@ public class SprintController {
                             Model model) {
 
 
-try {
-    sprintService.saveSprint(from, to, storyPoints);
-}catch (Exception e){
+        try {
+            sprintService.saveSprint(from, to, storyPoints);
+        } catch (Exception e) {
 
-    model.addAttribute("errorMessage", e.getLocalizedMessage());
-    model.addAttribute("title","Add Sprint");
-    model.addAttribute("path","sprint/sprint");
+            model.addAttribute("errorMessage", e.getLocalizedMessage());
+            model.addAttribute("title", "Add Sprint");
+            model.addAttribute("path", "sprint/sprint");
 
-    return "main";
-}
+            return "main";
+        }
         model.addAttribute("sprints", sprintService.findAllSprints());
-        model.addAttribute("title","Sprint List");
-        model.addAttribute("path","sprint/sprintList");
+        model.addAttribute("title", "Sprint List");
+        model.addAttribute("path", "sprint/sprintList");
 
         return "main";
     }
 
     @GetMapping("sprint/delete")
     public String deleteSprint(@RequestParam long sprintId,
-                               Model model){
+                               Model model) {
         sprintService.deleteSprint(sprintId);
 
         return "redirect:/sprintList";

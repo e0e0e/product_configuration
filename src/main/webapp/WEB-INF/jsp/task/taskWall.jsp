@@ -1,10 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--<jsp:useBean id="chrono" class="java.time.temporal.ChronoUnit"/>--%>
 <%@ page import="java.time.temporal.ChronoUnit" %>
 <%@ page import="pl.sda.pms.progres.Progress" %>
+<sec:authentication var="loggedUser" property="principal"/>
 
 <div class="container">
 
@@ -14,7 +16,8 @@
             <div style="display: inline-block"><a
                     href="/taskWallPrevious?sprintId=${wall.theSprint.id}&previous=${param.previous}"
                     class="btn btn-outline-info btn-sm">
-                <span class="glyphicon glyphicon-triangle-left"></span></a></div>
+                <span class="glyphicon glyphicon-triangle-left"></span></a>
+            </div>
 
             <div style="display: inline-block">
                 <div class="dropdown" style="display: inline-block">
@@ -104,33 +107,41 @@
                             <div class="card bg-secondary m-2 text-center p-1">
                                 </c:if>
                                 <div class="row">
-                                    <div class="col float-left ">
 
-                                        <a href="/task/progressToNextChange?taskId=${task.id}&progress=${task.progress}&backToWall=${task.sprint.id}&previous=${param.previous}&next=false"
-                                           class="btn btn-outline-light btn-sm">
-                                            <span class="glyphicon glyphicon-triangle-left"></span></a>
-                                    </div>
+                                    <c:if test="${(loggedUser.username==task.user.username) || (loggedUser.username==task.project.user.username)}">
+                                        <div class="col float-left ">
+                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=${task.progress}&backToWall=${task.sprint.id}&previous=${param.previous}&next=false"
+                                               class="btn btn-outline-light btn-sm">
+                                                <span class="glyphicon glyphicon-triangle-left"></span></a>
+                                        </div>
+                                    </c:if>
+
                                     <div class="col float-none">
 
 
-                                        <a tabindex="0" class="m-1 text-dark " data-placement="bottom" data-container="body"
-                                           role="button" data-toggle="popover" data-trigger="focus" title="${task.name}"
-                                           data-content="${task.description}">${task.name}</a>
-                                            <%--                                            <button type="button" data-toggle="popover" title="${task.name}"  data-content="${task.description}">${task.name}</button>--%>
+                                        <a tabindex="0" class="m-1 text-dark" data-placement="bottom"
+                                           data-container="body"
+                                           role="button" data-toggle="popover" data-trigger="focus"
+                                           title="Task name: ${task.name}"
+                                           data-content="Task description: ${task.description}">${task.name}</a>
+
                                         <a href="/task/show?taskId=${task.id}"><span
                                                 class="glyphicon glyphicon glyphicon-info-sign text-dark"></span></a>
-                                        <a href="/task/edit?taskId=${task.id}"  style="float: right;">
-                                            <span class="glyphicon glyphicon-edit text-dark"></span></a>
+                                        <c:if test="${(loggedUser.username==task.user.username) || (loggedUser.username==task.project.user.username)}">
 
+                                            <a href="/task/edit?taskId=${task.id}" style="float: right;">
+                                                <span class="glyphicon glyphicon-edit text-dark"></span></a>
+                                        </c:if>
 
-                                            <%--                                    <c:if test="${user.username==task.user}">--%>
                                     </div>
-                                    <div class="col float-right">
-                                        <a href="/task/progressToNextChange?taskId=${task.id}&progress=${task.progress}&backToWall=${task.sprint.id}&previous=${param.previous}&next=true"
-                                           class="btn btn-outline-light btn-sm">
-                                            <span class="glyphicon glyphicon-triangle-right"></span></a>
-                                    </div>
-                                        <%--                                    </c:if>--%>
+                                    <c:if test="${(loggedUser.username==task.user.username) || (loggedUser.username==task.project.user.username)}">
+
+                                        <div class="col float-right">
+                                            <a href="/task/progressToNextChange?taskId=${task.id}&progress=${task.progress}&backToWall=${task.sprint.id}&previous=${param.previous}&next=true"
+                                               class="btn btn-outline-light btn-sm">
+                                                <span class="glyphicon glyphicon-triangle-right"></span></a>
+                                        </div>
+                                    </c:if>
                                 </div>
 
                                 <div class="card-footer">

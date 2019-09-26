@@ -73,4 +73,8 @@ public class SprintService {
     public Sprint findById(Long sprintId) {
         return sprintRepositoryJPA.findById(sprintId).get();
     }
+
+    public int findIfExists(LocalDate startDate1, LocalDate startDate2) {
+        return sprintRepositoryJPA.findIfExists(startDate1,startDate2);
+    }
 }

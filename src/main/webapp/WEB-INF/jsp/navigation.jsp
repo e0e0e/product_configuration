@@ -18,6 +18,7 @@
 <%--                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users">Add User</a></li>--%>
                     <%--                    <li class="nav-item"> <a class="nav-link text-light font-weight-bold" href="/project">Add Project</a> </li>--%>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users/projectList?userId=${user.id}">My Projects</a></li>
+                    <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/users/list">Users</a></li>
                     <li class="nav-item"><a class="nav-link text-primary font-weight-bold" href="/users/allProjectList">All Projects</a></li>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/sprint">Sprint</a></li>
                     <li class="nav-item"><a class="nav-link text-light font-weight-bold" href="/sprintList">Sprint List</a></li>
