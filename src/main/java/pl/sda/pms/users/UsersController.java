@@ -80,7 +80,18 @@ public class UsersController {
     public String listUsers(Model model) {
 
         model.addAttribute("users", userService.findAll());
-        return "user/list";
+        model.addAttribute("title", "User List");
+        model.addAttribute("path", "user/list");
+        return "main";
+    }
+
+    @GetMapping("accessDenied")
+    private String forbidenAccess(Model model){
+
+        model.addAttribute("title", "User List");
+        model.addAttribute("path", "accessDenied");
+        return "main";
+
     }
 
     @GetMapping("/userProfile")

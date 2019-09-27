@@ -1,16 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <style>
-        <%@include file="../css/style.css" %>
-    </style>
-    <%@include file="../css/boot.jsp" %>
-
-</head>
-<body>
-<%@include file="../navigation.jsp" %>
 
 <c:if test="${createUserResult==true}">
 
@@ -37,6 +26,12 @@
 
                     <div class="card-header bg-info text-left text-light"><h4>User name: ${user.username}<br/>
                         login:${user.login}</h4></div>
+                    <div class="col text-center float-right">
+
+                        <img class="img-circle bg-dark p-1 m-1 d-inline-block" src="${resourcePath}${user.avatar}"
+                             height="40" width="40"/>
+                        <div class="d-inline-block">${user.username}</div>
+                    </div>
 
                     <div class="card-body ">
 
@@ -70,7 +65,3 @@
     </div>
 
 </div>
-
-
-</body>
-</html>

@@ -49,7 +49,10 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
 
                 .and()
-                .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400);
+                .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400)
+
+                .and()
+                .exceptionHandling().accessDeniedPage("/accessDenied");
 
         http.csrf().disable();
         http.headers().frameOptions().disable();
