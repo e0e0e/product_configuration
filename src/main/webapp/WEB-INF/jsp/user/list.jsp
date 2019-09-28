@@ -13,7 +13,6 @@
 </c:if>
 
 
-
 <div class="container">
 
     <h3>Users</h3>
@@ -24,10 +23,7 @@
 
                 <div class="card text-dark bg-warning m-1">
 
-                    <div class="card-header bg-info text-left text-light"><h4>User name: ${user.username}<br/>
-                        login:${user.login}</h4></div>
-                    <div class="col text-center float-right">
-
+                    <div class="card-header bg-info text-left text-light">
                         <img class="img-circle bg-dark p-1 m-1 d-inline-block" src="${resourcePath}${user.avatar}"
                              height="40" width="40"/>
                         <div class="d-inline-block">${user.username}</div>
@@ -37,19 +33,21 @@
 
                             <%--                    <h5 class="card-title">Services Title 1</h5>--%>
 
+                        <p class="card-text text-left">login:${user.login}  </p>
+                        <br/>
                         <p class="card-text text-left">email: ${user.email}  </p>
-                                <br/>
+                        <br/>
                         <p class="card-text text-left">In projects: ${user.toString()}  </p>
 
                     </div>
 
                     <div class="card-footer bg-info text-right text-danger">
 
-                        <a href="/project/user?projectId=${user.id}" class="btn btn-outline-light btn-sm">
+                        <a href="/user/delete?userId=${user.id}" class="btn btn-outline-light btn-sm">
                             <span class="glyphicon glyphicon-trash"></span></a>
                             <%--                        <a href="/participant?projectId=${project.id}" class="btn btn-outline-light btn-sm">--%>
                             <%--                            <span class="glyphicon glyphicon-plus"></span></a>--%>
-                        <a href="/project/edit?projectId=${user.id}" class="btn btn-outline-light btn-sm">
+                        <a href="/user/edit?userId=${user.id}" class="btn btn-outline-light btn-sm">
                             <span class="glyphicon glyphicon-edit"></span></a>
                             <%--                        <div class="btn btn-outline-light btn-sm">--%>
                             <%--                                ${project.showUsersInProject()}</div>--%>

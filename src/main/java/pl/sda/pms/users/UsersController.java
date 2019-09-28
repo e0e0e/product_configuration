@@ -76,6 +76,19 @@ public class UsersController {
 
     }
 
+    @GetMapping("/user/edit")
+    public String editUser(@RequestParam long userId,
+                           Model model) {
+        try {
+            model.addAttribute("user", userService.findById(userId));
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getLocalizedMessage());
+        }
+        model.addAttribute("title", "Edit User");
+        model.addAttribute("path", "user/editUser");
+        return "main";
+    }
+
     @GetMapping("users/list")
     public String listUsers(Model model) {
 
@@ -86,7 +99,7 @@ public class UsersController {
     }
 
     @GetMapping("accessDenied")
-    private String forbidenAccess(Model model){
+    private String forbidenAccess(Model model) {
 
         model.addAttribute("title", "User List");
         model.addAttribute("path", "accessDenied");
