@@ -101,4 +101,18 @@ public class UserService {
     public void addAvatar(long userId, String image) {
         userRepository.addAvatar(userId,image);
     }
+
+    public void saveChanges(long userId, String login, String password, String email, String username) {
+
+        boolean isEmailTaken = userRepository.isEmailTakenExcept(email, userId)>0;
+
+        if (isEmailTaken) {
+            throw new RuntimeException("Email already in use");
+        }
+        User user = new User(login, password, email, username);
+        User created = userRepository.save(user);
+
+//    userRepository.saveChanges(userId, login, password, email, username);
+
+    }
 }

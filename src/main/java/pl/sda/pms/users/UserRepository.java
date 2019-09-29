@@ -34,4 +34,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query(value = "SELECT count(email) FROM user WHERE EMAIL like ?1", nativeQuery = true)
     int isEmailTaken(String email);
+
+//    void saveChanges(long userId, String login, String password, String email, String username);
+
+    @Query(value = "SELECT count(email) FROM user WHERE EMAIL like ?1 and id!=?2", nativeQuery = true)
+    int isEmailTakenExcept(String email, long userId);
 }

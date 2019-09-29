@@ -27,29 +27,29 @@ public class UserTest {
         assertEquals("Muzykant", user.getUsername());
     }
 
-//    @Test
-//    public void testSprintAddException() {
-//        //given
-//        LocalDate startDate1 = LocalDate.of(2019, 1, 5);
-//        LocalDate finishDate1 = LocalDate.of(2019, 1, 10);
-////        Sprint sprint1 = new Sprint(startDate1, finishDate1, 10);
-//        LocalDate startDate2 = LocalDate.of(2019, 1, 4);
-//        LocalDate finishDate2 = LocalDate.of(2019, 1, 10);
-//        Sprint sprint2 = new Sprint(startDate2, finishDate2, 10);
-//        int ex=sprintService.findIfExists(startDate1,startDate2);
+    @Test
+    public void testSprintAddException() {
+        //given
+        LocalDate startDate1 = LocalDate.of(2019, 1, 5);
+        LocalDate finishDate1 = LocalDate.of(2019, 1, 10);
+//        Sprint sprint1 = new Sprint(startDate1, finishDate1, 10);
+        LocalDate startDate2 = LocalDate.of(2019, 1, 4);
+        LocalDate finishDate2 = LocalDate.of(2019, 1, 10);
+      //  Sprint sprint2 = new Sprint(startDate2, finishDate2, 10);
+        System.out.println(sprintService.findIfExists(startDate1,startDate2));
 //        sprintService.saveSprint(startDate1, finishDate1, 10);
-//
-//        //when
-//
-//        //then
+
+        //when
+
+        //then
 //        try {
 //            sprintService.saveSprint(startDate2, finishDate2, 10);
 ////            fail("Expected an IndexOutOfBoundsException to be thrown");
 //        } catch (NullPointerException e) {
 //            assertEquals(e.getMessage(), "Data range overlaps");
 //        }
-//
-//    }
+assertEquals(1,1);
+    }
 
 
 }

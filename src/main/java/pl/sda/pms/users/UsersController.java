@@ -65,14 +65,14 @@ public class UsersController {
         }
     }
 
-    @GetMapping("users/delete")
+    @GetMapping("user/delete")
     public String deleteUser(@RequestParam long userId,
                              Model model) {
 
         userService.delete(userId);
         model.addAttribute("users", userService.findAll());
         model.addAttribute("deleteUserResults", true);
-        return "user/list";
+        return "redirect:/users/list";
 
     }
 
@@ -88,6 +88,32 @@ public class UsersController {
         model.addAttribute("path", "user/editUser");
         return "main";
     }
+
+    @GetMapping("saveChangedUser")
+    public String saveChangedUser(@RequestParam String password,
+                                  @RequestParam String email,
+                                  @RequestParam String login,
+                                  @RequestParam String username,
+                                  @RequestParam long userId,
+                                  Model model){
+
+//        try {
+//            userService.saveChanges(userId,login, passwordEncoder.encode(password), email, username);
+//
+//
+//        } catch (Exception e) {
+//
+//
+//        }
+
+        model.addAttribute("users", userService.findAll());
+        model.addAttribute("title", "User List");
+        model.addAttribute("path", "user/list");
+        return "main";
+    }
+
+
+
 
     @GetMapping("users/list")
     public String listUsers(Model model) {
