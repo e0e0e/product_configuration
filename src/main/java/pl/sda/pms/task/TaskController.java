@@ -243,4 +243,23 @@ public class TaskController {
         return "main";
     }
 
+    @GetMapping("/small/Task")
+    public String SmallTask(Model model) {
+
+        model.addAttribute("title", "smallTask");
+        model.addAttribute("path", "task/smallTask");
+
+        return "main";
+    }
+
+    @GetMapping("/addSmallTask")
+    public String AddSmallTask(Model model) {
+
+        taskService.createSmallTask(12);
+        model.addAttribute("title", "addsmallTask");
+        model.addAttribute("path", "task/smallTask");
+
+        return "main";
+    }
+
 }

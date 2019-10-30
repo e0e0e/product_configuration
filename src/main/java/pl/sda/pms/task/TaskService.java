@@ -21,12 +21,16 @@ public class TaskService {
     private final SprintRepositoryJPA sprintRepositoryJPA;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final SmallTaskRepository smallTaskRepository;
 
-    public TaskService(TaskRepository taskRepository, SprintRepositoryJPA sprintRepositoryJPA, ProjectRepository projectRepository, UserRepository userRepository) {
+    public TaskService(TaskRepository taskRepository, SprintRepositoryJPA sprintRepositoryJPA,
+            ProjectRepository projectRepository, UserRepository userRepository,
+            SmallTaskRepository smallTaskRepository) {
         this.taskRepository = taskRepository;
         this.sprintRepositoryJPA = sprintRepositoryJPA;
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.smallTaskRepository = smallTaskRepository;
     }
 
     public static LocalDate LocalDateFromWeekYearAndWeek(int weekYear,
@@ -190,5 +194,11 @@ public class TaskService {
         }
         taskRepository.updateTask(name,description,sprintId,storyPoints,weight,userId, taskId);
     }
+
+	public boolean createSmallTask(Integer i) {
+        SmallTask smallTask=new SmallTask();
+        SmallTask created=smallTaskRepository.save(smallTask);
+        return created.getId() != null;
+	}
 }
 

@@ -3,6 +3,7 @@ package pl.sda.pms.task;
 import pl.sda.pms.progres.Progress;
 import pl.sda.pms.projects.Project;
 import pl.sda.pms.sprint.Sprint;
+import pl.sda.pms.*;
 import pl.sda.pms.users.User;
 
 import javax.persistence.*;

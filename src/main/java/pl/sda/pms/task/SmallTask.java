@@ -1,20 +1,26 @@
 package pl.sda.pms.task;
 
+
+
+//import org.springframework.data.envers.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Entity
 @Audited
+
 public class SmallTask {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
+    
     private Integer size;
 
+    
+   
     public SmallTask(Integer size) {
         this.size = size;
     }
