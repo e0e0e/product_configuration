@@ -418,8 +418,8 @@ $RECYCLE.BIN/
 
 # Ignore idea folder
 
-idea/
+.idea/
 
 # ignore vscode
 
-vscode/
+.vscode/
