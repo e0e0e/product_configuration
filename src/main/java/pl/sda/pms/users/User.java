@@ -4,6 +4,9 @@ import pl.sda.pms.projects.Project;
 import pl.sda.pms.task.Task;
 
 import javax.persistence.*;
+
+import org.hibernate.envers.Audited;
+
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
@@ -11,6 +14,7 @@ import java.util.stream.Collectors;
 
 
 @Entity
+@Audited
 public class User {
 
     @Id

@@ -61,6 +61,9 @@ public class ProjectService {
         if (projectRepository.findIfProjectNameExistsExceptThis(projectId, projectName) > 0) {//if not same projectId
             throw new RuntimeException("Project name already in use");
         }
+        Project project=projectRepository.findById(projectId).get();
+        project.setDescription(description);
+        project.setProjectName(projectName);
         projectRepository.updateProject(projectId, projectName, description);
 
     }

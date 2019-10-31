@@ -196,7 +196,7 @@ public class TaskService {
     }
 
 	public boolean createSmallTask(Integer i) {
-        SmallTask smallTask=new SmallTask();
+        SmallTask smallTask=new SmallTask(i);
         SmallTask created=smallTaskRepository.save(smallTask);
         return created.getId() != null;
 	}

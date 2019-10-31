@@ -8,7 +8,10 @@ import pl.sda.pms.users.User;
 
 import javax.persistence.*;
 
+import org.hibernate.envers.Audited;
+
 @Entity
+@Audited
 public class Task {
 
     @Id

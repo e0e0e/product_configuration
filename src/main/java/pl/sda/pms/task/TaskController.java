@@ -253,13 +253,12 @@ public class TaskController {
     }
 
     @GetMapping("/addSmallTask")
-    public String AddSmallTask(Model model) {
+    public String AddSmallTask() {
 
-        taskService.createSmallTask(12);
-        model.addAttribute("title", "addsmallTask");
-        model.addAttribute("path", "task/smallTask");
+       boolean creted= taskService.createSmallTask(12);
 
-        return "main";
+
+        return "redirect:/small/Task";
     }
 
 }
