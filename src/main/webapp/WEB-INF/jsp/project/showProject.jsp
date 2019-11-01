@@ -96,4 +96,20 @@
 </div>
 <%@include file="../task/taskList.jsp" %>
 
+<div class="container">
+<c:forEach var="projectAud" items="${projectsAud}">
+<div class="row">
+    <div class="col">
+        ${projectAud.projectName}
+    </div>
+ <div class="col">
+        ${projectAud.description}
+    </div>
+
+</div>
+
+</c:forEach>
+
+</div>
+
 

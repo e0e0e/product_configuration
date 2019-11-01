@@ -194,11 +194,13 @@ public class ProjectController {
         List<Task> tasksToDo = taskService.findTasksToDo(projectId, 0);
         List<Task> tasksInProgress = taskService.findTasksToDo(projectId, 1);
         List<Task> tasksDone = taskService.findTasksToDo(projectId, 2);
+        List<Project> projectsAud=projectService.findAllById(projectId);
 
         model.addAttribute("tasksToDo", tasksToDo);
         model.addAttribute("tasksInProgress", tasksInProgress);
         model.addAttribute("tasksDone", tasksDone);
         model.addAttribute("tasks", taskList);
+        model.addAttribute("projectsAud", projectsAud);
 
         model.addAttribute("project", project);
         model.addAttribute("title", "Show Project");

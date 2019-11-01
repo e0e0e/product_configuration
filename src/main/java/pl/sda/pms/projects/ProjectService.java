@@ -1,5 +1,6 @@
 package pl.sda.pms.projects;
 
+import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.stereotype.Service;
 import pl.sda.pms.users.User;
 
@@ -51,20 +52,24 @@ public class ProjectService {
         return projectRepository.finaAllWhereAdmin(userId);
     }
 
-
     public List<Project> findAllWhereParticipate(Long userId) {
         return projectRepository.findAllWhereParticipate(userId);
     }
 
-
     public void updateProject(long projectId, String projectName, String description) {
-        if (projectRepository.findIfProjectNameExistsExceptThis(projectId, projectName) > 0) {//if not same projectId
+        if (projectRepository.findIfProjectNameExistsExceptThis(projectId, projectName) > 0) {// if not same projectId
             throw new RuntimeException("Project name already in use");
         }
-        Project project=projectRepository.findById(projectId).get();
+        Project project = projectRepository.findById(projectId).get();
         project.setDescription(description);
         project.setProjectName(projectName);
         projectRepository.updateProject(projectId, projectName, description);
 
+    }
+
+    public List<Project> findAllById(Long projectId) {
+        List<Project> posts = AuditReaderFactory.get(entityManager).createQuery()
+                .forRevisionsOfEntity(Project.class, true, true).add(AuditEntity.id().eq(1L)).getResultList();
+        return projectRepository.findAllById(projectId);
     }
 }

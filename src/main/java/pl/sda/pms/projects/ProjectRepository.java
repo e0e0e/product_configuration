@@ -30,4 +30,7 @@ public interface ProjectRepository extends CrudRepository<Project,Long> {
 
     @Query(value = "SELECT count(ID) FROM project WHERE PROJECT_NAME=?2 and id !=?1", nativeQuery = true)
     int findIfProjectNameExistsExceptThis(long projectId, String projectName);
+    
+    @Query(value = "SELECT * FROM project_aud WHERE Id  = ?1", nativeQuery = true)
+	List<Project> findAllById(Long projectId);
 }

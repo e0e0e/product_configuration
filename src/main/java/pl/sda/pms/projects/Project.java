@@ -4,11 +4,15 @@ import pl.sda.pms.task.Task;
 import pl.sda.pms.users.User;
 
 import javax.persistence.*;
+
+import org.hibernate.envers.Audited;
+
 import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@Audited
 public class Project implements Comparable<Project> {
 
     @Id

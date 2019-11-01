@@ -3,10 +3,14 @@ package pl.sda.pms.sprint;
 import pl.sda.pms.task.Task;
 
 import javax.persistence.*;
+
+import org.hibernate.envers.Audited;
+
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
+@Audited
 public class Sprint {
 
     @Id

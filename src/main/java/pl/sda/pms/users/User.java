@@ -1,5 +1,6 @@
 package pl.sda.pms.users;
 
+import org.hibernate.envers.Audited;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import pl.sda.pms.projects.Project;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 
 @Entity
+@Audited
 public class User {
 
     @Id
