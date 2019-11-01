@@ -1,6 +1,9 @@
 package pl.sda.pms.projects;
 
 import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.AuditQuery;
+import org.springframework.data.auditing.config.AuditingConfiguration;
 import org.springframework.stereotype.Service;
 import pl.sda.pms.users.User;
 
@@ -8,8 +11,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Service
 public class ProjectService {
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     private final ProjectRepository projectRepository;
 
@@ -68,8 +77,13 @@ public class ProjectService {
     }
 
     public List<Project> findAllById(Long projectId) {
-        List<Project> posts = AuditReaderFactory.get(entityManager).createQuery()
-                .forRevisionsOfEntity(Project.class, true, true).add(AuditEntity.id().eq(1L)).getResultList();
-        return projectRepository.findAllById(projectId);
+        
+        List<Project> projects = AuditReaderFactory.get(entityManager).createQuery()
+                .forRevisionsOfEntity(Project.class, true, true)
+                .add(AuditEntity.id().eq(projectId))
+                .getResultList();
+       
+       
+                return projects;
     }
 }

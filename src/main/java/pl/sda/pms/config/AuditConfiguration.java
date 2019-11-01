@@ -1,3 +1,5 @@
+package pl.sda.pms.config;
+
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.context.annotation.Bean;
