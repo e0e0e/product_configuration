@@ -1,7 +1,7 @@
 package pl.sda.pms.projects;
 
-
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.hibernate.envers.DefaultRevisionEntity;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -194,13 +194,21 @@ public class ProjectController {
         List<Task> tasksToDo = taskService.findTasksToDo(projectId, 0);
         List<Task> tasksInProgress = taskService.findTasksToDo(projectId, 1);
         List<Task> tasksDone = taskService.findTasksToDo(projectId, 2);
-        List<Project> projectsAud=projectService.findAllById(projectId);
+        List<Object> projectsAud=projectService.findAllById(projectId);
 
         model.addAttribute("tasksToDo", tasksToDo);
         model.addAttribute("tasksInProgress", tasksInProgress);
         model.addAttribute("tasksDone", tasksDone);
         model.addAttribute("tasks", taskList);
         model.addAttribute("projectsAud", projectsAud);
+
+       
+
+//         Object[] objArray = (Object[])projectsAud.get(0);
+        
+//         Project myEntity = (Project)objArray[0];
+//         DefaultRevisionEntity rev=(DefaultRevisionEntity)objArray[1];
+// rev.getRevisionDate().toString();
 
         model.addAttribute("project", project);
         model.addAttribute("title", "Show Project");

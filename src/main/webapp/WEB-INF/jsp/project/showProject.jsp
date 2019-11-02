@@ -56,7 +56,6 @@
 
         </div>
 
-
         <div class="row">
             <div class="col-4 bg-info border">
                 <c:forEach var="task" items="${tasksToDo}">
@@ -76,7 +75,6 @@
                         <span class="glyphicon glyphicon-triangle-right"></span></a><br/>
                 </c:forEach>
 
-
             </div>
             <div class="col-4 bg-info bg-info border">
                 <c:forEach var="task" items="${tasksDone}">
@@ -85,30 +83,29 @@
                     ${task.name} ${task.progress}<br/>
 
                 </c:forEach>
-
             </div>
-
-
         </div>
-
-
-
 </div>
 <%@include file="../task/taskList.jsp" %>
 
 <div class="container">
-<c:forEach var="projectAud" items="${projectsAud}">
-<div class="row">
-    <div class="col">
-        ${projectAud.projectName}
-    </div>
- <div class="col">
-        ${projectAud.description}
-    </div>
+    <c:forEach var="project" items="${projectsAud}">
+        <div class="row">
+            <div class="col">
+                ${project[0].projectName}
+            </div>
+            <div class="col">
+                    ${project[0].description}
+            </div>
+            <div class="col">
+            <fmt:formatDate type="date" value="${project[1].revisionDate}" pattern="yyyy-MM-dd, HH:mm"/>
+            </div>
+            <div class="col">
+                    ${project[1]}
+            </div>
+        </div>
 
-</div>
-
-</c:forEach>
+    </c:forEach>
 
 </div>
 
