@@ -57,23 +57,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-//    public void login(String userName, String password) {
-//        logged = userRepository.findAll().stream()
-//                .filter(e -> (e.getUsername().equals(userName) && e.getPassword().equals(password)))
-//                .findAny()
-//                .orElse(null);
-//
-//        // return user;
-//
-//    }
-//
-//    public User getLogged() {
-//        return logged;
-//    }
-//
-//    public void logout() {
-//        logged = null;
-//    }
 
 
     public List<User> findUsersByEmail(String filterUserByEmail) {
@@ -99,7 +82,11 @@ public class UserService {
     }
 
     public void addAvatar(long userId, String image) {
-        userRepository.addAvatar(userId,image);
+        //userRepository.addAvatar(userId,image);
+        User user=userRepository.findById(userId).get();
+        user.setAvatar(image);
+       
+        userRepository.save(user);
     }
 
     public void saveChanges(long userId, String login, String password, String email, String username) {

@@ -73,22 +73,12 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId).get();
         project.setDescription(description);
         project.setProjectName(projectName);
-        projectRepository.updateProject(projectId, projectName, description);
+        projectRepository.save(project);
+       // projectRepository.updateProject(projectId, projectName, description);
 
     }
 
     public  List<Object> findAllById(Long projectId) {
-        // AuditReader reader = AuditReaderFactory.get(entityManager);
-
-        // AuditQuery query = reader.createQuery()
-        // .forRevisionsOfEntity(Project.class, true, true);
-
-        // List<Project> projects = query.add(AuditEntity.id().eq(projectId))
-        // .getResultList();
-
-        // AuditQuery query2 = reader.createQuery()
-        // .forEntitiesAtRevision(Project.class, 1)
-        // .addOrder(AuditEntity.revisionNumber().desc());
         @SuppressWarnings("unchecked")
         List<Object> revisions = AuditReaderFactory.get(entityManager).createQuery()
                 .forRevisionsOfEntity(Project.class, false, true)

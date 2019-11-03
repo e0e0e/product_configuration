@@ -45,6 +45,8 @@ public class Task {
     @ManyToOne
     private Project project;
 
+	
+
     public Task() {
     }
 

@@ -87,8 +87,8 @@
         </div>
 </div>
 <%@include file="../task/taskList.jsp" %>
-
-<div class="container">
+<hr>
+<div class="container" >
     <c:forEach var="project" items="${projectsAud}">
         <div class="row">
             <div class="col">
@@ -100,8 +100,9 @@
             <div class="col">
             <fmt:formatDate type="date" value="${project[1].revisionDate}" pattern="yyyy-MM-dd, HH:mm"/>
             </div>
+
             <div class="col">
-                    ${project[1]}
+                    ${project[1].username}
             </div>
         </div>
 

@@ -6,10 +6,9 @@
 <div class="container">
     <table class="table table-dark">
         <tr>
-            <%--        <th>Id</th>--%>
             <th>task Name</th>
             <th>Description</th>
-            <%--        <th>User Name</th>--%>
+
             <th>Start Date</th>
             <th>Finish Date</th>
             <th>Story points</th>
@@ -42,18 +41,6 @@
 
     </table>
 </div>
-
-<%--<div class="progress">--%>
-<%--<c:forEach begin="1" end="12" varStatus="loop">--%>
-
-<%--        <div class="progress-bar progress-bar-white" role="progressbar"--%>
-<%--             style="width:${(1/12)*100}%">--%>
-<%--                ${loop.index+4}--%>
-<%--        </div>--%>
-
-
-<%--</c:forEach>--%>
-<%--</div>--%>
 <div class="container-fluid float-left ">
     <div class="flex-nowrap">
         <div class="progress" style="width:${timeLine.size()*35}px">
@@ -84,42 +71,3 @@
         </c:forEach>
     </div>
 </div>
-
-
-<%--<div class="container">--%>
-
-<%--        <div class="row">--%>
-<%--            <c:forEach var="date" items="${timeLine}">--%>
-<%--            <div class="col-sm-1 bg-warning text-sm">--%>
-<%--               ${date}--%>
-<%--            </div>--%>
-<%--            </c:forEach>--%>
-<%--        </div>--%>
-
-
-<%--</div>--%>
-<%--<div class="container">--%>
-<%--<c:forEach var="table" items="${timeTableMap}">--%>
-<%--    <div class="row">--%>
-
-<%--            <div class="col-sm-${table.value.daysToStart} bg-light text-sm">--%>
-<%--                  daysto statry  ${table.value.daysToStart}--%>
-<%--            </div>--%>
-<%--            <div class="col-sm-${table.value.daysToFinish-table.value.daysToStart+1} bg-info text-sm">--%>
-<%--                   days to finish  ${table.value.daysToFinish}--%>
-<%--            </div>--%>
-<%--        <div class="col-sm bg-dark text-sm">--%>
-
-<%--        </div>--%>
-
-<%--    </div>--%>
-<%--    </c:forEach>--%>
-
-<%--</div>--%>
-
-
-<%--private LocalDate startDate;--%>
-<%--private Integer daysToStart;--%>
-<%--private Integer daysToFinish;--%>
-<%--private Integer numberOfDays;--%>
-<%--private Long sprintId;--%>

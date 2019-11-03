@@ -188,7 +188,17 @@ public class TaskService {
         if (taskRepository.findIfTaskNameExistsInProjectExceptThis(taskId, name,taskRepository.findById(taskId).get().getProject().getId()) > 0) {//if not same projectId
             throw new RuntimeException("Task name already in use in this project");
         }
-        taskRepository.updateTask(name,description,sprintId,storyPoints,weight,userId, taskId);
+
+        Task task=taskRepository.findById(taskId).get();
+        task.setName(name);
+        task.setDescription(description);
+        task.setSprint(sprintRepositoryJPA.findById(sprintId).get());
+        task.setStoryPoints(storyPoints);
+        task.setWeight(weight);
+        task.setUser(userRepository.findById(userId).get());
+        taskRepository.save(task);
+
+        // taskRepository.updateTask(name,description,sprintId,storyPoints,weight,userId, taskId);
     }
 }
 

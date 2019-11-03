@@ -1,15 +1,12 @@
 package pl.sda.pms.users;
 
 import org.hibernate.envers.Audited;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import pl.sda.pms.projects.Project;
 import pl.sda.pms.task.Task;
 
 import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
-
 
 @Entity
 @Audited
@@ -22,10 +19,8 @@ public class User {
     private String login;
     private String password;
 
-
     @Column(unique = true)
     private String email;
-
 
     @Column(unique = true)
     private String username;
@@ -37,15 +32,12 @@ public class User {
     private Set<Task> tasks;
 
     @ManyToMany
-    @JoinTable(
-            name = "PARTICIPANTS",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "project_id")})
+    @JoinTable(name = "PARTICIPANTS", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "project_id") })
     private Set<Project> projectsParticipants;
 
-    private String avatar="default.png";
+    private String avatar = "default.png";
     private String authorities;
-
 
     public String getAvatar() {
         return avatar;
@@ -55,19 +47,16 @@ public class User {
         this.avatar = avatar;
     }
 
-
-
     public String getAuthorities() {
         return authorities;
     }
 
     public void setAuthorities(String authorities) {
-        this.authorities=authorities;
+        this.authorities = authorities;
     }
 
     public User() {
     }
-
 
     public void setProjectsParticipants(Set<Project> projectsParticipants) {
         this.projectsParticipants = projectsParticipants;
@@ -116,7 +105,6 @@ public class User {
         return password;
     }
 
-
     public Long getId() {
         return id;
     }
@@ -143,16 +131,15 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(username, user.username) &&
-                Objects.equals(projects, user.projects) &&
-                Objects.equals(projectsParticipants, user.projectsParticipants);
+        return Objects.equals(id, user.id) && Objects.equals(login, user.login)
+                && Objects.equals(password, user.password) && Objects.equals(email, user.email)
+                && Objects.equals(username, user.username) && Objects.equals(projects, user.projects)
+                && Objects.equals(projectsParticipants, user.projectsParticipants);
     }
 
     @Override
@@ -166,18 +153,11 @@ public class User {
         String str = "";
         try {
 
-           // for (Project project : projects) {
-//                str = str.concat(project.getProjectName() + "<br/>");
-               str= projects.stream()
-                       .sorted(Comparator.comparing(o -> o.getProjectName()))
-                       .map(e->e.getProjectName())
-                        .collect(Collectors.joining(", "));
+            str = projects.stream().sorted(Comparator.comparing(o -> o.getProjectName())).map(e -> e.getProjectName())
+                    .collect(Collectors.joining(", "));
 
-//                                .forEach(e-> str.concat(e.getProjectName() + "<br/>"));
-
-           // }
-        }catch(NullPointerException e){
-            System.out.println("Concat String of projects is:"+ e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("Concat String of projects is:" + e.getMessage());
         }
         return str;
     }
