@@ -52,7 +52,7 @@ public class SpringBootJPAIntegrationTest {
 
     @Test
     public void testIfCreateUserSuccesfullExceptionMessage() {
-
+    	//userRepository.findByEmail("as2d@gmail.com");
 
         try {
             userService
@@ -62,7 +62,10 @@ public class SpringBootJPAIntegrationTest {
         } catch (Exception e) {
             assertThat(e.getMessage(), is("Email already in use"));
         }
-
+//        TestThing testThing = new TestThing();
+//        thrown.expect(NotFoundException.class);
+//        thrown.expectMessage(startsWith("some Message"));
 
     }
+
 }

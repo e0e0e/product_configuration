@@ -26,6 +26,13 @@ public class UserTest {
         //then
         assertEquals("Muzykant", user.getUsername());
     }
+    @Test
+    public void testOne() {
+
+
+      
+        assertEquals("Muzykant", "Muzykant");
+    }
 
     @Test
     public void testSprintAddException() {
@@ -36,7 +43,7 @@ public class UserTest {
         LocalDate startDate2 = LocalDate.of(2019, 1, 4);
         LocalDate finishDate2 = LocalDate.of(2019, 1, 10);
       //  Sprint sprint2 = new Sprint(startDate2, finishDate2, 10);
-        System.out.println(sprintService.findIfExists(startDate1,startDate2));
+//        System.out.println(sprintService.findIfExists(startDate1,startDate2));
 //        sprintService.saveSprint(startDate1, finishDate1, 10);
 
         //when
