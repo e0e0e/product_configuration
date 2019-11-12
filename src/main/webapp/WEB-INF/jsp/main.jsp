@@ -24,7 +24,8 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="src/main/webapp/WEB-INF/jsp/script/canvas2image.js" type="text/javascript"></script>
+
+
 <script>
 	$(document).ready(function() {
 		$('[data-toggle="popover"]').popover();
@@ -104,8 +105,58 @@
 
 	function to_image() {
 		var canvas = document.getElementById("mycanvas");
-		document.getElementById("theimage").src = canvas.toDataURL();
-		Canvas2Image.saveAsPNG(canvas);
+		//document.getElementById("theimage").src = canvas.toDataURL();
+		//Canvas2Image.saveAsPNG(canvas);
+		var imageData = canvas.toDataURL("image/png");
+		$.ajax({
+
+			url : '/image/saveCanvasImage',
+			data : {
+				imageBase64 : imageData
+			},
+			type : 'post',
+			dataType : 'json',
+			timeout : 10000,
+			async : false,
+			error : function() {
+				console.log("image save error");
+			},
+			success : function(res) {
+				if (res.ret == 0) {
+					console.log("Image saved successfull");
+				} else {
+					console.log("FAIL : " + res.msg);
+				}
+			}
+		});
+	}
+	function to_ftp_image() {
+		var canvas = document.getElementById("mycanvas");
+		//document.getElementById("theimage").src = canvas.toDataURL();
+		//Canvas2Image.saveAsPNG(canvas);
+		var imageData = canvas.toDataURL("image/png");
+		
+		$.ajax({
+
+			url : '/image/saveCanvasImageToFtp',
+			data : {
+				imageBase64 : imageData
+			},
+			type : 'post',
+			dataType : 'json',
+			timeout : 10000,
+			async : false,
+			error : function() {
+				console.log("image save error");
+			},
+			success : function(res) {
+				if (res.ret == 0) {
+					console.log("Image saved successfull");
+				} else {
+					console.log("FAIL : " + res.msg);
+				}
+			}
+		});
 	}
 </script>
 <style>
