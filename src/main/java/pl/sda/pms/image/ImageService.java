@@ -84,7 +84,7 @@ public class ImageService {
 		 String server = "wielon.c0.pl";
 	        int port = 21;
 	        String user = "wielon";
-	        String pass = "krowa111";
+	        String pass = "pass";
 	 
 	        FTPClient ftpClient = new FTPClient();
 	 
