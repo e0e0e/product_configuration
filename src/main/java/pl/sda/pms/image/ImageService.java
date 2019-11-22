@@ -5,6 +5,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -66,7 +67,7 @@ public class ImageService {
 		return filename.substring(pos);
 	}
 
-	public Map<String, Object> saveToFtpMap(String imageBase64) {
+	public Map<String, Object> saveLocal(String imageBase64) {
 		Map<String, Object> res = new HashMap<String, Object>();
 
 		File imageFile = new File("/home/grzes/Documents/pliki/canvasImage.png");
@@ -87,7 +88,9 @@ public class ImageService {
 
 	}
 
-	public void readFtp() {
+	public FTPFile[] readFtp() {
+		
+		FTPFile[] result = null;
 		String server = config.getString("ftpServer");
 		int port = config.getInt("ftpPort");
 		String user = config.getString("ftpUser");
@@ -108,7 +111,7 @@ public class ImageService {
 			int replyCode = ftpClient.getReplyCode();
 			if (!FTPReply.isPositiveCompletion(replyCode)) {
 				System.out.println("Connect failed");
-				return;
+//				return;
 			}
 
 			ftpClient.enterLocalPassiveMode();
@@ -116,14 +119,14 @@ public class ImageService {
 
 			if (!success) {
 				System.out.println("Could not login to the server");
-				return;
+//				return;
 			} else {
 				System.out.print("Loggin succesfull");
 			}
 
 			// Lists files and directories
-			FTPFile[] files1 = ftpClient.listFiles("/wielon.c0.pl/img");
-			printFileDetails(files1);
+			result = ftpClient.listFiles("/wielon.c0.pl/img");
+			printFileDetails(result);
 
 			// upload
 //	            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -158,7 +161,10 @@ public class ImageService {
 				ex.printStackTrace();
 			}
 		}
+		
+		return result;
 	}
+
 	public void saveToFtp(String imageBase64) {
 		String server = config.getString("ftpServer");
 		int port = config.getInt("ftpPort");
@@ -198,19 +204,25 @@ public class ImageService {
 			printFileDetails(files1);
 
 			// upload
-	            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-	            
-	            File firstLocalFile = new File("/home/grzes/Documents/pliki/canvasImage.png");
-	            
-	            String firstRemoteFile = "/wielon.c0.pl/img/canvas"+(files1.length+1)+".png";
-	            InputStream inputStream = new FileInputStream(firstLocalFile);
-	            System.out.println("Start uploading first file");
-	            boolean done = ftpClient.storeFile(firstRemoteFile, inputStream);
-	            inputStream.close();
+			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-	            if (done) {
-	                System.out.println("The first file is uploaded successfully.");
-	            }
+//	            File firstLocalFile = new File("/home/grzes/Documents/pliki/canvasImage.png");
+			byte[] decodedBytes = DatatypeConverter
+					.parseBase64Binary(imageBase64.replaceAll("data:image/.+;base64,", ""));
+			BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(decodedBytes));
+
+			String firstRemoteFile = "/wielon.c0.pl/img/canvas" + (files1.length + 1) + ".png";
+			// InputStream inputStream = new FileInputStream(firstLocalFile);
+			System.out.println("Start uploading first file");
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			 ImageIO.write(bufferedImage, "png", outputStream);
+			 InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+			boolean done = ftpClient.storeFile(firstRemoteFile, inputStream);
+	            inputStream.close();
+			bufferedImage.flush();
+			if (done) {
+				System.out.println("The first file is uploaded successfully.");
+			}
 
 			// uses simpler methods
 //			String[] files2 = ftpClient.listNames();
@@ -231,7 +243,7 @@ public class ImageService {
 			}
 		}
 	}
-	
+
 	private static void printFileDetails(FTPFile[] files) {
 		DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (FTPFile file : files) {

@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPListParseEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,8 +81,12 @@ public class ImageController {
 	}
 
 	@GetMapping("/image/list")
-	public void readFtp(Model model) throws Exception {
-		imageService.readFtp();
+	public String readFtp(Model model) throws Exception {
+		FTPFile[] imageList= imageService.readFtp();
+		model.addAttribute("imageList",imageList);
+		model.addAttribute("title", "List image");
+		model.addAttribute("path", "image/listImages");
+		return "main";
 
 	}
 
