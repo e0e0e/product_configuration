@@ -1,4 +1,6 @@
 import org.junit.Test;
+
+import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.sprint.Sprint;
 import pl.sda.pms.sprint.SprintService;
 import pl.sda.pms.users.User;
@@ -50,6 +52,7 @@ public class UserTest {
 //        }
 assertEquals(1,1);
     }
+
 
 
 }

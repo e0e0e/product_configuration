@@ -23,3 +23,9 @@ INSERT INTO "TASK" ("ID", "DESCRIPTION",
     "SPRINT_ID",
     "USER_ID") VALUES
 (5,'make upper structure', 'upper structure', 0, 2, 3, 1, 3, 203); 
+
+INSERT INTO "PRODUCT_FEATURE" ("ID","NAME","DESCRIPTION","IMAGE_PATH") VALUES
+(11,'5-th wheel heigth','distance from ground to king pin plate','default.png');
+
+INSERT INTO "FEATURE" ("ID","NAME","DESCRIPTION","PRICE","IMAGE_PATH") VALUES
+(11,'1250','',55.1,'default.png');
