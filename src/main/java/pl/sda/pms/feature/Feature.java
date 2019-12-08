@@ -1,4 +1,4 @@
-package pl.sda.pms.productFeature;
+package pl.sda.pms.feature;
 
 import java.util.Set;
 
@@ -8,43 +8,61 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 import org.hibernate.envers.Audited;
 
-import pl.sda.pms.feature.Feature;
-import pl.sda.pms.users.User;
+import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
 @Audited
-public class ProductFeature {
-	
+public class Feature {
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;
 	@Column(unique = true)
 	String name;
 	String description;
+	Double price;
 	String imagePath;
 	
-	@ManyToMany
-    private Set<Feature> feature;
-	
-	public ProductFeature() {
+	public String getDescription() {
+		return description;
+	}
+	public Feature() {
 		
 	}
-	
-	public Set<Feature> getFeature() {
-		return feature;
-	}
-
-	public void setFeature(Set<Feature> feature) {
-		this.feature = feature;
-	}
-
-	public ProductFeature(String name, String description) {
+	public Feature(String name, String description) {
+		super();
 		this.name = name;
 		this.description = description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	
+
+	@ManyToMany
+	private Set<ProductFeature> productFeatureList;
+
+	public Set<ProductFeature> getProductFeatureList() {
+		return productFeatureList;
+	}
+
+	public void setProductFeatureList(Set<ProductFeature> productFeatureList) {
+		this.productFeatureList = productFeatureList;
+	}
+
+	public Feature(String name) {
+		super();
+		this.name = name;
+	}
+
+	public Feature(String name, Double price) {
+		super();
+		this.name = name;
+		this.price = price;
 	}
 
 	public String getName() {
@@ -55,12 +73,12 @@ public class ProductFeature {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	public String getImagePath() {
@@ -76,10 +94,11 @@ public class ProductFeature {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((feature == null) ? 0 : feature.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((imagePath == null) ? 0 : imagePath.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((productFeatureList == null) ? 0 : productFeatureList.hashCode());
 		return result;
 	}
 
@@ -91,16 +110,11 @@ public class ProductFeature {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProductFeature other = (ProductFeature) obj;
+		Feature other = (Feature) obj;
 		if (description == null) {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
-			return false;
-		if (feature == null) {
-			if (other.feature != null)
-				return false;
-		} else if (!feature.equals(other.feature))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -117,9 +131,17 @@ public class ProductFeature {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
+			return false;
+		if (productFeatureList == null) {
+			if (other.productFeatureList != null)
+				return false;
+		} else if (!productFeatureList.equals(other.productFeatureList))
+			return false;
 		return true;
 	}
-	
-	
-	
+
 }
