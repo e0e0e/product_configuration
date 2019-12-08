@@ -4,24 +4,11 @@
 <html>
 <head>
     <title>Project list</title>
-    <%--    <style><%@include file="../css/style.css"%></style>--%>
+
     <%@include file="../css/boot.jsp" %>
 </head>
 <body>
-<%--<%@include file="navigation.jsp" %>--%>
 
-<%--<h1>Login or create account</h1>--%>
-<%--<form method="post" action="/login">--%>
-<%--    <label>User name</label>--%>
-<%--    <input type="text" name="username"><br/>--%>
-<%--    <label>Password</label>--%>
-<%--    <input type="password" name="password">--%>
-<%--    <br/>--%>
-<%--    <input type="submit" value="Log in">--%>
-<%--    <br/>--%>
-<%--    <a href="/users">Create an account--%>
-<%--    </a><br/>--%>
-<%--</form>--%>
 
 <div class="container">
 
@@ -35,7 +22,6 @@
 
                 <div class="card-body ">
 
-                    <%--                    <h5 class="card-title">Services Title 1</h5>--%>
 
                     <form method="post" action="/login">
                         <label>User name</label>

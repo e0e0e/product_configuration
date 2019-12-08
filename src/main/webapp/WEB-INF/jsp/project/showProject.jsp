@@ -56,6 +56,7 @@
 
         </div>
 
+
         <div class="row">
             <div class="col-4 bg-info border">
                 <c:forEach var="task" items="${tasksToDo}">

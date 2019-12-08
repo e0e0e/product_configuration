@@ -6,9 +6,10 @@
 <div class="container">
     <table class="table table-dark">
         <tr>
+            <%--        <th>Id</th>--%>
             <th>task Name</th>
             <th>Description</th>
-
+            <%--        <th>User Name</th>--%>
             <th>Start Date</th>
             <th>Finish Date</th>
             <th>Story points</th>
