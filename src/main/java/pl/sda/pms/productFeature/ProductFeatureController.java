@@ -18,6 +18,7 @@ public class ProductFeatureController{
 	@GetMapping("/feature/productShow")
 	public String showProductFeatures(Model model) {
 
+		model.addAttribute("fields", productFeatureService.getFields());
 		model.addAttribute("features", productFeatureService.findAll());
 
 		model.addAttribute("title", "Show Features");

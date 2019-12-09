@@ -21,11 +21,11 @@ public class ProductFeature {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	Long id;
+	private Long id;
 	@Column(unique = true)
-	String name;
-	String description;
-	String imagePath;
+	private String name;
+	private String description;
+	private String imagePath;
 	
 	@ManyToMany
     private Set<Feature> feature;

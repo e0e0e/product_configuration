@@ -3,18 +3,19 @@
 	<%@include file="featureNavigation.jsp"%>
 
 
-	<c:forEach var="feature" items="${features}">
-name ${feature.name}
+	<form method="post" action="/saveChangedFeature">
+		<c:forEach var="field" items="${fields}">
+			<c:forEach var="row" items="${field}">
+				<br>
+				<label>${row.title}</label>
+				<br>
+				<input type="text" class="text-dark" name="${row.paramName}"
+					value=" ${row.value}">
+				<br />
 
- </c:forEach>
- <br>
-	fields:
-	<br>
-	
-	<c:forEach var="field" items="${fields}">
-	<br>
- ${field.title} - ${field.value}
-<br>
- </c:forEach>
+			</c:forEach>
+		</c:forEach>
+		<input type="submit" class="text-dark mt-5" value="Save">
+	</form>
 
 </div>

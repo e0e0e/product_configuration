@@ -1,16 +1,34 @@
 package pl.sda.pms.feature;
 
+public class Row {
 
-public class Row{
+	private String title;
+	private String value;
+	private String paramName;
+
 	
-	String title;
-	String value;
-	
+	public String getParamName() {
+		return paramName;
+	}
+
+	public void setParamName(String paramName) {
+		this.paramName = paramName;
+	}
+
+	public Row(String title, String value, String fieldName) {
+		super();
+		this.title = title;
+		this.value = value;
+		this.paramName = fieldName;
+	}
+
 	public Row(String title, String value) {
 		super();
 		this.title = title;
 		this.value = value;
 	}
+
+
 
 	public String getTitle() {
 		return title;
@@ -58,8 +76,5 @@ public class Row{
 			return false;
 		return true;
 	}
-	
-	
-	
-	
+
 }
