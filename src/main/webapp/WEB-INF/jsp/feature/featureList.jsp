@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container">
-	<%@include file="featureNavigation.jsp"%>
+	<%@include file="../featureNavigation.jsp"%>
 
 
 	<form method="post" action="/saveChangedFeature">

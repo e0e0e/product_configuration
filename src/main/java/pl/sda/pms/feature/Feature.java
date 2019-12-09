@@ -24,6 +24,8 @@ public class Feature {
 	String description;
 	Double price;
 	String imagePath;
+	@ManyToMany
+	private Set<ProductFeature> productFeatureList;
 	
 	public String getDescription() {
 		return description;
@@ -43,8 +45,7 @@ public class Feature {
 
 	
 
-	@ManyToMany
-	private Set<ProductFeature> productFeatureList;
+	
 
 	public Set<ProductFeature> getProductFeatureList() {
 		return productFeatureList;
@@ -142,6 +143,12 @@ public class Feature {
 		} else if (!productFeatureList.equals(other.productFeatureList))
 			return false;
 		return true;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
