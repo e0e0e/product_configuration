@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import pl.sda.pms.feature.Feature;
+import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.feature.Row;
 
 
@@ -43,6 +44,11 @@ public class ProductFeatureService {
 		
 		return tableValues;
 
+	}
+
+	public ProductFeature findById(Long id) {
+		return productFeatureRepository.findById(id).get();
+	
 	}
 
 	

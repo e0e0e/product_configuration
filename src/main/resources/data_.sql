@@ -30,8 +30,22 @@ INSERT INTO "PRODUCT_FEATURE" ("ID","NAME","DESCRIPTION","IMAGE_PATH") VALUES
 INSERT INTO "PRODUCT_FEATURE" ("ID","NAME","DESCRIPTION","IMAGE_PATH") VALUES
 (12,'Axle','producer of the axle','default.png');
 
-INSERT INTO "FEATURE" ("ID","NAME","DESCRIPTION","PRICE","IMAGE_PATH") VALUES
-(11,'1250','5-th wheel height',55.1,'default.png');
+INSERT INTO "PRODUCT_FEATURE" ("ID","NAME","DESCRIPTION","IMAGE_PATH") VALUES
+(13,'Body Type','','default.png');
 
 INSERT INTO "FEATURE" ("ID","NAME","DESCRIPTION","PRICE","IMAGE_PATH") VALUES
-(12,'BPW','axles producer',255.1,'default.png');
+(5,'1250','5-th wheel height',55.1,'default.png');
+
+INSERT INTO "FEATURE" ("ID","NAME","DESCRIPTION","PRICE","IMAGE_PATH") VALUES
+(14,'VAN','body type',355.1,'default.png');
+
+INSERT INTO "FEATURE" ("ID","NAME","DESCRIPTION","PRICE","IMAGE_PATH") VALUES
+(12,'BPW Drum','axles producer',255.1,'default.png');
+
+INSERT INTO "FEATURE" ("ID","NAME","DESCRIPTION","PRICE","IMAGE_PATH") VALUES
+(13,'SAF Drum','axles producer',255.1,'default.png');
+INSERT INTO "FEATURE" ("ID","NAME","DESCRIPTION","PRICE","IMAGE_PATH") VALUES
+(15,'Jost Disk','axles producer',255.1,'default.png');
+
+INSERT INTO "PRODUCT_CONFIGURATION" ("ID","NAME") VALUES
+(12,'VAN');

@@ -3,7 +3,7 @@
 	<%@include file="../featureNavigation.jsp"%>
 
 
-	<form method="post" action="/saveProductConfiguration">
+	<form method="post" action="/saveProduct">
 
 		<br> <label>Product Name</label> <br> <input type="text"
 			class="text-dark" name="name" value=""> <br /> <label>Project

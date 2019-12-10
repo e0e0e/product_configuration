@@ -23,11 +23,28 @@ public class ProductConfiguration{
 	@Column(unique = true)
 	private String name;
 	@ManyToMany
-	private List<ProductFeature>Configuration;
+	private List<ProductFeature> configurationList;
 	
+	public List<ProductFeature> getConfigurationList() {
+		return configurationList;
+	}
+
+
+	public void setConfigurationList(List<ProductFeature> configurationList) {
+		this.configurationList = configurationList;
+	}
+
+
 	public ProductConfiguration() {
 		super();
 	}
+	
+
+	public ProductConfiguration(String name) {
+		super();
+		this.name = name;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -45,13 +62,7 @@ public class ProductConfiguration{
 		this.name = name;
 	}
 
-	public List<ProductFeature> getConfiguration() {
-		return Configuration;
-	}
 
-	public void setConfiguration(List<ProductFeature> configuration) {
-		Configuration = configuration;
-	}
 	
 	
 
