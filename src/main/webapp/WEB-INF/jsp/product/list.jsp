@@ -3,8 +3,6 @@
 	<%@include file="../featureNavigation.jsp"%>
 
 
-
-
 	<h3>
 		Products<a href="/project" class="btn btn-outline-dark btn-sm"> <span
 			class="glyphicon glyphicon-plus"></span></a>
