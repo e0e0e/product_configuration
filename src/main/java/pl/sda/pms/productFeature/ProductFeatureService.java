@@ -51,6 +51,11 @@ public class ProductFeatureService {
 	
 	}
 
+	public ProductFeature findByID(Long id) {
+		return productFeatureRepository.findById(id).get();
+
+	}
+
 	
 	
 	

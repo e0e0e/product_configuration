@@ -15,6 +15,10 @@
 			<li class="nav-item"><a
 				class="nav-link text-light font-weight-bold"
 				href="/feature/productShow">Product Feature</a></li>
+				
+			<li class="nav-item"><a
+				class="nav-link text-light font-weight-bold" href="/feature/list">Feature
+					List</a></li>
 
 			<li class="nav-item"><a
 				class="nav-link text-light font-weight-bold" href="/product/add">Product
