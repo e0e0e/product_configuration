@@ -41,4 +41,8 @@ public class FeatureService {
 		return tableValues;
 
 	}
+
+	public Feature findByID(Long id) {
+		return featureRepository.findById(id).get();
+	}
 }

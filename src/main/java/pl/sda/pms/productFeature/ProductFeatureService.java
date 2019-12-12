@@ -1,7 +1,9 @@
 package pl.sda.pms.productFeature;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,12 @@ import pl.sda.pms.feature.Row;
 public class ProductFeatureService {
 	
 	private final ProductFeatureRepository productFeatureRepository;
+	private FeatureService featureService;
 
-	public ProductFeatureService(ProductFeatureRepository productFeatureRepository) {
+	public ProductFeatureService(ProductFeatureRepository productFeatureRepository,FeatureService featureService) {
 
 		this.productFeatureRepository = productFeatureRepository;
+		this.featureService=featureService;
 	}
 
 	public List<ProductFeature> findAll(){
@@ -54,6 +58,20 @@ public class ProductFeatureService {
 	public ProductFeature findByID(Long id) {
 		return productFeatureRepository.findById(id).get();
 
+	}
+
+	public void edit(Long id, String name, String description, String imagePath, List<Long> featureList) {
+		ProductFeature productFeature=productFeatureRepository.findById(id).get();
+		//Set<Feature> featureSet=productFeature.getFeature();
+		Set<Feature> featuresToAddFeatures=new HashSet<>();
+		
+		for(Long f:featureList) {
+			
+			featuresToAddFeatures.add(featureService.findByID(f));
+		}
+		productFeature.setFeature(featuresToAddFeatures);
+		productFeatureRepository.save(productFeature);
+		
 	}
 
 	

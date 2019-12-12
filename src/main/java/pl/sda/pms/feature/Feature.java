@@ -24,6 +24,8 @@ public class Feature {
 	String description;
 	Double price;
 	String imagePath;
+	String index;
+	
 	@ManyToMany
 	private Set<ProductFeature> productFeatureList;
 	
@@ -38,7 +40,12 @@ public class Feature {
 		this.name = name;
 		this.description = description;
 	}
-
+public String getIndex() {
+		return index;
+	}
+	public void setIndex(String index) {
+		this.index = index;
+	}
 	public void setDescription(String description) {
 		this.description = description;
 	}

@@ -18,20 +18,19 @@
 		<label>Project Description:</label><br />
 		<textarea rows="4" class="text-dark" name="description">${productFeature.description}</textarea>
 		<br /> <label>Feature Image:</label><br /> <input type="text"
-			class="text-dark" name="name" value="${productFeature.imagePath}"><br />
+			class="text-dark" name="imagePath" value="${productFeature.imagePath}"><br />
 
-		<br /> <label>Feature List:</label>
+		<br /> <label>Feature List:</label><br />
 		<c:forEach var="feat" items="${productFeature.feature}">
 			<div>>>${feat.name}--</div>
 			<br>
 		</c:forEach>
-		<select multiple>
-		<c:forEach var="feature" items="${featuresList}">
-		<option value="">${feature.name}</option>
-		</c:forEach>
-		</select>
-
-		<input type="submit" class="text-dark" value="Save">
+		<select name="featureList" multiple>
+			<c:forEach var="feature" items="${featuresList}">
+				<option value="${feature.id}">${feature.name}</option>
+			</c:forEach>
+		</select> 
+		<br> <input type="submit" class="text-dark" value="Save">
 
 
 	</form>

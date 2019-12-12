@@ -1,8 +1,11 @@
 package pl.sda.pms.productFeature;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.sda.pms.feature.FeatureService;
@@ -48,6 +51,22 @@ public class ProductFeatureController {
 		model.addAttribute("title", "Edit Features");
 		model.addAttribute("path", "feature/edit");
 		return "main";
+	}
+	
+	@PostMapping("/productFeatureChange")
+	public String changeProductFeature(@RequestParam Long productFeatureId, 
+			@RequestParam String name,
+			@RequestParam String description,
+			@RequestParam String imagePath,
+			@RequestParam List<Long> featureList,
+			Model model
+			) {
+		
+		
+		productFeatureService.findById(productFeatureId);
+		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList);
+		featureList.parallelStream().forEach(x->System.out.println(x));
+		return "redirect:/feature/list";
 	}
 
 }
