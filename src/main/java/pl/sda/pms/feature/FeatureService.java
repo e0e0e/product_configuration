@@ -34,6 +34,7 @@ public class FeatureService {
 			rowList.add(new Row("Feature Description", feature.getDescription(),"description"));
 			rowList.add(new Row("Price", feature.getPrice().toString(),"price"));
 			rowList.add(new Row("Image Path", feature.getImagePath(),"imagePath"));
+			rowList.add(new Row("Index", feature.getIndex(),"index"));
 			tableValues.add(rowList);
 		}
 
@@ -44,5 +45,17 @@ public class FeatureService {
 
 	public Feature findByID(Long id) {
 		return featureRepository.findById(id).get();
+	}
+
+	public boolean saveChanges(String name, String description, String imagePath, String index, String price,
+			Long id) {
+		Feature feature=featureRepository.findById(id).get();
+		feature.setName(name);
+		feature.setDescription(description);
+		feature.setImagePath(imagePath);
+		feature.setIndex(index);
+		feature.setPrice(Double.parseDouble(price));
+		Feature createdFeature=featureRepository.save(feature);
+		return createdFeature.getId()!=null;
 	}
 }

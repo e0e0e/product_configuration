@@ -60,7 +60,7 @@ public class ProductFeatureService {
 
 	}
 
-	public void edit(Long id, String name, String description, String imagePath, List<Long> featureList) {
+	public boolean edit(Long id, String name, String description, String imagePath, List<Long> featureList) {
 		ProductFeature productFeature=productFeatureRepository.findById(id).get();
 		//Set<Feature> featureSet=productFeature.getFeature();
 		Set<Feature> featuresToAddFeatures=new HashSet<>();
@@ -70,8 +70,11 @@ public class ProductFeatureService {
 			featuresToAddFeatures.add(featureService.findByID(f));
 		}
 		productFeature.setFeature(featuresToAddFeatures);
-		productFeatureRepository.save(productFeature);
-		
+		productFeature.setName(name);
+		productFeature.setDescription(description);
+		productFeature.setImagePath(imagePath);
+		ProductFeature createdFeature=productFeatureRepository.save(productFeature);
+		return createdFeature.getId()!=null;
 	}
 
 	

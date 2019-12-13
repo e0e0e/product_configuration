@@ -20,11 +20,11 @@
 		<br /> <label>Feature Image:</label><br /> <input type="text"
 			class="text-dark" name="imagePath" value="${productFeature.imagePath}"><br />
 
-		<br /> <label>Feature List:</label><br />
+		<br /> <label>Current feature List:</label><br />
 		<c:forEach var="feat" items="${productFeature.feature}">
-			<div>>>${feat.name}--</div>
-			<br>
+			<div>${feat.name}</div>
 		</c:forEach>
+		<br /> <label>Chanfe feature List:</label><br />
 		<select name="featureList" multiple>
 			<c:forEach var="feature" items="${featuresList}">
 				<option value="${feature.id}">${feature.name}</option>
