@@ -2,7 +2,7 @@
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
 
-	<form method="post" action="/saveChangedProductFeature">
+
 		<c:forEach var="feature" items="${features}">
 			<div class="card text-light bg-light border m-1">
 				<div class="card-header bg-info text-left-light">${feature.name}
@@ -21,6 +21,5 @@
 				</div>
 			</div>
 		</c:forEach>
-		<input type="submit" class="text-dark mt-5" value="Save">
-	</form>
+
 </div>

@@ -10,18 +10,15 @@
 	<div class="navbar-collapse collapse show" id="navbar12" style="">
 		<ul class="navbar-nav mr-auto bg-info">
 			<li class="nav-item"><a
-				class="nav-link text-light font-weight-bold" href="/feature/show">Feature</a></li>
+				class="nav-link text-light font-weight-bold" href="/feature/show">Features</a></li>
 
-			<li class="nav-item"><a
-				class="nav-link text-light font-weight-bold"
-				href="/feature/productShow">Product Feature</a></li>
 				
 			<li class="nav-item"><a
-				class="nav-link text-light font-weight-bold" href="/feature/list">Feature
-					List</a></li>
+				class="nav-link text-light font-weight-bold" href="/feature/list">Product Features
+					</a></li>
 
 			<li class="nav-item"><a
-				class="nav-link text-light font-weight-bold" href="/product/add">Product
+				class="nav-link text-light font-weight-bold" href="/product/add">Create
 					Configuration</a></li>
 			<li class="nav-item"><a
 				class="nav-link text-light font-weight-bold" href="/product/list">Product

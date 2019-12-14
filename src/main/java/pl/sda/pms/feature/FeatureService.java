@@ -58,4 +58,11 @@ public class FeatureService {
 		Feature createdFeature=featureRepository.save(feature);
 		return createdFeature.getId()!=null;
 	}
+
+	public boolean create(String name, String description, String imagePath, String index, String price) {
+		Feature feature=new Feature(name, description, Double.parseDouble(price), imagePath, index);
+		
+		Feature createdFeature=featureRepository.save(feature);
+		return createdFeature.getId()!=null;
+	}
 }

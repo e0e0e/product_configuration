@@ -35,6 +35,15 @@ public class Feature {
 	public Feature() {
 		
 	}
+	
+	public Feature(String name, String description, Double price, String imagePath, String index) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.imagePath = imagePath;
+		this.index = index;
+	}
 	public Feature(String name, String description) {
 		super();
 		this.name = name;

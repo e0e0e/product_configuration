@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.hibernate.envers.Audited;
 
@@ -22,7 +23,7 @@ public class ProductConfiguration{
 	private Long id;
 	@Column(unique = true)
 	private String name;
-	@ManyToMany
+	@OneToMany
 	private List<ProductFeature> configurationList;
 	
 	public List<ProductFeature> getConfigurationList() {

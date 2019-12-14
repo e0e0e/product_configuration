@@ -20,18 +20,12 @@ public class FeatureController {
 		this.productFeatureService=productFeatureService;
 	}
 
-//	@GetMapping("/feature")
-//    public String showFeature(Model model) {
-//
-//        return "featurelist";
-//    }
+
 
 	@GetMapping("/feature/show")
 	public String showFeatures(Model model) {
 		
 		
-		
-		model.addAttribute("fields", featureService.getFields());
 		model.addAttribute("features", featureService.findAll());
 
 		model.addAttribute("title", "Show Features");
@@ -63,6 +57,29 @@ public class FeatureController {
 		model.addAttribute("feature", featureService.findByID(featureId));
 
 		featureService.saveChanges(name,description,imagePath,index,price,featureId);
+
+		return "redirect:/feature/list";
+	}
+	
+	@GetMapping("/feature/add")
+	public String addFeatures(Model model) {
+		
+		model.addAttribute("title", "Add Features");
+		model.addAttribute("path", "feature/createFeature");
+		return "main";
+	}
+	
+	
+	@PostMapping("/createFeature")
+	public String createFeature(@RequestParam String name,
+			@RequestParam String description,
+			@RequestParam String imagePath,
+			@RequestParam String index,
+			@RequestParam String price
+	) {
+				
+
+		featureService.create(name,description,imagePath,index,price);
 
 		return "redirect:/feature/list";
 	}

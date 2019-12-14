@@ -4,7 +4,7 @@
 
 
 	<h3>
-		Products<a href="/project" class="btn btn-outline-dark btn-sm"> <span
+		Products<a href="/product/add" class="btn btn-outline-dark btn-sm"> <span
 			class="glyphicon glyphicon-plus"></span></a>
 	</h3>
 
@@ -23,8 +23,20 @@
 			<ul>
 				<c:forEach var="configList"
 					items="${configuration.configurationList}">
+					<li><a class="btn btn-outline-info text-dark" href="/feature/edit?productFeatureId=${configList.id}">${configList.name} <span
+					class="glyphicon glyphicon-edit text-dark"></span></a>
+					</li>
 					
-					<li><p class="card-text text-left">${configList.name}</p></li>
+					<ul>
+				<c:forEach var="feature"
+					items="${configList.feature}">
+					
+					<li><a class="btn btn-outline-info text-dark" href="/feature/editFeature?featureId=${feature.id}">${feature.name} <span
+					class="glyphicon glyphicon-edit text-dark"></span></a>
+					</li>
+				</c:forEach>
+				</ul>
+				
 				</c:forEach>
 				</ul>
 			</div>

@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.envers.Audited;
 
 import pl.sda.pms.feature.Feature;
+import pl.sda.pms.productConfiguration.ProductConfiguration;
 import pl.sda.pms.users.User;
 
 @Entity
@@ -22,7 +23,6 @@ public class ProductFeature {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(unique = true)
 	private String name;
 	private String description;
 	private String imagePath;
@@ -30,6 +30,17 @@ public class ProductFeature {
 	@ManyToMany
     private Set<Feature> feature;
 	
+	@ManyToOne
+	private ProductConfiguration productConfiguration;
+	
+	public ProductConfiguration getProductConfiguration() {
+		return productConfiguration;
+	}
+
+	public void setProductConfiguration(ProductConfiguration productConfiguration) {
+		this.productConfiguration = productConfiguration;
+	}
+
 	public ProductFeature() {
 		
 	}
