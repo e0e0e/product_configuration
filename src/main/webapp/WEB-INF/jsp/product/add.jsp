@@ -10,7 +10,7 @@
 			Feature:</label><br /> <select name="feature" class="text-dark" value="" multiple>
 
 			<c:forEach var="feature" items="${features}">
-				<option value="${feature.id}">${feature.name}</option>
+				<option value="${feature.id}">${feature.name} -${feature.productConfiguration.name }</option>
 			</c:forEach>
 
 		</select> <br> <input type="submit" class="text-dark mt-5" value="Save">

@@ -58,5 +58,27 @@ public class ProductConfigurationController {
 
 		return "redirect:/product/list";
 	}
+	
+	@GetMapping("/product/edit")
+	public String editProduct(@RequestParam Long productId,
+			Model model) {
+
+		model.addAttribute("newFeatures", productFeatureService.findAll());
+		model.addAttribute("product",productConfigurationService.findById(productId));
+		model.addAttribute("title", "Edit Product");
+		model.addAttribute("path", "product/edit");
+		return "main";
+	}
+	
+	@PostMapping("/saveChangedProduct")
+	public String saveChangedProduct(@RequestParam String name,
+			@RequestParam List<Long> feature,
+			@RequestParam Long productId,
+			Model model) {
+
+		productConfigurationService.saveChanges(productId,name, feature);
+
+		return "redirect:/product/list";
+	}
 
 }

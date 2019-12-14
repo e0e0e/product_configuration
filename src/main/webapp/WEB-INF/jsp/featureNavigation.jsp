@@ -17,9 +17,7 @@
 				class="nav-link text-light font-weight-bold" href="/feature/list">Product Features
 					</a></li>
 
-			<li class="nav-item"><a
-				class="nav-link text-light font-weight-bold" href="/product/add">Create
-					Configuration</a></li>
+
 			<li class="nav-item"><a
 				class="nav-link text-light font-weight-bold" href="/product/list">Product
 					List</a></li>

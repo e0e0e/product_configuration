@@ -66,7 +66,7 @@ public class ProductFeatureController {
 		productFeatureService.findById(productFeatureId);
 		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList);
 		featureList.parallelStream().forEach(x->System.out.println(x));
-		return "redirect:/feature/list";
+		return "redirect:/product/list";
 	}
 
 }

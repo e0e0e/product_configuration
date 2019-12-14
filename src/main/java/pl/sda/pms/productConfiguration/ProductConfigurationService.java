@@ -57,6 +57,29 @@ public class ProductConfigurationService {
 
         return revisions;
     }
+
+	public boolean saveChanges(Long id, String name, List<Long> feature) {
+		ProductConfiguration productConfiguration=productConfigurationRepository.findById(id).get();
+		
+		List<ProductFeature> productFeature= new ArrayList<ProductFeature>();
+		for(Long fId:feature){
+			ProductFeature featureToConfigurator= productFeatureService.findById(fId);
+			productFeature.add(featureToConfigurator);
+		}
+		productConfiguration.setConfigurationList(productFeature);
+
+		productConfiguration.setName(name);
+		ProductConfiguration create=productConfigurationRepository.save(productConfiguration);
+		
+		return create.getId()!=null;
+		
+	}
+
+	public ProductConfiguration findById(Long id) {
+		
+		return productConfigurationRepository.findById(id).get();
+		
+	}
 	
 	
 

@@ -13,7 +13,7 @@
 	
 
 			<div class="card-header bg-info text-left text-light">
-				<a href="/product/show?productId=${configuration.id}"
+				<a href="/product/edit?productId=${configuration.id}"
 					class="nav-link text-light font-weight-bold">
 					${configuration.name}</a>
 			</div>
