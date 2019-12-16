@@ -8,7 +8,7 @@
 			class="glyphicon glyphicon-plus"></span></a>
 	</h3>
 
-
+	<c:forEach var="configuration" items="${configurations}">
 		<div class="card text-dark bg-warning m-1">
 	
 
@@ -47,7 +47,7 @@
 
 			</div>
 		</div>
-
+	</c:forEach>
 
 
 </div>

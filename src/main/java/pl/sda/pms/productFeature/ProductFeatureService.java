@@ -98,4 +98,14 @@ public class ProductFeatureService {
 		
 	}
 
+	public void removeFeature(Feature feature, Long productFeatureId) {
+		ProductFeature productFeature = productFeatureRepository.findById(productFeatureId).get();
+		productFeature.getFeature().remove(feature);
+		feature.getProductFeatureList().remove(productFeature);
+		featureService.save(feature);
+		productFeatureRepository.save(productFeature);
+		
+		
+	}
+
 }

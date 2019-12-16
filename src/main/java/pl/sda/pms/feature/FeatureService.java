@@ -65,4 +65,9 @@ public class FeatureService {
 		Feature createdFeature=featureRepository.save(feature);
 		return createdFeature.getId()!=null;
 	}
+
+	public void save(Feature feature) {
+		featureRepository.save(feature);
+		
+	}
 }

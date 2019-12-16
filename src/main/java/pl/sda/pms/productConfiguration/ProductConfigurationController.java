@@ -43,12 +43,38 @@ public class ProductConfigurationController {
 		return "main";
 	}
 
-	@GetMapping("/product/list")
+	@GetMapping("/product/listAll")
 	public String showFeatures(Model model) {
 	
 		//List<Object> oblistList=productConfigurationService.findAllById(3L);
 
 		model.addAttribute("configurations", productConfigurationService.findAll());
+		
+		model.addAttribute("title", "Show Features");
+		model.addAttribute("path", "product/listAll");
+		return "main";
+	}
+	
+	@GetMapping("/product/show")
+	public String showOneFeature(Model model) {
+	
+		//List<Object> oblistList=productConfigurationService.findAllById(3L);
+
+		model.addAttribute("configurations", productConfigurationService.findAll());
+		
+		model.addAttribute("title", "Show Features");
+		model.addAttribute("path", "product/show");
+		return "main";
+	}
+	
+	
+	@GetMapping("/product/list")
+	public String showProduct(@RequestParam Long productId,
+			Model model) {
+	
+		//List<Object> oblistList=productConfigurationService.findAllById(3L);
+
+		model.addAttribute("configuration", productConfigurationService.findById(productId));
 		
 		model.addAttribute("title", "Show Features");
 		model.addAttribute("path", "product/list");
@@ -85,6 +111,17 @@ public class ProductConfigurationController {
 		productConfigurationService.saveChanges(productId,name, feature);
 
 		return "redirect:/product/list";
+	}
+	@GetMapping("/product/selection")
+	public String productSelectiom(@RequestParam Long productId,
+			Model model) {
+		
+		model.addAttribute("configuration", productConfigurationService.findById(productId));
+		
+		model.addAttribute("title", "Make new Order");
+		model.addAttribute("path", "product/selection");
+		return "main";
+		
 	}
 
 }
