@@ -1,6 +1,8 @@
 package pl.sda.pms.productConfiguration;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.productFeature.ProductFeatureService;
@@ -77,7 +80,7 @@ public class ProductConfigurationController {
 		model.addAttribute("configuration", productConfigurationService.findById(productId));
 		
 		model.addAttribute("title", "Show Features");
-		model.addAttribute("path", "product/list");
+		model.addAttribute("path", "product/show");
 		return "main";
 	}
 	
@@ -110,7 +113,7 @@ public class ProductConfigurationController {
 
 		productConfigurationService.saveChanges(productId,name, feature);
 
-		return "redirect:/product/list";
+		return "redirect:/product/show";
 	}
 	@GetMapping("/product/selection")
 	public String productSelectiom(@RequestParam Long productId,
@@ -120,6 +123,27 @@ public class ProductConfigurationController {
 		
 		model.addAttribute("title", "Make new Order");
 		model.addAttribute("path", "product/selection");
+		return "main";
+		
+	}
+	
+	@PostMapping("/orderCreate")
+	public String orderCreation(@RequestParam Map<Long,Long> paramMap,
+			@RequestParam Long productConfigurationId,
+			Model model) {
+		
+		
+		paramMap.entrySet().stream().forEach(x->System.out.println(x.getKey()+" - "+x.getValue()));
+		//model.addAttribute("configuration", productConfigurationService.findById(productId));
+		Map<ProductFeature,Feature> orderMap=paramMap.entrySet().stream()
+				.filter(x->x.getKey() instanceof Long)
+				.collect(Collectors.toMap(
+	            e ->  productFeatureService.findById(e.getKey()),
+	            e ->  featureService.findByID(e.getValue())));
+	        
+		//productFeatureService.saveOrder(productFeatureService.findById(id));
+		model.addAttribute("title", "Show Products");
+		model.addAttribute("path", "product/show");
 		return "main";
 		
 	}

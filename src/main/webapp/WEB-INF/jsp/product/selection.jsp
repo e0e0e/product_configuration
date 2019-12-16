@@ -21,7 +21,7 @@
 
 
 		<div class="card-body ">
-		<form method="post" action="/orderCreate">
+		<form method="post" action="/orderCreate?productConfigurationId=${configuration.id}">
 			<ul>
 				<c:forEach var="configList"
 					items="${configuration.configurationList}">
@@ -30,7 +30,7 @@
 							<span class="glyphicon glyphicon-edit text-dark"></span>
 					</a></li>
 
-					<select name="${configList.name}">
+					<select name="${configList.id}">
 						<c:forEach var="feature" items="${configList.feature}">
 							<option value="${feature.id}">${feature.name}</option>
 						</c:forEach>

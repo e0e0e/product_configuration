@@ -20,13 +20,14 @@ import pl.sda.pms.productFeature.ProductFeature;
 public class Feature {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Long id;
+	private Long id;
 	@Column(unique = true)
-	String name;
-	String description;
-	Double price;
-	String imagePath;
-	String index;
+	private String name;
+	private String description;
+	private Double price;
+	private String imagePath;
+	private String index;
+	
 
 	@Override
 	public String toString() {

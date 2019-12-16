@@ -35,6 +35,8 @@ public class ProductFeature {
 	@ManyToOne
 	private ProductConfiguration productConfiguration;
 	
+	
+	
 	@Override
 	public String toString() {
 		return "ProductFeature [name=" + name + ", feature=" + feature + ", productConfiguration="
