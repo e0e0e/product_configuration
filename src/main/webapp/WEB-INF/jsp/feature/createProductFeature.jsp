@@ -4,15 +4,17 @@
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
 
-	<h1>Edit Product Feature</h1>
+	<h1>Create Product Feature</h1>
 	<sec:authentication var="loggedUser" property="principal" />
+	
 	<form method="post"
-		action="/productFeatureChange?userId=${loggedUser.id}&productFeatureId=${param.productFeatureId}">
+		action="/productFeatureCreate">
 		<c:if test="${errorMessage!=null}">
 
 			<p style="background-color: red;">${errorMessage}</p>
 
 		</c:if>
+		
 		<label>Feature Name:</label><br /> <input type="text"
 			class="text-dark" name="name" value="${productFeature.name}"><br />
 		<label>Project Description:</label><br />

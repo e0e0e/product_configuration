@@ -31,7 +31,12 @@ public class ProductConfigurationController {
 
 	@GetMapping("/product/add")
 	public String showFeature(Model model) {
-		model.addAttribute("features", productFeatureService.findAll());
+		List<ProductFeature> productFeature=productFeatureService.findAll();
+		
+		System.out.println("ProductConfiguration feature");
+		System.out.println(productFeature.toString());
+		
+		model.addAttribute("features", productFeature);
 
 		model.addAttribute("title", "Show Features");
 		model.addAttribute("path", "product/add");
@@ -44,6 +49,7 @@ public class ProductConfigurationController {
 		//List<Object> oblistList=productConfigurationService.findAllById(3L);
 
 		model.addAttribute("configurations", productConfigurationService.findAll());
+		
 		model.addAttribute("title", "Show Features");
 		model.addAttribute("path", "product/list");
 		return "main";

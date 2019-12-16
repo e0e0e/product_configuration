@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import org.hibernate.envers.Audited;
@@ -25,17 +27,24 @@ public class Feature {
 	Double price;
 	String imagePath;
 	String index;
-	
+
+	@Override
+	public String toString() {
+		return "Feature [name=" + name + ", description=" + description + ", productFeatureList=" + productFeatureList
+				+ "]";
+	}
+
 	@ManyToMany
 	private Set<ProductFeature> productFeatureList;
-	
+
 	public String getDescription() {
 		return description;
 	}
+
 	public Feature() {
-		
+
 	}
-	
+
 	public Feature(String name, String description, Double price, String imagePath, String index) {
 		super();
 		this.name = name;
@@ -44,24 +53,24 @@ public class Feature {
 		this.imagePath = imagePath;
 		this.index = index;
 	}
+
 	public Feature(String name, String description) {
 		super();
 		this.name = name;
 		this.description = description;
 	}
-public String getIndex() {
+
+	public String getIndex() {
 		return index;
 	}
+
 	public void setIndex(String index) {
 		this.index = index;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
-
-	
 
 	public Set<ProductFeature> getProductFeatureList() {
 		return productFeatureList;
@@ -160,9 +169,11 @@ public String getIndex() {
 			return false;
 		return true;
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}

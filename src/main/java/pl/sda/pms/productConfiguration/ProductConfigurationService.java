@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.productFeature.ProductFeature;
+import pl.sda.pms.productFeature.ProductFeatureRepository;
 import pl.sda.pms.productFeature.ProductFeatureService;
 import pl.sda.pms.projects.Project;
 
@@ -38,14 +39,19 @@ public class ProductConfigurationService {
 
 	public void create(String name, List<Long> feature) {
 		ProductConfiguration productConfiguration=new ProductConfiguration(name);
-		List<ProductFeature> productFeature= new ArrayList<ProductFeature>();
-		for(Long id:feature){
-			ProductFeature featureToConfigurator= productFeatureService.findById(id);
-			productFeature.add(featureToConfigurator);
-		}
-		productConfiguration.setConfigurationList(productFeature);
-		productConfigurationRepository.save(productConfiguration);
+		
+		List<ProductFeature> configurationList=new ArrayList<ProductFeature>();
+		for(Long f:feature){
+			ProductFeature featureToConfigurator= productFeatureService.findById(f);
+			featureToConfigurator.setProductConfiguration(productConfiguration);
+			
+			configurationList.add(featureToConfigurator);
 
+		}
+		
+		productConfiguration.setConfigurationListByList(configurationList);
+		ProductConfiguration createdProductConfiguration=productConfigurationRepository.save(productConfiguration);
+		productFeatureService.save(configurationList,createdProductConfiguration);
 	}
 	
 	public  List<Object> findAllById(Long id) {
@@ -61,12 +67,15 @@ public class ProductConfigurationService {
 	public boolean saveChanges(Long id, String name, List<Long> feature) {
 		ProductConfiguration productConfiguration=productConfigurationRepository.findById(id).get();
 		
-		List<ProductFeature> productFeature= new ArrayList<ProductFeature>();
-		for(Long fId:feature){
-			ProductFeature featureToConfigurator= productFeatureService.findById(fId);
-			productFeature.add(featureToConfigurator);
+		List<ProductFeature> configurationList=new ArrayList<ProductFeature>();
+		for(Long f:feature){
+			ProductFeature featureToConfigurator= productFeatureService.findById(f);
+			
+			
+			configurationList.add(featureToConfigurator);
 		}
-		productConfiguration.setConfigurationList(productFeature);
+		
+		productConfiguration.setConfigurationListByList(configurationList);
 
 		productConfiguration.setName(name);
 		ProductConfiguration create=productConfigurationRepository.save(productConfiguration);

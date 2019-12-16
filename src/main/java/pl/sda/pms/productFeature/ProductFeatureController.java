@@ -52,6 +52,28 @@ public class ProductFeatureController {
 		model.addAttribute("path", "feature/edit");
 		return "main";
 	}
+	@GetMapping("/feature/addProductFeature")
+	public String addProductFeatures(Model model) {
+
+		model.addAttribute("featuresList", featureService.findAll());
+		
+		model.addAttribute("title", "Add Product Features");
+		model.addAttribute("path", "feature/createProductFeature");
+		return "main";
+	}
+	
+	@PostMapping("/productFeatureCreate")
+	public String createProductFeatures(@RequestParam String name,
+			@RequestParam String description,
+			@RequestParam String imagePath,
+			@RequestParam List<Long> featureList,
+			Model model) {
+
+		productFeatureService.save(name, description, imagePath, featureList);
+		model.addAttribute("featuresList", featureService.findAll());
+		
+		return "redirect:/feature/list";
+	}
 	
 	@PostMapping("/productFeatureChange")
 	public String changeProductFeature(@RequestParam Long productFeatureId, 

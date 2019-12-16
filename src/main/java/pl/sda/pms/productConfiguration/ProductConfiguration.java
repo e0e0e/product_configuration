@@ -1,9 +1,14 @@
 package pl.sda.pms.productConfiguration;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,15 +28,16 @@ public class ProductConfiguration{
 	private Long id;
 	@Column(unique = true)
 	private String name;
-	@OneToMany
-	private List<ProductFeature> configurationList;
 	
-	public List<ProductFeature> getConfigurationList() {
+	@OneToMany
+	private Set<ProductFeature> configurationList;
+	
+	public Set<ProductFeature> getConfigurationList() {
 		return configurationList;
 	}
 
 
-	public void setConfigurationList(List<ProductFeature> configurationList) {
+	public void setConfigurationList(Set<ProductFeature> configurationList) {
 		this.configurationList = configurationList;
 	}
 
@@ -61,6 +67,15 @@ public class ProductConfiguration{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+
+	public void setConfigurationListByList(List<ProductFeature> feature) {
+		
+		Set<ProductFeature> configurationSet=new HashSet<ProductFeature>();
+		configurationSet.addAll(feature);
+		this.configurationList=configurationSet;
+		
 	}
 
 

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -30,9 +31,15 @@ public class ProductFeature {
 	@ManyToMany
     private Set<Feature> feature;
 	
+
 	@ManyToOne
 	private ProductConfiguration productConfiguration;
 	
+	@Override
+	public String toString() {
+		return "ProductFeature [name=" + name + ", feature=" + feature + ", productConfiguration="
+				+ productConfiguration + "]";
+	}
 	public ProductConfiguration getProductConfiguration() {
 		return productConfiguration;
 	}
@@ -58,6 +65,12 @@ public class ProductFeature {
 		this.description = description;
 	}
 
+	public ProductFeature(String name, String description, String imagePath, Set<Feature> feature) {
+		this.name = name;
+		this.description = description;
+		this.imagePath=imagePath;
+		this.feature=feature;
+	}
 	public String getName() {
 		return name;
 	}
