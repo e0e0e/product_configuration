@@ -80,7 +80,7 @@ public class ProductConfigurationController {
 		model.addAttribute("configuration", productConfigurationService.findById(productId));
 		
 		model.addAttribute("title", "Show Features");
-		model.addAttribute("path", "product/show");
+		model.addAttribute("path", "product/list");
 		return "main";
 	}
 	
@@ -135,12 +135,26 @@ public class ProductConfigurationController {
 		
 		paramMap.entrySet().stream().forEach(x->System.out.println(x.getKey()+" - "+x.getValue()));
 		//model.addAttribute("configuration", productConfigurationService.findById(productId));
-		Map<ProductFeature,Feature> orderMap=paramMap.entrySet().stream()
-				.filter(x->x.getKey() instanceof Long)
-				.collect(Collectors.toMap(
-	            e ->  productFeatureService.findById(e.getKey()),
-	            e ->  featureService.findByID(e.getValue())));
-	        
+//		Map<ProductFeature,Feature> orderMap=paramMap.entrySet().stream()
+//				.filter(x->x.getKey() instanceof Long)
+//				.collect(Collectors.toMap(
+//	            e ->  productFeatureService.findById(e.getKey()),
+//	            e ->  featureService.findByID(e.getValue())));
+//		System.out.println("order map");
+//		orderMap.entrySet().stream().forEach(x->System.out.println(x.getKey().getName()+" - "+x.getValue().getName()));
+//		
+
+        for (Map.Entry<Long,Long> entry : paramMap.entrySet()) {
+            System.out.println("Key = " + entry.getKey() +", Value = " + entry.getValue()); 
+            if(entry.getKey().getClass().getName().equals("java.lang.String")) {
+            ProductFeature productFeature=productFeatureService.findById(entry.getKey());
+            if(productFeature==null) {
+            	
+            	System.out.println("is null");
+            }
+            System.out.println(productFeature.toString());
+            }
+    } 
 		//productFeatureService.saveOrder(productFeatureService.findById(id));
 		model.addAttribute("title", "Show Products");
 		model.addAttribute("path", "product/show");

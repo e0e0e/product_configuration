@@ -10,10 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.envers.Audited;
 
 import pl.sda.pms.feature.Feature;
+import pl.sda.pms.order.OrderFeature;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
 import pl.sda.pms.users.User;
 
@@ -35,8 +37,16 @@ public class ProductFeature {
 	@ManyToOne
 	private ProductConfiguration productConfiguration;
 	
+	@OneToOne
+	private OrderFeature orderFeature;
 	
 	
+	public OrderFeature getOrderFeature() {
+		return orderFeature;
+	}
+	public void setOrderFeature(OrderFeature orderFeature) {
+		this.orderFeature = orderFeature;
+	}
 	@Override
 	public String toString() {
 		return "ProductFeature [name=" + name + ", feature=" + feature + ", productConfiguration="

@@ -12,19 +12,18 @@
 			<li class="nav-item"><a
 				class="nav-link text-light font-weight-bold" href="/feature/show">Features</a></li>
 
-				
+
 			<li class="nav-item"><a
-				class="nav-link text-light font-weight-bold" href="/feature/list">Product Features
-					</a></li>
-					
+				class="nav-link text-light font-weight-bold" href="/feature/list">Product
+					Features </a></li>
+
 			<li class="nav-item"><a
 				class="nav-link text-light font-weight-bold" href="/product/show">Product
 					Show</a></li>
-					<li class="nav-item"><a
-				class="nav-link text-light font-weight-bold" href="/product/listAll">All Products</a></li>
-					
-						<li class="nav-item"><a
-				class="nav-link text-light font-weight-bold" href="/product/selection">New Order</a></li>
+			<li class="nav-item"><a
+				class="nav-link text-light font-weight-bold" href="/product/listAll">All
+					Products</a></li>
+
 		</ul>
 	</div>
 </nav>

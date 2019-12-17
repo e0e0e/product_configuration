@@ -7,12 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.envers.Audited;
 
+import pl.sda.pms.order.OrderFeature;
 import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
@@ -27,7 +28,6 @@ public class Feature {
 	private Double price;
 	private String imagePath;
 	private String index;
-	
 
 	@Override
 	public String toString() {
@@ -37,6 +37,17 @@ public class Feature {
 
 	@ManyToMany
 	private Set<ProductFeature> productFeatureList;
+
+	@OneToOne
+	private OrderFeature orderFeatures;
+
+	public OrderFeature getOrderFeatures() {
+		return orderFeatures;
+	}
+
+	public void setOrderFeatures(OrderFeature orderFeatures) {
+		this.orderFeatures = orderFeatures;
+	}
 
 	public String getDescription() {
 		return description;
