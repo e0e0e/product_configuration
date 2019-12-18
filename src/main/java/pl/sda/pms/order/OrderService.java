@@ -1,5 +1,6 @@
 package pl.sda.pms.order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import pl.sda.pms.OrderFeature.OrderFeature;
 
 import pl.sda.pms.OrderFeature.OrderFeatureService;
+import pl.sda.pms.feature.Feature;
 
 @Service
 public class OrderService {
@@ -23,14 +25,39 @@ public class OrderService {
 
 
 
-	public void create(List<OrderFeature> orderList) {
-		Order order = new Order();
+	public void create(Ord order) {
+		orderRepository.save(order);
+//		Order order = new Order(orderList);
+//		
+//		orderRepository.save(order);
+//		for (OrderFeature o : orderList) {
+//			
+//			
+//			
+//			if(order.getOrderFeatures()==null) {
+//				List<OrderFeature> orderFeatureList=new ArrayList<>();
+//				orderFeatureList.add(o);
+//				order.setOrderFeatures(orderFeatureList);
+//				
+//			}else {
+//			order.getOrderFeatures().add(o);
+//			}
+//			if(o.getOrder()==null) {
+//				List<Order> orders=new ArrayList<>();
+//				o.setOrder(orders);
+//			}else {
+//			o.getOrder().add(order);
+//			}
+//			OrderFeature orderFeature=orderFeatureService.create(o);
+//		}
+		//order.setOrderFeatures(orderList);
 		
-		orderList.forEach(x->orderFeatureService.create(x));
+//		orderList.forEach(a->a.getOrder().add(order)
+//				.forEach(x->orderFeatureService.create(x));
 
-		order.setOrderFeatures(orderList);
+		//order.setOrderFeatures(orderList);
 
-		//orderRepository.save(order);
+		
 		// TODO Auto-generated method stub
 
 	}

@@ -12,7 +12,8 @@ import javax.persistence.OneToOne;
 import org.hibernate.envers.Audited;
 
 import pl.sda.pms.feature.Feature;
-import pl.sda.pms.order.Order;
+import pl.sda.pms.order.Ord;
+//import pl.sda.pms.order.Order;
 import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
@@ -38,7 +39,20 @@ public OrderFeature(ProductFeature productFeature,Feature feature) {
 
 
 @ManyToMany
-private List<Order> order;
+private List<Ord> ord;
+
+
+
+
+public List<Ord> getOrd() {
+	return ord;
+}
+
+
+
+public void setOrd(List<Ord> ord) {
+	this.ord = ord;
+}
 
 
 

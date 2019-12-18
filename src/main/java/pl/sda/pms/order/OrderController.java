@@ -57,7 +57,12 @@ public class OrderController {
 //		orderList.stream()
 //				.forEach(x -> System.out.println(x.getProductFeature().getName() + " - " + x.getFeature().getName()));
 
-		orderService.create(orderList);
+		List<OrderFeature> orderFeatures=orderFeatureService.create(orderList);
+		Ord ord=new Ord();
+		ord.setOrderFeatures(orderFeatures);
+		orderService.create(ord);
+		
+		
 		
 		model.addAttribute("title", "Show Products");
 		model.addAttribute("path", "product/show");
