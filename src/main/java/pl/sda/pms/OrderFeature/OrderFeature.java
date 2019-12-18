@@ -1,4 +1,4 @@
-package pl.sda.pms.order;
+package pl.sda.pms.OrderFeature;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.envers.Audited;
 
 import pl.sda.pms.feature.Feature;
+import pl.sda.pms.order.Order;
 import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
@@ -25,6 +26,15 @@ private Long id;
 public OrderFeature() {
 
 }
+
+
+
+public OrderFeature(ProductFeature productFeature,Feature feature) {
+	super();
+	this.feature = feature;
+	this.productFeature = productFeature;
+}
+
 
 
 @ManyToMany

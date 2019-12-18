@@ -14,8 +14,8 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.envers.Audited;
 
+import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
-import pl.sda.pms.order.OrderFeature;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
 import pl.sda.pms.users.User;
 

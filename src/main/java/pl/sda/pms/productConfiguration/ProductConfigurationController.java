@@ -25,20 +25,19 @@ public class ProductConfigurationController {
 	private final ProductFeatureService productFeatureService;
 
 	public ProductConfigurationController(ProductConfigurationService productConfigurationService,
-			FeatureService featureService,
-			ProductFeatureService productFeatureService) {
+			FeatureService featureService, ProductFeatureService productFeatureService) {
 		this.productConfigurationService = productConfigurationService;
 		this.featureService = featureService;
-		this.productFeatureService=productFeatureService;
+		this.productFeatureService = productFeatureService;
 	}
 
 	@GetMapping("/product/add")
 	public String showFeature(Model model) {
-		List<ProductFeature> productFeature=productFeatureService.findAll();
-		
+		List<ProductFeature> productFeature = productFeatureService.findAll();
+
 		System.out.println("ProductConfiguration feature");
 		System.out.println(productFeature.toString());
-		
+
 		model.addAttribute("features", productFeature);
 
 		model.addAttribute("title", "Show Features");
@@ -48,118 +47,78 @@ public class ProductConfigurationController {
 
 	@GetMapping("/product/listAll")
 	public String showFeatures(Model model) {
-	
-		//List<Object> oblistList=productConfigurationService.findAllById(3L);
+
+		// List<Object> oblistList=productConfigurationService.findAllById(3L);
 
 		model.addAttribute("configurations", productConfigurationService.findAll());
-		
+
 		model.addAttribute("title", "Show Features");
 		model.addAttribute("path", "product/listAll");
 		return "main";
 	}
-	
+
 	@GetMapping("/product/show")
 	public String showOneFeature(Model model) {
-	
-		//List<Object> oblistList=productConfigurationService.findAllById(3L);
+
+		// List<Object> oblistList=productConfigurationService.findAllById(3L);
 
 		model.addAttribute("configurations", productConfigurationService.findAll());
-		
+
 		model.addAttribute("title", "Show Features");
 		model.addAttribute("path", "product/show");
 		return "main";
 	}
-	
-	
+
 	@GetMapping("/product/list")
-	public String showProduct(@RequestParam Long productId,
-			Model model) {
-	
-		//List<Object> oblistList=productConfigurationService.findAllById(3L);
+	public String showProduct(@RequestParam Long productId, Model model) {
+
+		// List<Object> oblistList=productConfigurationService.findAllById(3L);
 
 		model.addAttribute("configuration", productConfigurationService.findById(productId));
-		
+
 		model.addAttribute("title", "Show Features");
 		model.addAttribute("path", "product/list");
 		return "main";
 	}
-	
+
 	@PostMapping("/saveProduct")
-	public String saveConfiguration(@RequestParam String name,
-			@RequestParam List<Long> feature,
-			Model model) {
+	public String saveConfiguration(@RequestParam String name, @RequestParam List<Long> feature, Model model) {
 
 		productConfigurationService.create(name, feature);
 
 		return "redirect:/product/list";
 	}
-	
+
 	@GetMapping("/product/edit")
-	public String editProduct(@RequestParam Long productId,
-			Model model) {
+	public String editProduct(@RequestParam Long productId, Model model) {
 
 		model.addAttribute("newFeatures", productFeatureService.findAll());
-		model.addAttribute("product",productConfigurationService.findById(productId));
+		model.addAttribute("product", productConfigurationService.findById(productId));
 		model.addAttribute("title", "Edit Product");
 		model.addAttribute("path", "product/edit");
 		return "main";
 	}
-	
-	@PostMapping("/saveChangedProduct")
-	public String saveChangedProduct(@RequestParam String name,
-			@RequestParam List<Long> feature,
-			@RequestParam Long productId,
-			Model model) {
 
-		productConfigurationService.saveChanges(productId,name, feature);
+	@PostMapping("/saveChangedProduct")
+	public String saveChangedProduct(@RequestParam String name, @RequestParam List<Long> feature,
+			@RequestParam Long productId, Model model) {
+
+		productConfigurationService.saveChanges(productId, name, feature);
 
 		return "redirect:/product/show";
 	}
+
 	@GetMapping("/product/selection")
-	public String productSelectiom(@RequestParam Long productId,
-			Model model) {
-		
+	public String productSelectiom(@RequestParam Long productId, Model model) {
+
 		model.addAttribute("configuration", productConfigurationService.findById(productId));
-		
+
 		model.addAttribute("title", "Make new Order");
 		model.addAttribute("path", "product/selection");
 		return "main";
-		
-	}
-	
-	@PostMapping("/orderCreate")
-	public String orderCreation(@RequestParam Map<Long,Long> paramMap,
-			@RequestParam Long productConfigurationId,
-			Model model) {
-		
-		
-		paramMap.entrySet().stream().forEach(x->System.out.println(x.getKey()+" - "+x.getValue()));
-		//model.addAttribute("configuration", productConfigurationService.findById(productId));
-//		Map<ProductFeature,Feature> orderMap=paramMap.entrySet().stream()
-//				.filter(x->x.getKey() instanceof Long)
-//				.collect(Collectors.toMap(
-//	            e ->  productFeatureService.findById(e.getKey()),
-//	            e ->  featureService.findByID(e.getValue())));
-//		System.out.println("order map");
-//		orderMap.entrySet().stream().forEach(x->System.out.println(x.getKey().getName()+" - "+x.getValue().getName()));
-//		
 
-        for (Map.Entry<Long,Long> entry : paramMap.entrySet()) {
-            System.out.println("Key = " + entry.getKey() +", Value = " + entry.getValue()); 
-            if(entry.getKey().getClass().getName().equals("java.lang.String")) {
-            ProductFeature productFeature=productFeatureService.findById(entry.getKey());
-            if(productFeature==null) {
-            	
-            	System.out.println("is null");
-            }
-            System.out.println(productFeature.toString());
-            }
-    } 
-		//productFeatureService.saveOrder(productFeatureService.findById(id));
-		model.addAttribute("title", "Show Products");
-		model.addAttribute("path", "product/show");
-		return "main";
-		
 	}
+
+	
 
 }

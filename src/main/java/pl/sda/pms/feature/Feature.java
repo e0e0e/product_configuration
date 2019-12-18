@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.envers.Audited;
 
-import pl.sda.pms.order.OrderFeature;
+import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
