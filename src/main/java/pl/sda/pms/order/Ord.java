@@ -92,7 +92,25 @@ public Integer getUnitsToProduce() {
 public void setUnitsToProduce(Integer unitsToProduce) {
 	this.unitsToProduce = unitsToProduce;
 }
+public void removeOrderFeatures(OrderFeature orderFeature) {
+    this.orderFeatures.remove(orderFeature);
+    orderFeature.getOrd().remove(this);
+}
+
+public void removeAllOrderFeatures() {
+//    this.orderFeatures.clear();
+//    orderFeatures.forEach(x->x.getOrd().remove(this));
+//    
+    List<OrderFeature> orderFeatures=this.getOrderFeatures();
+	orderFeatures.forEach(x->x.getOrd().remove(this));
+}
 
 
+
+@Override
+public String toString() {
+	return "Ord [id=" + id + ", orderName=" + orderName + ", price=" + price + ", client=" + client
+			+ ", unitsToProduce=" + unitsToProduce + ", orderFeatures=" + orderFeatures + "]";
+}
 
 }

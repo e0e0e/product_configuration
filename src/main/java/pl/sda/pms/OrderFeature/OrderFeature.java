@@ -39,7 +39,7 @@ public OrderFeature(ProductFeature productFeature,Feature feature) {
 
 
 
-@ManyToMany(cascade = CascadeType.REMOVE)
+@ManyToMany
 private List<Ord> ord;
 
 
@@ -88,6 +88,13 @@ public ProductFeature getProductFeature() {
 public void setProductFeature(ProductFeature productFeature) {
 	this.productFeature = productFeature;
 }
+
+
+
+
+
+
+
 
 
 

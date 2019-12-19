@@ -63,10 +63,18 @@ public class OrderService {
 	}
 
 	public void deleteById(Long orderId) {
-		Ord orderOrd=orderRepository.findById(orderId).get();
+		Ord order=orderRepository.findById(orderId).get();
+		System.out.println(order);
+		List<OrderFeature> orderFeatures=order.getOrderFeatures();
+		orderFeatures.forEach(x->x.getOrd().remove(order));
 		
+		//order.removeAllOrderFeatures();
+		//System.out.println(order);
+		//orderRepository.save(order);
 		orderRepository.deleteById(orderId);
 		
 	}
+
+
 
 }
