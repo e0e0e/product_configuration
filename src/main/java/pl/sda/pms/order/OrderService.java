@@ -13,17 +13,13 @@ import pl.sda.pms.feature.Feature;
 @Service
 public class OrderService {
 	private final OrderRepository orderRepository;
-	private final OrderFeatureService orderFeatureService; 
-
-
+	private final OrderFeatureService orderFeatureService;
 
 	public OrderService(OrderRepository orderRepository, OrderFeatureService orderFeatureService) {
 		super();
 		this.orderRepository = orderRepository;
 		this.orderFeatureService = orderFeatureService;
 	}
-
-
 
 	public void create(Ord order) {
 		orderRepository.save(order);
@@ -50,16 +46,27 @@ public class OrderService {
 //			}
 //			OrderFeature orderFeature=orderFeatureService.create(o);
 //		}
-		//order.setOrderFeatures(orderList);
-		
+		// order.setOrderFeatures(orderList);
+
 //		orderList.forEach(a->a.getOrder().add(order)
 //				.forEach(x->orderFeatureService.create(x));
 
-		//order.setOrderFeatures(orderList);
+		// order.setOrderFeatures(orderList);
 
-		
 		// TODO Auto-generated method stub
 
+	}
+
+	public List<Ord> findAll() {
+		return orderRepository.findAll();
+
+	}
+
+	public void deleteById(Long orderId) {
+		Ord orderOrd=orderRepository.findById(orderId).get();
+		
+		orderRepository.deleteById(orderId);
+		
 	}
 
 }

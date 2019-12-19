@@ -23,6 +23,9 @@
 			<li class="nav-item"><a
 				class="nav-link text-light font-weight-bold" href="/product/listAll">All
 					Products</a></li>
+					
+					<li class="nav-item"><a
+				class="nav-link text-light font-weight-bold" href="/orders/list">Orders</a></li>
 
 		</ul>
 	</div>

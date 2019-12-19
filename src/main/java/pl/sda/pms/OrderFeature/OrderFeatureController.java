@@ -32,6 +32,32 @@ public class OrderFeatureController {
 		this.productFeatureService = productFeatureService;
 		this.orderFeatureService=orderFeatureService;
 	}
-	
+	@PostMapping("/orderCreate")
+	public String orderCreation(@RequestParam Map<String, String> paramMap, @RequestParam Long productConfigurationId,
+			Model model) {
+
+		List<OrderFeature> orderList = paramMap.entrySet().stream().filter(x -> isNumeric(x.getKey()))
+				.map(e -> new OrderFeature(productFeatureService.findById(Long.parseLong(e.getKey())),
+						featureService.findByID(Long.parseLong(e.getValue()))))
+				.collect(Collectors.toList());
+		
+
+		List<OrderFeature> orderFeatures = orderFeatureService.create(orderList);
+
+		return "redirect:/orders/list";
+
+	}
+
+	public static boolean isNumeric(String strNum) {
+		if (strNum == null) {
+			return false;
+		}
+		try {
+			double d = Double.parseDouble(strNum);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
 
 }

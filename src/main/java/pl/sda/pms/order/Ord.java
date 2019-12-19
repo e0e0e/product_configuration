@@ -3,6 +3,7 @@ package pl.sda.pms.order;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ private String client;
 private Integer unitsToProduce;
 
 
-@ManyToMany
+@ManyToMany(mappedBy = "ord")
 private List<OrderFeature> orderFeatures;
 
 public Ord(List<OrderFeature> orderFeatures) {
