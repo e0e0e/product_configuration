@@ -9,7 +9,7 @@
 	</h3>
 
 
-		<div class="card text-dark bg-warning m-1">
+		<div class="card text-dark bg-light m-1">
 	
 
 			<div class="card-header bg-info text-left text-light">
@@ -25,6 +25,8 @@
 					items="${configuration.configurationList}">
 					<li><a class="btn btn-outline-info text-dark" href="/feature/edit?productFeatureId=${configList.id}">${configList.name} <span
 					class="glyphicon glyphicon-edit text-dark"></span></a>
+					<a class="btn btn-outline-info text-dark" href="/feature/removeProductFeature?productFeatureId=${configList.id}"><span
+					class="glyphicon glyphicon-trash text-dark"></span></a>
 					</li>
 					
 					<ul>

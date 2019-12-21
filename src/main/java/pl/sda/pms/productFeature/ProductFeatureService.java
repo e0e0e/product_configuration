@@ -78,8 +78,8 @@ public class ProductFeatureService {
 		return createdFeature.getId() != null;
 	}
 
-	public void save(List<ProductFeature> productFeature, ProductConfiguration productConfiguration) {
-		productFeature.forEach(x -> {
+	public void save(Set<ProductFeature> configurationList, ProductConfiguration productConfiguration) {
+		configurationList.forEach(x -> {
 			x.setProductConfiguration(productConfiguration);
 			productFeatureRepository.save(x);
 		});
@@ -87,6 +87,7 @@ public class ProductFeatureService {
 	}
 
 	public void save(String name, String description, String imagePath, List<Long> featureList) {
+		
 		Set<Feature> featureSet=new HashSet<Feature>();
 		
 		for(Long id:featureList) {
@@ -105,6 +106,11 @@ public class ProductFeatureService {
 		featureService.save(feature);
 		productFeatureRepository.save(productFeature);
 		
+		
+	}
+
+	public void save(ProductFeature productFeature) {
+		productFeatureRepository.save(productFeature);
 		
 	}
 

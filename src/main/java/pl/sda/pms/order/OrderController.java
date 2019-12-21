@@ -56,5 +56,30 @@ public class OrderController {
 	
 		return "redirect:/orders/list";
 	}
+	
+	@GetMapping("/order/addMore")
+	public String addDetailsToOrder(@RequestParam Long orderId,
+			Model model) {
+		
+		model.addAttribute("order",orderService.findById(orderId));
+	
+		model.addAttribute("title", "Add details to Order");
+		model.addAttribute("path", "order/addMore");
+		return "main";
+	}
+	
+	@PostMapping("/orderToChange")
+	public String orderToChange(@RequestParam Long orderId,
+			@RequestParam String orderName,
+			@RequestParam String price,
+			@RequestParam Integer unitsToProduce,
+			@RequestParam String client,
+			Model model) {
+		
+		
+		orderService.addMore(orderId,orderName,price,unitsToProduce,client);
+	
+		return "redirect:/orders/list";
+	}
 
 }

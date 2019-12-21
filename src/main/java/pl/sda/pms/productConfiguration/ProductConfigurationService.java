@@ -1,7 +1,9 @@
 package pl.sda.pms.productConfiguration;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.management.loading.PrivateClassLoader;
 import javax.persistence.EntityManager;
@@ -37,23 +39,6 @@ public class ProductConfigurationService {
 
 	}
 
-	public void create(String name, List<Long> feature) {
-		ProductConfiguration productConfiguration=new ProductConfiguration(name);
-		
-		List<ProductFeature> configurationList=new ArrayList<ProductFeature>();
-		for(Long f:feature){
-			ProductFeature featureToConfigurator= productFeatureService.findById(f);
-			featureToConfigurator.setProductConfiguration(productConfiguration);
-			
-			configurationList.add(featureToConfigurator);
-
-		}
-		
-		productConfiguration.setConfigurationListByList(configurationList);
-		ProductConfiguration createdProductConfiguration=productConfigurationRepository.save(productConfiguration);
-		productFeatureService.save(configurationList,createdProductConfiguration);
-	}
-	
 	public  List<Object> findAllById(Long id) {
         @SuppressWarnings("unchecked")
         List<Object> revisions = AuditReaderFactory.get(entityManager).createQuery()
@@ -63,24 +48,47 @@ public class ProductConfigurationService {
 
         return revisions;
     }
-
-	public boolean saveChanges(Long id, String name, List<Long> feature) {
-		ProductConfiguration productConfiguration=productConfigurationRepository.findById(id).get();
+	
+	public void create(String name, List<Long> productFeatures) {
+		ProductConfiguration productConfiguration=new ProductConfiguration();
+		productConfiguration.setName(name);
 		
-		List<ProductFeature> configurationList=new ArrayList<ProductFeature>();
-		for(Long f:feature){
+		Set<ProductFeature> configurationList=new HashSet<ProductFeature>();
+		for(Long f:productFeatures){
 			ProductFeature featureToConfigurator= productFeatureService.findById(f);
-			
+			featureToConfigurator.setProductConfiguration(productConfiguration);
 			
 			configurationList.add(featureToConfigurator);
+
 		}
 		
-		productConfiguration.setConfigurationListByList(configurationList);
-
-		productConfiguration.setName(name);
-		ProductConfiguration create=productConfigurationRepository.save(productConfiguration);
+		productConfiguration.setConfigurationList(configurationList);
+		ProductConfiguration createdProductConfiguration=productConfigurationRepository.save(productConfiguration);
 		
-		return create.getId()!=null;
+		productFeatureService.save(configurationList,createdProductConfiguration);
+	}
+	
+
+
+	public boolean saveChanges(Long id, String name, List<Long> productFeatures) {
+		
+		ProductConfiguration productConfiguration=productConfigurationRepository.findById(id).get();
+		
+		Set<ProductFeature> configurationList=new HashSet<ProductFeature>();
+		for(Long f:productFeatures){
+			ProductFeature featureToConfigurator= productFeatureService.findById(f);
+			featureToConfigurator.setProductConfiguration(productConfiguration);
+			
+			configurationList.add(featureToConfigurator);
+
+		}
+		
+		productConfiguration.setConfigurationList(configurationList);
+		ProductConfiguration createdProductConfiguration=productConfigurationRepository.save(productConfiguration);
+		
+		productFeatureService.save(configurationList,createdProductConfiguration);
+		
+		return createdProductConfiguration.getId()!=null;
 		
 	}
 

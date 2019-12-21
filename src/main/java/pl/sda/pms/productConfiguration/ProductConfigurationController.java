@@ -86,7 +86,7 @@ public class ProductConfigurationController {
 
 		productConfigurationService.create(name, feature);
 
-		return "redirect:/product/list";
+		return "redirect:/product/show";
 	}
 
 	@GetMapping("/product/edit")

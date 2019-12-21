@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
+import pl.sda.pms.productConfiguration.ProductConfiguration;
+import pl.sda.pms.productConfiguration.ProductConfigurationService;
 
 @Controller
 public class ProductFeatureController {
@@ -101,6 +103,23 @@ public class ProductFeatureController {
 		
 		Feature feature=featureService.findByID(featureId);
 		productFeatureService.removeFeature(feature,productFeatureId);
+		
+		
+		return "redirect:/product/show";
+		
+	}
+	
+	@GetMapping("/feature/removeProductFeature")
+	public String removeProductFeature(
+			@RequestParam Long productFeatureId,
+			Model model) {
+		
+		ProductFeature productFeature=productFeatureService.findByID(productFeatureId);
+		ProductConfiguration productConfiguration=productFeature.getProductConfiguration();
+		productConfiguration.getConfigurationList().remove(productFeature);
+	//	productConfigurationService.save(productConfiguration);
+		productFeature.removeProductConfiguration();
+		productFeatureService.save(productFeature);
 		
 		
 		return "redirect:/product/show";

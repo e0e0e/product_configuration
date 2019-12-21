@@ -29,7 +29,7 @@ public class ProductConfiguration{
 	@Column(unique = true)
 	private String name;
 	
-	@OneToMany
+	@OneToMany(mappedBy="productConfiguration")
 	private Set<ProductFeature> configurationList;
 	
 	public Set<ProductFeature> getConfigurationList() {

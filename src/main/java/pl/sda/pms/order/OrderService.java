@@ -64,14 +64,26 @@ public class OrderService {
 
 	public void deleteById(Long orderId) {
 		Ord order=orderRepository.findById(orderId).get();
-		System.out.println(order);
-		List<OrderFeature> orderFeatures=order.getOrderFeatures();
-		orderFeatures.forEach(x->x.getOrd().remove(order));
 		
-		//order.removeAllOrderFeatures();
-		//System.out.println(order);
-		//orderRepository.save(order);
+		order.removeAllOrderFeatures();
 		orderRepository.deleteById(orderId);
+		
+	}
+
+	public Ord findById(Long orderId) {
+		return orderRepository.findById(orderId).get();
+		
+	}
+
+	public void addMore(Long orderId, String orderName, String price, Integer unitsToProduce, String client) {
+		
+	Ord order=orderRepository.findById(orderId).get();
+	order.setOrderName(orderName);
+	order.setPrice(Double.parseDouble(price));
+	order.setUnitsToProduce(unitsToProduce);
+	order.setClient(client);
+	orderRepository.save(order);
+	
 		
 	}
 

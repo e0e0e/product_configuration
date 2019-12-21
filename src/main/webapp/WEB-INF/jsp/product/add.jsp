@@ -6,8 +6,8 @@
 	<form method="post" action="/saveProduct">
 
 		<br> <label>Product Name</label> <br> <input type="text"
-			class="text-dark" name="name" value=""> <br /> <label>Project
-			Feature:</label><br /> <select name="feature" class="text-dark" value="" multiple>
+			class="text-dark" name="name" value=""> <br />
+			<label>Project Feature:</label><br /> <select name="feature" class="text-dark" value="" multiple>
 
 			<c:forEach var="feature" items="${features}">
 				<option value="${feature.id}">${feature.name} -${feature.productConfiguration.name }</option>
