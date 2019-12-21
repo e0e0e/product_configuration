@@ -165,9 +165,9 @@ public class ProductFeature {
 		this.id = id;
 	}
 	public void removeProductConfiguration() {
-		ProductConfiguration productConfiguration=this.productConfiguration;
-		Set<ProductFeature> productFeatureSet=productConfiguration.getConfigurationList();
-		productFeatureSet.remove(this);
+		//ProductConfiguration productConfiguration=this.productConfiguration;
+		this.productConfiguration=null;
+//		productFeatureSet.remove(this);
 	}
 	
 	

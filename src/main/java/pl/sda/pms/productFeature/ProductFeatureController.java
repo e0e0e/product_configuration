@@ -115,10 +115,12 @@ public class ProductFeatureController {
 			Model model) {
 		
 		ProductFeature productFeature=productFeatureService.findByID(productFeatureId);
-		ProductConfiguration productConfiguration=productFeature.getProductConfiguration();
-		productConfiguration.getConfigurationList().remove(productFeature);
-	//	productConfigurationService.save(productConfiguration);
 		productFeature.removeProductConfiguration();
+		
+//		ProductConfiguration productConfiguration=productFeature.getProductConfiguration();
+//		productConfiguration.getConfigurationList().remove(productFeature);
+	//	productConfigurationService.save(productConfiguration);
+	//	productFeature.removeProductConfiguration();
 		productFeatureService.save(productFeature);
 		
 		

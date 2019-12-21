@@ -41,6 +41,8 @@ public class ProductConfiguration{
 		this.configurationList = configurationList;
 	}
 
+	
+	
 
 	public ProductConfiguration() {
 		super();
