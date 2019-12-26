@@ -60,7 +60,8 @@ public class ProductFeatureController {
 	public String listProductFeatures(@RequestParam Long productFeatureId, Model model) {
 
 		model.addAttribute("productFeature", productFeatureService.findByID(productFeatureId));
-		model.addAttribute("featuresList", featureService.findAll());
+		model.addAttribute("featuresList", featureService.findNotUsed());
+		
 
 		model.addAttribute("title", "Edit Features");
 		model.addAttribute("path", "feature/edit");
@@ -70,7 +71,7 @@ public class ProductFeatureController {
 	@GetMapping("/feature/addProductFeature")
 	public String addProductFeatures(Model model) {
 
-		model.addAttribute("featuresList", featureService.findAll());
+		model.addAttribute("featuresList", featureService.findNotUsed());
 
 		model.addAttribute("title", "Add Product Features");
 		model.addAttribute("path", "feature/createProductFeature");
@@ -96,7 +97,7 @@ public class ProductFeatureController {
 		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList);
 		// featureList.parallelStream().forEach(x->System.out.println(x));
 
-		return "redirect:/product/show";
+		return "redirect:/feature/list";
 	}
 
 	@GetMapping("/feature/removeFeature")
@@ -110,23 +111,24 @@ public class ProductFeatureController {
 	}
 
 	@GetMapping("/feature/removeProductFeature")
-	public String removeProductFeature(@RequestParam Long productFeatureId, Model model) {
+	public String removeProductFeature(@RequestParam Long productFeatureId, @RequestParam Long productId, Model model) {
 
 		ProductFeature productFeature = productFeatureService.findByID(productFeatureId);
+		productFeature.setPosition(null);
 		productFeature.removeProductConfiguration();
 		productFeatureService.save(productFeature);
 
-		return "redirect:/product/show";
+		return "redirect:/product/list?productId=" + productId;
 
 	}
 
 	@GetMapping("/feature/moveDown")
-	public String moveDownProductFeature(@RequestParam Long productFeatureId, @RequestParam Long productId, Model model) {
+	public String moveDownProductFeature(@RequestParam Long productFeatureId, @RequestParam Long productId,
+			Model model) {
 
-	
 		ProductFeature productFeature = productFeatureService.findByID(productFeatureId);
 		ProductConfiguration productConfiguration = productFeature.getProductConfiguration();
-		
+
 		int position = productFeature.getPosition();
 		ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
 				.sorted(Comparator.comparing(ProductFeature::getPosition)).filter(x -> x.getPosition() > position)
@@ -140,19 +142,18 @@ public class ProductFeatureController {
 		return "redirect:/product/list?productId=" + productId;
 
 	}
-	
+
 	@GetMapping("/feature/moveUp")
 	public String moveUpProductFeature(@RequestParam Long productFeatureId, @RequestParam Long productId, Model model) {
 
-	
 		ProductFeature productFeature = productFeatureService.findByID(productFeatureId);
 		ProductConfiguration productConfiguration = productFeature.getProductConfiguration();
-		
+
 		int position = productFeature.getPosition();
 		ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
-				.sorted(Comparator.comparing(ProductFeature::getPosition).reversed()).filter(x -> x.getPosition() < position)
-				.findFirst().get();
-		
+				.sorted(Comparator.comparing(ProductFeature::getPosition).reversed())
+				.filter(x -> x.getPosition() < position).findFirst().get();
+
 		productFeature.setPosition(nextProductFeature.getPosition());
 		nextProductFeature.setPosition(position);
 

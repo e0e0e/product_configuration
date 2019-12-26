@@ -23,47 +23,50 @@ import pl.sda.pms.users.User;
 @Entity
 @Audited
 public class ProductFeature {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String name;
 	private String description;
 	private String imagePath;
-	private Integer position; 
-	
+	private Integer position;
 
 	public Integer getPosition() {
 		return position;
 	}
+
 	public void setPosition(Integer position) {
 		this.position = position;
 	}
+
 	public void autoPosition() {
-		this.position = this.productConfiguration.getConfigurationList().size()+1;
+		this.position = this.productConfiguration.getConfigurationList().size() + 1;
 	}
+
 	@ManyToMany
-    private Set<Feature> feature;
-	
+	private Set<Feature> feature;
 
 	@ManyToOne
 	private ProductConfiguration productConfiguration;
-	
+
 	@OneToOne
 	private OrderFeature orderFeature;
-	
-	
+
 	public OrderFeature getOrderFeature() {
 		return orderFeature;
 	}
+
 	public void setOrderFeature(OrderFeature orderFeature) {
 		this.orderFeature = orderFeature;
 	}
+
 	@Override
 	public String toString() {
 		return "ProductFeature [name=" + name + ", feature=" + feature + ", productConfiguration="
 				+ productConfiguration + "]";
 	}
+
 	public ProductConfiguration getProductConfiguration() {
 		return productConfiguration;
 	}
@@ -73,8 +76,9 @@ public class ProductFeature {
 	}
 
 	public ProductFeature() {
-		
+
 	}
+
 	public ProductFeature(Long id, String name, String description, String imagePath, Integer position,
 			Set<Feature> feature, ProductConfiguration productConfiguration, OrderFeature orderFeature) {
 		super();
@@ -87,6 +91,7 @@ public class ProductFeature {
 		this.productConfiguration = productConfiguration;
 		this.orderFeature = orderFeature;
 	}
+
 	public Set<Feature> getFeature() {
 		return feature;
 	}
@@ -103,9 +108,10 @@ public class ProductFeature {
 	public ProductFeature(String name, String description, String imagePath, Set<Feature> feature) {
 		this.name = name;
 		this.description = description;
-		this.imagePath=imagePath;
-		this.feature=feature;
+		this.imagePath = imagePath;
+		this.feature = feature;
 	}
+
 	public String getName() {
 		return name;
 	}
@@ -186,12 +192,12 @@ public class ProductFeature {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public void removeProductConfiguration() {
-		//ProductConfiguration productConfiguration=this.productConfiguration;
-		this.productConfiguration=null;
+		// ProductConfiguration productConfiguration=this.productConfiguration;
+
+		this.productConfiguration = null;
 //		productFeatureSet.remove(this);
 	}
-	
-	
-	
+
 }

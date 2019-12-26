@@ -38,6 +38,7 @@
 								:</a> <a class="btn btn-outline-info text-dark"
 								href="/feature/editFeature?featureId=${feature.id}">${feature.feature.name}
 							</a>
+							<span>${feature.feature.index}</span>
 						</div>
 
 

@@ -22,17 +22,17 @@ import pl.sda.pms.projects.Project;
 
 @Service
 public class ProductConfigurationService {
-	
+
 	@PersistenceContext
-    EntityManager entityManager;
-	
-	
+	EntityManager entityManager;
+
 	private final ProductConfigurationRepository productConfigurationRepository;
 	private final ProductFeatureService productFeatureService;
 
-	public ProductConfigurationService(ProductConfigurationRepository productConfigurationRepository, ProductFeatureService productFeatureService) {
+	public ProductConfigurationService(ProductConfigurationRepository productConfigurationRepository,
+			ProductFeatureService productFeatureService) {
 		this.productConfigurationRepository = productConfigurationRepository;
-		this.productFeatureService=productFeatureService;
+		this.productFeatureService = productFeatureService;
 	}
 
 	public List<ProductConfiguration> findAll() {
@@ -40,76 +40,90 @@ public class ProductConfigurationService {
 
 	}
 
-	public  List<Object> findAllById(Long id) {
-        @SuppressWarnings("unchecked")
-        List<Object> revisions = AuditReaderFactory.get(entityManager).createQuery()
-                .forRevisionsOfEntity(ProductConfiguration.class, false, true)
-                .add(AuditEntity.id().eq(id))
-                .getResultList();
+	public List<Object> findAllById(Long id) {
+		@SuppressWarnings("unchecked")
+		List<Object> revisions = AuditReaderFactory.get(entityManager).createQuery()
+				.forRevisionsOfEntity(ProductConfiguration.class, false, true).add(AuditEntity.id().eq(id))
+				.getResultList();
 
-        return revisions;
-    }
-	
+		return revisions;
+	}
+
 	public void create(String name, List<Long> productFeatures) {
-		ProductConfiguration productConfiguration=new ProductConfiguration();
+		ProductConfiguration productConfiguration = new ProductConfiguration();
 		productConfiguration.setName(name);
-		
-		LinkedList<ProductFeature> configurationList=new LinkedList<ProductFeature>();
-		for(Long f:productFeatures){
-			ProductFeature featureToConfigurator= productFeatureService.findById(f);
+
+		LinkedList<ProductFeature> configurationList = new LinkedList<ProductFeature>();
+		for (Long f : productFeatures) {
+			ProductFeature featureToConfigurator = productFeatureService.findById(f);
 			featureToConfigurator.setProductConfiguration(productConfiguration);
-			
+
 			configurationList.add(featureToConfigurator);
 
 		}
-		
-		productConfiguration.setConfigurationList(configurationList);
-		ProductConfiguration createdProductConfiguration=productConfigurationRepository.save(productConfiguration);
-		
-		productFeatureService.save(configurationList,createdProductConfiguration);
-	}
-	
 
+		productConfiguration.setConfigurationList(configurationList);
+		ProductConfiguration createdProductConfiguration = productConfigurationRepository.save(productConfiguration);
+
+		productFeatureService.save(configurationList, createdProductConfiguration);
+	}
 
 	public boolean saveChanges(Long id, String name, List<Long> productFeatures) {
-		
-		ProductConfiguration productConfiguration=productConfigurationRepository.findById(id).get();
-		
-		LinkedList<ProductFeature> configurationList=new LinkedList<ProductFeature>();
-		for(Long f:productFeatures){
-			ProductFeature featureToConfigurator= productFeatureService.findById(f);
-			featureToConfigurator.setProductConfiguration(productConfiguration);
-			
-			configurationList.add(featureToConfigurator);
 
+		ProductConfiguration productConfiguration = productConfigurationRepository.findById(id).get();
+		List<ProductFeature> configurationList = new ArrayList<ProductFeature>();
+		int maxPosition = 1;
+		try {
+			configurationList=productConfiguration.getConfigurationList();
+			maxPosition = configurationList.stream().mapToInt(x -> x.getPosition()).max()
+					.getAsInt() + 1;
+			
+		} catch (Exception e) {
+			System.out.println("No product Feature in this configurator.");
+			System.out.println(e.getMessage());
 		}
 		
+		
+
+		for (int i = 0; i < productFeatures.size(); i++) {
+			ProductFeature productFeatureTempFeature = productFeatureService.findById(productFeatures.get(i));
+			productFeatureTempFeature.setProductConfiguration(productConfiguration);
+			productFeatureTempFeature.setPosition(maxPosition + i);
+			configurationList.add(productFeatureTempFeature);
+		}
+//
+//		for (Long f : productFeatures) {		
+//			ProductFeature featureToConfigurator = productFeatureService.findById(f);
+//			featureToConfigurator.setProductConfiguration(productConfiguration);
+//
+//			configurationList.add(featureToConfigurator);
+//
+//		}
+
 		productConfiguration.setConfigurationList(configurationList);
-		ProductConfiguration createdProductConfiguration=productConfigurationRepository.save(productConfiguration);
-		
-		productFeatureService.save(configurationList,createdProductConfiguration);
-		
-		return createdProductConfiguration.getId()!=null;
-		
+		ProductConfiguration createdProductConfiguration = productConfigurationRepository.save(productConfiguration);
+
+		productFeatureService.save(configurationList, createdProductConfiguration);
+
+		return createdProductConfiguration.getId() != null;
+
 	}
 
 	public ProductConfiguration findById(Long id) {
-		
+
 		return productConfigurationRepository.findById(id).get();
-		
+
 	}
 
 	public void delete(Long productId) {
 
-	productConfigurationRepository.deleteById(productId);
-		
+		productConfigurationRepository.deleteById(productId);
+
 	}
 
 	public void save(ProductConfiguration productConfiguration) {
 		productConfigurationRepository.save(productConfiguration);
-		
+
 	}
-	
-	
 
 }

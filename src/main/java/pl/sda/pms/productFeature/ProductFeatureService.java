@@ -66,7 +66,11 @@ public class ProductFeatureService {
 		ProductFeature productFeature = productFeatureRepository.findById(id).get();
 		// Set<Feature> featureSet=productFeature.getFeature();
 		Set<Feature> featuresToAddFeatures = new HashSet<>();
-
+		try {
+		featuresToAddFeatures.addAll(productFeature.getFeature());
+		}catch (Exception e) {
+			System.out.println("product feature service edit failur"+e.getMessage());
+		}
 		for (Long f : featureList) {
 
 			featuresToAddFeatures.add(featureService.findByID(f));
@@ -75,7 +79,6 @@ public class ProductFeatureService {
 		productFeature.setName(name);
 		productFeature.setDescription(description);
 		productFeature.setImagePath(imagePath);
-		
 		ProductFeature createdFeature = productFeatureRepository.save(productFeature);
 		return createdFeature.getId() != null;
 	}

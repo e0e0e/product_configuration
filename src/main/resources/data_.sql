@@ -34,10 +34,10 @@ INSERT INTO "PRODUCT_FEATURE" ("ID","NAME","DESCRIPTION","IMAGE_PATH","POSITION"
 (13,'Body Type','','default.png',0);
 
 INSERT INTO "FEATURE" ("ID","NAME","DESCRIPTION","PRICE","IMAGE_PATH","INDEX") VALUES
-(1,'1250','5-th wheel height',55.1,'default.png','null');
+(1,'1250','5-th wheel height',55.1,'default.png','K125444');
 
 INSERT INTO "FEATURE" ("ID","NAME","DESCRIPTION","PRICE","IMAGE_PATH","INDEX") VALUES
-(2,'1200','5-th wheel height',55.1,'default.png','null');
+(2,'1200','5-th wheel height',55.1,'default.png','K123411');
 INSERT INTO "FEATURE" ("ID","NAME","DESCRIPTION","PRICE","IMAGE_PATH","INDEX") VALUES
-(3,'saf','aXLE',55.1,'default.png','null');
+(3,'saf','aXLE',55.1,'default.png','K234555');
 

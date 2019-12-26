@@ -2,16 +2,15 @@
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
 	<div>
-		<label>Product Features: </label> <a
-			href="/feature/addProductFeature"> <span
-			class="glyphicon glyphicon-plus text-dark"></span></a>
+		<label>Product Features: </label> <a href="/feature/addProductFeature">
+			<span class="glyphicon glyphicon-plus text-dark"></span>
+		</a>
 	</div>
 
 	<c:forEach var="feature" items="${features}">
 		<div class="card text-light bg-light border m-1">
 			<div class="card-header bg-info text-left-light">${feature.name}
-				<a href="/feature/edit?productFeatureId=${feature.id}"
-					style="float: right;"> <span
+				<a href="/feature/edit?productFeatureId=${feature.id}"> <span
 					class="glyphicon glyphicon-edit text-dark"></span></a>
 			</div>
 			<div class="card-body ">
