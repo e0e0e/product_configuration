@@ -30,7 +30,18 @@ public class ProductFeature {
 	private String name;
 	private String description;
 	private String imagePath;
+	private Integer position; 
 	
+
+	public Integer getPosition() {
+		return position;
+	}
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
+	public void autoPosition() {
+		this.position = this.productConfiguration.getConfigurationList().size()+1;
+	}
 	@ManyToMany
     private Set<Feature> feature;
 	
@@ -64,7 +75,18 @@ public class ProductFeature {
 	public ProductFeature() {
 		
 	}
-	
+	public ProductFeature(Long id, String name, String description, String imagePath, Integer position,
+			Set<Feature> feature, ProductConfiguration productConfiguration, OrderFeature orderFeature) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.imagePath = imagePath;
+		this.position = position;
+		this.feature = feature;
+		this.productConfiguration = productConfiguration;
+		this.orderFeature = orderFeature;
+	}
 	public Set<Feature> getFeature() {
 		return feature;
 	}

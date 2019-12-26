@@ -119,6 +119,15 @@ public class ProductConfigurationController {
 
 	}
 
-	
+	@GetMapping("/product/delete")
+	public String productDelete(@RequestParam Long productId, Model model) {
+
+		productConfigurationService.delete(productId);
+		
+
+		
+		return "redirect:/product/show";
+
+	}
 
 }

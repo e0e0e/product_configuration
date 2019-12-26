@@ -1,6 +1,7 @@
 package pl.sda.pms.productFeature;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,15 +75,23 @@ public class ProductFeatureService {
 		productFeature.setName(name);
 		productFeature.setDescription(description);
 		productFeature.setImagePath(imagePath);
+		
 		ProductFeature createdFeature = productFeatureRepository.save(productFeature);
 		return createdFeature.getId() != null;
 	}
 
-	public void save(Set<ProductFeature> configurationList, ProductConfiguration productConfiguration) {
-		configurationList.forEach(x -> {
-			x.setProductConfiguration(productConfiguration);
-			productFeatureRepository.save(x);
-		});
+	public void save(List<ProductFeature> configurationList, ProductConfiguration productConfiguration) {
+		for (int i = 0; i < configurationList.size(); i++) {
+			ProductFeature productFeature=configurationList.get(i);
+			productFeature.setProductConfiguration(productConfiguration);
+			productFeature.setPosition(i);
+			productFeatureRepository.save(productFeature);
+		}
+//		configurationList.forEach(x -> {
+//			x.setProductConfiguration(productConfiguration);
+//			x.autoPosition();
+//			productFeatureRepository.save(x);
+//		});
 
 	}
 
@@ -111,6 +120,11 @@ public class ProductFeatureService {
 
 	public void save(ProductFeature productFeature) {
 		productFeatureRepository.save(productFeature);
+		
+	}
+
+	public void findByPositionAndProduct(int i, Long productId) {
+		
 		
 	}
 

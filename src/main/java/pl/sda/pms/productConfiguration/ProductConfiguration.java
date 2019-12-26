@@ -1,19 +1,20 @@
 package pl.sda.pms.productConfiguration;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.envers.Audited;
 
@@ -29,18 +30,25 @@ public class ProductConfiguration{
 	@Column(unique = true)
 	private String name;
 	
-	@OneToMany(mappedBy="productConfiguration")
-	private Set<ProductFeature> configurationList;
+	@OneToMany(mappedBy="productConfiguration", cascade = CascadeType.REMOVE)
+	@OrderBy("position")
+	private List<ProductFeature> configurationList;
 	
-	public Set<ProductFeature> getConfigurationList() {
+	public List<ProductFeature> getConfigurationList() {
 		return configurationList;
 	}
 
 
-	public void setConfigurationList(Set<ProductFeature> configurationList) {
+	public void setConfigurationList(List<ProductFeature> configurationList) {
 		this.configurationList = configurationList;
 	}
-
+	public void moveDownInConfigurationList(ProductFeature productFeature) {
+		List<ProductFeature> configurationList =this.configurationList ;
+		int indexOf=configurationList.indexOf(productFeature);
+		Collections.swap(this.configurationList,indexOf,indexOf+1);
+		this.configurationList= configurationList;
+		
+	}
 	
 	
 
@@ -74,10 +82,16 @@ public class ProductConfiguration{
 
 	public void setConfigurationListByList(List<ProductFeature> feature) {
 		
-		Set<ProductFeature> configurationSet=new HashSet<ProductFeature>();
+		LinkedList<ProductFeature> configurationSet=new LinkedList<ProductFeature>();
 		configurationSet.addAll(feature);
 		this.configurationList=configurationSet;
 		
+	}
+
+
+	public void removeConfigurationList() {
+
+		this.configurationList=null;
 	}
 
 

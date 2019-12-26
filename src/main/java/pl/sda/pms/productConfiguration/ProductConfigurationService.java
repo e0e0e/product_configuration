@@ -2,6 +2,7 @@ package pl.sda.pms.productConfiguration;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -53,7 +54,7 @@ public class ProductConfigurationService {
 		ProductConfiguration productConfiguration=new ProductConfiguration();
 		productConfiguration.setName(name);
 		
-		Set<ProductFeature> configurationList=new HashSet<ProductFeature>();
+		LinkedList<ProductFeature> configurationList=new LinkedList<ProductFeature>();
 		for(Long f:productFeatures){
 			ProductFeature featureToConfigurator= productFeatureService.findById(f);
 			featureToConfigurator.setProductConfiguration(productConfiguration);
@@ -74,7 +75,7 @@ public class ProductConfigurationService {
 		
 		ProductConfiguration productConfiguration=productConfigurationRepository.findById(id).get();
 		
-		Set<ProductFeature> configurationList=new HashSet<ProductFeature>();
+		LinkedList<ProductFeature> configurationList=new LinkedList<ProductFeature>();
 		for(Long f:productFeatures){
 			ProductFeature featureToConfigurator= productFeatureService.findById(f);
 			featureToConfigurator.setProductConfiguration(productConfiguration);
@@ -95,6 +96,17 @@ public class ProductConfigurationService {
 	public ProductConfiguration findById(Long id) {
 		
 		return productConfigurationRepository.findById(id).get();
+		
+	}
+
+	public void delete(Long productId) {
+
+	productConfigurationRepository.deleteById(productId);
+		
+	}
+
+	public void save(ProductConfiguration productConfiguration) {
+		productConfigurationRepository.save(productConfiguration);
 		
 	}
 	

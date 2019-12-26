@@ -23,7 +23,7 @@ public class Feature {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(unique = true)
+//	@Column(unique = true)
 	private String name;
 	private String description;
 	private Double price;
@@ -57,6 +57,9 @@ public class Feature {
 	public Feature() {
 
 	}
+
+	
+
 
 	public Feature(String name, String description, Double price, String imagePath, String index) {
 		super();

@@ -20,7 +20,10 @@
 					class="glyphicon glyphicon-edit text-dark"></span>
 				</a><a class="btn btn-outline-warning text-dark"
 					href="/product/selection?productId=${configuration.id}"><span
-					class="glyphicon glyphicon-briefcase text-dark"></span></a>
+					class="glyphicon glyphicon-briefcase text-dark"></span></a> <a
+					class="btn btn-outline-warning text-dark"
+					href="/product/delete?productId=${configuration.id}"><span
+					class="glyphicon glyphicon-trash text-dark"></span></a>
 			</div>
 
 

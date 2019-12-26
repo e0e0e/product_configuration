@@ -4,51 +4,58 @@
 
 
 	<h3>
-		Products<a href="/product/add" class="btn btn-outline-dark btn-sm"> <span
-			class="glyphicon glyphicon-plus"></span></a>
+		Products<a href="/product/add" class="btn btn-outline-dark btn-sm">
+			<span class="glyphicon glyphicon-plus"></span>
+		</a>
 	</h3>
 
 
-		<div class="card text-dark bg-light m-1">
-	
-
-			<div class="card-header bg-info text-left text-light">
-				<a href="/product/edit?productId=${configuration.id}"
-					class="nav-link text-light font-weight-bold">
-					${configuration.name}</a>
-			</div>
+	<div class="card text-dark bg-light m-1">
 
 
-			<div class="card-body ">
+		<div class="card-header bg-info text-left text-light">
+			<a href="/product/edit?productId=${configuration.id}"
+				class="nav-link text-light font-weight-bold">
+				${configuration.name}</a>
+		</div>
+
+
+		<div class="card-body ">
 			<ul>
 				<c:forEach var="configList"
 					items="${configuration.configurationList}">
-					<li><a class="btn btn-outline-info text-dark" href="/feature/edit?productFeatureId=${configList.id}">${configList.name} <span
-					class="glyphicon glyphicon-edit text-dark"></span></a>
-					<a class="btn btn-outline-info text-dark" href="/feature/removeProductFeature?productFeatureId=${configList.id}"><span
-					class="glyphicon glyphicon-trash text-dark"></span></a>
-					</li>
-					
+					<li><a class="btn btn-outline-info text-dark"
+						href="/feature/edit?productFeatureId=${configList.id}">${configList.name}
+							<span class="glyphicon glyphicon-edit text-dark"></span>
+					</a> <a class="btn btn-outline-info text-dark"
+						href="/feature/removeProductFeature?productFeatureId=${configList.id}"><span
+							class="glyphicon glyphicon-trash text-dark"></span></a> <a
+						href="/feature/moveDown?productFeatureId=${configList.id}&productId=${configuration.id}"
+						class="btn btn-outline-info text-dark"> <span
+							class="glyphicon glyphicon-triangle-bottom"></span></a> <a
+						href="/feature/moveUp?productFeatureId=${configList.id}&productId=${configuration.id}"
+						class="btn btn-outline-info text-dark"> <span
+							class="glyphicon glyphicon-triangle-top"></span></a></li>
 					<ul>
-				<c:forEach var="feature"
-					items="${configList.feature}">
-					
-					<li><a class="btn btn-outline-info text-dark" href="/feature/editFeature?featureId=${feature.id}">${feature.name} <span
-					class="glyphicon glyphicon-edit text-dark"></span></a>
-					<a class="btn btn-outline-info text-dark" href="/feature/removeFeature?featureId=${feature.id}&productFeatureId=${configList.id}"><span
-					class="glyphicon glyphicon-trash text-dark"></span></a>
-					</li>
-				</c:forEach>
-				</ul>
-				
-				</c:forEach>
-				</ul>
-			</div>
-			<div class="card-footer bg-info text-right text-light">
-				<div>created by:</div>
+						<c:forEach var="feature" items="${configList.feature}">
 
-			</div>
+							<li><a class="btn btn-outline-info text-dark"
+								href="/feature/editFeature?featureId=${feature.id}">${feature.name}
+									<span class="glyphicon glyphicon-edit text-dark"></span>
+							</a> <a class="btn btn-outline-info text-dark"
+								href="/feature/removeFeature?featureId=${feature.id}&productFeatureId=${configList.id}"><span
+									class="glyphicon glyphicon-trash text-dark"></span></a></li>
+						</c:forEach>
+					</ul>
+
+				</c:forEach>
+			</ul>
 		</div>
+		<div class="card-footer bg-info text-right text-light">
+			<div>created by:</div>
+
+		</div>
+	</div>
 
 
 
