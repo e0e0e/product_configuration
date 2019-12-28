@@ -100,7 +100,8 @@ public class ProductConfigurationController {
 	}
 
 	@PostMapping("/saveChangedProduct")
-	public String saveChangedProduct(@RequestParam String name, @RequestParam List<Long> feature,
+	public String saveChangedProduct(@RequestParam String name,
+			@RequestParam(required = false) List<Long> feature,
 			@RequestParam Long productId, Model model) {
 
 		productConfigurationService.saveChanges(productId, name, feature);
@@ -123,9 +124,16 @@ public class ProductConfigurationController {
 	public String productDelete(@RequestParam Long productId, Model model) {
 
 		productConfigurationService.delete(productId);
-		
 
-		
+		return "redirect:/product/show";
+
+	}
+
+	@GetMapping("/product/copy")
+	public String productClone(@RequestParam Long productId, Model model) {
+
+		productConfigurationService.clone(productId);
+
 		return "redirect:/product/show";
 
 	}

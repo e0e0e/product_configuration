@@ -19,84 +19,61 @@ import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
 @Audited
-public class OrderFeature{
+public class OrderFeature {
 
-@Id	
-@GeneratedValue(strategy = GenerationType.AUTO)
-private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-public OrderFeature() {
+	public OrderFeature() {
 
-}
+	}
 
+	public OrderFeature(ProductFeature productFeature, Feature feature) {
+		super();
+		this.feature = feature;
+		this.productFeature = productFeature;
+	}
 
+	@ManyToMany
+	private List<Ord> ord;
 
-public OrderFeature(ProductFeature productFeature,Feature feature) {
-	super();
-	this.feature = feature;
-	this.productFeature = productFeature;
-}
+	@OneToOne
+	private Feature feature;
 
+	@OneToOne
+	private ProductFeature productFeature;
 
+	public Long getId() {
+		return id;
+	}
 
-@ManyToMany
-private List<Ord> ord;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
+	public Feature getFeature() {
+		return feature;
+	}
 
+	public List<Ord> getOrd() {
+		return ord;
+	}
 
+	public void setOrd(List<Ord> ord) {
+		this.ord = ord;
+	}
 
-public List<Ord> getOrd() {
-	return ord;
-}
+	public void setFeature(Feature feature) {
+		this.feature = feature;
+	}
 
+	public ProductFeature getProductFeature() {
+		return productFeature;
+	}
 
+	public void setProductFeature(ProductFeature productFeature) {
+		this.productFeature = productFeature;
+	}
 
-public void setOrd(List<Ord> ord) {
-	this.ord = ord;
-}
-
-
-
-@OneToOne
-private Feature feature;
-
-@OneToOne
-private ProductFeature productFeature;
-
-
-
-public Long getId() {
-	return id;
-}
-
-public void setId(Long id) {
-	this.id = id;
-}
-
-public Feature getFeature() {
-	return feature;
-}
-
-public void setFeature(Feature feature) {
-	this.feature = feature;
-}
-
-public ProductFeature getProductFeature() {
-	return productFeature;
-}
-
-public void setProductFeature(ProductFeature productFeature) {
-	this.productFeature = productFeature;
-}
-
-
-
-
-
-
-
-
-
-
-	
 }

@@ -44,9 +44,9 @@
 
 
 						<div class="row">
-							<div class="col-2">${feature.productFeature.name}:</div>
-							<div class="col-4">${feature.feature.name}</div>
-							<div class="col-2">${feature.feature.index}</div>
+							<div class="col-2 m-1">${feature.productFeature.name}:</div>
+							<div class="col-4 m-1">${feature.feature.name}</div>
+							<div class="col-2 m-1">${feature.feature.index}</div>
 						</div>
 
 

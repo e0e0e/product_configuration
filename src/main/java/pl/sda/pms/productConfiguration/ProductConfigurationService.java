@@ -71,34 +71,30 @@ public class ProductConfigurationService {
 	public boolean saveChanges(Long id, String name, List<Long> productFeatures) {
 
 		ProductConfiguration productConfiguration = productConfigurationRepository.findById(id).get();
+		productConfiguration.setName(name);
 		List<ProductFeature> configurationList = new ArrayList<ProductFeature>();
 		int maxPosition = 1;
 		try {
-			configurationList=productConfiguration.getConfigurationList();
-			maxPosition = configurationList.stream().mapToInt(x -> x.getPosition()).max()
-					.getAsInt() + 1;
-			
+			configurationList = productConfiguration.getConfigurationList();
+			maxPosition = configurationList.stream().mapToInt(x -> x.getPosition()).max().getAsInt() + 1;
+
 		} catch (Exception e) {
 			System.out.println("No product Feature in this configurator.");
 			System.out.println(e.getMessage());
 		}
-		
-		
 
-		for (int i = 0; i < productFeatures.size(); i++) {
-			ProductFeature productFeatureTempFeature = productFeatureService.findById(productFeatures.get(i));
-			productFeatureTempFeature.setProductConfiguration(productConfiguration);
-			productFeatureTempFeature.setPosition(maxPosition + i);
-			configurationList.add(productFeatureTempFeature);
+		try {
+
+			for (int i = 0; i < productFeatures.size(); i++) {
+				ProductFeature productFeatureTempFeature = productFeatureService.findById(productFeatures.get(i));
+				productFeatureTempFeature.setProductConfiguration(productConfiguration);
+				productFeatureTempFeature.setPosition(maxPosition + i);
+				configurationList.add(productFeatureTempFeature);
+			}
+
+		} catch (Exception e) {
+			System.out.println("list of product feature is empty, no problem:" + e.getMessage());
 		}
-//
-//		for (Long f : productFeatures) {		
-//			ProductFeature featureToConfigurator = productFeatureService.findById(f);
-//			featureToConfigurator.setProductConfiguration(productConfiguration);
-//
-//			configurationList.add(featureToConfigurator);
-//
-//		}
 
 		productConfiguration.setConfigurationList(configurationList);
 		ProductConfiguration createdProductConfiguration = productConfigurationRepository.save(productConfiguration);
@@ -122,6 +118,19 @@ public class ProductConfigurationService {
 	}
 
 	public void save(ProductConfiguration productConfiguration) {
+		productConfigurationRepository.save(productConfiguration);
+
+	}
+
+	public void clone(Long productId) {
+
+		ProductConfiguration productConfigurationOrgin = productConfigurationRepository.findById(productId).get();
+		
+		List<ProductFeature> configurationList=new ArrayList<>();
+		configurationList.addAll(productConfigurationOrgin.getConfigurationList());
+		ProductConfiguration productConfiguration = new ProductConfiguration(
+				productConfigurationOrgin.getName() + "copy",configurationList);
+
 		productConfigurationRepository.save(productConfiguration);
 
 	}

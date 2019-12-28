@@ -24,7 +24,7 @@
 		<textarea
 			rows="2"
 			class="text-dark"
-			name="description">${feature.name}</textarea>
+			name="name">${feature.name}</textarea>
 		<br /> <label>Feature Description:</label><br />
 		<textarea
 			rows="4"

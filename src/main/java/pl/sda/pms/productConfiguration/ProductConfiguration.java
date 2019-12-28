@@ -63,6 +63,13 @@ public class ProductConfiguration{
 	}
 
 
+	public ProductConfiguration(String name, List<ProductFeature> configurationList) {
+		super();
+		this.name = name;
+		this.configurationList = configurationList;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -94,7 +101,17 @@ public class ProductConfiguration{
 		this.configurationList=null;
 	}
 
-
+	@Override
+	public ProductConfiguration clone() {
+		ProductConfiguration user = null;
+	    try {
+	        user = (ProductConfiguration) super.clone();
+	    } catch (CloneNotSupportedException e) {
+	        
+	    }
+	    
+	    return user;
+	}
 	
 	
 
