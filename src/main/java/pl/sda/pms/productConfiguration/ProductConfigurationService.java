@@ -14,6 +14,8 @@ import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.springframework.stereotype.Service;
 
+import pl.sda.pms.OrderFeature.OrderFeature;
+import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.productFeature.ProductFeatureRepository;
@@ -125,14 +127,40 @@ public class ProductConfigurationService {
 	public void clone(Long productId) {
 
 		ProductConfiguration productConfigurationOrgin = productConfigurationRepository.findById(productId).get();
-		
-		List<ProductFeature> configurationList=new ArrayList<>();
-		configurationList.addAll(productConfigurationOrgin.getConfigurationList());
-		ProductConfiguration productConfiguration = new ProductConfiguration(
-				productConfigurationOrgin.getName() + "copy",configurationList);
+		ProductConfiguration productConfiguration = new ProductConfiguration();
+		List<ProductFeature> configurationListOrgin = productConfigurationOrgin.getConfigurationList();
+
+		List<ProductFeature> configurationList = cloneProductFeatures(configurationListOrgin);
+
+		//configurationList.addAll(configurationList);
+		for(ProductFeature p:configurationList) {
+			p.setProductConfiguration(productConfiguration);
+			
+		}
+
+		productConfiguration.setName(productConfigurationOrgin.getName() + "copy");
+		productConfiguration.setConfigurationList(configurationList);
 
 		productConfigurationRepository.save(productConfiguration);
 
+	}
+
+	private List<ProductFeature> cloneProductFeatures(List<ProductFeature> configurationListOrgin) {
+		List<ProductFeature> configurationList = new ArrayList<>();
+		for (ProductFeature productFeature : configurationListOrgin) {
+
+			ProductFeature newProductFeature = new ProductFeature(productFeature.getName(),
+					productFeature.getDescription(), productFeature.getImagePath(), productFeature.getPosition());
+
+			Set<Feature> featureSet = new HashSet<>();
+			for (Feature f : productFeature.getFeature()) {
+				featureSet.add(f);
+			}
+			newProductFeature.setFeature(featureSet);
+			productFeatureService.save(newProductFeature);
+			configurationList.add(newProductFeature);
+		}
+		return configurationList;
 	}
 
 }

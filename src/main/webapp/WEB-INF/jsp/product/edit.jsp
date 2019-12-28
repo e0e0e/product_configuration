@@ -11,12 +11,17 @@
 		method="post"
 		action="/saveChangedProduct?productId=${param.productId}">
 
-		<br> <label>Product Name</label> <br> <input
+		<br>
+		<label>Product Name</label>
+		<br>
+		<input
 			type="text"
 			class="text-dark"
 			name="name"
-			value="${product.name}"> <br /> <label>Project
-			Current Feature:</label><br />
+			value="${product.name}">
+		<br />
+		<label>Project Current Feature:</label>
+		<br />
 		<ul>
 			<c:forEach
 				var="productFeature"
@@ -26,7 +31,10 @@
 		</ul>
 
 
-		<br> <label>To Change Feature:</label><br> <select
+		<br>
+		<label>To Change Feature:</label>
+		<br>
+		<select
 			size="${fn:length(newFeatures)}"
 			name="feature"
 			class="text-dark"
@@ -35,9 +43,10 @@
 			<c:forEach
 				var="newFeature"
 				items="${newFeatures}">
-				<option value="${newFeature.id}">${newFeature.name}</option>
+				<option value="${newFeature.id}">${newFeature.name}   -   ${newFeature.productConfiguration.name}</option>
 			</c:forEach>
-		</select> <br>
+		</select>
+		<br>
 		<input
 			type="submit"
 			class="text-dark mt-5"

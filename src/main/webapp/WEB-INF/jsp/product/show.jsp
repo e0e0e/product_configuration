@@ -17,30 +17,30 @@
 	<c:forEach
 		var="configuration"
 		items="${configurations}">
-		<div class="card text-dark bg-warning m-1">
+		<div class="card text-dark bg-dark m-1">
 
 
 			<div class="card-header bg-info text-left text-light">
 				<a
 					href="/product/list?productId=${configuration.id}"
-					class="btn btn-outline-warning text-dark">
+					class="btn btn-outline-dark text-light m-1">
 					${configuration.name} <span
-						class="glyphicon glyphicon-edit text-dark"></span>
+						class="glyphicon glyphicon-edit text-light"></span>
 				</a>
 				<a
-					class="btn btn-outline-warning text-dark"
+					class="btn btn-outline-dark text-light m-1"
 					href="/product/selection?productId=${configuration.id}">
-					<span class="glyphicon glyphicon-briefcase text-dark"></span>
+					<span class="glyphicon glyphicon-briefcase text-light"></span>
 				</a>
 				<a
-					class="btn btn-outline-warning text-dark"
+					class="btn btn-outline-dark text-light m-1"
 					href="/product/delete?productId=${configuration.id}">
-					<span class="glyphicon glyphicon-trash text-dark"></span>
+					<span class="glyphicon glyphicon-trash text-light"></span>
 				</a>
 				<a
-					class="btn btn-outline-warning text-dark"
+					class="btn btn-outline-dark text-light m-1"
 					href="/product/copy?productId=${configuration.id}">
-					<span class="glyphicon glyphicon-copy text-dark"></span>
+					<span class="glyphicon glyphicon-copy text-light"></span>
 				</a>
 			</div>
 

@@ -60,12 +60,28 @@ public class ProductFeatureController {
 	public String listProductFeatures(@RequestParam Long productFeatureId, Model model) {
 
 		model.addAttribute("productFeature", productFeatureService.findByID(productFeatureId));
-		model.addAttribute("featuresList", featureService.findNotUsed());
+		model.addAttribute("featuresList", featureService.findAll());
 		
 
 		model.addAttribute("title", "Edit Features");
 		model.addAttribute("path", "feature/edit");
 		return "main";
+	}
+	@GetMapping("/feature/delete")
+	public String deleteProductFeatures(@RequestParam Long productFeatureId, Model model) {
+
+		productFeatureService.delete(productFeatureId);
+		
+		
+
+		return "redirect:/feature/list";
+	}
+	
+	@GetMapping("/feature/copy")
+	public String copyProductFeatures(@RequestParam Long productFeatureId, Model model) {
+
+		productFeatureService.clone(productFeatureId);
+		return "redirect:/feature/list";
 	}
 
 	@GetMapping("/feature/addProductFeature")
@@ -106,9 +122,10 @@ public class ProductFeatureController {
 	public String removeFeature(@RequestParam Long featureId, @RequestParam Long productFeatureId, Model model) {
 
 		Feature feature = featureService.findByID(featureId);
+		Long productId= productFeatureService.findById(productFeatureId).getProductConfiguration().getId();
 		productFeatureService.removeFeature(feature, productFeatureId);
 
-		return "redirect:/product/show";
+		return "redirect:/product/list?productId=" + productId;
 
 	}
 

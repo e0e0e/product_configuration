@@ -79,6 +79,17 @@ public class ProductFeature {
 
 	}
 
+	public ProductFeature(String name, String description, String imagePath, Integer position
+			) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.imagePath = imagePath;
+		this.position = position;
+	
+		
+	}
+
 	public ProductFeature(Long id, String name, String description, String imagePath, Integer position,
 			Set<Feature> feature, ProductConfiguration productConfiguration, OrderFeature orderFeature) {
 		super();

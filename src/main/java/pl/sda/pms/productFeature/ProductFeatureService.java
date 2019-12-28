@@ -67,9 +67,9 @@ public class ProductFeatureService {
 		// Set<Feature> featureSet=productFeature.getFeature();
 		Set<Feature> featuresToAddFeatures = new HashSet<>();
 		try {
-		featuresToAddFeatures.addAll(productFeature.getFeature());
-		}catch (Exception e) {
-			System.out.println("product feature service edit failur"+e.getMessage());
+			featuresToAddFeatures.addAll(productFeature.getFeature());
+		} catch (Exception e) {
+			System.out.println("product feature service edit failur" + e.getMessage());
 		}
 		try {
 			for (Long f : featureList) {
@@ -77,11 +77,12 @@ public class ProductFeatureService {
 				featuresToAddFeatures.add(featureService.findByID(f));
 			}
 			productFeature.setFeature(featuresToAddFeatures);
-			
-		}catch (Exception e) {
-			System.out.println("product feature service edit, no new features in feature List, no problem"+e.getMessage());	
+
+		} catch (Exception e) {
+			System.out.println(
+					"product feature service edit, no new features in feature List, no problem" + e.getMessage());
 		}
-		
+
 		productFeature.setName(name);
 		productFeature.setDescription(description);
 		productFeature.setImagePath(imagePath);
@@ -91,7 +92,7 @@ public class ProductFeatureService {
 
 	public void save(List<ProductFeature> configurationList, ProductConfiguration productConfiguration) {
 		for (int i = 0; i < configurationList.size(); i++) {
-			ProductFeature productFeature=configurationList.get(i);
+			ProductFeature productFeature = configurationList.get(i);
 			productFeature.setProductConfiguration(productConfiguration);
 			productFeature.setPosition(i);
 			productFeatureRepository.save(productFeature);
@@ -105,16 +106,16 @@ public class ProductFeatureService {
 	}
 
 	public void save(String name, String description, String imagePath, List<Long> featureList) {
-		
-		Set<Feature> featureSet=new HashSet<Feature>();
-		
-		for(Long id:featureList) {
+
+		Set<Feature> featureSet = new HashSet<Feature>();
+
+		for (Long id : featureList) {
 			featureSet.add(featureService.findByID(id));
-			}
-		
-		ProductFeature productFeature=new ProductFeature(name,description,imagePath,featureSet);
+		}
+
+		ProductFeature productFeature = new ProductFeature(name, description, imagePath, featureSet);
 		productFeatureRepository.save(productFeature);
-		
+
 	}
 
 	public void removeFeature(Feature feature, Long productFeatureId) {
@@ -123,17 +124,37 @@ public class ProductFeatureService {
 		feature.getProductFeatureList().remove(productFeature);
 		featureService.save(feature);
 		productFeatureRepository.save(productFeature);
-		
-		
+
 	}
 
 	public void save(ProductFeature productFeature) {
 		productFeatureRepository.save(productFeature);
-		
+
 	}
 
 	public void findByPositionAndProduct(int i, Long productId) {
+
+	}
+
+	public void clone(Long productFeatureId) {
+		ProductFeature productFeatureOrgin = productFeatureRepository.findById(productFeatureId).get();
+
+		ProductFeature newProductFeature = new ProductFeature(productFeatureOrgin.getName(),
+				productFeatureOrgin.getDescription(), productFeatureOrgin.getImagePath(),
+				productFeatureOrgin.getPosition());
+
+		Set<Feature> featureSet = new HashSet<>();
+		for (Feature f : productFeatureOrgin.getFeature()) {
+			featureSet.add(f);
+		}
+		newProductFeature.setFeature(featureSet);
+		productFeatureRepository.save(newProductFeature);
 		
+
+	}
+
+	public void delete(Long productFeatureId) {
+		productFeatureRepository.deleteById(productFeatureId);
 		
 	}
 
