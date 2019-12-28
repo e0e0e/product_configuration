@@ -71,11 +71,17 @@ public class ProductFeatureService {
 		}catch (Exception e) {
 			System.out.println("product feature service edit failur"+e.getMessage());
 		}
-		for (Long f : featureList) {
+		try {
+			for (Long f : featureList) {
 
-			featuresToAddFeatures.add(featureService.findByID(f));
+				featuresToAddFeatures.add(featureService.findByID(f));
+			}
+			productFeature.setFeature(featuresToAddFeatures);
+			
+		}catch (Exception e) {
+			System.out.println("product feature service edit, no new features in feature List, no problem"+e.getMessage());	
 		}
-		productFeature.setFeature(featuresToAddFeatures);
+		
 		productFeature.setName(name);
 		productFeature.setDescription(description);
 		productFeature.setImagePath(imagePath);

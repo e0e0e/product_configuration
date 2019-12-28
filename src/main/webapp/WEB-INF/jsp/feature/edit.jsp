@@ -13,8 +13,7 @@
 			<p style="background-color: red;">${errorMessage}</p>
 
 		</c:if>
-		<label>Feature Name:</label><br /> <input type="text"
-			class="text-dark" name="name" value="${productFeature.name}"><br />
+		<label>Feature Name:</label><br /> <textarea rows="2" class="text-dark" name="description">${productFeature.name}</textarea><br />
 		<label>Project Description:</label><br />
 		<textarea rows="4" class="text-dark" name="description">${productFeature.description}</textarea>
 		<br /> <label>Feature Image:</label><br /> <input type="text"

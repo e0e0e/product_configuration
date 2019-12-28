@@ -90,10 +90,12 @@ public class ProductFeatureController {
 
 	@PostMapping("/productFeatureChange")
 	public String changeProductFeature(@RequestParam Long productFeatureId, @RequestParam String name,
-			@RequestParam String description, @RequestParam String imagePath, @RequestParam List<Long> featureList,
+			@RequestParam String description, @RequestParam String imagePath,
+			@RequestParam(required = false) List<Long> featureList,
 			Model model) {
 
 		productFeatureService.findById(productFeatureId);
+		
 		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList);
 		// featureList.parallelStream().forEach(x->System.out.println(x));
 
