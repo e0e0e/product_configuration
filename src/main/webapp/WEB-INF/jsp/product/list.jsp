@@ -57,6 +57,7 @@
 								class="btn btn-outline-info text-dark"
 								href="/feature/removeFeature?featureId=${feature.id}&productFeatureId=${configList.id}"><span
 									class="glyphicon glyphicon-trash text-dark"></span></a></li>
+									
 						</c:forEach>
 					</ul>
 

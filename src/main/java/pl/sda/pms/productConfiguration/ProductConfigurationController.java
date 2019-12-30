@@ -120,6 +120,26 @@ public class ProductConfigurationController {
 
 	}
 
+	@GetMapping("/product/filter")
+	public String productFilter(Model model) {
+
+		model.addAttribute("configuration", productConfigurationService.findById(8L));
+
+		model.addAttribute("title", "Make new Order");
+		model.addAttribute("path", "product/filter");
+		return "main";
+
+	}
+	@PostMapping("/product/search")
+	public String productSearch(@RequestParam Map<String, String> paramMap, Model model) {
+
+		model.addAttribute("configuration", productConfigurationService.findByForm(paramMap));
+
+		return "redirect:/product/show";
+		
+
+	}
+	
 	@GetMapping("/product/delete")
 	public String productDelete(@RequestParam Long productId, Model model) {
 

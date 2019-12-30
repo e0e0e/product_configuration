@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.management.loading.PrivateClassLoader;
@@ -161,6 +162,12 @@ public class ProductConfigurationService {
 			configurationList.add(newProductFeature);
 		}
 		return configurationList;
+	}
+
+	public Object findByForm(Map<String, String> paramMap) {
+		paramMap.entrySet().stream()
+		.forEach(x->System.out.println(x.getKey()+" - "+x.getValue()));
+		return null;
 	}
 
 }
