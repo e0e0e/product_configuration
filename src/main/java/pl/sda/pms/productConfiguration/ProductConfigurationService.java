@@ -31,11 +31,13 @@ public class ProductConfigurationService {
 
 	private final ProductConfigurationRepository productConfigurationRepository;
 	private final ProductFeatureService productFeatureService;
+	private final FeatureService featureService;
 
 	public ProductConfigurationService(ProductConfigurationRepository productConfigurationRepository,
-			ProductFeatureService productFeatureService) {
+			ProductFeatureService productFeatureService,FeatureService featureService) {
 		this.productConfigurationRepository = productConfigurationRepository;
 		this.productFeatureService = productFeatureService;
+		this.featureService=featureService;
 	}
 
 	public List<ProductConfiguration> findAll() {
@@ -166,7 +168,8 @@ public class ProductConfigurationService {
 
 	public Object findByForm(Map<String, String> paramMap) {
 		paramMap.entrySet().stream()
-		.forEach(x->System.out.println(x.getKey()+" - "+x.getValue()));
+		.forEach(x->System.out.println(
+				productFeatureService.findByID(Long.parseLong(x.getKey())).getName()+" - "+featureService.findByID(Long.parseLong(x.getValue())).getName()));
 		return null;
 	}
 
