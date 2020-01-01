@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.management.loading.PrivateClassLoader;
 import javax.persistence.EntityManager;
@@ -34,10 +35,10 @@ public class ProductConfigurationService {
 	private final FeatureService featureService;
 
 	public ProductConfigurationService(ProductConfigurationRepository productConfigurationRepository,
-			ProductFeatureService productFeatureService,FeatureService featureService) {
+			ProductFeatureService productFeatureService, FeatureService featureService) {
 		this.productConfigurationRepository = productConfigurationRepository;
 		this.productFeatureService = productFeatureService;
-		this.featureService=featureService;
+		this.featureService = featureService;
 	}
 
 	public List<ProductConfiguration> findAll() {
@@ -135,10 +136,10 @@ public class ProductConfigurationService {
 
 		List<ProductFeature> configurationList = cloneProductFeatures(configurationListOrgin);
 
-		//configurationList.addAll(configurationList);
-		for(ProductFeature p:configurationList) {
+		// configurationList.addAll(configurationList);
+		for (ProductFeature p : configurationList) {
 			p.setProductConfiguration(productConfiguration);
-			
+
 		}
 
 		productConfiguration.setName(productConfigurationOrgin.getName() + "copy");
@@ -167,9 +168,28 @@ public class ProductConfigurationService {
 	}
 
 	public Object findByForm(Map<String, String> paramMap) {
-		paramMap.entrySet().stream()
-		.forEach(x->System.out.println(
-				productFeatureService.findByID(Long.parseLong(x.getKey())).getName()+" - "+featureService.findByID(Long.parseLong(x.getValue())).getName()));
+
+		Map<String, String> filterMap = paramMap.entrySet().stream()
+				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())).getName(),
+						x -> featureService.findByID(Long.parseLong(x.getValue())).getName()));
+
+		String selectedProductFeatures = filterMap.entrySet().stream().map(x -> x.getKey())
+				.collect(Collectors.joining(", "));
+
+		List<String> pfNames = filterMap.entrySet().stream().map(x -> x.getKey()).collect(Collectors.toList());
+		List<String> fNames = filterMap.entrySet().stream().map(x -> x.getValue()).collect(Collectors.toList());
+
+		String query = filterMap.entrySet().stream()
+				.map(x -> "pf.name='" + x.getKey() + "' and f.name='" + x.getValue() + "'")
+				.collect(Collectors.joining(" OR "));
+
+		System.out.println(pfNames);
+
+		List<ProductConfiguration> productIdList = productConfigurationRepository.findProductByChoosenFeatyres(pfNames,
+				fNames);
+		// findByProductFeatureNames(pfNames, fNames);
+		System.out.println("Result:");
+		productIdList.forEach(x -> System.out.println(x.getName()));
 		return null;
 	}
 
