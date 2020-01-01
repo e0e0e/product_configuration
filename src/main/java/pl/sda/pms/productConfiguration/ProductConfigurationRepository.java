@@ -14,12 +14,10 @@ public interface ProductConfigurationRepository extends JpaRepository<ProductCon
 	
 	List<ProductConfiguration> findAll();
 //Select * from feature left join PRODUCT_FEATURE_FEATURE ON feature.id=PRODUCT_FEATURE_FEATURE.feature_id
-	@Query(value = "SELECT DISTINCT pc.id FROM product_configuration pc inner join PRODUCT_FEATURE pf on pc.id=pf.PRODUCT_CONFIGURATION_ID inner"
-			+ " join PRODUCT_FEATURE_FEATURE pff on pff.product_feature_id=pf.id"
-			+ " inner join feature f on f.id=pff.feature_id WHERE pf.name= :pfName AND f.name=:fName ", nativeQuery = true)
+	@Query(value = "SELECT DISTINCT pc.id FROM product_configuration pc inner join PRODUCT_FEATURE pf on pc.id=pf.PRODUCT_CONFIGURATION_ID inner join PRODUCT_FEATURE_FEATURE pff on pff.product_feature_id=pf.id inner join feature f on f.id=pff.feature_id "
+			+ "WHERE pf.name= :pfName AND f.name=:fName ", nativeQuery = true)
 	List<Long> findByProductFeatureNames(@Param("pfName") Collection<String> pfName,@Param("fName") Collection<String> fName);
 	
 
-	
-   // int findIfProjectNameExistsExceptThis(long projectId, String projectName);
+
 }

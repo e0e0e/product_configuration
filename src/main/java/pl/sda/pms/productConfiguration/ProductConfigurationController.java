@@ -133,12 +133,15 @@ public class ProductConfigurationController {
 	@PostMapping("/product/search")
 	public String productSearch(@RequestParam Map<String, String> paramMap, Model model) {
 
-		model.addAttribute("configuration", productConfigurationService.findByForm(paramMap));
+		model.addAttribute("configurations", productConfigurationService.findByForm(paramMap));
 
-		return "redirect:/product/show";
+		model.addAttribute("title", "Show Features");
+		model.addAttribute("path", "product/show");
+		return "main";
 		
 
 	}
+
 	
 	@GetMapping("/product/delete")
 	public String productDelete(@RequestParam Long productId, Model model) {

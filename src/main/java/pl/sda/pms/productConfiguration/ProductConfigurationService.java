@@ -167,30 +167,30 @@ public class ProductConfigurationService {
 		return configurationList;
 	}
 
-	public Object findByForm(Map<String, String> paramMap) {
+	public List<ProductConfiguration> findByForm(Map<String, String> paramMap) {
 
 		Map<String, String> filterMap = paramMap.entrySet().stream()
 				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())).getName(),
 						x -> featureService.findByID(Long.parseLong(x.getValue())).getName()));
 
-		String selectedProductFeatures = filterMap.entrySet().stream().map(x -> x.getKey())
-				.collect(Collectors.joining(", "));
+//		String selectedProductFeatures = filterMap.entrySet().stream().map(x -> x.getKey())
+//				.collect(Collectors.joining(", "));
 
 		List<String> pfNames = filterMap.entrySet().stream().map(x -> x.getKey()).collect(Collectors.toList());
 		List<String> fNames = filterMap.entrySet().stream().map(x -> x.getValue()).collect(Collectors.toList());
 
 		String query = filterMap.entrySet().stream()
-				.map(x -> "pf.name='" + x.getKey() + "' and f.name='" + x.getValue() + "'")
-				.collect(Collectors.joining(" OR "));
+				.map(x -> "(pf.name LIKE '" + x.getKey() + "' and f.name LIKE '" + x.getValue() + "')")
+				.collect(Collectors.joining(" AND "));
 
 		System.out.println(pfNames);
 
-		List<ProductConfiguration> productIdList = productConfigurationRepository.findProductByChoosenFeatyres(pfNames,
-				fNames);
+		List<ProductConfiguration> productIdList = productConfigurationRepository.findProductByChoosenFeatyres(query);
+		System.out.println(query);
 		// findByProductFeatureNames(pfNames, fNames);
 		System.out.println("Result:");
 		productIdList.forEach(x -> System.out.println(x.getName()));
-		return null;
+		return productIdList;
 	}
 
 }

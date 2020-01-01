@@ -29,6 +29,9 @@
 			<form
 				method="post"
 				action="/product/search">
+				<input
+					type="submit"
+					value="Search">
 				<ul>
 					<c:forEach
 						var="configList"
@@ -55,7 +58,7 @@
 				</ul>
 				<input
 					type="submit"
-					value="Save">
+					value="Search">
 			</form>
 		</div>
 		<div class="card-footer bg-info text-right text-light">
