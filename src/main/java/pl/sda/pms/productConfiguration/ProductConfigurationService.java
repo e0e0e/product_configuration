@@ -169,28 +169,37 @@ public class ProductConfigurationService {
 
 	public List<ProductConfiguration> findByForm(Map<String, String> paramMap) {
 
+		List<ProductConfiguration> productsConfigurations = productConfigurationRepository.findAll();
+
 		Map<String, String> filterMap = paramMap.entrySet().stream()
 				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())).getName(),
 						x -> featureService.findByID(Long.parseLong(x.getValue())).getName()));
 
-//		String selectedProductFeatures = filterMap.entrySet().stream().map(x -> x.getKey())
-//				.collect(Collectors.joining(", "));
 
 		List<String> pfNames = filterMap.entrySet().stream().map(x -> x.getKey()).collect(Collectors.toList());
 		List<String> fNames = filterMap.entrySet().stream().map(x -> x.getValue()).collect(Collectors.toList());
+		List<ProductConfiguration> filteredProductsConfigurations = new ArrayList<ProductConfiguration>();
+		for (ProductConfiguration pc : productsConfigurations) {
 
-		List<String> query = filterMap.entrySet().stream()
-				.map(x -> "(a.pf.name LIKE '" + x.getKey() + "' and a.f.name LIKE '" + x.getValue() + "')")
-				.collect(Collectors.toList());
+			Integer isAvalible = 0;
+			for (ProductFeature pf : pc.getConfigurationList()) {
+				for (Feature f : pf.getFeature()) {
+					if (fNames.contains(f.getName())) {
+						isAvalible++;
+					}
 
-		//System.out.println(pfNames);
+				}
 
-		List<ProductConfiguration> productIdList = productConfigurationRepository.findProductByChoosenFeatyres(query);
-		//System.out.println(query);
-		// findByProductFeatureNames(pfNames, fNames);
-//		System.out.println("Result:");
-//		productIdList.forEach(x -> System.out.println(x.getName()));
-		return productIdList;
+			}
+
+			if (isAvalible == fNames.size()) {
+				filteredProductsConfigurations.add(pc);
+
+			}
+
+		}
+
+		return filteredProductsConfigurations;
 	}
 
 }
