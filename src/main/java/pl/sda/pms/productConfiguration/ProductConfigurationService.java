@@ -174,10 +174,10 @@ public class ProductConfigurationService {
 		Map<String, String> filterMap = paramMap.entrySet().stream()
 				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())).getName(),
 						x -> featureService.findByID(Long.parseLong(x.getValue())).getName()));
+		List<String> fNames = filterMap.entrySet().stream().map(x -> x.getValue()).collect(Collectors.toList());
 
 
 		List<String> pfNames = filterMap.entrySet().stream().map(x -> x.getKey()).collect(Collectors.toList());
-		List<String> fNames = filterMap.entrySet().stream().map(x -> x.getValue()).collect(Collectors.toList());
 		List<ProductConfiguration> filteredProductsConfigurations = new ArrayList<ProductConfiguration>();
 		for (ProductConfiguration pc : productsConfigurations) {
 

@@ -40,10 +40,7 @@
 
 					<li class="nav-item"><a
 						class="nav-link text-light font-weight-bold"
-						href="/product/show">Product Show</a></li>
-						<li class="nav-item"><a
-						class="nav-link text-light font-weight-bold"
-						href="/product/filter">Product Filter <span class="glyphicon glyphicon-filter text-light"></span></a></li>
+						href="/product/show">Product Show</a>
 						
 					<li class="nav-item"><a
 						class="nav-link text-light font-weight-bold"

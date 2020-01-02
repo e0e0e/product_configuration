@@ -41,44 +41,67 @@ public class OrderController {
 
 	@GetMapping("/orders/list")
 	public String listOrders(Model model) {
-		
-		model.addAttribute("orders",orderService.findAll());
+
+		model.addAttribute("orders", orderService.findAll());
 		model.addAttribute("title", "List Orders");
 		model.addAttribute("path", "order/list");
 		return "main";
 	}
-	
+
+	@GetMapping("/order/show")
+	public String listOrders(@RequestParam Long orderId, Model model) {
+
+		model.addAttribute("order", orderService.findById(orderId));
+		model.addAttribute("title", "List Orders");
+		model.addAttribute("path", "order/show");
+		return "main";
+	}
+
+	@GetMapping("/order/edit")
+	public String productSelectiom(@RequestParam Long orderId, Model model) {
+
+		model.addAttribute("order", orderService.findById(orderId));
+
+		model.addAttribute("title", "Edit Order");
+		model.addAttribute("path", "order/edit");
+		return "main";
+
+	}
+
 	@GetMapping("/order/delete")
-	public String deleteOrder(@RequestParam Long orderId,
-			Model model) {
-		
+	public String deleteOrder(@RequestParam Long orderId, Model model) {
+
 		orderService.deleteById(orderId);
-	
+
 		return "redirect:/orders/list";
 	}
-	
+
 	@GetMapping("/order/addMore")
-	public String addDetailsToOrder(@RequestParam Long orderId,
-			Model model) {
-		
-		model.addAttribute("order",orderService.findById(orderId));
-	
+	public String addDetailsToOrder(@RequestParam Long orderId, Model model) {
+
+		model.addAttribute("order", orderService.findById(orderId));
+
 		model.addAttribute("title", "Add details to Order");
 		model.addAttribute("path", "order/addMore");
 		return "main";
 	}
-	
+
 	@PostMapping("/orderToChange")
-	public String orderToChange(@RequestParam Long orderId,
-			@RequestParam String orderName,
-			@RequestParam String price,
-			@RequestParam Integer unitsToProduce,
-			@RequestParam String client,
+	public String orderToChange(@RequestParam Long orderId, @RequestParam String orderName, @RequestParam String price,
+			@RequestParam Integer unitsToProduce, @RequestParam String client, Model model) {
+
+		orderService.addMore(orderId, orderName, price, unitsToProduce, client);
+
+		return "redirect:/orders/list";
+	}
+
+	@PostMapping("/order/saveProductChanges")
+	public String saveProductOrderChanges(@RequestParam Map<String, String> paramMap, @RequestParam String orderId,
 			Model model) {
-		
-		
-		orderService.addMore(orderId,orderName,price,unitsToProduce,client);
-	
+
+		orderService.saveProductOrderChanges(paramMap);
+		paramMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() + "--" + x.getValue()));
+
 		return "redirect:/orders/list";
 	}
 

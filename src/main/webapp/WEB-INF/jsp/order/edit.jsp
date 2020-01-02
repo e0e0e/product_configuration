@@ -7,16 +7,6 @@
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
 
-
-	<h3>
-		Products<a
-			href="/product/add"
-			class="btn btn-outline-dark btn-sm"> <span
-			class="glyphicon glyphicon-plus"></span>
-		</a>
-	</h3>
-
-
 	<div class="card text-dark bg-light m-1">
 
 
@@ -31,30 +21,37 @@
 		<div class="card-body ">
 			<form
 				method="post"
-				action="/orderCreate?productConfigurationId=${configuration.id}">
+				action="/order/saveProductChanges?orderId=${order.id}">
 
 				<c:forEach
-					var="configList"
-					items="${configuration.configurationList}">
+					var="orderFeature"
+					items="${order.orderFeatures}">
 					<div class="row m-3 border box">
-						<div class="col-2 m-2">${configList.name}</div>
+						<div class="col-2 m-2">${orderFeature.productFeature.name}</div>
 						<div class="col-4 m-2">
-
 							<c:choose>
 								<c:when
-									test="${fn:length(configList.feature)>1}">
-									<select name="${configList.id}">
+									test="${fn:length(orderFeature.productFeature.feature)>1}">
+									<select name="${orderFeature.id}">
 								</c:when>
 								<c:otherwise>
-								<select name="${configList.id}" disabled>
+									<select
+										name="${orderFeature.id}"
+										disabled>
 								</c:otherwise>
 							</c:choose>
+							<option
+								value="orderFeature.feature.id"
+								selected
+								disabled
+								hidden>${orderFeature.feature.name}</option>
 							<c:forEach
 								var="feature"
-								items="${configList.feature}">
+								items="${orderFeature.productFeature.feature}">
 								<option value="${feature.id}">${feature.name}</option>
 							</c:forEach>
 							</select>
+
 						</div>
 					</div>
 				</c:forEach>

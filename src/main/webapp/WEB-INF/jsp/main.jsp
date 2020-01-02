@@ -51,18 +51,10 @@
 }
 
 .box {
-	/* Basic styling and alignment */
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 100px;
-	border-radius: 4px;
-	width: 150px;
-	height: 150px;
-	/* Basic styling and alignment */
-	/* For Neumorphism Effect */
-	background-color: #E0E5EC;
-	box-shadow: 9px 9px 16px rgb(163, 177, 198, 0.6), -9px -9px 16px
-		rgba(255, 255, 255, 0.5);
+	background: rgb(238, 238, 240);
+	
+	box-shadow: 9px 9px 16px rgb(87, 87, 87, 0.6), -9px -9px 16px
+		rgba(248, 249, 250, 0.5);
 	/* For Neumorphism Effect */
 }
 </style>
@@ -75,9 +67,12 @@
 		class="page-footer font-small blue pt-4 text-center mt-5"
 		style="position: initial; bottom: 0; font-size: 10px;">
 		<p class="wysiwyg-text-align-center">
-			<strong><em>Avatars icons made by </em></strong><a
-				href="https://www.freepik.com/home"><strong><em>Freepik</em></strong></a><strong><em>
-					from </em></strong><strong><em><a href="http://www.flaticon.com/">www.flaticon.com</a></em></strong>
+			<strong><em>Avatars icons made by </em></strong>
+			<a href="https://www.freepik.com/home">
+				<strong><em>Freepik</em></strong>
+			</a>
+			<strong><em> from </em></strong><strong><em><a
+						href="http://www.flaticon.com/">www.flaticon.com</a></em></strong>
 		</p>
 	</footer>
 </body>

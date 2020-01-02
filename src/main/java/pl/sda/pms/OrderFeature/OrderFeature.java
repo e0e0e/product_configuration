@@ -25,15 +25,7 @@ public class OrderFeature {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	public OrderFeature() {
 
-	}
-
-	public OrderFeature(ProductFeature productFeature, Feature feature) {
-		super();
-		this.feature = feature;
-		this.productFeature = productFeature;
-	}
 
 	@ManyToMany
 	private List<Ord> ord;
@@ -44,6 +36,17 @@ public class OrderFeature {
 	@OneToOne
 	private ProductFeature productFeature;
 
+	
+	public OrderFeature() {
+
+	}
+
+	public OrderFeature(ProductFeature productFeature, Feature feature) {
+		super();
+		this.feature = feature;
+		this.productFeature = productFeature;
+	}
+	
 	public Long getId() {
 		return id;
 	}

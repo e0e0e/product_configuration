@@ -9,8 +9,13 @@
 		Products
 		<a
 			href="/product/add"
-			class="btn btn-outline-dark btn-sm">
-			<span class="glyphicon glyphicon-plus"></span>
+			class="btn btn-outline-secondary btn-lg m-2">
+			<span class="glyphicon glyphicon-plus text-dark"></span>
+		</a>
+		<a
+			class="btn btn-outline-secondary btn-lg m-2"
+			href="/product/filter">
+			<span class="glyphicon glyphicon-filter text-dark"></span>
 		</a>
 	</h3>
 
@@ -24,8 +29,8 @@
 				<a
 					href="/product/list?productId=${configuration.id}"
 					class="btn btn-outline-dark text-light m-1">
-					${configuration.name} <span
-						class="glyphicon glyphicon-edit text-light"></span>
+					${configuration.name}
+					<span class="glyphicon glyphicon-edit text-light"></span>
 				</a>
 				<a
 					class="btn btn-outline-dark text-light m-1"
