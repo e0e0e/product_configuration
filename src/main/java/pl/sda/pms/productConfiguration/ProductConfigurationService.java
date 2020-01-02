@@ -179,17 +179,17 @@ public class ProductConfigurationService {
 		List<String> pfNames = filterMap.entrySet().stream().map(x -> x.getKey()).collect(Collectors.toList());
 		List<String> fNames = filterMap.entrySet().stream().map(x -> x.getValue()).collect(Collectors.toList());
 
-		String query = filterMap.entrySet().stream()
-				.map(x -> "(pf.name LIKE '" + x.getKey() + "' and f.name LIKE '" + x.getValue() + "')")
-				.collect(Collectors.joining(" AND "));
+		List<String> query = filterMap.entrySet().stream()
+				.map(x -> "(a.pf.name LIKE '" + x.getKey() + "' and a.f.name LIKE '" + x.getValue() + "')")
+				.collect(Collectors.toList());
 
-		System.out.println(pfNames);
+		//System.out.println(pfNames);
 
 		List<ProductConfiguration> productIdList = productConfigurationRepository.findProductByChoosenFeatyres(query);
-		System.out.println(query);
+		//System.out.println(query);
 		// findByProductFeatureNames(pfNames, fNames);
-		System.out.println("Result:");
-		productIdList.forEach(x -> System.out.println(x.getName()));
+//		System.out.println("Result:");
+//		productIdList.forEach(x -> System.out.println(x.getName()));
 		return productIdList;
 	}
 

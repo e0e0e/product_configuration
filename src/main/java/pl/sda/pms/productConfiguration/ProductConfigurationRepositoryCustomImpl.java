@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -21,35 +22,32 @@ public class ProductConfigurationRepositoryCustomImpl implements ProductConfigur
 	private EntityManager entityManager;
 
 	@Override
-	public List<ProductConfiguration> findProductByChoosenFeatyres(String queryCd) {
+	public List<ProductConfiguration> findProductByChoosenFeatyres(List<String> queryCd) {
 
-//		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-//		CriteriaQuery<ProductConfiguration> query = cb.createQuery(ProductConfiguration.class);
-//
-//		Root<ProductConfiguration> productConfiguration = query.from(ProductConfiguration.class);
-//
-//		Join<Object, Object> pf = productConfiguration.join("configurationList");
-//		Join<Object, Object> f = pf.join("feature");
-//		List<Predicate> predicates = new ArrayList<>();
-//		List<Predicate> predicatesAND = new ArrayList<>();
-//		for (int i = 0; i < fNames.size(); i++) {
-//			predicatesAND.add(cb.and(cb.like(pf.get("name"), pfNames.get(i)), cb.like(f.get("name"), fNames.get(i))));
-//			//predicates.add(cb.and(cb.like(pf.get("name"), pfNames.get(i)), cb.like(f.get("name"), fNames.get(i))));
-//
-//		}
-////		for(int i = 0; i < predicatesAND.size()-1; i++) {
-//			predicates.add(cb.and(predicatesAND.get(0),predicatesAND.get(1)));
-////			
-////		}
-//
-//		query.where(predicates.toArray(new Predicate[predicates.size()]));
-//
-//		return entityManager.createQuery(query).getResultList();
-//SELECT DISTINCT pc.id FROM product_configuration pc inner join PRODUCT_FEATURE pf on pc.id=pf.PRODUCT_CONFIGURATION_ID inner join PRODUCT_FEATURE_FEATURE pff on pff.product_feature_id=pf.id inner join feature f on f.id=pff.feature_id
-		TypedQuery<ProductConfiguration> query = entityManager.createQuery("SELECT pc FROM ProductConfiguration pc join pc.configurationList pf join pf.feature f WHERE "+queryCd,
-				ProductConfiguration.class);
-		List<ProductConfiguration> results = query.getResultList();
-		return results;
+
+		//String baseQueryString="SELECT pc FROM ProductConfiguration pc join pc.configurationList pf join pf.feature f ";
+		String baseQueryString="SELECT DISTINCT pc.name FROM product_configuration pc inner join PRODUCT_FEATURE pf on pc.id=pf.PRODUCT_CONFIGURATION_ID inner join PRODUCT_FEATURE_FEATURE pff on pff.product_feature_id=pf.id inner join feature f on f.id=pff.feature_id ";
+		//		+ "where pf.name LIKE 'Axle' and f.name LIKE 'SAF drum' ";
+		
+		//String queryString="SELECT pc FROM "+baseQueryString+" WHERE "+q;
+		for (String q : queryCd) {
+			System.out.println("query : "+q);
+			baseQueryString=String.format("SELECT a.id FROM (%s) a WHERE %s",baseQueryString,q);
+		}
+		//String q2="Select a from (SELECT pc FROM ProductConfiguration pc join pc.configurationList pf join pf.feature f WHERE (pf.name LIKE 'Axle' and f.name LIKE 'SAF drum')) a";
+
+		System.out.println(String.format("query %s",baseQueryString));
+//		TypedQuery<ProductConfiguration> query = entityManager.createQuery(q2,
+//				ProductConfiguration.class);
+		
+		String sqlString="SELECT DISTINCT pc.name FROM product_configuration pc inner join PRODUCT_FEATURE pf on pc.id=pf.PRODUCT_CONFIGURATION_ID inner join PRODUCT_FEATURE_FEATURE pff on pff.product_feature_id=pf.id inner join feature f on f.id=pff.feature_id "
+				+ "where pf.name LIKE 'Axle' and f.name LIKE 'SAF drum' ";
+		
+		Query sqlQuery =entityManager.createNativeQuery(baseQueryString);
+		
+		List<String> results = sqlQuery.getResultList();
+		results.forEach(x->System.out.println("winer :"+x));
+		return new ArrayList<ProductConfiguration>();
 	}
 
 }
