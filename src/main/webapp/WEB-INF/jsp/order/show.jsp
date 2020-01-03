@@ -3,7 +3,7 @@
 	uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	<div class="card text-dark bg-light m-1">
 
 
@@ -55,5 +55,27 @@
 	</div>
 
 
+
+</div>
+
+<div class="container" >
+    <c:forEach var="order" items="${aud}">
+        <div class="row border">
+            <div class="col  text-warning">
+           
+            </div>
+         <div class="col  text-danger">
+                ${order[0].productFeature.name}
+            </div>
+            <div class="col">
+            <fmt:formatDate type="date" value="${order[1].revisionDate}" pattern="yyyy-MM-dd, HH:mm"/>
+            </div>
+
+            <div class="col">
+                    ${order[1].username}
+            </div>
+        </div>
+
+    </c:forEach>
 
 </div>

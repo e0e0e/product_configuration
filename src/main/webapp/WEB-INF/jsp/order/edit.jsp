@@ -32,17 +32,18 @@
 							<c:choose>
 								<c:when
 									test="${fn:length(orderFeature.productFeature.feature)>1}">
-									<select name="${orderFeature.id}">
+									<select name="${orderFeature.productFeature.id}">
 								</c:when>
 								<c:otherwise>
 									<select
-										name="${orderFeature.id}"
+									class="greyText"
+										name="${orderFeature.productFeature.id}"
 										disabled>
 								</c:otherwise>
 							</c:choose>
 							<option
 								value="orderFeature.feature.id"
-								selected
+								selected="true"
 								disabled
 								hidden>${orderFeature.feature.name}</option>
 							<c:forEach

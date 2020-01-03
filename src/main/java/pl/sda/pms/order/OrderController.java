@@ -52,6 +52,7 @@ public class OrderController {
 	public String listOrders(@RequestParam Long orderId, Model model) {
 
 		model.addAttribute("order", orderService.findById(orderId));
+		model.addAttribute("aud",orderService.findByIdAud(orderId));
 		model.addAttribute("title", "List Orders");
 		model.addAttribute("path", "order/show");
 		return "main";
@@ -99,8 +100,8 @@ public class OrderController {
 	public String saveProductOrderChanges(@RequestParam Map<String, String> paramMap, @RequestParam String orderId,
 			Model model) {
 
-		orderService.saveProductOrderChanges(paramMap);
-		paramMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() + "--" + x.getValue()));
+		orderService.saveProductOrderChanges(paramMap,orderId);
+		//paramMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() + "--" + x.getValue()));
 
 		return "redirect:/orders/list";
 	}

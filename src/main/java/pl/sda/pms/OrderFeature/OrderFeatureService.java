@@ -50,10 +50,19 @@ public class OrderFeatureService {
 
 		});
 
-		
 		ord.setOrderFeatures(orderList);
 		orderRepository.save(ord);
 		return result;
+
+	}
+
+	public OrderFeature findByID(long id) {
+
+		return orderFeatureRepository.findById(id).get();
+	}
+
+	public void save(OrderFeature orderFeature) {
+		orderFeatureRepository.save(orderFeature);
 
 	}
 

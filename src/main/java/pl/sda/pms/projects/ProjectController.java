@@ -202,14 +202,6 @@ public class ProjectController {
         model.addAttribute("tasks", taskList);
         model.addAttribute("projectsAud", projectsAud);
 
-       
-
-//         Object[] objArray = (Object[])projectsAud.get(0);
-        
-//         Project myEntity = (Project)objArray[0];
-//         DefaultRevisionEntity rev=(DefaultRevisionEntity)objArray[1];
-// rev.getRevisionDate().toString();
-
         model.addAttribute("project", project);
         model.addAttribute("title", "Show Project");
         model.addAttribute("path", "project/showProject");

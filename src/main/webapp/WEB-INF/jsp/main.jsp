@@ -57,6 +57,9 @@
 		rgba(248, 249, 250, 0.5);
 	/* For Neumorphism Effect */
 }
+.greyText{
+color: #a9cfee;
+}
 </style>
 </head>
 <body>

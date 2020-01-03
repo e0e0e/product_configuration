@@ -17,6 +17,7 @@ import org.hibernate.envers.Audited;
 
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
+import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
 import pl.sda.pms.users.User;
 
@@ -63,8 +64,7 @@ public class ProductFeature {
 
 	@Override
 	public String toString() {
-		return "ProductFeature [name=" + name + ", feature=" + feature + ", productConfiguration="
-				+ productConfiguration + "]";
+		return "ProductFeature [name=" + name + ", feature=" + feature +"]";
 	}
 
 	public ProductConfiguration getProductConfiguration() {
@@ -79,15 +79,13 @@ public class ProductFeature {
 
 	}
 
-	public ProductFeature(String name, String description, String imagePath, Integer position
-			) {
+	public ProductFeature(String name, String description, String imagePath, Integer position) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.imagePath = imagePath;
 		this.position = position;
-	
-		
+
 	}
 
 	public ProductFeature(Long id, String name, String description, String imagePath, Integer position,
@@ -209,6 +207,10 @@ public class ProductFeature {
 
 		this.productConfiguration = null;
 //		productFeatureSet.remove(this);
+	}
+
+	public Feature getFeatureById(Long id) {
+		return this.feature.stream().filter(x -> x.getId().equals(id)).findFirst().get();
 	}
 
 }
