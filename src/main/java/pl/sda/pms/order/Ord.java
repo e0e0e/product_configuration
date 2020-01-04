@@ -1,6 +1,5 @@
 package pl.sda.pms.order;
 
-
 import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
@@ -39,171 +38,155 @@ import pl.sda.pms.productFeature.ProductFeature;
 @Audited
 @EntityListeners(AuditingEntityListener.class)
 public class Ord {
-	
 
-@Id	
-@GeneratedValue(strategy = GenerationType.AUTO)	
-private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-private String orderName;
+	private String orderName;
 
-private Double price;
-private String client;
-private Integer unitsToProduce;
-private Integer revision;
+	private Double price;
+	private String client;
+	private Integer unitsToProduce;
+	private Integer revision;
 
+	public Integer getRevision() {
+		return revision;
+	}
 
-public Integer getRevision() {
-	return revision;
-}
+	public void setRevision(Integer revision) {
+		this.revision = revision;
+	}
 
+	public void revisionUp() {
+		this.revision++;
+	}
 
+	@ManyToMany(mappedBy = "ord")
+	private List<OrderFeature> orderFeatures;
 
-public void setRevision(Integer revision) {
-	this.revision = revision;
-}
+	@CreatedBy
+	@Column(name = "created_by")
+	private String createdBy;
 
-public void revisionUp() {
-	this.revision++;
-}
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
 
-@ManyToMany(mappedBy = "ord")
-private List<OrderFeature> orderFeatures;
+	@LastModifiedBy
+	@Column(name = "last_modified_by")
+	private String lastModifiedBy;
 
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastModifiedDate;
 
-@CreatedBy
-@Column(name = "created_by")
-private String createdBy;
+	public Ord(List<OrderFeature> orderFeatures) {
+		super();
+		this.orderFeatures = orderFeatures;
+	}
 
-@CreationTimestamp
-@Temporal(TemporalType.TIMESTAMP)
-private Date createdDate;
+	public List<OrderFeature> getOrderFeatures() {
+		return orderFeatures;
+	}
 
-@LastModifiedBy
-@Column(name = "last_modified_by")
-private String lastModifiedBy;
+	public void setOrderFeatures(List<OrderFeature> orderFeatures) {
+		this.orderFeatures = orderFeatures;
+	}
 
-@UpdateTimestamp
-@Temporal(TemporalType.TIMESTAMP)
-private Date lastModifiedDate;
+	public String getCreatedBy() {
+		return createdBy;
+	}
 
-public Ord(List<OrderFeature> orderFeatures) {
-	super();
-	this.orderFeatures = orderFeatures;
-}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
 
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
 
-public List<OrderFeature> getOrderFeatures() {
-	return orderFeatures;
-}
+	public Ord() {
+		super();
+	}
 
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-public void setOrderFeatures(List<OrderFeature> orderFeatures) {
-	this.orderFeatures = orderFeatures;
-}
+	public String getOrderName() {
+		return orderName;
+	}
 
+	public void setOrderName(String orderName) {
+		this.orderName = orderName;
+	}
 
+	public Double getPrice() {
+		return price;
+	}
 
-public String getCreatedBy() {
-	return createdBy;
-}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
 
+	public String getClient() {
+		return client;
+	}
 
+	public void setClient(String client) {
+		this.client = client;
+	}
 
-public void setCreatedBy(String createdBy) {
-	this.createdBy = createdBy;
-}
+	public Integer getUnitsToProduce() {
+		return unitsToProduce;
+	}
 
+	public void setUnitsToProduce(Integer unitsToProduce) {
+		this.unitsToProduce = unitsToProduce;
+	}
 
-public String getLastModifiedBy() {
-	return lastModifiedBy;
-}
+	public void removeOrderFeatures(OrderFeature orderFeature) {
+		this.orderFeatures.remove(orderFeature);
+		orderFeature.getOrd().remove(this);
+	}
 
-
-
-public void setLastModifiedBy(String lastModifiedBy) {
-	this.lastModifiedBy = lastModifiedBy;
-}
-
-
-public Ord() {
-	super();
-}
-public Long getId() {
-	return id;
-}
-public void setId(Long id) {
-	this.id = id;
-}
-public String getOrderName() {
-	return orderName;
-}
-public void setOrderName(String orderName) {
-	this.orderName = orderName;
-}
-public Double getPrice() {
-	return price;
-}
-public void setPrice(Double price) {
-	this.price = price;
-}
-public String getClient() {
-	return client;
-}
-public void setClient(String client) {
-	this.client = client;
-}
-public Integer getUnitsToProduce() {
-	return unitsToProduce;
-}
-public void setUnitsToProduce(Integer unitsToProduce) {
-	this.unitsToProduce = unitsToProduce;
-}
-public void removeOrderFeatures(OrderFeature orderFeature) {
-    this.orderFeatures.remove(orderFeature);
-    orderFeature.getOrd().remove(this);
-}
-
-public void removeAllOrderFeatures() {
+	public void removeAllOrderFeatures() {
 //    this.orderFeatures.clear();
 //    orderFeatures.forEach(x->x.getOrd().remove(this));
 //    
-    List<OrderFeature> orderFeatures=this.getOrderFeatures();
-	orderFeatures.forEach(x->x.getOrd().remove(this));
-}
+		List<OrderFeature> orderFeatures = this.getOrderFeatures();
+		orderFeatures.forEach(x -> x.getOrd().remove(this));
+	}
 
+	@Override
+	public String toString() {
+		return "Ord [id=" + id + ", orderName=" + orderName + ", price=" + price + ", client=" + client
+				+ ", unitsToProduce=" + unitsToProduce + ", orderFeatures=" + orderFeatures + "]";
+	}
 
+	public Date getCreatedDate() {
+		return createdDate;
+	}
 
-@Override
-public String toString() {
-	return "Ord [id=" + id + ", orderName=" + orderName + ", price=" + price + ", client=" + client
-			+ ", unitsToProduce=" + unitsToProduce + ", orderFeatures=" + orderFeatures + "]";
-}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
 
-
-public Date getCreatedDate() {
-	return createdDate;
-}
-
-
-
-public void setCreatedDate(Date createdDate) {
-	this.createdDate = createdDate;
-}
-
-
-
-public Date getLastModifiedDate() {
-	return lastModifiedDate;
-}
-
-
-
-public void setLastModifiedDate(Date lastModifiedDate) {
-	this.lastModifiedDate = lastModifiedDate;
-}
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
 
 }
