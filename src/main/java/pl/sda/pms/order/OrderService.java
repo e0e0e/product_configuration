@@ -138,19 +138,18 @@ public class OrderService {
 
 		Ord order = orderRepository.findById(orderId).get();
 		List<OrderFeature> orderFeaturesList = order.getOrderFeatures();		
-		
+		orderFeaturesList.get(0).getFeature().getName();
 		
 		@SuppressWarnings("unchecked")
 		List<Object> revisions1 = AuditReaderFactory.get(entityManager).createQuery()
-				.forRevisionsOfEntity(OrderFeature.class, false, false)
+				.forRevisionsOfEntity(OrderFeature.class, false, true)
 				.add(AuditEntity.id().isNotNull())
-				//.add(AuditEntity.property(“title”).eq(“Hibernate Tips – 64 Tips for your day to day work”))
-				.getResultList();
+			.getResultList();
 		
-	
+	//	.traverseRelation( "ord", JoinType.INNER )
+		//.add(AuditEntity.property(“title”).eq(“Hibernate Tips – 64 Tips for your day to day work”))
 		
-	
-		
+		//System.out.println(revisions1.get(0).);
 
 		return revisions1;
 	}

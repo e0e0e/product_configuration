@@ -1,11 +1,15 @@
 package pl.sda.pms.order;
 
+
+import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,9 +17,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
@@ -23,6 +37,7 @@ import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
 @Audited
+@EntityListeners(AuditingEntityListener.class)
 public class Ord {
 	
 
@@ -35,10 +50,42 @@ private String orderName;
 private Double price;
 private String client;
 private Integer unitsToProduce;
+private Integer revision;
 
+
+public Integer getRevision() {
+	return revision;
+}
+
+
+
+public void setRevision(Integer revision) {
+	this.revision = revision;
+}
+
+public void revisionUp() {
+	this.revision++;
+}
 
 @ManyToMany(mappedBy = "ord")
 private List<OrderFeature> orderFeatures;
+
+
+@CreatedBy
+@Column(name = "created_by")
+private String createdBy;
+
+@CreationTimestamp
+@Temporal(TemporalType.TIMESTAMP)
+private Date createdDate;
+
+@LastModifiedBy
+@Column(name = "last_modified_by")
+private String lastModifiedBy;
+
+@UpdateTimestamp
+@Temporal(TemporalType.TIMESTAMP)
+private Date lastModifiedDate;
 
 public Ord(List<OrderFeature> orderFeatures) {
 	super();
@@ -57,6 +104,28 @@ public void setOrderFeatures(List<OrderFeature> orderFeatures) {
 	this.orderFeatures = orderFeatures;
 }
 
+
+
+public String getCreatedBy() {
+	return createdBy;
+}
+
+
+
+public void setCreatedBy(String createdBy) {
+	this.createdBy = createdBy;
+}
+
+
+public String getLastModifiedBy() {
+	return lastModifiedBy;
+}
+
+
+
+public void setLastModifiedBy(String lastModifiedBy) {
+	this.lastModifiedBy = lastModifiedBy;
+}
 
 
 public Ord() {
@@ -111,6 +180,30 @@ public void removeAllOrderFeatures() {
 public String toString() {
 	return "Ord [id=" + id + ", orderName=" + orderName + ", price=" + price + ", client=" + client
 			+ ", unitsToProduce=" + unitsToProduce + ", orderFeatures=" + orderFeatures + "]";
+}
+
+
+
+public Date getCreatedDate() {
+	return createdDate;
+}
+
+
+
+public void setCreatedDate(Date createdDate) {
+	this.createdDate = createdDate;
+}
+
+
+
+public Date getLastModifiedDate() {
+	return lastModifiedDate;
+}
+
+
+
+public void setLastModifiedDate(Date lastModifiedDate) {
+	this.lastModifiedDate = lastModifiedDate;
 }
 
 }

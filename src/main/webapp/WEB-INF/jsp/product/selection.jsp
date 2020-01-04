@@ -46,7 +46,7 @@
 									<select name="${configList.id}">
 								</c:when>
 								<c:otherwise>
-								<select name="${configList.id}" disabled>
+								<select name="${configList.id}" class="greyText">
 								</c:otherwise>
 							</c:choose>
 							<c:forEach
