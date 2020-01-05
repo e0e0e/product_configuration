@@ -3,8 +3,11 @@ package pl.sda.pms.order;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
@@ -86,22 +89,34 @@ public class OrderService {
 
 	public void saveProductOrderChanges(Map<String, String> paramMap, String orderId) {
 		Ord order = orderRepository.findById(Long.parseLong(orderId)).get();
+		List<OrderFeature> orginalOrderFeatures = order.getOrderFeatures();
 
-		Map<ProductFeature, Feature> anotherMap = paramMap.entrySet().stream()
+		Map<ProductFeature, Feature> newOrderFeaturesMap = paramMap.entrySet().stream()
 				.filter(x -> OrderFeatureController.isNumeric(x.getKey()))
 				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())),
 						x -> featureService.findByID(Long.parseLong(x.getValue()))));
 
-		List<String> orderFeatureStringList = anotherMap.entrySet().stream()
-				.map(x -> x.getKey().getName() + ", " + x.getValue().getName()+"<br>")
+		Map<String, Feature> newStringFeaturesMap = paramMap.entrySet().stream()
+				.filter(x -> OrderFeatureController.isNumeric(x.getKey()))
+				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())).getName(),
+						x -> featureService.findByID(Long.parseLong(x.getValue()))));
+
+		List<String> oldOrderFeatureList = newOrderFeaturesMap.entrySet().stream().map(x -> x.getKey().getName())
+				.collect(Collectors.toList());
+
+		Map<String, Feature> oldOrderFeatureMap = orginalOrderFeatures.stream()
+				.collect(Collectors.toMap(x -> x.getProductFeature().getName(), x -> x.getFeature()));
+
+		List<String> orderFeatureStringList = oldOrderFeatureList.stream().map(
+				x -> x + ": " + oldOrderFeatureMap.get(x).getName() + " -> " + newStringFeaturesMap.get(x).getName())
 				.collect(Collectors.toList());
 
 		order.setOrderFeaturesStrings(orderFeatureStringList);
-		
+
 		order.revisionUp();
 		orderRepository.save(order);
 
-		anotherMap.entrySet().stream().forEach(x -> {
+		newOrderFeaturesMap.entrySet().stream().forEach(x -> {
 			OrderFeature orderFeature = x.getKey().getOrderFeature();
 			orderFeature.setFeature(x.getValue());
 			orderFeatureService.save(orderFeature);
@@ -114,36 +129,11 @@ public class OrderService {
 
 		@SuppressWarnings("unchecked")
 		List<Object> revisions = AuditReaderFactory.get(entityManager).createQuery()
-				.forRevisionsOfEntity(Ord.class, false, true).add(AuditEntity.id().eq(orderId)).getResultList();
+				.forRevisionsOfEntity(Ord.class, false, true)
+				.add(AuditEntity.id().eq(orderId)).getResultList();
+		revisions.remove(0);
 
-		Ord order = orderRepository.findById(orderId).get();
-		List<OrderFeature> orderFeaturesList = order.getOrderFeatures();
-		orderFeaturesList.get(0).getFeature().getName();
-
-		@SuppressWarnings("unchecked")
-		List<Object> revisions1 = AuditReaderFactory.get(entityManager).createQuery()
-				.forRevisionsOfEntity(Ord.class, false, true).add(AuditEntity.id().eq(orderId)).getResultList();
-
-//		String s = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(1578178800000L);
-////		Ord dt = (Ord) ((Object[]) revisions1.get(0))[0];
-////		// String nameString=dt.getLastModifiedDate().toGMTString();
-////		// (Object[]) revisions1.get( 0 ))[0];
-//		for (Object o : revisions1) {
-//			Object[] objects = (Object[]) o;
-//			Object ob1 = objects[0];
-//			Ord ord = (Ord) ob1;
-//
-//			if (ord.getCreatedDate() != null) {
-//				System.out.println((Date) ord.getCreatedDate());
-//			}
-//		}
-		// .traverseRelation( "ord", JoinType.INNER )
-		// .add(AuditEntity.property(“title”).eq(“Hibernate Tips – 64 Tips for your day
-		// to day work”))
-
-		// System.out.println(revisions1.get(0).);
-
-		return revisions1;
+		return revisions;
 	}
 
 }

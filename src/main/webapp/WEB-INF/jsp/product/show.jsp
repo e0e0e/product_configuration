@@ -37,11 +37,11 @@
 					href="/product/selection?productId=${configuration.id}">
 					<span class="glyphicon glyphicon-briefcase text-light"></span>
 				</a>
-				<a
+			<%-- 	<a
 					class="btn btn-outline-dark text-light m-1"
 					href="/product/delete?productId=${configuration.id}">
 					<span class="glyphicon glyphicon-trash text-light"></span>
-				</a>
+				</a> --%>
 				<a
 					class="btn btn-outline-dark text-light m-1"
 					href="/product/copy?productId=${configuration.id}">
