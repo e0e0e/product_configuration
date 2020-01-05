@@ -1,6 +1,8 @@
 package pl.sda.pms.order;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import pl.sda.pms.OrderFeature.OrderFeature;
@@ -44,42 +47,11 @@ public class OrderService {
 
 	public void create(Ord order) {
 		orderRepository.save(order);
-//		Order order = new Order(orderList);
-//		
-//		orderRepository.save(order);
-//		for (OrderFeature o : orderList) {
-//			
-//			
-//			
-//			if(order.getOrderFeatures()==null) {
-//				List<OrderFeature> orderFeatureList=new ArrayList<>();
-//				orderFeatureList.add(o);
-//				order.setOrderFeatures(orderFeatureList);
-//				
-//			}else {
-//			order.getOrderFeatures().add(o);
-//			}
-//			if(o.getOrder()==null) {
-//				List<Order> orders=new ArrayList<>();
-//				o.setOrder(orders);
-//			}else {
-//			o.getOrder().add(order);
-//			}
-//			OrderFeature orderFeature=orderFeatureService.create(o);
-//		}
-		// order.setOrderFeatures(orderList);
-
-//		orderList.forEach(a->a.getOrder().add(order)
-//				.forEach(x->orderFeatureService.create(x));
-
-		// order.setOrderFeatures(orderList);
-
-		// TODO Auto-generated method stub
 
 	}
 
 	public List<Ord> findAll() {
-		return orderRepository.findAll();
+		return orderRepository.findAll(Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
 
 	}
 
@@ -120,7 +92,15 @@ public class OrderService {
 				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())),
 						x -> featureService.findByID(Long.parseLong(x.getValue()))));
 
-		anotherMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() + "--" + x.getValue()));
+		List<String> orderFeatureStringList = anotherMap.entrySet().stream()
+				.map(x -> x.getKey().getName() + ", " + x.getValue().getName()+"<br>")
+				.collect(Collectors.toList());
+
+		order.setOrderFeaturesStrings(orderFeatureStringList);
+		
+		order.revisionUp();
+		orderRepository.save(order);
+
 		anotherMap.entrySet().stream().forEach(x -> {
 			OrderFeature orderFeature = x.getKey().getOrderFeature();
 			orderFeature.setFeature(x.getValue());
@@ -137,19 +117,31 @@ public class OrderService {
 				.forRevisionsOfEntity(Ord.class, false, true).add(AuditEntity.id().eq(orderId)).getResultList();
 
 		Ord order = orderRepository.findById(orderId).get();
-		List<OrderFeature> orderFeaturesList = order.getOrderFeatures();		
+		List<OrderFeature> orderFeaturesList = order.getOrderFeatures();
 		orderFeaturesList.get(0).getFeature().getName();
-		
+
 		@SuppressWarnings("unchecked")
 		List<Object> revisions1 = AuditReaderFactory.get(entityManager).createQuery()
-				.forRevisionsOfEntity(OrderFeature.class, false, true)
-				.add(AuditEntity.id().isNotNull())
-			.getResultList();
-		
-	//	.traverseRelation( "ord", JoinType.INNER )
-		//.add(AuditEntity.property(“title”).eq(“Hibernate Tips – 64 Tips for your day to day work”))
-		
-		//System.out.println(revisions1.get(0).);
+				.forRevisionsOfEntity(Ord.class, false, true).add(AuditEntity.id().eq(orderId)).getResultList();
+
+//		String s = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(1578178800000L);
+////		Ord dt = (Ord) ((Object[]) revisions1.get(0))[0];
+////		// String nameString=dt.getLastModifiedDate().toGMTString();
+////		// (Object[]) revisions1.get( 0 ))[0];
+//		for (Object o : revisions1) {
+//			Object[] objects = (Object[]) o;
+//			Object ob1 = objects[0];
+//			Ord ord = (Ord) ob1;
+//
+//			if (ord.getCreatedDate() != null) {
+//				System.out.println((Date) ord.getCreatedDate());
+//			}
+//		}
+		// .traverseRelation( "ord", JoinType.INNER )
+		// .add(AuditEntity.property(“title”).eq(“Hibernate Tips – 64 Tips for your day
+		// to day work”))
+
+		// System.out.println(revisions1.get(0).);
 
 		return revisions1;
 	}

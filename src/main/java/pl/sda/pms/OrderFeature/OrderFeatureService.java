@@ -2,6 +2,8 @@ package pl.sda.pms.OrderFeature;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,10 @@ public class OrderFeatureService {
 			f.getProductFeature().setOrderFeature(f);
 		}
 
+		List<String> orderFeatureStringList = orderList.stream()
+				.map(x -> x.getFeature().getName() + ", " + x.getProductFeature().getName())
+				.collect(Collectors.toList());
+
 		Ord ord = new Ord();
 
 		result.forEach(orderFeature -> {
@@ -49,7 +55,7 @@ public class OrderFeatureService {
 			}
 
 		});
-
+		ord.setOrderFeaturesStrings(orderFeatureStringList);
 		ord.setOrderFeatures(orderList);
 		orderRepository.save(ord);
 		return result;

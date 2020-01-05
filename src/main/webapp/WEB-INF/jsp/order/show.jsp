@@ -1,6 +1,9 @@
 <%@ taglib
 	prefix="c"
 	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib
+	prefix="fmt"
+	uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
 	<%@ taglib
@@ -11,10 +14,9 @@
 
 		<div class="card-header bg-info text-left text-light">
 			<div>LP. ${order.id}, Order name: ${order.orderName}, Price:
-				${order.price}, Client Address: ${order.client},
-				 Units: ${order.unitsToProduce}
-				 Modified: ${order.lastModifiedDate}
-				 </div>
+				${order.price}, Client Address: ${order.client}, Units:
+				${order.unitsToProduce} Created: ${order.createdDate}, Modified:
+				${order.lastModifiedDate}, Revision: ${order.revision}</div>
 			<a
 				class="btn btn-outline-info text-dark"
 				href="/order/delete?orderId=${order.id}"> <span
@@ -66,13 +68,14 @@
 		var="order"
 		items="${aud}">
 		<div class="row border">
-		<div class="col  text-danger">${order[0].productFeature.name}</div>
-			<div class="col  text-warning">	
-				<c:catch var="exception">${order[0].feature.name}</c:catch>
-				<c:if test="${not empty exception}">Nothing selected</c:if>
-				<%-- <c:if test="${not empty order[0].feature.id}">${order[0].feature.id}</c:if> --%>
+			<div class="col  text-secondary">
+				<c:forEach
+					var="listRow"
+					items="${order[0].orderFeaturesStrings}">
+					<div class="row">${listRow}</div>
+				</c:forEach>
 			</div>
-			
+
 			<div class="col">
 				<fmt:formatDate
 					type="date"
@@ -82,7 +85,9 @@
 
 			<div class="col">${order[1].username}</div>
 		</div>
-
+		<div>LP. ${order[0].id}, Order name: ${order[0].orderName},
+			Price: ${order[0].price}, Client Address: ${order[0].client}, Units:
+			${order[0].unitsToProduce}</div>
 	</c:forEach>
 
 </div>

@@ -1,12 +1,14 @@
 package pl.sda.pms.order;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -48,19 +50,9 @@ public class Ord {
 	private Double price;
 	private String client;
 	private Integer unitsToProduce;
-	private Integer revision;
-
-	public Integer getRevision() {
-		return revision;
-	}
-
-	public void setRevision(Integer revision) {
-		this.revision = revision;
-	}
-
-	public void revisionUp() {
-		this.revision++;
-	}
+	private Integer revision = 0;
+	@ElementCollection
+	private List<String> orderFeaturesStrings = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "ord")
 	private List<OrderFeature> orderFeatures;
@@ -112,6 +104,24 @@ public class Ord {
 
 	public Ord() {
 		super();
+	}
+
+	public Ord(Long id, String orderName, Double price, String client, Integer unitsToProduce, Integer revision,
+			List<String> orderFeaturesStrings, List<OrderFeature> orderFeatures, String createdBy, Date createdDate,
+			String lastModifiedBy, Date lastModifiedDate) {
+		super();
+		this.id = id;
+		this.orderName = orderName;
+		this.price = price;
+		this.client = client;
+		this.unitsToProduce = unitsToProduce;
+		this.revision = revision;
+		this.orderFeaturesStrings = orderFeaturesStrings;
+		this.orderFeatures = orderFeatures;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.lastModifiedBy = lastModifiedBy;
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public Long getId() {
@@ -187,6 +197,30 @@ public class Ord {
 
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public List<String> getOrderFeaturesStrings() {
+		return orderFeaturesStrings;
+	}
+
+	public void setOrderFeaturesStrings(List<String> orderFeaturesStrings) {
+		this.orderFeaturesStrings = orderFeaturesStrings;
+	}
+
+	public Integer getRevision() {
+		return revision;
+	}
+
+	public void setRevision(Integer revision) {
+		this.revision = revision;
+	}
+
+	public void revisionUp() {
+		if (this.revision == null) {
+			this.revision = 1;
+		} else {
+			this.revision++;
+		}
 	}
 
 }

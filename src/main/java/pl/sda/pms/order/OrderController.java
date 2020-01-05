@@ -53,9 +53,6 @@ public class OrderController {
 
 		model.addAttribute("order", orderService.findById(orderId));
 		model.addAttribute("aud",orderService.findByIdAud(orderId));
-//		List<Object> lObjects=orderService.findByIdAud(orderId);
-//		Object orderFeature=lObjects.get(0);
-//		orderFeature.getClass();
 		model.addAttribute("title", "List Orders");
 		model.addAttribute("path", "order/show");
 		return "main";
