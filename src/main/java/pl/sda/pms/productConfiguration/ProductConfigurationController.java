@@ -70,7 +70,9 @@ public class ProductConfigurationController {
 	}
 
 	@GetMapping("/product/list")
-	public String showProduct(@RequestParam Long productId, Model model) {
+	public String showProduct(@RequestParam Long productId,
+		//	@RequestParam(required = false) Long productFeatureId,
+			Model model) {
 
 		// List<Object> oblistList=productConfigurationService.findAllById(3L);
 

@@ -125,7 +125,7 @@ public class ProductFeatureController {
 		Long productId= productFeatureService.findById(productFeatureId).getProductConfiguration().getId();
 		productFeatureService.removeFeature(feature, productFeatureId);
 
-		return "redirect:/product/list?productId=" + productId;
+		return "redirect:/product/list?productId=" + productId+"&productFeaturesId="+productFeatureId+"#anchor_"+productFeatureId;
 
 	}
 
@@ -158,7 +158,7 @@ public class ProductFeatureController {
 		productFeatureService.save(nextProductFeature);
 		productFeatureService.save(productFeature);
 
-		return "redirect:/product/list?productId=" + productId;
+		return "redirect:/product/list?productId=" + productId+"#anchor_"+productFeatureId;
 
 	}
 
@@ -179,7 +179,7 @@ public class ProductFeatureController {
 		productFeatureService.save(nextProductFeature);
 		productFeatureService.save(productFeature);
 
-		return "redirect:/product/list?productId=" + productId;
+		return "redirect:/product/list?productId=" + productId+"#anchor_"+productFeatureId;
 
 	}
 }

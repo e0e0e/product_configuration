@@ -30,6 +30,7 @@
 				<c:forEach
 					var="configList"
 					items="${configuration.configurationList}">
+					<a name="anchor_${configList.id}"></a>
 					<li><a
 						class="btn btn-outline-info text-dark"
 						href="/feature/edit?productFeatureId=${configList.id}">${configList.name}
@@ -49,15 +50,16 @@
 							var="feature"
 							items="${configList.feature}">
 
-							<li><a
+							<li class="border-bottom"><a
 								class="btn btn-outline-info text-dark"
 								href="/feature/editFeature?featureId=${feature.id}">${feature.name}
 									<span class="glyphicon glyphicon-edit text-dark"></span>
 							</a> <a
 								class="btn btn-outline-info text-dark"
 								href="/feature/removeFeature?featureId=${feature.id}&productFeatureId=${configList.id}"><span
-									class="glyphicon glyphicon-trash text-dark"></span></a></li>
-									
+									class="glyphicon glyphicon-trash text-dark"></span></a><span
+								class="float-right m-2">${feature.index}</span></li>
+
 						</c:forEach>
 					</ul>
 
