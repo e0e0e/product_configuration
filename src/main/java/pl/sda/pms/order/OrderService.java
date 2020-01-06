@@ -83,6 +83,8 @@ public class OrderService {
 
 		order.setUnitsToProduce(unitsToProduce);
 		order.setClient(client);
+		order.setOrderFeaturesStrings(null);
+		order.revisionUp();
 		orderRepository.save(order);
 
 	}
