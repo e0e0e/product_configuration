@@ -29,7 +29,9 @@ public class Feature {
 	private Double price;
 	private String imagePath;
 	private String index;
+	private String mIndex;
 
+	
 	@Override
 	public String toString() {
 		return "Feature [name=" + name + ", description=" + description + ", productFeatureList=" + productFeatureList
@@ -61,13 +63,14 @@ public class Feature {
 	
 
 
-	public Feature(String name, String description, Double price, String imagePath, String index) {
+	public Feature(String name, String description, Double price, String imagePath, String index, String mIndex) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.imagePath = imagePath;
 		this.index = index;
+		this.mIndex = mIndex;
 	}
 
 	public Feature(String name, String description) {
@@ -193,5 +196,14 @@ public class Feature {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public String getmIndex() {
+		return mIndex;
+	}
+
+	public void setmIndex(String mIndex) {
+		this.mIndex = mIndex;
+	}
+
 
 }

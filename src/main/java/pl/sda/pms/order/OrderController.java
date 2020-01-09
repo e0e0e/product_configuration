@@ -68,6 +68,18 @@ public class OrderController {
 		return "main";
 
 	}
+	
+	@GetMapping("/order/print")
+	public String orderPrint(@RequestParam Long orderId, Model model) {
+
+		model.addAttribute("order", orderService.findById(orderId));
+
+		model.addAttribute("title", "Print Order");
+		model.addAttribute("path", "order/edit");
+		return "order/print";
+
+	}
+	
 
 	@GetMapping("/order/delete")
 	public String deleteOrder(@RequestParam Long orderId, Model model) {

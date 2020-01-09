@@ -52,11 +52,12 @@ public class FeatureController {
 			@RequestParam String index,
 			@RequestParam String price,
 			@RequestParam Long featureId,
+			@RequestParam String mIndex,
 			Model model) {
 				
 		model.addAttribute("feature", featureService.findByID(featureId));
 
-		featureService.saveChanges(name,description,imagePath,index,price,featureId);
+		featureService.saveChanges(name,description,imagePath,index,price,featureId,mIndex);
 
 		return "redirect:/feature/list";
 	}
@@ -75,11 +76,12 @@ public class FeatureController {
 			@RequestParam String description,
 			@RequestParam String imagePath,
 			@RequestParam String index,
+			@RequestParam String mIndex,
 			@RequestParam String price
 	) {
 				
 
-		featureService.create(name,description,imagePath,index,price);
+		featureService.create(name,description,imagePath,index,price,mIndex);
 
 		return "redirect:/feature/list";
 	}

@@ -47,19 +47,20 @@ public class FeatureService {
 		return featureRepository.findById(id).get();
 	}
 
-	public boolean saveChanges(String name, String description, String imagePath, String index, String price, Long id) {
+	public boolean saveChanges(String name, String description, String imagePath, String index, String price, Long id, String mIndex) {
 		Feature feature = featureRepository.findById(id).get();
 		feature.setName(name);
 		feature.setDescription(description);
 		feature.setImagePath(imagePath);
 		feature.setIndex(index);
+		feature.setmIndex(mIndex);
 		feature.setPrice(Double.parseDouble(price));
 		Feature createdFeature = featureRepository.save(feature);
 		return createdFeature.getId() != null;
 	}
 
-	public boolean create(String name, String description, String imagePath, String index, String price) {
-		Feature feature = new Feature(name, description, 0.0, imagePath, index);
+	public boolean create(String name, String description, String imagePath, String index, String price, String mindex) {
+		Feature feature = new Feature(name, description, 0.0, imagePath, index, mindex);
 		if (OrderFeatureController.isNumeric(price)) {
 			feature.setPrice(Double.parseDouble(price));
 

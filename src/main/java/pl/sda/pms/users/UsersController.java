@@ -43,7 +43,7 @@ public class UsersController {
     @GetMapping("/")
     public String index() {
 
-        return "redirect:/taskWall";
+        return "redirect:/orders/list";
     }
 
     @PostMapping("/users")

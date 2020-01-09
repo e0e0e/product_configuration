@@ -17,39 +17,41 @@
 				${order.price}, Client Address: ${order.client}, Units:
 				${order.unitsToProduce} Created: ${order.createdDate}, Modified:
 				${order.lastModifiedDate}, Revision: ${order.revision}</div>
-				
+
 			<a
 				class="btn btn-outline-info text-dark"
 				href="/order/delete?orderId=${order.id}">
-				<span class="glyphicon glyphicon-trash text-dark"></span>
+				<span class="glyphicon glyphicon-trash text-light"></span>
 			</a>
 			<a
 				class="btn btn-outline-info text-dark"
 				href="/order/edit?orderId=${order.id}">
-				<span class="glyphicon glyphicon-edit text-dark"></span>
+				<span class="glyphicon glyphicon-edit text-light"></span>
 			</a>
+				<a
+				class="btn btn-outline-info text-light"
+				href="/order/print?orderId=${order.id}">
+				<span class="glyphicon glyphicon-print text-light"></span>
+			</a>
+			
 		</div>
 
 
 		<div class="card-body ">
 			<ul>
 
-
-
-
 				<c:forEach
 					var="feature"
 					items="${order.orderFeatures}">
-
-
 					<div class="row border-bottom m-1">
 						<div class="col-2 m-1">${feature.productFeature.name}:</div>
 						<div class="col-4 m-1">${feature.feature.name}</div>
 						<div class="col-2 m-1">${feature.feature.index}</div>
+						<div class="col-2 m-1">${feature.feature.mIndex}</div>
+						<c:if test="${feature.feature.price!='0.0'}">
+							<div class="col-1 m-1">${feature.feature.price}</div>
+						</c:if>
 					</div>
-
-
-
 				</c:forEach>
 			</ul>
 

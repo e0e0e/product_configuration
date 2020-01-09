@@ -10,21 +10,24 @@ import java.util.stream.Collectors;
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.stereotype.Service;
 
+import javassist.expr.NewArray;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.feature.Row;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
+import pl.sda.pms.productConfiguration.ProductConfigurationService;
 
 @Service
 public class ProductFeatureService {
 
 	private final ProductFeatureRepository productFeatureRepository;
-	private FeatureService featureService;
+	private final FeatureService featureService;
 
 	public ProductFeatureService(ProductFeatureRepository productFeatureRepository, FeatureService featureService) {
 
 		this.productFeatureRepository = productFeatureRepository;
 		this.featureService = featureService;
+
 	}
 
 	public List<ProductFeature> findAll() {
@@ -105,7 +108,7 @@ public class ProductFeatureService {
 
 	}
 
-	public void save(String name, String description, String imagePath, List<Long> featureList) {
+	public ProductFeature save(String name, String description, String imagePath, List<Long> featureList) {
 
 		Set<Feature> featureSet = new HashSet<Feature>();
 
@@ -114,7 +117,8 @@ public class ProductFeatureService {
 		}
 
 		ProductFeature productFeature = new ProductFeature(name, description, imagePath, featureSet);
-		productFeatureRepository.save(productFeature);
+		ProductFeature createdProductFeature = productFeatureRepository.save(productFeature);
+		return createdProductFeature;
 
 	}
 
@@ -149,13 +153,12 @@ public class ProductFeatureService {
 		}
 		newProductFeature.setFeature(featureSet);
 		productFeatureRepository.save(newProductFeature);
-		
 
 	}
 
 	public void delete(Long productFeatureId) {
 		productFeatureRepository.deleteById(productFeatureId);
-		
+
 	}
 
 }

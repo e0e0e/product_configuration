@@ -26,7 +26,10 @@
 			<label>Index:</label>
 		</div>
 		<input type="text" class="text-dark" name="index" value="">
-
+<div>
+			<label>Index M:</label>
+		</div>
+		<input type="text" class="text-dark" name="mIndex" value="">
 		<div>
 			<input type="submit" class="text-dark mt-5" value="Save">
 		</div>

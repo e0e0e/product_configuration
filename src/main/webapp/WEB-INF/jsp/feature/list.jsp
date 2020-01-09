@@ -30,6 +30,8 @@
 				href="/feature/delete?productFeatureId=${feature.id}">
 					<span class="glyphicon glyphicon-trash text-light  m-2"></span>
 				</a>
+				<span class="float-right m-2">included in product: ${feature.productConfiguration.name}</span>
+				
 			</div>
 			<div class="card-body ">
 

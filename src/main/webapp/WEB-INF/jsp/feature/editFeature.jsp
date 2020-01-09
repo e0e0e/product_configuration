@@ -44,7 +44,14 @@
 			type="text"
 			class="text-dark"
 			name="index"
-			value="${feature.index}"><br /> <br> <input
+			value="${feature.index}"><br />
+			<label>Index M:</label><br />
+		<input
+			type="text"
+			class="text-dark"
+			name="mIndex"
+			value="${feature.mIndex}"><br /> <br>
+			<input
 			type="submit"
 			class="text-dark"
 			value="Save">

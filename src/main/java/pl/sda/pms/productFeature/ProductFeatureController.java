@@ -1,5 +1,6 @@
 package pl.sda.pms.productFeature;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -98,7 +99,20 @@ public class ProductFeatureController {
 	public String createProductFeatures(@RequestParam String name, @RequestParam String description,
 			@RequestParam String imagePath, @RequestParam List<Long> featureList, Model model) {
 
-		productFeatureService.save(name, description, imagePath, featureList);
+		ProductFeature productFeature=productFeatureService.save(name, description, imagePath, featureList);
+		
+//		List<ProductConfiguration> productsList = productConfigurationService.findAll();
+//
+//		productsList.forEach(x -> {
+//			List<ProductFeature> productFeatureList = new ArrayList<>();
+//			ProductFeature productFeatureNew = new ProductFeature(name, description, imagePath, productFeature.getFeature());
+//			productFeatureList = x.getConfigurationList();
+//			productFeatureList.add(productFeatureNew);
+//			x.setConfigurationList(productFeatureList);
+//			productConfigurationService.save(x);
+//
+//		});
+		
 		model.addAttribute("featuresList", featureService.findAll());
 
 		return "redirect:/feature/list";
