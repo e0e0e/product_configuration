@@ -37,9 +37,9 @@
 						var="configList"
 						items="${configuration.configurationList}">
 						<div class="row">
-							<div class="col-2 m-1"> ${configList.name}</div>
+							<div class="col-2 m-1" > ${configList.name}</div>
 							<div class="col-2 m-1">
-							<select name="${configList.id}">
+							<select name="${configList.id}" id="${configList.name}" onchange='changeAction(this,${configList.id})'>
 								<option
 									value=""
 									selected
@@ -62,7 +62,7 @@
 			</form>
 		</div>
 		<div class="card-footer bg-info text-right text-light">
-			<div>created by:</div>
+		
 
 		</div>
 	</div>
@@ -70,3 +70,21 @@
 
 
 </div>
+<script>
+function changeAction(val,da) {
+	
+	 var xhttp = new XMLHttpRequest();
+	    xhttp.onreadystatechange = function() {
+	         if (this.readyState == 4 && this.status == 200) {
+	      
+	            
+	             console.log(this.responseText);
+	         }
+	    };
+	    console.log("/product/matching?featureId="+val.value+"&productFeatureId="+da);
+	    xhttp.open("GET", "/product/matching?featureId="+val.value+"&productFeatureId="+da, true);
+	    xhttp.setRequestHeader("Content-type", "application/json");
+	    xhttp.send("Your JSON Data Here");
+	
+}
+</script>

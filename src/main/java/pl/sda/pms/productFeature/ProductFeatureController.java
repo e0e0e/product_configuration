@@ -62,22 +62,20 @@ public class ProductFeatureController {
 
 		model.addAttribute("productFeature", productFeatureService.findByID(productFeatureId));
 		model.addAttribute("featuresList", featureService.findAll());
-		
 
 		model.addAttribute("title", "Edit Features");
 		model.addAttribute("path", "feature/edit");
 		return "main";
 	}
+
 	@GetMapping("/feature/delete")
 	public String deleteProductFeatures(@RequestParam Long productFeatureId, Model model) {
 
 		productFeatureService.delete(productFeatureId);
-		
-		
 
 		return "redirect:/feature/list";
 	}
-	
+
 	@GetMapping("/feature/copy")
 	public String copyProductFeatures(@RequestParam Long productFeatureId, Model model) {
 
@@ -99,20 +97,16 @@ public class ProductFeatureController {
 	public String createProductFeatures(@RequestParam String name, @RequestParam String description,
 			@RequestParam String imagePath, @RequestParam List<Long> featureList, Model model) {
 
-		ProductFeature productFeature=productFeatureService.save(name, description, imagePath, featureList);
-		
-//		List<ProductConfiguration> productsList = productConfigurationService.findAll();
-//
-//		productsList.forEach(x -> {
-//			List<ProductFeature> productFeatureList = new ArrayList<>();
-//			ProductFeature productFeatureNew = new ProductFeature(name, description, imagePath, productFeature.getFeature());
-//			productFeatureList = x.getConfigurationList();
-//			productFeatureList.add(productFeatureNew);
-//			x.setConfigurationList(productFeatureList);
-//			productConfigurationService.save(x);
-//
-//		});
-		
+		List<ProductConfiguration> productsList = productConfigurationService.findAll();
+
+		productsList.forEach(x -> {
+
+			ProductFeature productFeatureNew = productFeatureService.save(name, description, imagePath, featureList);
+			productFeatureNew.setProductConfiguration(x);
+			productFeatureService.save(productFeatureNew);
+
+		});
+
 		model.addAttribute("featuresList", featureService.findAll());
 
 		return "redirect:/feature/list";
@@ -121,13 +115,12 @@ public class ProductFeatureController {
 	@PostMapping("/productFeatureChange")
 	public String changeProductFeature(@RequestParam Long productFeatureId, @RequestParam String name,
 			@RequestParam String description, @RequestParam String imagePath,
-			@RequestParam(required = false) List<Long> featureList,
-			Model model) {
+			@RequestParam(required = false) List<Long> featureList, Model model) {
 
 		productFeatureService.findById(productFeatureId);
-		
+
 		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList);
-		// featureList.parallelStream().forEach(x->System.out.println(x));
+	
 
 		return "redirect:/feature/list";
 	}
@@ -136,10 +129,11 @@ public class ProductFeatureController {
 	public String removeFeature(@RequestParam Long featureId, @RequestParam Long productFeatureId, Model model) {
 
 		Feature feature = featureService.findByID(featureId);
-		Long productId= productFeatureService.findById(productFeatureId).getProductConfiguration().getId();
+		Long productId = productFeatureService.findById(productFeatureId).getProductConfiguration().getId();
 		productFeatureService.removeFeature(feature, productFeatureId);
 
-		return "redirect:/product/list?productId=" + productId+"&productFeaturesId="+productFeatureId+"#anchor_"+productFeatureId;
+		return "redirect:/product/list?productId=" + productId + "&productFeaturesId=" + productFeatureId + "#anchor_"
+				+ productFeatureId;
 
 	}
 
@@ -172,7 +166,7 @@ public class ProductFeatureController {
 		productFeatureService.save(nextProductFeature);
 		productFeatureService.save(productFeature);
 
-		return "redirect:/product/list?productId=" + productId+"#anchor_"+productFeatureId;
+		return "redirect:/product/list?productId=" + productId + "#anchor_" + productFeatureId;
 
 	}
 
@@ -193,7 +187,7 @@ public class ProductFeatureController {
 		productFeatureService.save(nextProductFeature);
 		productFeatureService.save(productFeature);
 
-		return "redirect:/product/list?productId=" + productId+"#anchor_"+productFeatureId;
+		return "redirect:/product/list?productId=" + productId + "#anchor_" + productFeatureId;
 
 	}
 }

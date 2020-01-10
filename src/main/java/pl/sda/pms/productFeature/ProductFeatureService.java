@@ -66,8 +66,14 @@ public class ProductFeatureService {
 	}
 
 	public boolean edit(Long id, String name, String description, String imagePath, List<Long> featureList) {
+		
+		
 		ProductFeature productFeature = productFeatureRepository.findById(id).get();
-		// Set<Feature> featureSet=productFeature.getFeature();
+
+		//List<ProductFeature> productFeaturesByName= productFeatureRepository.findByName(productFeature.getName()); 
+		
+		
+		
 		Set<Feature> featuresToAddFeatures = new HashSet<>();
 		try {
 			featuresToAddFeatures.addAll(productFeature.getFeature());

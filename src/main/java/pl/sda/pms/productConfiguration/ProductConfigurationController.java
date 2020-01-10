@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
@@ -71,7 +72,7 @@ public class ProductConfigurationController {
 
 	@GetMapping("/product/list")
 	public String showProduct(@RequestParam Long productId,
-		//	@RequestParam(required = false) Long productFeatureId,
+			// @RequestParam(required = false) Long productFeatureId,
 			Model model) {
 
 		// List<Object> oblistList=productConfigurationService.findAllById(3L);
@@ -102,8 +103,7 @@ public class ProductConfigurationController {
 	}
 
 	@PostMapping("/saveChangedProduct")
-	public String saveChangedProduct(@RequestParam String name,
-			@RequestParam(required = false) List<Long> feature,
+	public String saveChangedProduct(@RequestParam String name, @RequestParam(required = false) List<Long> feature,
 			@RequestParam Long productId, Model model) {
 
 		productConfigurationService.saveChanges(productId, name, feature);
@@ -132,6 +132,7 @@ public class ProductConfigurationController {
 		return "main";
 
 	}
+
 	@PostMapping("/product/search")
 	public String productSearch(@RequestParam Map<String, String> paramMap, Model model) {
 
@@ -140,11 +141,21 @@ public class ProductConfigurationController {
 		model.addAttribute("title", "Show Features");
 		model.addAttribute("path", "product/show");
 		return "main";
-		
 
 	}
 
-	
+	@GetMapping("/product/matching")
+	@ResponseBody
+	public String productSearchFilter(@RequestParam Long featureId, @RequestParam Long productFeatureId, Model model) {
+
+		// model.addAttribute("configurations",
+		// productConfigurationService.findByForm(paramMap));
+		// featureService.findByID(param);
+
+		return featureService.findByID(featureId).getName()+" "+productFeatureService.findById(productFeatureId).getName();
+
+	}
+
 	@GetMapping("/product/delete")
 	public String productDelete(@RequestParam Long productId, Model model) {
 
