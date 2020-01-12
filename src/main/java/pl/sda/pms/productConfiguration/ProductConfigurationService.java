@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.management.loading.PrivateClassLoader;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.xml.crypto.dsig.keyinfo.PGPData;
 
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
@@ -202,53 +203,44 @@ public class ProductConfigurationService {
 		return filteredProductsConfigurations;
 	}
 
-	public void productLiveSearch(String features) {
-		  JSONObject obj = new JSONObject(features);
-		 Map<String, Object> filterMap= obj.toMap();
-		 filterMap.entrySet().stream()
-		 .forEach(x->System.out.println(x.getKey()+"-"+x.getValue()));
-		 List<String> productFeatureNameList= filterMap.entrySet().stream()
-		 .map(x->x.getKey())
-		 .collect(Collectors.toList());
-		 
-		 
-		 List<ProductConfiguration> productConfigurations=productConfigurationRepository.findAll()
-				 .stream()
-				 .filter(x->{
-					 if(x.getConfigurationList().stream()
-						 .filter(p->productFeatureNameList.contains(p.getName())).count()>0) {
-						 return true;
-					 }
-					 return false;
-								 }
-								 ).collect(Collectors.toList());
-		 
-//		 List<ProductConfiguration> productConfigurations2=productConfigurationRepository.findAll()
-//				 .stream()
-//				 .map(x->{
-//					 x.getConfigurationList().stream()
-//					 .filter(pf->pf.getFeature().contains(featureService.findByID(filterMap.get(pf.getName()))));
-//							 
-//				 })
-//				 .collect(Collectors.toList());
-		 
-		 
-		 
-		 productConfigurations.forEach(x->System.out.println(x.getName()));
-		 
-		
-		 
-		for(ProductConfiguration pC:productConfigurations) {
-			for(ProductFeature pF:pC.getConfigurationList()) {
-				
-				
+	public List<ProductConfiguration> productLiveSearch(String features) {
+		JSONObject obj = new JSONObject(features);
+
+		Map<String, Feature> filterMap = obj.toMap().entrySet().stream().collect(Collectors.toMap(x -> x.getKey(),
+				x -> featureService.findByID(Long.parseLong((String) x.getValue()))));
+
+		List<String> productFeatureNameList = filterMap.entrySet().stream().map(x -> x.getKey())
+				.collect(Collectors.toList());
+
+		List<ProductConfiguration> productConfigurations = productConfigurationRepository.findAll().stream()
+				.filter(x -> {
+					if (x.getConfigurationList().stream().filter(p -> productFeatureNameList.contains(p.getName()))
+							.count() > 0) {
+						return true;
+					}
+					return false;
+				}).collect(Collectors.toList());
+
+
+
+		productConfigurations.forEach(x -> System.out.println(x.getName()));
+		List<ProductConfiguration> productList = new ArrayList<>();
+
+		for (ProductConfiguration pC : productConfigurations) {
+			Integer resultNumber = 0;
+			for (ProductFeature pF : pC.getConfigurationList()) {
+				if (pF.getFeature().contains(filterMap.get(pF.getName()))) {
+					resultNumber++;
+				}
 			}
-			
+			if (resultNumber == filterMap.size()) {
+				productList.add(pC);
 			}
-		 
-		 
-		 
+		}
+		System.out.println("---VVV---");
+		productList.forEach(x->System.out.println(x.getName()));
 		
+		return productList;
 	}
 
 }

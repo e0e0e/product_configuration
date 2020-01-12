@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -149,12 +150,13 @@ public class ProductConfigurationController {
 	}
 
 	@PostMapping(value="/product/matching", consumes = "application/json", produces = "application/json")
-	public String productLiveSearch(@RequestBody String features, Model model) {
+	@ResponseBody
+	public List<ProductConfiguration> productLiveSearch(@RequestBody String features, Model model) {
 		 
-		 productConfigurationService.productLiveSearch(features);
+		List<ProductConfiguration> productList= productConfigurationService.productLiveSearch(features);
 
 
-		return "ok wczytalo";
+		return productList;
 
 	}
 
