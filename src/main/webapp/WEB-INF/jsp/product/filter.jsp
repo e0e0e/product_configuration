@@ -4,7 +4,7 @@
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
 
-<div id="rest"></div>
+	<div id="rest"></div>
 	<h3>
 		Products
 		<a
@@ -19,10 +19,7 @@
 
 
 		<div class="card-header bg-info text-left text-light">
-			<a
-				href="/product/edit?productId=${configuration.id}"
-				class="nav-link text-light font-weight-bold">
-				${configuration.name}</a>
+
 		</div>
 
 
@@ -78,8 +75,34 @@ function changeAction(val,da) {
 	 var xhttp = new XMLHttpRequest();
 	    xhttp.onreadystatechange = function() {
 	         if (this.readyState == 4 && this.status == 200) {
+	        	 
+	        	 products=JSON.parse(this.responseText);
 	        	 document.getElementById("rest").innerHTML=this.responseText;
-	        	 console.log(this.responseText);
+	        	 
+	        	 for (let key in products){
+	        		 let select='<option value="" selected disabled hidden>Ignore</option>';
+	        		   if(products.hasOwnProperty(key)){
+	    /*     		     console.log(`${key} : ${products[key]}`) */
+	        		     
+	        		   
+	        		     for (let k in products[key]){
+	        		    	 
+	        		    	 console.log(products[key][k].selected);
+	        		    	 if(products[key][k].selected==false){
+	        		    	 select=select.concat('<option value="'+products[key][k].id+'">'+products[key][k].name+'</option>');
+	        		    	 }else{
+	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected>'+products[key][k].name+'</option>'); 	 
+	        		    	 }
+	        		    	 console.log(select);
+	        		     }
+	        		     select.concat("</select>");
+	        		   }
+	        		   console.log(select);
+	        		   document.getElementById(key).innerHTML=select;
+	        		
+	        		}
+	        	 
+	        	
 	      
 	         }
 	    };

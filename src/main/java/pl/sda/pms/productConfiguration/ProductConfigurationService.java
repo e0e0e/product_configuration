@@ -1,10 +1,12 @@
 package pl.sda.pms.productConfiguration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,9 +20,12 @@ import org.hibernate.envers.query.AuditEntity;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.deser.std.MapEntryDeserializer;
+
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
+import pl.sda.pms.feature.ShortFeature;
 import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.productFeature.ProductFeatureRepository;
 import pl.sda.pms.productFeature.ProductFeatureService;
@@ -203,12 +208,40 @@ public class ProductConfigurationService {
 		return filteredProductsConfigurations;
 	}
 
-	public List<ProductConfiguration> productLiveSearch(String features) {
+	public Map<String, List<ShortFeature>> productLiveSearch(String features) {
 		JSONObject obj = new JSONObject(features);
 
-		Map<String, Feature> filterMap = obj.toMap().entrySet().stream().collect(Collectors.toMap(x -> x.getKey(),
-				x -> featureService.findByID(Long.parseLong((String) x.getValue()))));
+		Map<String, Feature> filterMap = obj.toMap().entrySet().stream().collect(
+				Collectors.toMap(x -> x.getKey(), x -> featureService.findByID(Long.parseLong((String) x.getValue()))));
 
+		List<ProductConfiguration> productList = getFilteredProducts(filterMap);
+		
+		
+		System.out.println("---VVV---");
+		productList.forEach(x -> System.out.println(x.getName()));
+
+		Map<String, List<ShortFeature>> formMap = getMApOfResultsForForm(productList);
+		
+		for(Entry<String, Feature> m:filterMap.entrySet()) {
+			List<ShortFeature> shortFeatureList=formMap.get(m.getKey());
+			
+			
+			for(ShortFeature sf:shortFeatureList) {
+				if(sf.getName().equals(m.getValue().getName())) {
+					sf.setSelected(true);
+					System.out.println(sf);
+				}
+				
+			}
+			
+			
+		}
+				//forEach(f->if(f.getName()==x.getValue().getName()){f.setIsSelected=true;}));;
+
+		return formMap;
+	}
+
+	private List<ProductConfiguration> getFilteredProducts(Map<String, Feature> filterMap) {
 		List<String> productFeatureNameList = filterMap.entrySet().stream().map(x -> x.getKey())
 				.collect(Collectors.toList());
 
@@ -221,26 +254,50 @@ public class ProductConfigurationService {
 					return false;
 				}).collect(Collectors.toList());
 
-
-
 		productConfigurations.forEach(x -> System.out.println(x.getName()));
 		List<ProductConfiguration> productList = new ArrayList<>();
 
 		for (ProductConfiguration pC : productConfigurations) {
 			Integer resultNumber = 0;
+
 			for (ProductFeature pF : pC.getConfigurationList()) {
 				if (pF.getFeature().contains(filterMap.get(pF.getName()))) {
 					resultNumber++;
 				}
 			}
 			if (resultNumber == filterMap.size()) {
+
 				productList.add(pC);
 			}
 		}
-		System.out.println("---VVV---");
-		productList.forEach(x->System.out.println(x.getName()));
-		
 		return productList;
+	}
+
+	private Map<String, List<ShortFeature>> getMApOfResultsForForm(List<ProductConfiguration> productList) {
+		Map<String, List<ShortFeature>> formMap = new HashMap<String, List<ShortFeature>>();
+
+		for (ProductConfiguration pC : productList) {
+
+			if (!pC.getName().equals("pattern")) {
+
+				for (ProductFeature pF : pC.getConfigurationList()) {
+
+					if (!formMap.containsKey(pF.getName())) {
+						formMap.put(pF.getName(),
+								pF.getFeature().stream().map(f ->new ShortFeature(f.getId(), f.getName())).collect(Collectors.toList()));
+					} else {
+						List<ShortFeature> featureNames = formMap.get(pF.getName());
+
+						pF.getFeature().stream().filter(f -> !featureNames.contains(new ShortFeature(f.getId(), f.getName())))
+								.forEach(f -> featureNames.add(new ShortFeature(f.getId(), f.getName())));
+						System.out.println(" ");
+					}
+
+				}
+
+			}
+		}
+		return formMap;
 	}
 
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
+import pl.sda.pms.feature.ShortFeature;
 import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.productFeature.ProductFeatureService;
 
@@ -151,12 +152,12 @@ public class ProductConfigurationController {
 
 	@PostMapping(value="/product/matching", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public List<ProductConfiguration> productLiveSearch(@RequestBody String features, Model model) {
+	public Map<String, List<ShortFeature>> productLiveSearch(@RequestBody String features, Model model) {
 		 
-		List<ProductConfiguration> productList= productConfigurationService.productLiveSearch(features);
+		Map<String, List<ShortFeature>> productMap= productConfigurationService.productLiveSearch(features);
 
 
-		return productList;
+		return productMap;
 
 	}
 
