@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import pl.sda.pms.OrderFeature.OrderFeature;
@@ -176,7 +177,6 @@ public class ProductConfigurationService {
 						x -> featureService.findByID(Long.parseLong(x.getValue())).getName()));
 		List<String> fNames = filterMap.entrySet().stream().map(x -> x.getValue()).collect(Collectors.toList());
 
-
 		List<String> pfNames = filterMap.entrySet().stream().map(x -> x.getKey()).collect(Collectors.toList());
 		List<ProductConfiguration> filteredProductsConfigurations = new ArrayList<ProductConfiguration>();
 		for (ProductConfiguration pc : productsConfigurations) {
@@ -200,6 +200,55 @@ public class ProductConfigurationService {
 		}
 
 		return filteredProductsConfigurations;
+	}
+
+	public void productLiveSearch(String features) {
+		  JSONObject obj = new JSONObject(features);
+		 Map<String, Object> filterMap= obj.toMap();
+		 filterMap.entrySet().stream()
+		 .forEach(x->System.out.println(x.getKey()+"-"+x.getValue()));
+		 List<String> productFeatureNameList= filterMap.entrySet().stream()
+		 .map(x->x.getKey())
+		 .collect(Collectors.toList());
+		 
+		 
+		 List<ProductConfiguration> productConfigurations=productConfigurationRepository.findAll()
+				 .stream()
+				 .filter(x->{
+					 if(x.getConfigurationList().stream()
+						 .filter(p->productFeatureNameList.contains(p.getName())).count()>0) {
+						 return true;
+					 }
+					 return false;
+								 }
+								 ).collect(Collectors.toList());
+		 
+//		 List<ProductConfiguration> productConfigurations2=productConfigurationRepository.findAll()
+//				 .stream()
+//				 .map(x->{
+//					 x.getConfigurationList().stream()
+//					 .filter(pf->pf.getFeature().contains(featureService.findByID(filterMap.get(pf.getName()))));
+//							 
+//				 })
+//				 .collect(Collectors.toList());
+		 
+		 
+		 
+		 productConfigurations.forEach(x->System.out.println(x.getName()));
+		 
+		
+		 
+		for(ProductConfiguration pC:productConfigurations) {
+			for(ProductFeature pF:pC.getConfigurationList()) {
+				
+				
+			}
+			
+			}
+		 
+		 
+		 
+		
 	}
 
 }

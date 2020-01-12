@@ -1,17 +1,21 @@
 package pl.sda.pms.productConfiguration;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
@@ -144,15 +148,13 @@ public class ProductConfigurationController {
 
 	}
 
-	@GetMapping("/product/matching")
-	@ResponseBody
-	public String productSearchFilter(@RequestParam Long featureId, @RequestParam Long productFeatureId, Model model) {
+	@PostMapping(value="/product/matching", consumes = "application/json", produces = "application/json")
+	public String productLiveSearch(@RequestBody String features, Model model) {
+		 
+		 productConfigurationService.productLiveSearch(features);
 
-		// model.addAttribute("configurations",
-		// productConfigurationService.findByForm(paramMap));
-		// featureService.findByID(param);
 
-		return featureService.findByID(featureId).getName()+" "+productFeatureService.findById(productFeatureId).getName();
+		return "ok wczytalo";
 
 	}
 
