@@ -18,19 +18,15 @@
 	<div class="card text-dark bg-light m-1">
 
 
-		<div class="card-header bg-info text-left text-light">
-
-		</div>
+		<div class="card-header bg-info text-left text-light"></div>
 
 
 		<div class="card-body ">
 			<form
 				id="myFilterForm"
 				method="post"
-				action="/product/search">
-				<input
-					type="submit"
-					value="Search">
+				action="/filter/orderCreate">
+
 				<ul>
 					<c:forEach
 						var="configList"
@@ -38,7 +34,7 @@
 						<div class="row">
 							<div class="col-2 m-1">${configList.name}</div>
 							<div class="col-2 m-1">
-								<select
+								<select required
 									name="${configList.id}"
 									id="${configList.name}"
 									onchange='changeAction(this,${configList.id})'>
@@ -59,8 +55,9 @@
 					</c:forEach>
 				</ul>
 				<input
+					id="saveButton"
 					type="submit"
-					value="Search">
+					value="Save">
 			</form>
 		</div>
 		<div class="card-footer bg-info text-right text-light"></div>
@@ -77,27 +74,29 @@ function changeAction(val,da) {
 	         if (this.readyState == 4 && this.status == 200) {
 	        	 
 	        	 products=JSON.parse(this.responseText);
-	        	 document.getElementById("rest").innerHTML=this.responseText;
+	        	
 	        	 
 	        	 for (let key in products){
 	        		 let select='<option value="" selected disabled hidden>Ignore</option>';
 	        		   if(products.hasOwnProperty(key)){
-	    /*     		     console.log(`${key} : ${products[key]}`) */
-	        		     
-	        		   
+
+	        		    if(products[key].length>1){	        		   
 	        		     for (let k in products[key]){
-	        		    	 
-	        		    	 console.log(products[key][k].selected);
+	        		    	
+	        		    	
 	        		    	 if(products[key][k].selected==false){
 	        		    	 select=select.concat('<option value="'+products[key][k].id+'">'+products[key][k].name+'</option>');
 	        		    	 }else{
 	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected>'+products[key][k].name+'</option>'); 	 
 	        		    	 }
-	        		    	 console.log(select);
+	        	
+	        		    	 }
+	        		     }else{
+	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected>'+products[key][0].name+'</option>');  
 	        		     }
 	        		     select.concat("</select>");
 	        		   }
-	        		   console.log(select);
+
 	        		   document.getElementById(key).innerHTML=select;
 	        		
 	        		}
@@ -107,18 +106,19 @@ function changeAction(val,da) {
 	         }
 	    };
 	    
-
+	    document.getElementById("saveButton").style.display = 'block';
 	    let arr={};
   	  for (var i = 0; i < document.getElementById("myFilterForm").elements.length; i++) {
   		  let valueFromForm=document.getElementById("myFilterForm").elements[i].value;
-  		  if(valueFromForm!="" && valueFromForm!='Search'){
+  		
+  		  if(valueFromForm!="" && valueFromForm!='Save'){
   			  arr[document.getElementById("myFilterForm").elements[i].id]=valueFromForm;
-
+  	
   		  }
   		}
 
         let fString=JSON.stringify(arr);
-        console.log(fString);
+    
 	    xhttp.open("POST", "/product/matching", true);
 	    xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send(fString);

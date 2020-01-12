@@ -183,7 +183,6 @@ public class ProductConfigurationService {
 						x -> featureService.findByID(Long.parseLong(x.getValue())).getName()));
 		List<String> fNames = filterMap.entrySet().stream().map(x -> x.getValue()).collect(Collectors.toList());
 
-		List<String> pfNames = filterMap.entrySet().stream().map(x -> x.getKey()).collect(Collectors.toList());
 		List<ProductConfiguration> filteredProductsConfigurations = new ArrayList<ProductConfiguration>();
 		for (ProductConfiguration pc : productsConfigurations) {
 
@@ -217,26 +216,26 @@ public class ProductConfigurationService {
 		List<ProductConfiguration> productList = getFilteredProducts(filterMap);
 		
 		
-		System.out.println("---VVV---");
-		productList.forEach(x -> System.out.println(x.getName()));
+//		System.out.println("---VVV---");
+//		productList.forEach(x -> System.out.println(x.getName()));
 
 		Map<String, List<ShortFeature>> formMap = getMApOfResultsForForm(productList);
 		
 		for(Entry<String, Feature> m:filterMap.entrySet()) {
 			List<ShortFeature> shortFeatureList=formMap.get(m.getKey());
 			
-			
+			if(shortFeatureList!=null) {
 			for(ShortFeature sf:shortFeatureList) {
 				if(sf.getName().equals(m.getValue().getName())) {
 					sf.setSelected(true);
-					System.out.println(sf);
+				//	System.out.println(sf);
 				}
 				
-			}
+			}}
 			
 			
 		}
-				//forEach(f->if(f.getName()==x.getValue().getName()){f.setIsSelected=true;}));;
+				
 
 		return formMap;
 	}
@@ -254,7 +253,7 @@ public class ProductConfigurationService {
 					return false;
 				}).collect(Collectors.toList());
 
-		productConfigurations.forEach(x -> System.out.println(x.getName()));
+		//productConfigurations.forEach(x -> System.out.println(x.getName()));
 		List<ProductConfiguration> productList = new ArrayList<>();
 
 		for (ProductConfiguration pC : productConfigurations) {
@@ -290,7 +289,7 @@ public class ProductConfigurationService {
 
 						pF.getFeature().stream().filter(f -> !featureNames.contains(new ShortFeature(f.getId(), f.getName())))
 								.forEach(f -> featureNames.add(new ShortFeature(f.getId(), f.getName())));
-						System.out.println(" ");
+					//	System.out.println(" ");
 					}
 
 				}
