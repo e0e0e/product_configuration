@@ -95,17 +95,26 @@ public class ProductFeatureController {
 
 	@PostMapping("/productFeatureCreate")
 	public String createProductFeatures(@RequestParam String name, @RequestParam String description,
-			@RequestParam String imagePath, @RequestParam List<Long> featureList, Model model) {
+			@RequestParam String imagePath, @RequestParam(required = false) List<Long> featureList, Model model) {
 
 		List<ProductConfiguration> productsList = productConfigurationService.findAll();
+		try {
+			productsList.forEach(x -> {
 
-		productsList.forEach(x -> {
+				ProductFeature productFeatureNew = productFeatureService.save(name, description, imagePath,
+						featureList);
+				productFeatureNew.setProductConfiguration(x);
+				productFeatureService.save(productFeatureNew);
 
-			ProductFeature productFeatureNew = productFeatureService.save(name, description, imagePath, featureList);
-			productFeatureNew.setProductConfiguration(x);
-			productFeatureService.save(productFeatureNew);
+			});
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "Please choose feature");
+			model.addAttribute("featuresList", featureService.findNotUsed());
 
-		});
+			model.addAttribute("title", "Add Product Features");
+			model.addAttribute("path", "feature/createProductFeature");
+			return "main";
+		}
 
 		model.addAttribute("featuresList", featureService.findAll());
 
@@ -120,7 +129,6 @@ public class ProductFeatureController {
 		productFeatureService.findById(productFeatureId);
 
 		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList);
-	
 
 		return "redirect:/feature/list";
 	}

@@ -15,13 +15,8 @@
 	<form
 		method="post"
 		action="/productFeatureCreate">
-		<c:if test="${errorMessage!=null}">
 
-			<p style="background-color: red;">${errorMessage}</p>
-
-		</c:if>
-
-		<label>Feature Name:</label>
+		<label>Product Feature Name:</label>
 		<br />
 		<input
 			type="text"
@@ -52,6 +47,11 @@
 			<div>${feat.name}</div>
 		</c:forEach>
 		<br /> --%>
+		<c:if test="${errorMessage!=null}">
+
+			<p style="background-color: red;">${errorMessage}</p>
+
+		</c:if>
 		<label>Change feature List:</label>
 		<br />
 		<select
