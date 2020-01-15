@@ -92,11 +92,21 @@ public class OrderService {
 	public void saveProductOrderChanges(Map<String, String> paramMap, String orderId) {
 		Ord order = orderRepository.findById(Long.parseLong(orderId)).get();
 		List<OrderFeature> orginalOrderFeatures = order.getOrderFeatures();
-		
+
 		Map<ProductFeature, Feature> newOrderFeaturesMap = paramMap.entrySet().stream()
 				.filter(x -> OrderFeatureController.isNumeric(x.getKey()))
 				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())),
 						x -> featureService.findByID(Long.parseLong(x.getValue()))));
+
+		List<OrderFeature> newOrderFeatures = newOrderFeaturesMap.entrySet().stream()
+				.map(x -> new OrderFeature(x.getKey(), x.getValue())).collect(Collectors.toList());
+
+		for (OrderFeature of : newOrderFeatures) {
+					orginalOrderFeatures.stream()
+					.filter(x -> x.getProductFeature().getName().equals(of.getProductFeature().getName()))
+					.collect(Collectors.toList()).get(0).setFeature(of.getFeature());
+
+		}
 
 		Map<String, Feature> newStringFeaturesMap = paramMap.entrySet().stream()
 				.filter(x -> OrderFeatureController.isNumeric(x.getKey()))
@@ -116,8 +126,10 @@ public class OrderService {
 		order.setOrderFeaturesStrings(orderFeatureStringList);
 
 		order.revisionUp();
-		Double priceList=orginalOrderFeatures.stream().mapToDouble(x->x.getFeature().getPrice()).sum();
+		Double priceList = orginalOrderFeatures.stream().mapToDouble(x -> x.getFeature().getPrice()).sum();
+
 		order.setPrice(priceList);
+		order.setOrderFeatures(orginalOrderFeatures);
 		orderRepository.save(order);
 
 		newOrderFeaturesMap.entrySet().stream().forEach(x -> {
@@ -133,8 +145,7 @@ public class OrderService {
 
 		@SuppressWarnings("unchecked")
 		List<Object> revisions = AuditReaderFactory.get(entityManager).createQuery()
-				.forRevisionsOfEntity(Ord.class, false, true)
-				.add(AuditEntity.id().eq(orderId)).getResultList();
+				.forRevisionsOfEntity(Ord.class, false, true).add(AuditEntity.id().eq(orderId)).getResultList();
 		revisions.remove(0);
 
 		return revisions;

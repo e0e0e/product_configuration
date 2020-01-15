@@ -9,8 +9,10 @@
 	<%@ taglib
 		prefix="fmt"
 		uri="http://java.sun.com/jsp/jstl/fmt"%>
+		<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-		<c:set var = "imagesPath" scope = "session" value = "http://konfigurator.viberti.pl/images/Knorr.png"/>
+		<c:set var = "imagesPath" value = "http://konfigurator.viberti.pl/imagesLd/"/>
+		<c:set var = "default" value = "default.png"/>
 	<div class="card text-dark bg-light m-1">
 
 
@@ -51,7 +53,13 @@
 						<div class="col-4 m-1">${feature.feature.name}</div>
 						<div class="col-2 m-1">${feature.feature.index}</div>
 						<div class="col-1 m-1">${feature.feature.mIndex}</div>
-						<div class="col-1 m-1"><img src=${imagesPath} alt="Flowers in Chania" width="20"></div>
+				
+						<div class="col-1 m-1">
+						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
+						<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50">
+						</a>
+						</div>
+						
 						<c:if test="${feature.feature.price!='0.0'}">
 							<div class="col-1 m-1">${feature.feature.price}</div>
 						</c:if>
