@@ -92,7 +92,7 @@ public class OrderService {
 	public void saveProductOrderChanges(Map<String, String> paramMap, String orderId) {
 		Ord order = orderRepository.findById(Long.parseLong(orderId)).get();
 		List<OrderFeature> orginalOrderFeatures = order.getOrderFeatures();
-
+		
 		Map<ProductFeature, Feature> newOrderFeaturesMap = paramMap.entrySet().stream()
 				.filter(x -> OrderFeatureController.isNumeric(x.getKey()))
 				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())),
@@ -116,6 +116,8 @@ public class OrderService {
 		order.setOrderFeaturesStrings(orderFeatureStringList);
 
 		order.revisionUp();
+		Double priceList=orginalOrderFeatures.stream().mapToDouble(x->x.getFeature().getPrice()).sum();
+		order.setPrice(priceList);
 		orderRepository.save(order);
 
 		newOrderFeaturesMap.entrySet().stream().forEach(x -> {

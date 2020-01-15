@@ -4,19 +4,22 @@
 <%@ taglib
 	prefix="fmt"
 	uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div class="container">
+<div>
 	<%@include file="../featureNavigation.jsp"%>
 	<%@ taglib
 		prefix="fmt"
 		uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+		<c:set var = "imagesPath" scope = "session" value = "http://konfigurator.viberti.pl/images/Knorr.png"/>
 	<div class="card text-dark bg-light m-1">
 
 
 		<div class="card-header bg-info text-left text-light">
-			<div>LP. ${order.id}, Order name: ${order.orderName}, Price:
-				${order.price}, Client Address: ${order.client}, Units:
+			<div>LP. ${order.id}, Order name: ${order.orderName}, Client Address: ${order.client}, Units:
 				${order.unitsToProduce} Created: ${order.createdDate}, Modified:
-				${order.lastModifiedDate}, Revision: ${order.revision}</div>
+				${order.lastModifiedDate}, Revision: ${order.revision}
+				<div>Price : ${order.price}</div>
+				</div>
 
 			<a
 				class="btn btn-outline-info text-dark"
@@ -47,7 +50,8 @@
 						<div class="col-2 m-1">${feature.productFeature.name}:</div>
 						<div class="col-4 m-1">${feature.feature.name}</div>
 						<div class="col-2 m-1">${feature.feature.index}</div>
-						<div class="col-2 m-1">${feature.feature.mIndex}</div>
+						<div class="col-1 m-1">${feature.feature.mIndex}</div>
+						<div class="col-1 m-1"><img src=${imagesPath} alt="Flowers in Chania" width="20"></div>
 						<c:if test="${feature.feature.price!='0.0'}">
 							<div class="col-1 m-1">${feature.feature.price}</div>
 						</c:if>
@@ -58,7 +62,7 @@
 		</div>
 		<div class="card-footer bg-info text-right text-light">
 			<div>Modified by: ${order.lastModifiedBy}</div>
-
+			
 		</div>
 	</div>
 

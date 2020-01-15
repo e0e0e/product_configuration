@@ -38,6 +38,8 @@ public class OrderFeatureService {
 			f.getProductFeature().setOrderFeature(f);
 		}
 
+		Double priceSum=result.stream().mapToDouble(x->x.getFeature().getPrice()).sum();
+		
 		List<String> orderFeatureStringList = orderList.stream()
 				.map(x -> x.getFeature().getName() + ", " + x.getProductFeature().getName())
 				.collect(Collectors.toList());
@@ -57,6 +59,8 @@ public class OrderFeatureService {
 		});
 		ord.setOrderFeaturesStrings(orderFeatureStringList);
 		ord.setOrderFeatures(orderList);
+		ord.setPrice(priceSum);
+
 		orderRepository.save(ord);
 		return result;
 
