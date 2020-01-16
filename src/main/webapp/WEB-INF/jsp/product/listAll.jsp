@@ -30,11 +30,20 @@
 					<ul>
 				<c:forEach var="feature"
 					items="${configList.feature}">
-					
-					<li><a class="btn btn-outline-info text-dark" href="/feature/editFeature?featureId=${feature.id}">${feature.name} <span
+					<li>
+					<c:choose>
+					<c:when test="${user.authorities=='[ADMIN]'}">
+					<a class="btn btn-outline-info text-dark" href="/feature/editFeature?featureId=${feature.id}">${feature.name} <span
 					class="glyphicon glyphicon-edit text-dark"></span></a>
+					
 					<a class="btn btn-outline-info text-dark" href="/feature/removeFeature?featureId=${feature.id}&productFeatureId=${configList.id}"><span
 					class="glyphicon glyphicon-trash text-dark"></span></a>
+					
+					</c:when>
+					<c:otherwise>
+						${feature.name}
+					</c:otherwise>
+					</c:choose>
 					</li>
 				</c:forEach>
 				</ul>

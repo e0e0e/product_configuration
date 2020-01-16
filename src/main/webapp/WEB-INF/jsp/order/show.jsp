@@ -4,15 +4,35 @@
 <%@ taglib
 	prefix="fmt"
 	uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div>
+
 	<%@include file="../featureNavigation.jsp"%>
 	<%@ taglib
 		prefix="fmt"
 		uri="http://java.sun.com/jsp/jstl/fmt"%>
 		<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+		<%@ taglib
+	prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 		<c:set var = "imagesPath" value = "http://konfigurator.viberti.pl/imagesLd/"/>
 		<c:set var = "default" value = "default.png"/>
+		<sec:authentication
+	var="user"
+	property="principal" />
+			<script>
+function imgError(es)
+{
+	
+var something = "${imagesPath}";
+var imagePath = "0.png";
+console.log(something.concat(imagePath));
+es.src=something.concat(imagePath);
+es.parentElement.href=something.concat(imagePath);
+
+}
+</script>
+<div>
+
 	<div class="card text-dark bg-light m-1">
 
 
@@ -22,12 +42,13 @@
 				${order.lastModifiedDate}, Revision: ${order.revision}
 				<div>Price : ${order.price}</div>
 				</div>
-
+<c:if test="${user.authorities=='[ADMIN]'}">
 			<a
 				class="btn btn-outline-info text-dark"
 				href="/order/delete?orderId=${order.id}">
 				<span class="glyphicon glyphicon-trash text-light"></span>
 			</a>
+			</c:if>
 			<a
 				class="btn btn-outline-info text-dark"
 				href="/order/edit?orderId=${order.id}">
@@ -56,7 +77,7 @@
 				
 						<div class="col-1 m-1">
 						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
-						<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50">
+						<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50" onerror="imgError(this)">
 						</a>
 						</div>
 						
@@ -77,6 +98,8 @@
 
 
 </div>
+
+
 
 <div class="container p-5">
 	<c:forEach
@@ -106,3 +129,4 @@
 	</c:forEach>
 
 </div>
+

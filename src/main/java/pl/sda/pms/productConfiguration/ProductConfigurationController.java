@@ -42,9 +42,6 @@ public class ProductConfigurationController {
 	public String showFeature(Model model) {
 		List<ProductFeature> productFeature = productFeatureService.findAll();
 
-		System.out.println("ProductConfiguration feature");
-		System.out.println(productFeature.toString());
-
 		model.addAttribute("features", productFeature);
 
 		model.addAttribute("title", "Show Features");

@@ -61,6 +61,7 @@
 							</div>
 						</a>
 					</div>
+					<c:if test="${user.authorities=='[ADMIN]'}">
 					<div class="col-1">
 						<a
 							class="btn btn-outline-secondary text-dark float-right"
@@ -68,6 +69,7 @@
 							<span class="glyphicon glyphicon-trash text-light"></span>
 						</a>
 					</div>
+					</c:if>
 				</div>
 
 			</div>

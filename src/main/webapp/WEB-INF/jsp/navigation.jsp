@@ -6,7 +6,7 @@
 	class="java.util.Date" />
 <sec:authentication
 	var="user"
-	property="principal" />
+	property="principal" scope="session"/>
 <div>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-info">
@@ -25,32 +25,40 @@
 				class="navbar-collapse collapse show"
 				id="navbar11"
 				style="">
+				
 				<ul class="navbar-nav mr-auto bg-info">
+			
+		
+			<c:if test="${user.authorities=='[ADMIN]'}">
 					<li class="nav-item"><a
-						class="nav-link text-light font-weight-bold"
+						class="nav-link text-warning font-weight-bold btn btn-outline-dark"
 						href="/feature/show">Features</a></li>
-					<li class="nav-item"><a
-						href="/feature/add"
-						class="nav-link text-light font-weight-bold">Feature<span
-							class="glyphicon glyphicon-plus text-light"></span></a></li>
-
-					<li class="nav-item"><a
-						class="nav-link text-light font-weight-bold"
-						href="/feature/list">Product Features </a></li>
-
-					<li class="nav-item"><a
-						class="nav-link text-light font-weight-bold"
-						href="/product/show">Product Show</a>
 						
 					<li class="nav-item"><a
-						class="nav-link text-light font-weight-bold"
-						href="/product/listAll">All Products</a></li>
+						href="/feature/add"
+						class="nav-link text-warning font-weight-bold btn btn-outline-dark">F <span
+							class="glyphicon glyphicon-plus text-warning"></span></a></li>
 
 					<li class="nav-item"><a
-						class="nav-link text-light font-weight-bold"
+						class="nav-link text-warning font-weight-bold btn btn-outline-dark"
+						href="/feature/list">Product Features </a></li>
+				</c:if>
+					<li class="nav-item"><a
+						class="nav-link text-light font-weight-bold btn btn-outline-dark"
+						href="/product/show">Product Show</a>
+						
+
+					<li class="nav-item"><a
+						class="nav-link text-light font-weight-bold btn btn-outline-dark"
 						href="/orders/list">Orders</a></li>
 
+							<li class="nav-item"><a
+			class="nav-link text-light font-weight-bold btn btn-outline-dark"
+			href="/product/filter">
+			<span class="glyphicon glyphicon-plus text-light"></span></a>
+</li>		
 				</ul>
+				
 			</div>
 		</div>
 		<div
@@ -68,5 +76,5 @@
 				style="color: white;"></span></a> <br />
 		</div>
 	</nav>
-	<div></div>
+
 </div>

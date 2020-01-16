@@ -6,11 +6,14 @@
 
 
 	<h3>
-		Products<a
+		Product
+		<c:if test="${user.authorities=='[ADMIN]'}">
+		<a
 			href="/product/add"
 			class="btn btn-outline-dark btn-sm"> <span
 			class="glyphicon glyphicon-plus"></span>
 		</a>
+		</c:if>
 	</h3>
 
 
@@ -18,10 +21,17 @@
 
 
 		<div class="card-header bg-info text-left text-light">
+		<c:choose>
+					<c:when test="${user.authorities=='[ADMIN]'}">
 			<a
 				href="/product/edit?productId=${configuration.id}"
 				class="nav-link text-light font-weight-bold">
 				${configuration.name}</a>
+				</c:when>
+					<c:otherwise>
+<div class="text-light font-weight-bold">${configuration.name}</div>
+					</c:otherwise>
+					</c:choose>
 		</div>
 
 
@@ -31,7 +41,10 @@
 					var="configList"
 					items="${configuration.configurationList}">
 					<a name="anchor_${configList.id}"></a>
-					<li><a
+					<li>
+					<c:choose>
+					<c:when test="${user.authorities=='[ADMIN]'}">
+					<a
 						class="btn btn-outline-info text-dark"
 						href="/feature/edit?productFeatureId=${configList.id}">${configList.name}
 							<span class="glyphicon glyphicon-edit text-dark"></span>
@@ -45,12 +58,21 @@
 						href="/feature/moveUp?productFeatureId=${configList.id}&productId=${configuration.id}"
 						class="btn btn-outline-info text-dark"> <span
 							class="glyphicon glyphicon-triangle-top"></span></a></li>
+					
+					</c:when>
+					<c:otherwise>
+					<div class="btn btn-outline-info text-dark">${configList.name}</div>
+					</c:otherwise>
+					</c:choose>
 					<ul>
 						<c:forEach
 							var="feature"
 							items="${configList.feature}">
 
-							<li class="border-bottom"><a
+							<li class="border-bottom">
+							<c:choose>
+					<c:when test="${user.authorities=='[ADMIN]'}">
+							<a
 								class="btn btn-outline-info text-dark"
 								href="/feature/editFeature?featureId=${feature.id}">${feature.name}
 									<span class="glyphicon glyphicon-edit text-dark"></span>
@@ -58,7 +80,13 @@
 								class="btn btn-outline-info text-dark"
 								href="/feature/removeFeature?featureId=${feature.id}&productFeatureId=${configList.id}"><span
 									class="glyphicon glyphicon-trash text-dark"></span></a><span
-								class="float-right m-2">${feature.index}</span></li>
+								class="float-right m-2">${feature.index}</span>
+								</c:when>
+					<c:otherwise>
+							<div class="btn btn-outline-info text-dark">${feature.name}</div>
+					</c:otherwise>
+					</c:choose>
+								</li>
 
 						</c:forEach>
 					</ul>
