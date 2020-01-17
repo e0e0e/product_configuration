@@ -36,6 +36,12 @@
 			class="text-dark"
 			name="description">${productFeature.description}</textarea>
 		<br />
+			 <input type="checkbox" name="parent" value="Chassis"
+			 <c:if test="${productFeature.parent=='Chassis'}">
+			 checked
+			 </c:if>
+			 >Chassis feature
+		<br />
 		<label>Feature Image:</label>
 		<br />
 		<input

@@ -11,7 +11,9 @@ public interface ProductFeatureRepository extends JpaRepository<ProductFeature, 
 
 	List<ProductFeature> findAll();
 
-	@Query(value = "Select * from productFeature where name=?1", nativeQuery = true)
+	@Query(value = "Select * from product_feature where name=?1", nativeQuery = true)
 	List<ProductFeature> findByName(String name);
+
+
 
 }

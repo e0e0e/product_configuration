@@ -1,9 +1,13 @@
-table, th, td, form {
+table,
+th,
+td,
+form {
     border: 1px solid black;
     border-collapse: collapse;
     padding: 5px;
     background-color: khaki;
 }
+
 ul {
     list-style-type: none;
     margin: 0;

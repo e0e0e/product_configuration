@@ -7,7 +7,7 @@
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
 
-	<h1>Edit Product Feature</h1>
+	<h1>Edit Feature</h1>
 	<sec:authentication
 		var="loggedUser"
 		property="principal" />

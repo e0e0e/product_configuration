@@ -6,12 +6,7 @@
 
 	<div id="rest"></div>
 	<h3>
-		Products
-		<a
-			href="/product/add"
-			class="btn btn-outline-dark btn-sm">
-			<span class="glyphicon glyphicon-plus"></span>
-		</a>
+		Configuration of order
 	</h3>
 
 

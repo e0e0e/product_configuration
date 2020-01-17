@@ -2,6 +2,7 @@ package pl.sda.pms.productFeature;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,15 +66,15 @@ public class ProductFeatureService {
 
 	}
 
-	public boolean edit(Long id, String name, String description, String imagePath, List<Long> featureList) {
-		
-		
-		ProductFeature productFeature = productFeatureRepository.findById(id).get();
+	public boolean edit(Long id, String newName, String description, String imagePath, List<Long> featureList,
+			String parent) {
 
-		//List<ProductFeature> productFeaturesByName= productFeatureRepository.findByName(productFeature.getName()); 
-		
-		
-		
+		ProductFeature productFeature = productFeatureRepository.findById(id).get();
+		List<ProductFeature> productFeatureSameName = productFeatureRepository.findByName(productFeature.getName());
+
+		// List<ProductFeature> productFeaturesByName=
+		// productFeatureRepository.findByName(productFeature.getName());
+
 		Set<Feature> featuresToAddFeatures = new HashSet<>();
 		try {
 			featuresToAddFeatures.addAll(productFeature.getFeature());
@@ -91,12 +92,19 @@ public class ProductFeatureService {
 			System.out.println(
 					"product feature service edit, no new features in feature List, no problem" + e.getMessage());
 		}
+		List<Boolean> createdFeature = new ArrayList<>();
 
-		productFeature.setName(name);
-		productFeature.setDescription(description);
-		productFeature.setImagePath(imagePath);
-		ProductFeature createdFeature = productFeatureRepository.save(productFeature);
-		return createdFeature.getId() != null;
+		productFeatureSameName.stream().forEach(pf -> {
+			pf.setName(newName);
+			pf.setDescription(description);
+			pf.setImagePath(imagePath);
+
+			pf.setParent(parent);
+
+			createdFeature.add(productFeatureRepository.save(pf).getId() == null);
+		});
+
+		return createdFeature.contains(false);
 	}
 
 	public void save(List<ProductFeature> configurationList, ProductConfiguration productConfiguration) {
@@ -106,11 +114,11 @@ public class ProductFeatureService {
 			productFeature.setPosition(i);
 			productFeatureRepository.save(productFeature);
 		}
-//		configurationList.forEach(x -> {
-//			x.setProductConfiguration(productConfiguration);
-//			x.autoPosition();
-//			productFeatureRepository.save(x);
-//		});
+		// configurationList.forEach(x -> {
+		// x.setProductConfiguration(productConfiguration);
+		// x.autoPosition();
+		// productFeatureRepository.save(x);
+		// });
 
 	}
 
@@ -167,4 +175,91 @@ public class ProductFeatureService {
 
 	}
 
+	public void moveDown(Long productFeatureId, Long productId) {
+
+		ProductFeature productFeature = productFeatureRepository.findById(productFeatureId).get();
+		List<ProductFeature> productFeaturesByOrgynalName = productFeatureRepository
+				.findByName(productFeature.getName());
+		try {
+			for (ProductFeature pf : productFeaturesByOrgynalName) {
+				try {
+				ProductConfiguration productConfiguration = pf.getProductConfiguration();
+				int position = pf.findPositionInProduct();
+
+				
+					ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
+							.sorted(Comparator.comparing(ProductFeature::findPositionInProduct))
+							.filter(x -> x.findPositionInProduct() > position).findFirst().get();
+
+					pf.setPosition(nextProductFeature.findPositionInProduct());
+					nextProductFeature.setPosition(position);
+
+					productFeatureRepository.save(nextProductFeature);
+					productFeatureRepository.save(pf);
+				} catch (Exception e) {
+					System.out.println("product feature Service productFeature last in product: " + e.getMessage());
+				}
+
+			}
+		} catch (Exception e) {
+			System.out.println("move down: " + e.getMessage());
+		}
+
+	}
+
+	public void moveUp(Long productFeatureId, Long productId) {
+
+		ProductFeature productFeature = productFeatureRepository.findById(productFeatureId).get();
+		List<ProductFeature> productFeaturesByOrgynalName = productFeatureRepository
+				.findByName(productFeature.getName());
+		try {
+			for (ProductFeature pf : productFeaturesByOrgynalName) {
+				try {
+				ProductConfiguration productConfiguration = pf.getProductConfiguration();
+				int position = pf.findPositionInProduct();
+
+				
+					ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
+							.sorted(Comparator.comparing(ProductFeature::findPositionInProduct))
+							.filter(x -> x.findPositionInProduct() < position).findFirst().get();
+
+					pf.setPosition(nextProductFeature.findPositionInProduct());
+					nextProductFeature.setPosition(position);
+
+					productFeatureRepository.save(nextProductFeature);
+					productFeatureRepository.save(pf);
+				} catch (Exception e) {
+					System.out.println("product feature Service productFeature last in product: " + e.getMessage());
+				}
+
+			}
+		} catch (Exception e) {
+			System.out.println("move Up: " + e.getMessage());
+		}
+
+	}
+
+	public void unifyPosition() {
+
+		List<ProductFeature> productFeatures = productFeatureRepository.findAll();
+
+		Set<String> nameSet = productFeatures.stream().map(pf -> pf.getName()).collect(Collectors.toSet());
+
+		for (String name : nameSet) {
+			List<ProductFeature> pfList = productFeatureRepository.findByName(name);
+
+			try {
+
+				Integer positionDefault = pfList.stream().filter(x -> x.getProductConfiguration() != null).findFirst()
+						.get().findPositionInProduct();
+				pfList.stream().forEach(pf -> {
+					pf.setPosition(positionDefault);
+					productFeatureRepository.save(pf);
+				});
+			} catch (Exception e) {
+				System.out.println("Product Feature Service probably not used in product " + e.getMessage());
+			}
+
+		}
+	}
 }

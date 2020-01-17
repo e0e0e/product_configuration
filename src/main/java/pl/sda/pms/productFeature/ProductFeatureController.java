@@ -36,8 +36,6 @@ public class ProductFeatureController {
 		this.featureService = featureService;
 		this.productConfigurationService = productConfigurationService;
 	}
-	
-
 
 	@GetMapping("/feature/productShow")
 	public String showProductFeatures(Model model) {
@@ -126,12 +124,14 @@ public class ProductFeatureController {
 
 	@PostMapping("/productFeatureChange")
 	public String changeProductFeature(@RequestParam Long productFeatureId, @RequestParam String name,
-			@RequestParam String description, @RequestParam String imagePath,
-			@RequestParam(required = false) List<Long> featureList, Model model) {
+			@RequestParam String description, @RequestParam(required = false) String parent,
+			@RequestParam String imagePath, @RequestParam(required = false) List<Long> featureList, Model model) {
 
 		productFeatureService.findById(productFeatureId);
-
-		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList);
+		if (parent == null) {
+			parent = "";
+		}
+		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList, parent);
 
 		return "redirect:/feature/list";
 	}
@@ -164,18 +164,7 @@ public class ProductFeatureController {
 	public String moveDownProductFeature(@RequestParam Long productFeatureId, @RequestParam Long productId,
 			Model model) {
 
-		ProductFeature productFeature = productFeatureService.findByID(productFeatureId);
-		ProductConfiguration productConfiguration = productFeature.getProductConfiguration();
-
-		int position = productFeature.getPosition();
-		ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
-				.sorted(Comparator.comparing(ProductFeature::getPosition)).filter(x -> x.getPosition() > position)
-				.findFirst().get();
-		productFeature.setPosition(nextProductFeature.getPosition());
-		nextProductFeature.setPosition(position);
-
-		productFeatureService.save(nextProductFeature);
-		productFeatureService.save(productFeature);
+		productFeatureService.moveDown(productFeatureId, productId);
 
 		return "redirect:/product/list?productId=" + productId + "#anchor_" + productFeatureId;
 
@@ -184,21 +173,21 @@ public class ProductFeatureController {
 	@GetMapping("/feature/moveUp")
 	public String moveUpProductFeature(@RequestParam Long productFeatureId, @RequestParam Long productId, Model model) {
 
-		ProductFeature productFeature = productFeatureService.findByID(productFeatureId);
-		ProductConfiguration productConfiguration = productFeature.getProductConfiguration();
-
-		int position = productFeature.getPosition();
-		ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
-				.sorted(Comparator.comparing(ProductFeature::getPosition).reversed())
-				.filter(x -> x.getPosition() < position).findFirst().get();
-
-		productFeature.setPosition(nextProductFeature.getPosition());
-		nextProductFeature.setPosition(position);
-
-		productFeatureService.save(nextProductFeature);
-		productFeatureService.save(productFeature);
+		productFeatureService.moveUp(productFeatureId, productId);
+		
 
 		return "redirect:/product/list?productId=" + productId + "#anchor_" + productFeatureId;
+
+	}
+
+
+
+	@GetMapping("/productFeature/unify")
+	public String unifyPosition() {
+
+		productFeatureService.unifyPosition();
+
+		return null;
 
 	}
 }

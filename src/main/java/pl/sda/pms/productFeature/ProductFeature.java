@@ -32,11 +32,22 @@ public class ProductFeature {
 	private String description;
 	private String imagePath;
 	private Integer position;
+	private String parent;
 
-	public Integer getPosition() {
-		return position;
+
+
+	public Integer findPositionInProduct() {
+
+		try {
+		return	productConfiguration.getConfigurationList().indexOf(this);
+		} catch (Exception e) {
+			System.out.println("Product Feature , not in product: "+e.getMessage());
+		}
+		return	null;
 	}
-
+	public Integer getPosition() {
+		return	position;
+	}
 	public void setPosition(Integer position) {
 		this.position = position;
 	}
@@ -78,7 +89,13 @@ public class ProductFeature {
 	public ProductFeature() {
 
 	}
+	public String getParent() {
+		return this.parent;
+	}
 
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
 	public ProductFeature(String name, String description, String imagePath, Integer position) {
 		super();
 		this.name = name;
