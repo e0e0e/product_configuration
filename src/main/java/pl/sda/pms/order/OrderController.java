@@ -60,11 +60,17 @@ public class OrderController {
 
 	@GetMapping("/order/edit")
 	public String productSelectiom(@RequestParam Long orderId, Model model) {
+		Ord order=orderService.findById(orderId);
+		Map<String,String> orderMap=order.getOrderFeatures().stream().collect(Collectors.toMap(fp->fp.getProductFeature().getName(), f->f.getFeature().getName()));
 
-		model.addAttribute("order", orderService.findById(orderId));
+
+		model.addAttribute("order", orderMap);
+		model.addAttribute("orderId", orderId);
+		
+		model.addAttribute("configuration", productConfigurationService.findById(8L));
 
 		model.addAttribute("title", "Edit Order");
-		model.addAttribute("path", "order/edit");
+		model.addAttribute("path", "product/filterOrder");
 		return "main";
 
 	}
