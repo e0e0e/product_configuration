@@ -31,6 +31,17 @@ es.parentElement.href=something.concat(imagePath);
 es.width="1";
 
 }
+function hideChassis(){
+  var x = document.getElementsByClassName("chassis");
+  for(var i = 0; i < x.length; i++) {
+ if (x[i].style.display === "none") {
+    x[i].style.display = "block";
+  } else {
+   x[i].style.display = "none";
+  }
+  }
+}
+
 </script>
 <div>
 
@@ -43,7 +54,7 @@ es.width="1";
 				${order.lastModifiedDate}, Revision: ${order.revision}
 				<div>Price : ${order.price}</div>
 				</div>
-<c:if test="${user.authorities=='[ADMIN]'}">
+			<c:if test="${user.authorities=='[ADMIN]'}">
 			<a
 				class="btn btn-outline-info text-dark"
 				href="/order/delete?orderId=${order.id}">
@@ -60,17 +71,55 @@ es.width="1";
 				href="/order/print?orderId=${order.id}">
 				<span class="glyphicon glyphicon-print text-light"></span>
 			</a>
-			
-		</div>
-
-
+			</div>
 		<div class="card-body ">
-			<ul>
-
 				<c:forEach
 					var="feature"
 					items="${order.orderFeatures}">
-					<div class="row border-bottom m-1">
+					<c:choose>
+						<c:when test="${feature.productFeature.parent=='Chassis'}">
+						<div class="chassis border-left  border-bottom  ml-5">
+						<div class="row">
+						<div class="col-2"><div class="ml-5">${feature.productFeature.name}:</div></div>
+						<div class="col-4"><div class="ml-5">${feature.feature.name}</div></div>
+						<div class="col-2">${feature.feature.index}</div>
+						<div class="col-1">${feature.feature.mIndex}</div>
+				
+						<div class="col-1">
+						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
+						<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50" onerror="imgError(this)">
+						</a>
+						</div>
+						
+						<c:if test="${feature.feature.price!='0.0'}">
+							<div class="col-1">${feature.feature.price}</div>
+						</c:if>
+						</div>
+						</div>
+						</c:when>
+						<c:when test="${feature.productFeature.name=='Chassis'}">
+						<div class="row border-bottom m-1">
+						<div class="col-2 m-1"><button class="btn btn-outline-secondry text-dark" onclick="hideChassis()"><span class="glyphicon glyphicon-menu-up text-dark"></span></button>
+						${feature.productFeature.name}:</div>
+						<div class="col-4 m-1">${feature.feature.name}</div>
+						<div class="col-1 m-1">${feature.feature.index}</div>
+						<div class="col-1 m-1">${feature.feature.mIndex}</div>
+				
+						<div class="col-1 m-1">
+						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
+						<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50" onerror="imgError(this)">
+						</a>
+						</div>
+						
+						<c:if test="${feature.feature.price!='0.0'}">
+							<div class="col-1 m-1">${feature.feature.price}</div>
+						</c:if>
+						</div>
+						</div>
+						</c:when>
+
+						<c:otherwise>
+						<div class="row border-bottom m-1">
 						<div class="col-2 m-1">${feature.productFeature.name}:</div>
 						<div class="col-4 m-1">${feature.feature.name}</div>
 						<div class="col-2 m-1">${feature.feature.index}</div>
@@ -85,9 +134,10 @@ es.width="1";
 						<c:if test="${feature.feature.price!='0.0'}">
 							<div class="col-1 m-1">${feature.feature.price}</div>
 						</c:if>
-					</div>
+						</div>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
-			</ul>
 
 		</div>
 		<div class="card-footer bg-info text-right text-light">

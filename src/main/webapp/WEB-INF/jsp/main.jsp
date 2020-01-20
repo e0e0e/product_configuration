@@ -63,6 +63,10 @@
 .greyText{
 color: #a9cfee;
 }
+
+.border-3 {
+    border-width:3px !important;
+}
 </style>
 </head>
 <body>

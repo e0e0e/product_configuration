@@ -220,7 +220,7 @@ public class ProductFeatureService {
 
 				
 					ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
-							.sorted(Comparator.comparing(ProductFeature::findPositionInProduct))
+							.sorted(Comparator.comparing(ProductFeature::findPositionInProduct).reversed())
 							.filter(x -> x.findPositionInProduct() < position).findFirst().get();
 
 					pf.setPosition(nextProductFeature.findPositionInProduct());
