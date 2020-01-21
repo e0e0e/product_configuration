@@ -16,6 +16,9 @@
 		<div class="card-header bg-info text-left text-light"></div>
 
 <div id="error"></div>
+<div id="picture" style="position:absolute;top:30px;">
+
+</div>
 		<div class="card-body ">
 			<form
 				id="myFilterForm"
@@ -83,14 +86,14 @@ function changeAction(val,da) {
 						}
 	        		    	
 	        		    	 if(products[key][k].selected==false){
-	        		    	 	select=select.concat('<option value="'+products[key][k].id+'">'+products[key][k].name+'</option>');
+	        		    	 	select=select.concat('<option value="'+products[key][k].id+'" onmouseover="normalImg(this)">'+products[key][k].name+'</option>');
 	        		    	 }else{
-	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected  class="bg-warning">'+products[key][k].name+'</option>'); 	 
+	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected  class="bg-warning" onmouseover="normalImg(this)">'+products[key][k].name+'</option>'); 	 
 	        		    	 }
 	        	
 	        		    	 }
 	        		     }else{
-	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected class="bg-danger">'+products[key][0].name+'</option>'); 
+	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected class="bg-danger" onmouseover="normalImg(this)">'+products[key][0].name+'</option>'); 
 							 document.getElementById(key).style.color="blue"; 
 							 
 	        		     }
@@ -103,7 +106,7 @@ function changeAction(val,da) {
 					   }
 	        		}
 				 }else{
-					document.getElementById("error").innerHTML="No product found, refresh and search different configuration, or mak as not standrd order";
+					document.getElementById("error").innerHTML="No product found, refresh and search different configuration, or mak as not standard order";
 					document.getElementById("error").style.color="red";
 					document.getElementById("myFilterForm").style.backgroundColor="orange";
 				 }
@@ -130,4 +133,5 @@ function changeAction(val,da) {
 		xhttp.send(fString);
 	
 }
+
 </script>

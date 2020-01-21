@@ -37,7 +37,7 @@
 										value=""
 										selected
 										disabled
-										hidden>Ignore</option>
+										hidden>Select</option>
 									<c:forEach
 										var="feature"
 										items="${configList.feature}">

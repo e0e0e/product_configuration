@@ -93,25 +93,37 @@ public class OrderService {
 		Ord order = orderRepository.findById(Long.parseLong(orderId)).get();
 		List<OrderFeature> orginalOrderFeatures = order.getOrderFeatures();
 
-		Map<ProductFeature, Feature> newOrderFeaturesMap = paramMap.entrySet().stream()
+		Map<ProductFeature, Feature> newOrderFeaturesMapToFilter = paramMap.entrySet().stream()
 				.filter(x -> OrderFeatureController.isNumeric(x.getKey()))
 				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())),
 						x -> featureService.findByID(Long.parseLong(x.getValue()))));
 
-		List<OrderFeature> newOrderFeatures = newOrderFeaturesMap.entrySet().stream()
+		List<OrderFeature> newOrderFeaturesToFilter = newOrderFeaturesMapToFilter.entrySet().stream()
 				.map(x -> new OrderFeature(x.getKey(), x.getValue())).collect(Collectors.toList());
 
+		List<OrderFeature> newOrderFeatures = new ArrayList<>();
+		for (OrderFeature of : newOrderFeaturesToFilter) {
+			for (OrderFeature orf : orginalOrderFeatures) {
+				if (of.getProductFeature().getName().equals(orf.getProductFeature().getName())
+						&& !of.getFeature().getName().equals(orf.getFeature().getName())) {
+					newOrderFeatures.add(of);
+				}
+
+			}
+		}
+
+		Map<ProductFeature, Feature> newOrderFeaturesMap = newOrderFeatures.stream()
+				.collect(Collectors.toMap(x -> x.getProductFeature(), x -> x.getFeature()));
+
 		for (OrderFeature of : newOrderFeatures) {
-					orginalOrderFeatures.stream()
+			orginalOrderFeatures.stream()
 					.filter(x -> x.getProductFeature().getName().equals(of.getProductFeature().getName()))
 					.collect(Collectors.toList()).get(0).setFeature(of.getFeature());
 
 		}
 
-		Map<String, Feature> newStringFeaturesMap = paramMap.entrySet().stream()
-				.filter(x -> OrderFeatureController.isNumeric(x.getKey()))
-				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())).getName(),
-						x -> featureService.findByID(Long.parseLong(x.getValue()))));
+		Map<String, Feature> newStringFeaturesMap = newOrderFeaturesMap.entrySet().stream()
+		.collect(Collectors.toMap(x->x.getKey().getName(),x->x.getValue()));
 
 		List<String> oldOrderFeatureList = newOrderFeaturesMap.entrySet().stream().map(x -> x.getKey().getName())
 				.collect(Collectors.toList());

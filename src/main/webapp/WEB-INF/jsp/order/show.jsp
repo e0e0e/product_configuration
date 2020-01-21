@@ -25,7 +25,6 @@ function imgError(es)
 	
 var something = "${imagesPath}";
 var imagePath = "0.png";
-console.log(something.concat(imagePath));
 es.src=something.concat(imagePath);
 es.parentElement.href=something.concat(imagePath);
 es.width="1";
