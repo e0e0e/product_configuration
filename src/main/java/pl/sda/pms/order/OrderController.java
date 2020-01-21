@@ -124,4 +124,14 @@ public class OrderController {
 		return "redirect:/orders/list";
 	}
 
+	@PostMapping("/filter/orderSaveEdited")
+	public String orderSaveEdited(@RequestParam Map<String, String> paramMap, @RequestParam String orderId,
+			Model model) {
+
+		orderService.saveProductOrderChanges(paramMap,orderId);
+		//paramMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() + "--" + x.getValue()));
+
+		return "redirect:/orders/list";
+	}
+
 }

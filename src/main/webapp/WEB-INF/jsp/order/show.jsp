@@ -80,7 +80,7 @@ function hideChassis(){
 						<c:when test="${feature.productFeature.parent=='Chassis'}">
 						<div class="chassis border-left  border-bottom  ml-5">
 						<div class="row">
-						<div class="col-2"><div class="ml-5">${feature.productFeature.name}:</div></div>
+						<div class="col-2"><div class="ml-5 p-2">${feature.productFeature.name}:</div></div>
 						<div class="col-4"><div class="ml-5">${feature.feature.name}</div></div>
 						<div class="col-2">${feature.feature.index}</div>
 						<div class="col-1">${feature.feature.mIndex}</div>
@@ -102,7 +102,7 @@ function hideChassis(){
 						<div class="col-2 m-1"><button class="btn btn-outline-secondry text-dark" onclick="hideChassis()"><span class="glyphicon glyphicon-menu-up text-dark"></span></button>
 						${feature.productFeature.name}:</div>
 						<div class="col-4 m-1">${feature.feature.name}</div>
-						<div class="col-1 m-1">${feature.feature.index}</div>
+						<div class="col-2 m-1">${feature.feature.index}</div>
 						<div class="col-1 m-1">${feature.feature.mIndex}</div>
 				
 						<div class="col-1 m-1">

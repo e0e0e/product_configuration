@@ -15,12 +15,12 @@
 
 		<div class="card-header bg-info text-left text-light"></div>
 
-
+<div id="error"></div>
 		<div class="card-body ">
 			<form
 				id="myFilterForm"
 				method="post"
-				action="/filter/orderSaveEdited?orderId=">
+				action="/filter/orderSaveEdited?orderId=${orderId}">
 
 				<ul>
 					<c:forEach
@@ -29,7 +29,7 @@
 						<div class="row">
 							<div class="col-2 m-1">${configList.name}</div>
 							<div class="col-2 m-1">
-								<select required
+								<select
 									name="${configList.id}"
 									id="${configList.name}"
 									onchange='changeAction(this,${configList.id})'>
@@ -69,34 +69,44 @@ function changeAction(val,da) {
 	         if (this.readyState == 4 && this.status == 200) {
 	        	 
 	        	 products=JSON.parse(this.responseText);
-	        	
-	        	 
+	        	console.log(Object.getOwnPropertyNames(products).length);
+	        	 if(Object.getOwnPropertyNames(products).length>0){
 	        	 for (let key in products){
 	        		 let select='<option value="" disabled hidden></option>';
 	        		   if(products.hasOwnProperty(key)){
 
 	        		    if(products[key].length>1){	        		   
 	        		     for (let k in products[key]){
-	        		    	console.log( products[key][k]);
+	        		    if(products[key][k].id == document.getElementById(key).value){
+							console.log(products[key][k].id );
+
+						}
 	        		    	
 	        		    	 if(products[key][k].selected==false){
-	        		    	 select=select.concat('<option value="'+products[key][k].id+'">'+products[key][k].name+'</option>');
+	        		    	 	select=select.concat('<option value="'+products[key][k].id+'">'+products[key][k].name+'</option>');
 	        		    	 }else{
-	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected>'+products[key][k].name+'</option>'); 	 
+	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected  class="bg-warning">'+products[key][k].name+'</option>'); 	 
 	        		    	 }
 	        	
 	        		    	 }
 	        		     }else{
-	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected>'+products[key][0].name+'</option>');  
+	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected class="bg-danger">'+products[key][0].name+'</option>'); 
+							 document.getElementById(key).style.color="blue"; 
+							 
 	        		     }
 	        		     select.concat("</select>");
 	        		   }
 					   if(key!=null){
 
 	        		   document.getElementById(key).innerHTML=select;
+						 
 					   }
 	        		}
-	        	 
+				 }else{
+					document.getElementById("error").innerHTML="No product found, refresh and search different configuration, or mak as not standrd order";
+					document.getElementById("error").style.color="red";
+					document.getElementById("myFilterForm").style.backgroundColor="orange";
+				 }
 	        	
 	      
 	         }
