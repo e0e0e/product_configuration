@@ -5,6 +5,8 @@ import javax.persistence.*;
 import org.hibernate.envers.Audited;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import pl.sda.pms.OrderFeature.OrderFeature;
+
 @Entity
 @Audited
 @EntityListeners(AuditingEntityListener.class)
@@ -16,6 +18,12 @@ public class Color {
     private String Ral;
     private String Hex;
     private String name;
+
+    @OneToOne
+    private OrderFeature orderFeature;
+
+ 
+
 
     public Color() {
     }
@@ -52,7 +60,13 @@ public class Color {
         this.name = name;
     }
 
+    public OrderFeature getOrderFeature() {
+        return this.orderFeature;
+    }
 
+    public void setOrderFeature(OrderFeature orderFeature) {
+        this.orderFeature = orderFeature;
+    }
 
 
 }

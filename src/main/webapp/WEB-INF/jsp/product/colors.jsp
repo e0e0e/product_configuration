@@ -23,35 +23,34 @@
 			<form
 				id="myFilterForm"
 				method="post"
-				action="/filter/orderSaveEdited?orderId=${orderId}">
+				action="/order/color/saveChanes?orderId=${orderId}">
 
-				<ul>
+<div class="row border-bottom">
+<div class="col-2 m-1">Product Feature</div>
+<div class="col-4 m-1">Selected</div>
+<div class="col-2 m-1">Color RAL</div>
+
+</div>
 					<c:forEach
 						var="configList"
 						items="${configuration.configurationList}">
-						<div class="row">
-							<div class="col-2 m-1">${configList.name}</div>
-							<div class="col-2 m-1">
-								<select
-									name="${configList.id}"
-									id="${configList.name}"
-									onchange='changeAction(this,${configList.id})'>
-									<option
-										value=""
-										selected
-										disabled
-										hidden>${order[configList.name]}</option>
-									<c:forEach
-										var="feature"
-										items="${configList.feature}">
-										<option value="${feature.id}">${feature.name}</option>
-
-									</c:forEach>
-								</select>
-							</div>
-						</div>
+                        <c:if test="${order[configList.name]!=null}">
+                        <div class="row border-bottom">
+                            <div class="col-2 m-1">${configList.name}</div>
+                                <div class="col-4 m-1" name="${configList.id}"  id="${configList.name}">${order[configList.name]}</div>
+                                
+                                <div class="col-2 m-1">
+                                    <select required name="feature" class="text-dark" value="">
+                                     <option value="" selected>Select</option>
+                                        <c:forEach var="color" items="${colors}">
+                                        <option value="${color.id}" style="background-color:${color.hex}">${color.ral}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </c:if>
 					</c:forEach>
-				</ul>
+                </br>
 				<input
 					id="saveButton"
 					type="submit"

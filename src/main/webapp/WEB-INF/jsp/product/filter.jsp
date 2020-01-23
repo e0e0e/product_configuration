@@ -24,7 +24,6 @@
 <div class="row border-bottom">
 <div class="col-2 m-1">Product Feature</div>
 <div class="col-5 m-1">Select</div>
-<div class="col-2 m-1">Color</div>
 
 </div>
 				
@@ -52,16 +51,6 @@
 									</c:forEach>
 								</select>
 							
-							</div>
-							<div class="col-2 m-1">
-								<c:if test="${configList.color}">
-								color to define
-								<%-- <select required
-									name="${configList.id}">
-
-									</select> --%>
-
-								</c:if>
 							</div>
 						</div>
 					</c:forEach>

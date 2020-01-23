@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.envers.Audited;
 
+import pl.sda.pms.color.Color;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.order.Ord;
 //import pl.sda.pms.order.Order;
@@ -35,6 +36,19 @@ public class OrderFeature {
 
 	@OneToOne
 	private ProductFeature productFeature;
+
+	@OneToOne
+	private Color color;
+
+
+	public Color getColor() {
+		return this.color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
 
 
 

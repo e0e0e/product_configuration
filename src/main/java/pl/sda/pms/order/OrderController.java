@@ -84,8 +84,7 @@ public class OrderController {
 	public String orderColorEdit(@RequestParam Long orderId, Model model) {
 		Ord order = orderService.findById(orderId);
 	
-		order.getOrderFeatures().stream().forEach(x->System.out.println(x.getProductFeature().getName()+"--"+(x.getProductFeature().isColor().equals(true))));
-		Map<String, String> orderMap = order.getOrderFeatures().stream().filter(x -> x.getProductFeature().isColor()==true)
+		Map<String, String> orderMap = order.getOrderFeatures().stream().filter(x -> (x.getProductFeature().getColor()!=null && x.getProductFeature().getColor()!=false ))
 				.collect(Collectors.toMap(fp -> fp.getProductFeature().getName(), f -> f.getFeature().getName()));
 		List<Color> colors = colorService.findAll();
 
