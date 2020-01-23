@@ -124,14 +124,19 @@ public class ProductFeatureController {
 
 	@PostMapping("/productFeatureChange")
 	public String changeProductFeature(@RequestParam Long productFeatureId, @RequestParam String name,
-			@RequestParam String description, @RequestParam(required = false) String parent,
+			@RequestParam String description,
+			 @RequestParam(required = false) String parent,
+			 @RequestParam(required = false) Boolean color,
 			@RequestParam String imagePath, @RequestParam(required = false) List<Long> featureList, Model model) {
 
 		productFeatureService.findById(productFeatureId);
 		if (parent == null) {
 			parent = "";
 		}
-		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList, parent);
+		if (color == null) {
+			color = false;
+		}
+		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList, parent,color);
 
 		return "redirect:/feature/list";
 	}

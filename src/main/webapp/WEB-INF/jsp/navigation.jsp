@@ -30,9 +30,16 @@
 			
 		
 			<c:if test="${user.authorities=='[ADMIN]'}">
+			<li class="nav-item"><a
+						class="nav-link text-warning font-weight-bold btn btn-outline-dark"
+						href="/color/list">Colors</a></li>
 					<li class="nav-item"><a
 						class="nav-link text-warning font-weight-bold btn btn-outline-dark"
 						href="/feature/show">Features</a></li>
+						<li class="nav-item"><a
+						href="/color/add"
+						class="nav-link text-warning font-weight-bold btn btn-outline-dark">C <span
+							class="glyphicon glyphicon-plus text-warning"></span></a></li>
 						
 					<li class="nav-item"><a
 						href="/feature/add"

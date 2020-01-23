@@ -42,6 +42,13 @@
 			 </c:if>
 			 >Chassis feature
 		<br />
+		<br />
+			 <input type="checkbox" name="color" value="true"
+			 <c:if test="${productFeature.color==true}">
+			 checked
+			 </c:if>
+			 >Color${productFeature.color}
+		<br />
 		<label>Feature Image:</label>
 		<br />
 		<input

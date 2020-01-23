@@ -31,6 +31,16 @@ public class Feature {
 	private String index;
 	private String mIndex;
 
+
+	public String getMIndex() {
+		return this.mIndex;
+	}
+
+	public void setMIndex(String mIndex) {
+		this.mIndex = mIndex;
+	}
+
+
 	
 	@Override
 	public String toString() {

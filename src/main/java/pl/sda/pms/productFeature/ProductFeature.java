@@ -33,6 +33,22 @@ public class ProductFeature {
 	private String imagePath;
 	private Integer position;
 	private String parent;
+	private Boolean color;
+
+	
+	public Boolean isColor() {
+		return this.color;
+	}
+
+	public Boolean getColor() {
+		return this.color;
+	}
+
+	public void setColor(Boolean color) {
+		this.color = color;
+	}
+
+
 
 
 

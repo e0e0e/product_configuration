@@ -67,7 +67,7 @@ public class ProductFeatureService {
 	}
 
 	public boolean edit(Long id, String newName, String description, String imagePath, List<Long> featureList,
-			String parent) {
+			String parent, Boolean color) {
 
 		ProductFeature productFeature = productFeatureRepository.findById(id).get();
 		List<ProductFeature> productFeatureSameName = productFeatureRepository.findByName(productFeature.getName());
@@ -98,7 +98,7 @@ public class ProductFeatureService {
 			pf.setName(newName);
 			pf.setDescription(description);
 			pf.setImagePath(imagePath);
-
+			pf.setColor(color);
 			pf.setParent(parent);
 
 			createdFeature.add(productFeatureRepository.save(pf).getId() == null);

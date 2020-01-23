@@ -21,18 +21,24 @@
 				id="myFilterForm"
 				method="post"
 				action="/filter/orderCreate">
+<div class="row border-bottom">
+<div class="col-2 m-1">Product Feature</div>
+<div class="col-5 m-1">Select</div>
+<div class="col-2 m-1">Color</div>
 
-				<ul>
+</div>
+				
 					<c:forEach
 						var="configList"
 						items="${configuration.configurationList}">
 						<div class="row">
 							<div class="col-2 m-1">${configList.name}</div>
-							<div class="col-2 m-1">
+							<div class="col-5 m-1">
 								<select required
 									name="${configList.id}"
 									id="${configList.name}"
-									onchange='changeAction(this,${configList.id})'>
+									onchange='changeAction(this,${configList.id})'
+									class="w-100">
 									<option
 										value=""
 										selected
@@ -45,10 +51,21 @@
 
 									</c:forEach>
 								</select>
+							
+							</div>
+							<div class="col-2 m-1">
+								<c:if test="${configList.color}">
+								color to define
+								<%-- <select required
+									name="${configList.id}">
+
+									</select> --%>
+
+								</c:if>
 							</div>
 						</div>
 					</c:forEach>
-				</ul>
+				
 				<input
 					id="saveButton"
 					type="submit"
@@ -72,7 +89,7 @@ function changeAction(val,da) {
 	        	
 	        	 
 	        	 for (let key in products){
-	        		 let select='<option value="" selected disabled hidden>Ignore</option>';
+	        		 let select='<option value="" selected disabled hidden>Select</option>';
 	        		   if(products.hasOwnProperty(key)){
 
 	        		    if(products[key].length>1){	        		   

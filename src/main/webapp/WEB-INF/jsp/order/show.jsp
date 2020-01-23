@@ -55,18 +55,25 @@ function hideChassis(){
 				</div>
 			<c:if test="${user.authorities=='[ADMIN]'}">
 			<a
-				class="btn btn-outline-info text-dark"
+				class="btn btn-outline-secondary text-dark"
 				href="/order/delete?orderId=${order.id}">
 				<span class="glyphicon glyphicon-trash text-light"></span>
 			</a>
 			</c:if>
 			<a
-				class="btn btn-outline-info text-dark"
+				class="btn btn-outline-secondary text-dark"
 				href="/order/edit?orderId=${order.id}">
 				<span class="glyphicon glyphicon-edit text-light"></span>
 			</a>
+			<a
+				class="btn btn-outline-secondary text-light"
+				href="/order/color/edit?orderId=${order.id}">
+				<i class="fa fa-paint-brush"></i>
+			</a>
+			
+			
 				<a
-				class="btn btn-outline-info text-light"
+				class="btn btn-outline-secondary text-light"
 				href="/order/print?orderId=${order.id}">
 				<span class="glyphicon glyphicon-print text-light"></span>
 			</a>
