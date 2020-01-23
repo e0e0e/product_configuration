@@ -24,11 +24,11 @@ public class SpringBootJPAIntegrationTest {
 
     @Test
     public void testIfSaveUserSuccesfull() {
-        User user = userRepository
-                .save(new User("Antewk", "saswd",
-                        "as2d@gmail.com", "Muzywkant", null));
+        // User user = userRepository
+        //         .save(new User("Antewk", "saswd",
+        //                 "as2d@gmail.com", "Muzywkant", null));
 
-        User finedUser=userRepository.findById(user.getId()).get();
+        // User finedUser=userRepository.findById(user.getId()).get();
 
 
 //        assertNotNull(finedUser);
@@ -39,9 +39,9 @@ public class SpringBootJPAIntegrationTest {
 
     @Test
     public void testIfCreateUserSuccesfull() {
-        boolean userIsCreated = userService
-                .create("Antewk", "saswd",
-                        "as2d@gmail.com", "Muzywkant");
+        // boolean userIsCreated = userService
+        //         .create("Antewk", "saswd",
+        //                 "as2d@gmail.com", "Muzywkant");
 
        // User finedUser=userRepository.findById(user.getId()).get();
 
