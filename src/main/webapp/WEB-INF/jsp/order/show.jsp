@@ -66,9 +66,9 @@ function hideChassis(){
 				<span class="glyphicon glyphicon-edit text-light"></span>
 			</a>
 			<a
-				class="btn btn-outline-secondary text-light"
+				class="btn btn-outline-secondary text-light;"
 				href="/order/color/edit?orderId=${order.id}">
-				<i class="fa fa-paint-brush"></i>
+				<i class="fa fa-paint-brush text-light"></i>
 			</a>
 			
 			
@@ -78,7 +78,7 @@ function hideChassis(){
 				<span class="glyphicon glyphicon-print text-light"></span>
 			</a>
 			</div>
-		<div class="card-body ">
+		<div class="card-body">
 				<c:forEach
 					var="feature"
 					items="${order.orderFeatures}">

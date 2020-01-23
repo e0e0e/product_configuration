@@ -10,10 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.OrderFeature.OrderFeatureRepository;
 import pl.sda.pms.OrderFeature.OrderFeatureService;
+import pl.sda.pms.color.Color;
+import pl.sda.pms.color.ColorService;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.productConfiguration.ProductConfigurationService;
@@ -28,15 +31,17 @@ public class OrderController {
 	private final ProductFeatureService productFeatureService;
 	private final OrderService orderService;
 	private final OrderFeatureService orderFeatureService;
+	private final ColorService colorService;
 
 	public OrderController(ProductConfigurationService productConfigurationService, FeatureService featureService,
-			ProductFeatureService productFeatureService, OrderService orderService,
+			ProductFeatureService productFeatureService, OrderService orderService, ColorService colorService,
 			OrderFeatureService orderFeatureService) {
 		this.productConfigurationService = productConfigurationService;
 		this.featureService = featureService;
 		this.productFeatureService = productFeatureService;
 		this.orderService = orderService;
 		this.orderFeatureService = orderFeatureService;
+		this.colorService = colorService;
 	}
 
 	@GetMapping("/orders/list")
@@ -52,7 +57,7 @@ public class OrderController {
 	public String listOrders(@RequestParam Long orderId, Model model) {
 
 		model.addAttribute("order", orderService.findById(orderId));
-		model.addAttribute("aud",orderService.findByIdAud(orderId));
+		model.addAttribute("aud", orderService.findByIdAud(orderId));
 		model.addAttribute("title", "List Orders");
 		model.addAttribute("path", "order/show");
 		return "main";
@@ -60,13 +65,13 @@ public class OrderController {
 
 	@GetMapping("/order/edit")
 	public String productSelectiom(@RequestParam Long orderId, Model model) {
-		Ord order=orderService.findById(orderId);
-		Map<String,String> orderMap=order.getOrderFeatures().stream().collect(Collectors.toMap(fp->fp.getProductFeature().getName(), f->f.getFeature().getName()));
-
+		Ord order = orderService.findById(orderId);
+		Map<String, String> orderMap = order.getOrderFeatures().stream()
+				.collect(Collectors.toMap(fp -> fp.getProductFeature().getName(), f -> f.getFeature().getName()));
 
 		model.addAttribute("order", orderMap);
 		model.addAttribute("orderId", orderId);
-		
+
 		model.addAttribute("configuration", productConfigurationService.findById(8L));
 
 		model.addAttribute("title", "Edit Order");
@@ -74,7 +79,28 @@ public class OrderController {
 		return "main";
 
 	}
+
+	@GetMapping("/order/color/edit")
+	public String orderColorEdit(@RequestParam Long orderId, Model model) {
+		Ord order = orderService.findById(orderId);
 	
+		order.getOrderFeatures().stream().forEach(x->System.out.println(x.getProductFeature().getName()+"--"+(x.getProductFeature().isColor().equals(true))));
+		Map<String, String> orderMap = order.getOrderFeatures().stream().filter(x -> x.getProductFeature().isColor()==true)
+				.collect(Collectors.toMap(fp -> fp.getProductFeature().getName(), f -> f.getFeature().getName()));
+		List<Color> colors = colorService.findAll();
+
+		model.addAttribute("order", orderMap);
+		model.addAttribute("orderId", orderId);
+		model.addAttribute("colors", colors);
+
+		model.addAttribute("configuration", productConfigurationService.findById(8L));
+
+		model.addAttribute("title", "Edit Order");
+		model.addAttribute("path", "product/colors");
+		return "main";
+
+	}
+
 	@GetMapping("/order/print")
 	public String orderPrint(@RequestParam Long orderId, Model model) {
 
@@ -85,7 +111,6 @@ public class OrderController {
 		return "order/print";
 
 	}
-	
 
 	@GetMapping("/order/delete")
 	public String deleteOrder(@RequestParam Long orderId, Model model) {
@@ -118,8 +143,9 @@ public class OrderController {
 	public String saveProductOrderChanges(@RequestParam Map<String, String> paramMap, @RequestParam String orderId,
 			Model model) {
 
-		orderService.saveProductOrderChanges(paramMap,orderId);
-		//paramMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() + "--" + x.getValue()));
+		orderService.saveProductOrderChanges(paramMap, orderId);
+		// paramMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() +
+		// "--" + x.getValue()));
 
 		return "redirect:/orders/list";
 	}
@@ -128,8 +154,9 @@ public class OrderController {
 	public String orderSaveEdited(@RequestParam Map<String, String> paramMap, @RequestParam String orderId,
 			Model model) {
 
-		orderService.saveProductOrderChanges(paramMap,orderId);
-		//paramMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() + "--" + x.getValue()));
+		orderService.saveProductOrderChanges(paramMap, orderId);
+		// paramMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() +
+		// "--" + x.getValue()));
 
 		return "redirect:/orders/list";
 	}
