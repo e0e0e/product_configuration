@@ -37,10 +37,10 @@
                         <c:if test="${order[configList.name]!=null}">
                         <div class="row border-bottom">
                             <div class="col-2 m-1">${configList.name}</div>
-                                <div class="col-4 m-1" name="${configList.id}"  id="${configList.name}">${order[configList.name]}</div>
+                                <div class="col-4 m-1" id="${configList.name}">${order[configList.name]}</div>
                                 
                                 <div class="col-2 m-1">
-                                    <select required name="feature" class="text-dark" value="">
+                                    <select required name="${configList.id}" class="text-dark" value="">
                                      <option value="" selected>Select</option>
                                         <c:forEach var="color" items="${colors}">
                                         <option value="${color.id}" style="background-color:${color.hex}">${color.ral}</option>

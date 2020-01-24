@@ -76,4 +76,16 @@ public class OrderFeatureController {
 		return true;
 	}
 
+	@PostMapping("/getAll")
+	public String getAll(Model model) {
+
+		// List<Feature> features=featureService.findAll();
+		// List<ProductFeature> productFeatures=productFeat
+
+
+		return null;
+
+	}
+
+
 }

@@ -31,4 +31,9 @@ public class ColorService {
 		return colorRepository.findAll();
 	}
 
+
+	public Color findById(Long colorId) {
+		return colorRepository.findById(colorId).get();
+	}
+
 }

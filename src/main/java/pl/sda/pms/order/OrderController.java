@@ -160,4 +160,19 @@ public class OrderController {
 		return "redirect:/orders/list";
 	}
 
+	@PostMapping("/order/color/saveChanes")
+	public String saveColor(@RequestParam Map<String, String> paramMap,
+			Model model) {
+
+			Long orderId=Long.parseLong(paramMap.get("orderId"));
+			paramMap.remove("orderId");
+			
+			orderService.saveColor(orderId,paramMap);
+
+		return "redirect:/order/show?orderId="+orderId;
+
+	}
+
+	
+
 }

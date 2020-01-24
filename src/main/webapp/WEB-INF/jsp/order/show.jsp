@@ -85,11 +85,11 @@ function hideChassis(){
 					<c:choose>
 						<c:when test="${feature.productFeature.parent=='Chassis'}">
 						<div class="chassis border-left  border-bottom  ml-5">
-						<div class="row">
-						<div class="col-2"><div class="ml-5 p-2">${feature.productFeature.name}:</div></div>
+						<div class="row p-1">
+						<div class="col-2"><div class="ml-5 p-2 bg-info text-light">${feature.productFeature.name}:</div></div>
 						<div class="col-4"><div class="ml-5">${feature.feature.name}</div></div>
 						<div class="col-2">${feature.feature.index}</div>
-						<div class="col-1">${feature.feature.mIndex}</div>
+						<div class="col-1">${feature.feature.mIndex}-${feature.color}-</div>
 				
 						<div class="col-1">
 						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
@@ -104,12 +104,12 @@ function hideChassis(){
 						</div>
 						</c:when>
 						<c:when test="${feature.productFeature.name=='Chassis'}">
-						<div class="row border-bottom m-1">
-						<div class="col-2 m-1"><button class="btn btn-outline-secondry text-dark" onclick="hideChassis()"><span class="glyphicon glyphicon-menu-up text-dark"></span></button>
+						<div class="row border-bottom p-1">
+						<div class="col-2 m-1 bg-info text-light "><button class="btn btn-outline-secondry bg-light text-light" onclick="hideChassis()"><span class="glyphicon glyphicon-menu-up text-dark"></span></button>
 						${feature.productFeature.name}:</div>
 						<div class="col-4 m-1">${feature.feature.name}</div>
 						<div class="col-2 m-1">${feature.feature.index}</div>
-						<div class="col-1 m-1">${feature.feature.mIndex}</div>
+						<div class="col-1 m-1">${feature.feature.mIndex}-${feature.color}-</div>
 				
 						<div class="col-1 m-1">
 						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
@@ -125,11 +125,11 @@ function hideChassis(){
 						</c:when>
 
 						<c:otherwise>
-						<div class="row border-bottom m-1">
-						<div class="col-2 m-1">${feature.productFeature.name}:</div>
+						<div class="row border-bottom m-1  p-0">
+						<div class="col-2 bg-info text-light p-1">${feature.productFeature.name}:</div>
 						<div class="col-4 m-1">${feature.feature.name}</div>
 						<div class="col-2 m-1">${feature.feature.index}</div>
-						<div class="col-1 m-1">${feature.feature.mIndex}</div>
+						<div class="col-1 m-1">${feature.feature.mIndex}-${feature.color}-</div>
 				
 						<div class="col-1 m-1">
 						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						

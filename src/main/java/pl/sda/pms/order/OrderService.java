@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.OrderFeature.OrderFeatureController;
 import pl.sda.pms.OrderFeature.OrderFeatureService;
+import pl.sda.pms.color.Color;
+import pl.sda.pms.color.ColorService;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.productFeature.ProductFeature;
@@ -38,14 +40,16 @@ public class OrderService {
 	private final OrderFeatureService orderFeatureService;
 	private final ProductFeatureService productFeatureService;
 	private final FeatureService featureService;
+	private final ColorService colorService;
 
 	public OrderService(OrderRepository orderRepository, OrderFeatureService orderFeatureService,
-			ProductFeatureService productFeatureService, FeatureService featureService) {
+			ProductFeatureService productFeatureService, FeatureService featureService,ColorService colorService) {
 		super();
 		this.orderRepository = orderRepository;
 		this.orderFeatureService = orderFeatureService;
 		this.featureService = featureService;
 		this.productFeatureService = productFeatureService;
+		this.colorService = colorService;
 	}
 
 	public void create(Ord order) {
@@ -123,7 +127,7 @@ public class OrderService {
 		}
 
 		Map<String, Feature> newStringFeaturesMap = newOrderFeaturesMap.entrySet().stream()
-		.collect(Collectors.toMap(x->x.getKey().getName(),x->x.getValue()));
+				.collect(Collectors.toMap(x -> x.getKey().getName(), x -> x.getValue()));
 
 		List<String> oldOrderFeatureList = newOrderFeaturesMap.entrySet().stream().map(x -> x.getKey().getName())
 				.collect(Collectors.toList());
@@ -163,6 +167,21 @@ public class OrderService {
 		return revisions;
 	}
 
+	public void saveColor(Long orderId, Map<String, String> paramMap) {
 
+		Ord order = orderRepository.findById(orderId).get();
+
+		Map<OrderFeature, Color> colorMap = paramMap.entrySet().stream()
+				.collect(Collectors.toMap(x -> orderFeatureService.findByID(Long.parseLong(x.getKey())),
+						x -> colorService.findById(Long.parseLong(x.getValue()))));
+		
+		colorMap.entrySet().stream().forEach(x->{
+			x.getKey().setColor(x.getValue());
+			orderFeatureService.save(x.getKey());
+
+
+		});				
+
+	}
 
 }
