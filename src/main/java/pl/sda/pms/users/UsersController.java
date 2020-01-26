@@ -58,7 +58,7 @@ public class UsersController {
             List<User> users = userService.findAll();
             model.addAttribute("users", users);
 
-            return "redirect:/taskWall";
+            return "redirect:/";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getLocalizedMessage());
             return "user/users";
