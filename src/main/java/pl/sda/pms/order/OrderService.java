@@ -43,7 +43,7 @@ public class OrderService {
 	private final ColorService colorService;
 
 	public OrderService(OrderRepository orderRepository, OrderFeatureService orderFeatureService,
-			ProductFeatureService productFeatureService, FeatureService featureService,ColorService colorService) {
+			ProductFeatureService productFeatureService, FeatureService featureService, ColorService colorService) {
 		super();
 		this.orderRepository = orderRepository;
 		this.orderFeatureService = orderFeatureService;
@@ -110,6 +110,8 @@ public class OrderService {
 			for (OrderFeature orf : orginalOrderFeatures) {
 				if (of.getProductFeature().getName().equals(orf.getProductFeature().getName())
 						&& !of.getFeature().getName().equals(orf.getFeature().getName())) {
+					System.out.println(of.getProductFeature().getName() + " -- " + orf.getProductFeature().getName());
+					System.out.println(of.getFeature().getName() + " -- " + orf.getFeature().getName());
 					newOrderFeatures.add(of);
 				}
 
@@ -135,8 +137,9 @@ public class OrderService {
 		Map<String, Feature> oldOrderFeatureMap = orginalOrderFeatures.stream()
 				.collect(Collectors.toMap(x -> x.getProductFeature().getName(), x -> x.getFeature()));
 
-		List<String> orderFeatureStringList = oldOrderFeatureList.stream().map(
-				x -> x + ": " + oldOrderFeatureMap.get(x).getName() + " -> " + newStringFeaturesMap.get(x).getName())
+		List<String> orderFeatureStringList = oldOrderFeatureList.stream()
+				.map(x -> x + ": " + oldOrderFeatureMap.get(x).getOrderFeatures().getFeature().getName() + " -> "
+						+ newStringFeaturesMap.get(x).getName())
 				.collect(Collectors.toList());
 
 		order.setOrderFeaturesStrings(orderFeatureStringList);
@@ -167,20 +170,23 @@ public class OrderService {
 		return revisions;
 	}
 
-	public void saveColor(Long orderId, Map<String, String> paramMap) {
+	public void saveColor(Long orderId, Map<String, String> paramMapStart) {
 
 		Ord order = orderRepository.findById(orderId).get();
+		Map<String, String> paramMap=paramMapStart.entrySet().stream().filter(x->!x.getValue().equals("")).collect(Collectors.toMap(x->x.getKey(),x->x.getValue()));
+
+		order.getOrderFeatures().forEach(x->System.out.println(x.getProductFeature().getId()+" - "+x.getProductFeature().getName()));
 
 		Map<OrderFeature, Color> colorMap = paramMap.entrySet().stream()
-				.collect(Collectors.toMap(x -> orderFeatureService.findByID(Long.parseLong(x.getKey())),
+				.collect(Collectors.toMap(x -> order.findByProductFeatureID(Long.parseLong(x.getKey())),
 						x -> colorService.findById(Long.parseLong(x.getValue()))));
-		
-		colorMap.entrySet().stream().forEach(x->{
+
+		colorMap.entrySet().stream().forEach(x -> {
 			x.getKey().setColor(x.getValue());
 			orderFeatureService.save(x.getKey());
 
+		});
 
-		});				
 
 	}
 

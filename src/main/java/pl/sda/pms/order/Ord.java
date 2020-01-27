@@ -223,4 +223,10 @@ public class Ord {
 		}
 	}
 
+	public OrderFeature findByProductFeatureID(Long id) {
+		return orderFeatures.stream().filter(x->x.getProductFeature().getId().equals(id)).findFirst().get();
+
+	
+	}
+
 }

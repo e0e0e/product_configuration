@@ -83,16 +83,25 @@ public class OrderController {
 	@GetMapping("/order/color/edit")
 	public String orderColorEdit(@RequestParam Long orderId, Model model) {
 		Ord order = orderService.findById(orderId);
-	
-		Map<String, String> orderMap = order.getOrderFeatures().stream().filter(x -> (x.getProductFeature().getColor()!=null && x.getProductFeature().getColor()!=false ))
-				.collect(Collectors.toMap(fp -> fp.getProductFeature().getName(), f -> f.getFeature().getName()));
+
+		List<OrderFeature> orderFeatures = order.getOrderFeatures().stream()
+				.filter(x -> (x.getProductFeature().getColor() != null && x.getProductFeature().getColor() != false))
+				.collect(Collectors.toList());
+
+		Map<String, Feature> orderMap = order.getOrderFeatures().stream()
+				.filter(x -> (x.getProductFeature().getColor() != null && x.getProductFeature().getColor() != false))
+				.collect(Collectors.toMap(fp -> fp.getProductFeature().getName(), f -> f.getFeature()));
 		List<Color> colors = colorService.findAll();
 
-		model.addAttribute("order", orderMap);
+		model.addAttribute("orderFeatures", orderFeatures);
+		model.addAttribute("orderMap", orderMap);
+		model.addAttribute("order", order);
 		model.addAttribute("orderId", orderId);
 		model.addAttribute("colors", colors);
 
-		model.addAttribute("configuration", productConfigurationService.findById(8L));
+		model.addAttribute("configuration", productConfigurationService.findById(8L));// change to findByName 'pattern',
+																						// it will crash if somthing
+																						// chang
 
 		model.addAttribute("title", "Edit Order");
 		model.addAttribute("path", "product/colors");
@@ -143,8 +152,6 @@ public class OrderController {
 			Model model) {
 
 		orderService.saveProductOrderChanges(paramMap, orderId);
-		// paramMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() +
-		// "--" + x.getValue()));
 
 		return "redirect:/orders/list";
 	}
@@ -154,25 +161,20 @@ public class OrderController {
 			Model model) {
 
 		orderService.saveProductOrderChanges(paramMap, orderId);
-		// paramMap.entrySet().stream().forEach(x -> System.out.println(x.getKey() +
-		// "--" + x.getValue()));
 
 		return "redirect:/orders/list";
 	}
 
 	@PostMapping("/order/color/saveChanes")
-	public String saveColor(@RequestParam Map<String, String> paramMap,
-			Model model) {
+	public String saveColor(@RequestParam Map<String, String> paramMap, Model model) {
 
-			Long orderId=Long.parseLong(paramMap.get("orderId"));
-			paramMap.remove("orderId");
-			
-			orderService.saveColor(orderId,paramMap);
+		Long orderId = Long.parseLong(paramMap.get("orderId"));
+		paramMap.remove("orderId");
 
-		return "redirect:/order/show?orderId="+orderId;
+		orderService.saveColor(orderId, paramMap);
+
+		return "redirect:/order/show?orderId=" + orderId;
 
 	}
-
-	
 
 }

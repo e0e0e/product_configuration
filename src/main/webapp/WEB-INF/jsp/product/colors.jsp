@@ -13,7 +13,15 @@
 	<div class="card text-dark bg-light m-1">
 
 
-		<div class="card-header bg-info text-left text-light"></div>
+		<div class="card-header bg-info text-left text-light">
+		<div class="row">
+<div class="col-2 m-1">Product Feature</div>
+<div class="col-4 m-1">Selected</div>
+<div class="col-2 m-1">Color RAL</div>
+
+</div>
+		
+		</div>
 
 <div id="error"></div>
 <div id="picture" style="position:absolute;top:30px;">
@@ -25,30 +33,25 @@
 				method="post"
 				action="/order/color/saveChanes?orderId=${orderId}">
 
-<div class="row border-bottom">
-<div class="col-2 m-1">Product Feature</div>
-<div class="col-4 m-1">Selected</div>
-<div class="col-2 m-1">Color RAL</div>
 
-</div>
 					<c:forEach
 						var="configList"
-						items="${configuration.configurationList}">
-                        <c:if test="${order[configList.name]!=null}">
+						items="${orderFeatures}">
+                        
                         <div class="row border-bottom">
-                            <div class="col-2 m-1">${configList.name}</div>
-                                <div class="col-4 m-1" id="${configList.name}">${order[configList.name]}</div>
+                            <div class="col-2 m-1">${configList.productFeature.name}</div>
+                                <div class="col-4 m-1" id="${configList.productFeature.name}">${configList.feature.name}</div>
                                 
                                 <div class="col-2 m-1">
-                                    <select required name="${configList.id}" class="text-dark" value="">
-                                     <option value="" selected>Select</option>
+                                    <select name="${configList.productFeature.id}" class="text-dark" value="${configList.color.id}">
+                                     <option value="" selected>${configList.color.ral}</option>
                                         <c:forEach var="color" items="${colors}">
                                         <option value="${color.id}" style="background-color:${color.hex}">${color.ral}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
                             </div>
-                        </c:if>
+                       
 					</c:forEach>
                 </br>
 				<input

@@ -87,9 +87,17 @@ function hideChassis(){
 						<div class="chassis border-left  border-bottom  ml-5">
 						<div class="row p-1">
 						<div class="col-2"><div class="ml-5 p-2 bg-info text-light">${feature.productFeature.name}:</div></div>
-						<div class="col-4"><div class="ml-5">${feature.feature.name}</div></div>
-						<div class="col-2">${feature.feature.index}</div>
-						<div class="col-1">${feature.feature.mIndex}-${feature.color}-</div>
+						<div class="col-3"><div class="ml-5">${feature.feature.name}</div></div>
+						<div class="col-1">${feature.feature.index}</div>
+						<div class="col-1">${feature.feature.mIndex}</div>
+						<c:choose>
+						<c:when test="${feature.productFeature.color==true}">
+						<div class="col-1 m-1">${feature.color.ral}<span class="glyphicon glyphicon-tint" style="color:${feature.color.hex};"></span></div>
+						</c:when>
+							<c:otherwise>
+							<div class="col-1 m-1"></div>
+							</c:otherwise>
+						</c:choose>
 				
 						<div class="col-1">
 						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
@@ -104,13 +112,14 @@ function hideChassis(){
 						</div>
 						</c:when>
 						<c:when test="${feature.productFeature.name=='Chassis'}">
-						<div class="row border-bottom p-1">
-						<div class="col-2 m-1 bg-info text-light "><button class="btn btn-outline-secondry bg-light text-light" onclick="hideChassis()"><span class="glyphicon glyphicon-menu-up text-dark"></span></button>
+						<div class="row border p-1">
+						<div class="col-2 bg-info text-light "><button class="btn btn-outline-secondry bg-light text-light p-1 m-1" onclick="hideChassis()"><span class="glyphicon glyphicon-menu-up text-dark"></span></button>
 						${feature.productFeature.name}:</div>
-						<div class="col-4 m-1">${feature.feature.name}</div>
-						<div class="col-2 m-1">${feature.feature.index}</div>
-						<div class="col-1 m-1">${feature.feature.mIndex}-${feature.color}-</div>
-				
+						<div class="col-3 m-1">${feature.feature.name}</div>
+						<div class="col-1 m-1">${feature.feature.index}</div>
+						<div class="col-1 m-1">${feature.feature.mIndex}</div>
+						<div class="col-1 m-1">${feature.color.ral}<span class="glyphicon glyphicon-tint" style="color:${feature.color.hex};"></span></div>
+						<div class="col-1 m-1"></div>
 						<div class="col-1 m-1">
 						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
 						<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50" onerror="imgError(this)">
@@ -127,10 +136,17 @@ function hideChassis(){
 						<c:otherwise>
 						<div class="row border-bottom m-1  p-0">
 						<div class="col-2 bg-info text-light p-1">${feature.productFeature.name}:</div>
-						<div class="col-4 m-1">${feature.feature.name}</div>
-						<div class="col-2 m-1">${feature.feature.index}</div>
-						<div class="col-1 m-1">${feature.feature.mIndex}-${feature.color}-</div>
-				
+						<div class="col-3 m-1">${feature.feature.name}</div>
+						<div class="col-1 m-1">${feature.feature.index}</div>
+						<div class="col-1 m-1">${feature.feature.mIndex}</div>
+						<c:choose>
+						<c:when test="${feature.productFeature.color==true}">
+						<div class="col-1 m-1">${feature.color.ral}<span class="glyphicon glyphicon-tint" style="color:${feature.color.hex};"></span></div>
+						</c:when>
+							<c:otherwise>
+							<div class="col-1 m-1"></div>
+							</c:otherwise>
+						</c:choose>
 						<div class="col-1 m-1">
 						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
 						<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50" onerror="imgError(this)">

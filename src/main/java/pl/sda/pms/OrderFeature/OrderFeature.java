@@ -1,6 +1,7 @@
 package pl.sda.pms.OrderFeature;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -93,6 +94,24 @@ public class OrderFeature {
 
 	public void setProductFeature(ProductFeature productFeature) {
 		this.productFeature = productFeature;
+	}
+
+	
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof OrderFeature)) {
+			return false;
+		}
+		OrderFeature orderFeature = (OrderFeature) o;
+		return Objects.equals(id, orderFeature.id) && Objects.equals(ord, orderFeature.ord) && Objects.equals(feature, orderFeature.feature) && Objects.equals(productFeature, orderFeature.productFeature) && Objects.equals(color, orderFeature.color);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, ord, feature, productFeature, color);
 	}
 
 }
