@@ -12,8 +12,8 @@
 	var="color"
 	items="${colors}">
 <div class="row p-2" style="background-color:${color.hex};">
-    <div class="col-2 text-light ml-5 p-2">${color.name}</div>
-    <div class="col-2 text-light ml-5 p-2" >${color.ral}</div>
+    <div class="col-2 text-light ml-5 p-2" style="mix-blend-mode: difference;">${color.name}</div>
+    <div class="col-2 text-light ml-5 p-2" style="mix-blend-mode: difference;">${color.ral}</div>
 </div>
 </c:forEach>
 

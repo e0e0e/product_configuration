@@ -171,7 +171,7 @@ public class ProductFeatureController {
 
 		productFeatureService.moveDown(productFeatureId, productId);
 
-		return "redirect:/product/list?productId=" + productId + "#anchor_" + productFeatureId;
+		return "redirect:/product/moveList?productId=" + productId + "#anchor_" + productFeatureId;
 
 	}
 
@@ -181,11 +181,11 @@ public class ProductFeatureController {
 		productFeatureService.moveUp(productFeatureId, productId);
 		
 
-		return "redirect:/product/list?productId=" + productId + "#anchor_" + productFeatureId;
+		return "redirect:/product/moveList?productId=" + productId + "#anchor_" + productFeatureId;
 
 	}
 
-
+	
 
 	@GetMapping("/productFeature/unify")
 	public String unifyPosition() {
@@ -194,5 +194,16 @@ public class ProductFeatureController {
 
 		return null;
 
+	}
+
+
+	@GetMapping("/product/moveList")
+	public String showMoveList(Model model) {
+
+		model.addAttribute("configuration", productConfigurationService.findByName("pattern"));
+
+		model.addAttribute("title", "Mve Product Features");
+		model.addAttribute("path", "product/move");
+		return "main";
 	}
 }

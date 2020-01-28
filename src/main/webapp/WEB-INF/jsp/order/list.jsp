@@ -10,11 +10,6 @@
 
 	<h3>
 		Orders:
-		<a
-			href="/order/add"
-			class="btn btn-outline-secondary btn-lg">
-			<span class="glyphicon glyphicon-plus"></span>
-		</a>
 	</h3>
 	<div class="card text-dark bg-light m-1">
 		<div class="card-header bg-secondary text-left text-light">

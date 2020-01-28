@@ -44,7 +44,7 @@ function hideChassis(){
 </script>
 <div>
 
-	<div class="card text-dark bg-light m-1">
+	<div class="card text-dark m-1">
 
 
 		<div class="card-header bg-info text-left text-light">

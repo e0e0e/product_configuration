@@ -299,4 +299,8 @@ public class ProductConfigurationService {
 		return formMap;
 	}
 
+	public ProductConfiguration findByName(String name) {
+		return productConfigurationRepository.findByName(name);
+	}
+
 }

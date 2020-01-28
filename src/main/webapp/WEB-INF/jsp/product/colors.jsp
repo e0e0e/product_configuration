@@ -46,7 +46,7 @@
                                     <select name="${configList.productFeature.id}" class="text-dark" value="${configList.color.id}">
                                      <option value="" selected>${configList.color.ral}</option>
                                         <c:forEach var="color" items="${colors}">
-                                        <option value="${color.id}" style="background-color:${color.hex}">${color.ral}</option>
+                                        <option value="${color.id}" style="background-color:${color.hex}; text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">${color.ral}</option>
                                         </c:forEach>
                                     </select>
                                 </div>

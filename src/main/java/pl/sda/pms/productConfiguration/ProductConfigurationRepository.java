@@ -14,6 +14,9 @@ public interface ProductConfigurationRepository extends JpaRepository<ProductCon
 	
 	List<ProductConfiguration> findAll();
 
+	@Query(value = "Select * from product_configuration where name like ?1", nativeQuery = true)
+	ProductConfiguration findByName(String name);
+
 
 
 }

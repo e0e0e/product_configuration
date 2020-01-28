@@ -9,7 +9,7 @@
 		<div>
 			<label>Name:</label>
 		</div>
-		<input type="text" class="text-dark" name="name" value="">
+		<input type="text" class="text-dark" name="name" value="" size="100">
 		<div>
 			<label>Description:</label>
 		</div>

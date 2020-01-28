@@ -10,7 +10,6 @@
 <div>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-info">
-		<div class="container">
 			<b class="navbar-brand">LD</b>
 
 			<button
@@ -49,6 +48,9 @@
 					<li class="nav-item"><a
 						class="nav-link text-warning font-weight-bold btn btn-outline-dark"
 						href="/feature/list">Product Features </a></li>
+						<li class="nav-item"><a
+						class="nav-link text-warning font-weight-bold btn btn-outline-dark"
+						href="/product/moveList">PF Move</a></li>
 				</c:if>
 					<li class="nav-item"><a
 						class="nav-link text-light font-weight-bold btn btn-outline-dark"
@@ -59,18 +61,16 @@
 						class="nav-link text-light font-weight-bold btn btn-outline-dark"
 						href="/orders/list">Orders</a></li>
 
-							<li class="nav-item"><a
-			class="nav-link text-light font-weight-bold btn btn-outline-dark"
-			href="/product/filter">
-			<span class="glyphicon glyphicon-plus text-light"></span></a>
-</li>		
+					<li class="nav-item"><a
+					class="nav-link text-light font-weight-bold btn btn-outline-dark"
+					href="/product/filter">
+					<span class="glyphicon glyphicon-plus text-light"></span></a>
+				</li>		
 				</ul>
 				
 			</div>
-		</div>
-		<div
-			style="display: inline-block"
-			class="text-white">
+		
+		<span class="navbar-text">
 
 			logged as: <a
 				href="/userProfile?username=${user.username}"
@@ -81,7 +81,8 @@
 				width="40" /> <a href="/logout"><span
 				class="glyphicon glyphicon-log-out"
 				style="color: white;"></span></a> <br />
-		</div>
+		</span>
+
 	</nav>
 
 </div>
