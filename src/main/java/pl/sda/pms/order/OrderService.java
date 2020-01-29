@@ -104,7 +104,7 @@ public class OrderService {
 
 		List<OrderFeature> newOrderFeaturesToFilter = newOrderFeaturesMapToFilter.entrySet().stream()
 				.map(x -> new OrderFeature(x.getKey(), x.getValue())).collect(Collectors.toList());
-				//newOrderFeaturesToFilter.forEach(x->System.out.println(x.getProductFeature().getName()));
+
 		List<OrderFeature> newOrderFeatures = new ArrayList<>();
 		for (OrderFeature of : newOrderFeaturesToFilter) {
 			for (OrderFeature orf : orginalOrderFeatures) {
@@ -138,7 +138,7 @@ public class OrderService {
 				.collect(Collectors.toMap(x -> x.getProductFeature().getName(), x -> x.getFeature()));
 
 		List<String> orderFeatureStringList = oldOrderFeatureList.stream()
-				.map(x -> x + ": " + oldOrderFeatureMap.get(x).getOrderFeatures().getFeature().getName() + " -> "
+				.map(x -> x + ": " + (oldOrderFeatureMap.get(x).getOrderFeatures()==null? "n/a":oldOrderFeatureMap.get(x).getOrderFeatures().getFeature().getName()) + " -> "
 						+ newStringFeaturesMap.get(x).getName())
 				.collect(Collectors.toList());
 

@@ -30,7 +30,11 @@
 						var="configList"
 						items="${configuration.configurationList}">
 						<div class="row">
-							<div class="col-2 m-1">${configList.name}</div>
+							<div class="col-2
+							<c:if test="${configList.parent!='Chassis'}">
+							bg-info text-light
+							</c:if>
+							">${configList.name}</div>
 							<div class="col-2 m-1">
 								<select
 									name="${configList.id}"
@@ -55,7 +59,8 @@
 				<input
 					id="saveButton"
 					type="submit"
-					value="Save">
+					value="Save"
+					class="m-4">
 			</form>
 		</div>
 		<div class="card-footer bg-info text-right text-light"></div>
