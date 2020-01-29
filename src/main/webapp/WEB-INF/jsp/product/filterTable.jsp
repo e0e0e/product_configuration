@@ -71,7 +71,6 @@
 
 
 </div>
-<div id="table"></div>
 <script>
 function changeAction(val,da) {
 	
@@ -103,19 +102,13 @@ function changeAction(val,da) {
 	        		     select.concat("</select>");
 	        		   }
 					   if(key!=null){
+console.log(key);
 	        		   document.getElementById(key).innerHTML=select;
 					   }
-					}
-			tableString="";
-	         for (let key in products){
-					if(products[key].length>1){	        		   
-	        		     for (let k in products[key]){
-							 tableString=tableString.concat('<div class="row"><div class="col">'+products[key][k].name+'</div></div>')
-						 }
-					}
-			}
+	        		}
+	        	 
 	        	
-	      document.getElementById("table").innerHTML=tableString;
+	      
 	         }
 	    };
 	    
