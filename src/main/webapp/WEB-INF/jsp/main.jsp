@@ -8,6 +8,8 @@
 	var="resourcePath"
 	scope="session"
 	value="/resources/images/icons/png/" />
+			<c:set var = "imagesPath" value = "http://konfigurator.viberti.pl/imagesLd/"/>
+		<c:set var = "default" value = "default.png"/>
 <html>
 <head>
 <title>${title}</title>
@@ -47,10 +49,22 @@
 		});
 	});
 	
+function imgError(es)
+{
+	
+var something = "${imagesPath}";
+var imagePath = "0.png";
+es.src=something.concat(imagePath);
+es.parentElement.href=something.concat(imagePath);
+es.width="1";
 
+}
 	
 </script>
 <style>
+
+
+
 .popover {
 	background-color: #9FC53B;
 }
@@ -68,6 +82,20 @@ color: #a9cfee;
 
 .border-3 {
     border-width:3px !important;
+}
+.ns_form{
+top: 20%;
+right: 5%;
+margin-top: -100px; /* Negative half of height. */
+
+display: block;
+position:fixed;
+background-color: #F3F2DF;
+padding:5% 5%;
+ box-shadow: 10px 10px 5px grey;
+  border-radius: 10px;
+  border: solid 1px #000000;
+  z-index: 9999;
 }
 </style>
 </head>

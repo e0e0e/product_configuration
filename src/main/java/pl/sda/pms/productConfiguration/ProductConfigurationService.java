@@ -240,6 +240,18 @@ public class ProductConfigurationService {
 		return formMap;
 	}
 
+	public List<ProductConfiguration> getProductList(String features) {
+		JSONObject obj = new JSONObject(features);
+
+		Map<String, Feature> filterMap = obj.toMap().entrySet().stream().collect(
+				Collectors.toMap(x -> x.getKey(), x -> featureService.findByID(Long.parseLong((String) x.getValue()))));
+
+		List<ProductConfiguration> productList = getFilteredProducts(filterMap);
+
+		return productList;
+
+	}
+
 	private List<ProductConfiguration> getFilteredProducts(Map<String, Feature> filterMap) {
 		List<String> productFeatureNameList = filterMap.entrySet().stream().map(x -> x.getKey())
 				.collect(Collectors.toList());

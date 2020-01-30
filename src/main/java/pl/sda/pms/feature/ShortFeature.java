@@ -1,29 +1,43 @@
 package pl.sda.pms.feature;
 
 
+import pl.sda.pms.productConfiguration.ProductConfiguration;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-
-import org.hibernate.envers.Audited;
-
-import pl.sda.pms.OrderFeature.OrderFeature;
-import pl.sda.pms.productFeature.ProductFeature;
 
 public class ShortFeature {
 
 	private Long id;
 
 	private String name;
+	private String imagePath;
+
+
+
+	public boolean isIsSelected() {
+		return this.isSelected;
+	}
+
+	public boolean getIsSelected() {
+		return this.isSelected;
+	}
+
+	public void setIsSelected(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
 	
 	boolean isSelected=false;
+
+	private ProductConfiguration productConfiguration;
+
+	public ProductConfiguration getProductConfiguration() {
+		return this.productConfiguration;
+	}
+
+	public void setProductConfiguration(ProductConfiguration productConfiguration) {
+		this.productConfiguration = productConfiguration;
+	}
+
+	
 
 	public boolean isSelected() {
 		return isSelected;
@@ -47,6 +61,12 @@ public class ShortFeature {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public ShortFeature(Long id, String name, String imagePath) {
+		this.id = id;
+		this.name = name;
+		this.imagePath = imagePath;
 	}
 
 	public ShortFeature(Long id, String name) {
@@ -84,6 +104,12 @@ public class ShortFeature {
 	public String toString() {
 		return "ShortFeature [id=" + id + ", name=" + name + ", isSelected=" + isSelected + "]";
 	}
+	public String getImagePath() {
+		return this.imagePath;
+	}
 
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 
 }

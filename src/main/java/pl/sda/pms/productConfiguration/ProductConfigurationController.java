@@ -153,10 +153,11 @@ public class ProductConfigurationController {
 		 
 		Map<String, List<ShortFeature>> productMap= productConfigurationService.productLiveSearch(features);
 
-
 		return productMap;
 
 	}
+
+
 
 	@GetMapping("/product/delete")
 	public String productDelete(@RequestParam Long productId, Model model) {

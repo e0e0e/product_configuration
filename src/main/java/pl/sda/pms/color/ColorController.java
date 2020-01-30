@@ -38,6 +38,7 @@ public class ColorController {
         return "main";
 
     }
+
     @GetMapping("/color/add")
     public String addColor(Model model) {
 

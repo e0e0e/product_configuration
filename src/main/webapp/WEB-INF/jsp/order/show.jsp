@@ -20,16 +20,7 @@
 	var="user"
 	property="principal" />
 			<script>
-function imgError(es)
-{
-	
-var something = "${imagesPath}";
-var imagePath = "0.png";
-es.src=something.concat(imagePath);
-es.parentElement.href=something.concat(imagePath);
-es.width="1";
 
-}
 function hideChassis(){
   var x = document.getElementsByClassName("chassis");
   for(var i = 0; i < x.length; i++) {
