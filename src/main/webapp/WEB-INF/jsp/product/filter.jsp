@@ -71,12 +71,13 @@
 							
 						
 						<div class="col-2">
-						<div class="text-dark" id="NS-${configList.name}"></div>
+						<%-- <div class="text-dark" id="NS-${configList.name}"></div> --%>
+						<input type="text" class="text-dark" name="nst-${configList.id}" id="NS-${configList.name}" value="" style="display:none;">
 						</div>
 						<div class="col-1">
-							<div class="text-dark" id="img-${configList.name}">
+							<div class="text-dark">
 								<a href="" target="_blank" class="rys">						
-						<img src="" alt="Flowers in Chania" width="50" id="img-${configList.name} onerror="imgError(this)">
+						<img src="" alt="Flowers in Chania" width="50" id="img-${configList.name}" onerror="imgError(this)">
 						</a>	
 							
 							</div>
@@ -117,15 +118,10 @@ function changeAction(val,da) {
 	        		    	
 	        		    	 if(products[key][k].selected==false){
 	        		    	 select=select.concat('<option value="'+products[key][k].id+'">'+products[key][k].name+'</option>');
-							 var something = "${imagesPath}";
-								var imagePath = products[key][k].imagePath;
-								
-								document.getElementById(key).src=something.concat(imagePath);
-								console.log(key);
-								console.log(imagePath);
+						
 ;	        		    	 }else{
 	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected>'+products[key][k].name+'</option>'); 
-								 
+				
 
 								
 								// es.parentElement.href=something.concat(imagePath);
@@ -133,11 +129,19 @@ function changeAction(val,da) {
 
 
 	        		    	 }
-	        	
+	        	 	
 	        		    	 }
 	        		     }else{
 	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected>'+products[key][0].name+'</option>');  
-							 
+							 				//   var something = "${imagesPath}";
+											//    if{imagePath!=null}{
+											// 		var imagePath = products[key][0].imagePath;
+													
+											// 		document.getElementById("img-"+key).src=something.concat(imagePath);
+											// 		document.getElementById("img-"+key).style.width="100px";
+											// 		console.log("img-"+key);
+											// 		console.log(something.concat(imagePath));
+											//    }
 	        		     }
 	        		    select.concat("</select>");
 					
@@ -145,6 +149,7 @@ function changeAction(val,da) {
 					   if(key!=null){
 	        		   document.getElementById(key).innerHTML=select;
 					   }
+					  
 					}
 			
 		// 	tableString="";
@@ -174,7 +179,7 @@ function changeAction(val,da) {
   		}
 
         let fString=JSON.stringify(arr);
-    
+   		console.log(fString);
 	    xhttp.open("POST", "/product/matching", true);
 	    xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send(fString);
@@ -237,12 +242,13 @@ let e=document.getElementById(featureId);
   //new_desc=new_desc.concat(", new description: ");
 
  
-  new_desc=new_desc.concat("  ");
+  new_desc=new_desc.concat("");
   new_desc=new_desc.concat(document.getElementById('opis_ns').value);
   document.getElementById('NS-Chassis').innerHTML="No standard"
   document.getElementById('NS-Chassis').style.backgroundColor="Salmon";
-  document.getElementById(newId).innerHTML=new_desc;
+  document.getElementById(newId).value=new_desc;
   document.getElementById(newId).style.backgroundColor="Salmon";
+  document.getElementById(newId).style.display="block";
   document.getElementById(featureId).style.backgroundColor="Salmon";
   //e.options[e.selectedIndex].text=new_desc;
   //console.log(e.options[e.selectedIndex].text+' will change to '+new_desc);

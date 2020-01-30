@@ -209,8 +209,14 @@ public class ProductConfigurationService {
 
 	public Map<String, List<ShortFeature>> productLiveSearch(String features) {
 		JSONObject obj = new JSONObject(features);
+		// Map<String, Feature> notStandardsMap=obj.toMap().entrySet().stream().filter(x->x.getKey().startsWith("NS-"))
+		// .collect(
+		// 		Collectors.toMap(x -> x.getKey().replace("NS-", ""), x -> featureService.createWithName(x.getValue().toString())));
 
-		Map<String, Feature> filterMap = obj.toMap().entrySet().stream().collect(
+
+		Map<String, Feature> filterMap = obj.toMap().entrySet().stream()
+		.filter(x->!x.getKey().startsWith("NS-"))
+		.collect(
 				Collectors.toMap(x -> x.getKey(), x -> featureService.findByID(Long.parseLong((String) x.getValue()))));
 
 		List<ProductConfiguration> productList = getFilteredProducts(filterMap);
@@ -295,11 +301,11 @@ public class ProductConfigurationService {
 
 					if (!formMap.containsKey(pF.getName())) {
 						formMap.put(pF.getName(),
-								pF.getFeature().stream().map(f ->new ShortFeature(f.getId(), f.getName())).collect(Collectors.toList()));
+								pF.getFeature().stream().map(f ->new ShortFeature(f.getId(), f.getName(),f.getImagePath())).collect(Collectors.toList()));
 					} else {
 						List<ShortFeature> featureNames = formMap.get(pF.getName());
 
-						pF.getFeature().stream().filter(f -> !featureNames.contains(new ShortFeature(f.getId(), f.getName())))
+						pF.getFeature().stream().filter(f -> !featureNames.contains(new ShortFeature(f.getId(), f.getName(),f.getImagePath())))
 								.forEach(f -> featureNames.add(new ShortFeature(f.getId(), f.getName())));
 					//	System.out.println(" ");
 					}

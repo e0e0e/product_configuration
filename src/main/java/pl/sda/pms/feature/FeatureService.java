@@ -79,4 +79,11 @@ public class FeatureService {
 		return featureRepository.findNotUsed();
 		
 	}
+
+	public Feature createWithName(String name) {
+		Feature feature=new Feature();
+		feature.setName(name);
+		return featureRepository.save(feature);
+
+	}
 }
