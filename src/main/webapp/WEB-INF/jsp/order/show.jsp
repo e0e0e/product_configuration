@@ -78,7 +78,13 @@ function hideChassis(){
 						<div class="chassis border-left  border-bottom  ml-5">
 						<div class="row p-1">
 						<div class="col-2"><div class="ml-5 p-2 bg-info text-light">${feature.productFeature.name}:</div></div>
-						<div class="col-3"><div class="ml-5">${feature.feature.name}</div></div>
+						<div class="col-3"><div class="ml-5">${feature.feature.name}</div>
+						<c:if test="${feature.feature.noStandard=='TRUE'}">
+						<a class="btn btn-outline-info text-dark"
+						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}"><span
+						class="glyphicon glyphicon-edit text-dark"></span></a>
+						</c:if>
+						</div>
 						<div class="col-1">${feature.feature.index}</div>
 						<div class="col-1">${feature.feature.mIndex}</div>
 						<c:choose>

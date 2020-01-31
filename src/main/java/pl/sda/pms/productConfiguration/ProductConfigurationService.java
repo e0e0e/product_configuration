@@ -209,10 +209,6 @@ public class ProductConfigurationService {
 
 	public Map<String, List<ShortFeature>> productLiveSearch(String features) {
 		JSONObject obj = new JSONObject(features);
-		// Map<String, Feature> notStandardsMap=obj.toMap().entrySet().stream().filter(x->x.getKey().startsWith("NS-"))
-		// .collect(
-		// 		Collectors.toMap(x -> x.getKey().replace("NS-", ""), x -> featureService.createWithName(x.getValue().toString())));
-
 
 		Map<String, Feature> filterMap = obj.toMap().entrySet().stream()
 		.filter(x->!x.getKey().startsWith("NS-"))

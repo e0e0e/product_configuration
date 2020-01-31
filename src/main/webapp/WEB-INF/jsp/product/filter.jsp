@@ -15,7 +15,7 @@
 	</h3>
 
 
-	<div class="card text-dark bg-light m-1">
+	<div class="card text-dark m-1">
 
 
 		<div class="card-header bg-info text-left text-light">
@@ -45,7 +45,7 @@
 							bg-info text-light
 							</c:if>
 							">${configList.name}</div>
-							<div class="col-5 m-1">
+							<div class="col-5 ">
 								<select required
 									name="${configList.id}"
 									id="${configList.name}"
@@ -88,7 +88,7 @@
 				<input
 					id="saveButton"
 					type="submit"
-					value="Save" class="m-4">
+					value="Save" class="m-4" style="display:none;">
 			</form>
 		</div>
 		<div class="card-footer bg-info text-right text-light"></div>
@@ -122,6 +122,10 @@ something = "${imagesPath}";
 ;	        		    	 }else{
 	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected>'+products[key][k].name+'</option>'); 
 											let imagePath = products[key][k].imagePath;
+											let selected=document.getElementById(key);
+											 if(selected.style.backgroundColor!=="salmon"){
+												selected.style.backgroundColor="PaleGreen";
+											}
 											   if(imagePath!==''){
 													let e=document.getElementById("img-"+key);
 													e.src=something.concat(imagePath);
@@ -147,20 +151,26 @@ something = "${imagesPath}";
 							 
 	        		     }else{
 	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected>'+products[key][0].name+'</option>');  
+							 				let selected=document.getElementById(key);
+											 if(selected.style.backgroundColor!=="salmon"){
+												selected.style.backgroundColor="PaleGreen";
+											}
+											let e=document.getElementById("img-"+key);
 							 				let imagePath = products[key][0].imagePath;
 											   if(imagePath!==''){
-													let e=document.getElementById("img-"+key);
+													
 													e.src=something.concat(imagePath);
 													e.style.width="100px";
 													e.parentElement.href=something.concat(imagePath);
 											   }else{
-													let e=document.getElementById("img-"+key);
 													e.src=something.concat('0.png');
 													e.style.width="1px";
 													e.parentElement.href=something.concat(imagePath);
 
 											   }
 											document.getElementById("bns-"+key).style.display="block";
+											document.getElementById("saveButton").style.display="block";
+											
 	        		     }
 	        		    select.concat("</select>");
 					
@@ -231,9 +241,8 @@ something = "${imagesPath}";
       // alert(poczatek);
 
       //document.getElementById(przycisk.value).innerHTML=poczatek;
-       document.getElementById('NS').innerHTML="<div class='ns_form'>Replace:<br>"+poczatek+" \
-      <br>with:<br> \
-      <textarea id='opis_ns' style='position:relativel;width:100%;height:240px;margin: auto;'></textarea> \
+       document.getElementById('NS').innerHTML="<div class='ns_form'>No standard: \
+      <textarea id='opis_ns' lass='form-control' style='position:relativel;width:100%;height:240px;margin: auto;'></textarea> \
        <br><button type='button'  id_zmiana="+wewnatrz+" class='btn btn-default btn-sm' onclick='conf_ns(this)'>  \
           <span class='glyphicon glyphicon-ok-sign'></span> OK \
         </button> \

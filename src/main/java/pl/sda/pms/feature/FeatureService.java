@@ -54,7 +54,10 @@ public class FeatureService {
 		feature.setImagePath(imagePath);
 		feature.setIndex(index);
 		feature.setmIndex(mIndex);
-		feature.setPrice(Double.parseDouble(price));
+
+		if (OrderFeatureController.isNumeric(price)) {
+			feature.setPrice(Double.parseDouble(price));
+	}
 		Feature createdFeature = featureRepository.save(feature);
 		return createdFeature.getId() != null;
 	}
@@ -80,10 +83,20 @@ public class FeatureService {
 		
 	}
 
-	public Feature createWithName(String name) {
+	public Feature createWithNameNoStandard(String name) {
 		Feature feature=new Feature();
 		feature.setName(name);
+		feature.setNoStandard(true);
 		return featureRepository.save(feature);
 
+	}
+
+	public void deleteById(Long featureId) {
+
+		featureRepository.deleteById(featureId);
+	}
+
+	public List<Feature> findWithSameProductFeatue(Long featureId) {
+		return null;
 	}
 }

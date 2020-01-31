@@ -13,7 +13,7 @@
 		property="principal" />
 	<form
 		method="post"
-		action="/featureChange?userId=${loggedUser.id}&featureId=${param.featureId}">
+		action="/featureChange?userId=${loggedUser.id}&featureId=${param.featureId}&orderId=${orderId}">
 		<c:if test="${errorMessage!=null}">
 
 			<p style="background-color: red;">${errorMessage}</p>
@@ -24,7 +24,7 @@
 		<textarea
 			rows="2"
 			class="text-dark"
-			name="name">${feature.name}</textarea>
+			name="name" cols="100">${feature.name}</textarea>
 		<br /> <label>Feature Description:</label><br />
 		<textarea
 			rows="4"

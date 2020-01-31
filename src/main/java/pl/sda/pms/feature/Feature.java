@@ -30,6 +30,19 @@ public class Feature {
 	private String imagePath;
 	private String index;
 	private String mIndex;
+	private Boolean noStandard;
+
+	public Boolean isNoStandard() {
+		return this.noStandard;
+	}
+
+	public Boolean getNoStandard() {
+		return this.noStandard;
+	}
+
+	public void setNoStandard(Boolean noStandard) {
+		this.noStandard = noStandard;
+	}
 
 
 	public String getMIndex() {
@@ -215,5 +228,10 @@ public class Feature {
 		this.mIndex = mIndex;
 	}
 
+
+	public Feature(String name, Boolean noStandard) {
+		this.name = name;
+		this.noStandard = noStandard;
+	}
 
 }

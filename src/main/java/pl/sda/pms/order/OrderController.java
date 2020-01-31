@@ -56,7 +56,8 @@ public class OrderController {
 	@GetMapping("/order/show")
 	public String listOrders(@RequestParam Long orderId, Model model) {
 
-		model.addAttribute("order", orderService.findById(orderId));
+		//model.addAttribute("order", orderService.findById(orderId));
+		model.addAttribute("order", orderService.findByIdAndUpdatePrice(orderId));
 		model.addAttribute("aud", orderService.findByIdAud(orderId));
 		model.addAttribute("title", "List Orders");
 		model.addAttribute("path", "order/show");

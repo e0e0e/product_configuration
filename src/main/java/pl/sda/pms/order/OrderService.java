@@ -190,4 +190,15 @@ public class OrderService {
 
 	}
 
+	public Object findByIdAndUpdatePrice(Long orderId) {
+
+		Ord order=orderRepository.findById(orderId).get();
+		Double price=order.getOrderFeatures().stream().filter(x->x.getFeature().getPrice()!=null)
+		.mapToDouble(x->x.getFeature().getPrice()).sum();
+		order.setPrice(price);
+		Ord updatedOrder=orderRepository.save(order);
+
+		return updatedOrder;
+	}
+
 }

@@ -38,7 +38,9 @@ public class OrderFeatureService {
 			f.getProductFeature().setOrderFeature(f);
 		}
 
-		Double priceSum=result.stream().mapToDouble(x->x.getFeature().getPrice()).sum();
+		Double priceSum=result.stream()
+			.filter(x->x.getFeature().getPrice()!=null)
+			.mapToDouble(x->x.getFeature().getPrice()).sum();
 		
 		List<String> orderFeatureStringList = orderList.stream()
 				.map(x -> x.getFeature().getName() + ", " + x.getProductFeature().getName())

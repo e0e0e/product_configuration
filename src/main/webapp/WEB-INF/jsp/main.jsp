@@ -90,7 +90,7 @@ margin-top: -100px; /* Negative half of height. */
 
 display: block;
 position:fixed;
-background-color: #F3F2DF;
+background-color: #ffffff;
 padding:5% 5%;
  box-shadow: 10px 10px 5px grey;
   border-radius: 10px;
