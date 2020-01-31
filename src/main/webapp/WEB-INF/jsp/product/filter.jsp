@@ -121,7 +121,20 @@ something = "${imagesPath}";
 						
 ;	        		    	 }else{
 	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected>'+products[key][k].name+'</option>'); 
-				
+											let imagePath = products[key][k].imagePath;
+											   if(imagePath!==''){
+													let e=document.getElementById("img-"+key);
+													e.src=something.concat(imagePath);
+													e.style.width="100px";
+													e.parentElement.href=something.concat(imagePath);
+											   }else{
+													let e=document.getElementById("img-"+key);
+													e.src=something.concat('0.png');
+													e.style.width="1px";
+													e.parentElement.href=something.concat(imagePath);
+
+											   }
+											document.getElementById("bns-"+key).style.display="block";
 
 								
 								// es.parentElement.href=something.concat(imagePath);
@@ -131,6 +144,7 @@ something = "${imagesPath}";
 	        		    	 }
 	        	 	
 	        		    	 }
+							 
 	        		     }else{
 	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected>'+products[key][0].name+'</option>');  
 							 				let imagePath = products[key][0].imagePath;
@@ -139,6 +153,12 @@ something = "${imagesPath}";
 													e.src=something.concat(imagePath);
 													e.style.width="100px";
 													e.parentElement.href=something.concat(imagePath);
+											   }else{
+													let e=document.getElementById("img-"+key);
+													e.src=something.concat('0.png');
+													e.style.width="1px";
+													e.parentElement.href=something.concat(imagePath);
+
 											   }
 											document.getElementById("bns-"+key).style.display="block";
 	        		     }
