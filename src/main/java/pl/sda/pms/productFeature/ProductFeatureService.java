@@ -22,11 +22,16 @@ import pl.sda.pms.productConfiguration.ProductConfigurationService;
 public class ProductFeatureService {
 
 	private final ProductFeatureRepository productFeatureRepository;
-	private final FeatureService featureService;
+	private  FeatureService featureService;
 
-	public ProductFeatureService(ProductFeatureRepository productFeatureRepository, FeatureService featureService) {
+	public ProductFeatureService(ProductFeatureRepository productFeatureRepository) {
 
 		this.productFeatureRepository = productFeatureRepository;
+
+	}
+
+	public void setFeatureService(FeatureService featureService) {
+
 		this.featureService = featureService;
 
 	}
@@ -261,5 +266,14 @@ public class ProductFeatureService {
 			}
 
 		}
+	}
+
+	public Collection<Feature> findFeaturesByProductFeatureName(String productFeatureName) {
+		List<ProductFeature> productFeatures=productFeatureRepository.findByName(productFeatureName);
+		Set<Feature> featuresInProductFeature=new HashSet<>();
+		productFeatures.stream().forEach(x->featuresInProductFeature.addAll(x.getFeature()));
+
+
+		return featuresInProductFeature;
 	}
 }

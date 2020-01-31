@@ -6,7 +6,11 @@
 	uri="http://www.springframework.org/security/tags"%>
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
+<c:if test="${errorMessage!=null}">
 
+            <p style="background-color: red;">${errorMessage}</p>
+
+        </c:if>
 	
 	<sec:authentication
 		var="loggedUser"
@@ -56,7 +60,7 @@
 				value="${feature.mIndex}"><br /> <br>
 				<input
 				type="submit"
-				class="text-dark"
+				class="text-light btn btn-outline-secondary"
 				value="Save">
 
 
@@ -64,6 +68,22 @@
 		</div>
 		<div class="col-6 bg-secondary">
 		<h1>Select existing Feature</h1>
+		<form
+			method="post"
+			action="/feature/existingFeatureChange?featureId=${param.featureId}&orderId=${orderId}">
+			<label>Features:</label><br />
+			<select name="existingFeatureId" calss="form-control w-100" class="custom-select" style="font-size: 14px;" size="5">
+		<c:forEach var="exFeature" items="${existingFeatures}">
+		<option value="${exFeature.id}">${exFeature.name},  ${exFeature.price}, ${exFeature.imagePath}</option>
+
+		</c:forEach>
+		<select>
+		<br>
+		<input
+				type="submit"
+				class="text-dark btn btn-outline-info m-5"
+				value="Save Existing">
+		</form>
 		</div>
 	</div>
 </div>
