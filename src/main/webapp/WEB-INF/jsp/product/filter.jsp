@@ -40,7 +40,7 @@
 						var="configList"
 						items="${configuration.configurationList}">
 						<div class="row">
-							<div class="col-2 
+							<div class="col-2 col-form-label 
 							<c:if test="${configList.parent!='Chassis'}">
 							bg-info text-light
 							</c:if>
@@ -50,7 +50,7 @@
 									name="${configList.id}"
 									id="${configList.name}"
 									onchange='changeAction(this,${configList.id})'
-									class="w-100">
+									class="w-100 form-control">
 									<option
 										value=""
 										selected
@@ -66,13 +66,13 @@
 							
 							</div>
 							<div class="col-1">
-							<div class="btn-warning btn-sm" align="right" onclick="notStandard(this)" value="${configList.name}">NS</div>
+							<div class="btn btn-outline-warning form-control" align="right" onclick="notStandard(this)" value="${configList.name}" id="bns-${configList.name}" style="display:none;">NS</div>
 							</div>
 							
 						
 						<div class="col-2">
 						<%-- <div class="text-dark" id="NS-${configList.name}"></div> --%>
-						<input type="text" class="text-dark" name="nst-${configList.id}" id="NS-${configList.name}" value="" style="display:none;">
+						<input type="text" class="text-dark form-control-plaintext border-bottom border-warning m-2"  readonly name="nst-${configList.id}" id="NS-${configList.name}" value="" style="display:none;">
 						</div>
 						<div class="col-1">
 							<div class="text-dark">
@@ -100,7 +100,7 @@
 <div id="table"></div>
 <script>
 function changeAction(val,da) {
-	
+something = "${imagesPath}";
 	 var xhttp = new XMLHttpRequest();
 	    xhttp.onreadystatechange = function() {
 	         if (this.readyState == 4 && this.status == 200) {
@@ -133,15 +133,14 @@ function changeAction(val,da) {
 	        		    	 }
 	        		     }else{
 	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected>'+products[key][0].name+'</option>');  
-							 				//   var something = "${imagesPath}";
-											//    if{imagePath!=null}{
-											// 		var imagePath = products[key][0].imagePath;
-													
-											// 		document.getElementById("img-"+key).src=something.concat(imagePath);
-											// 		document.getElementById("img-"+key).style.width="100px";
-											// 		console.log("img-"+key);
-											// 		console.log(something.concat(imagePath));
-											//    }
+							 				let imagePath = products[key][0].imagePath;
+											   if(imagePath!==''){
+													let e=document.getElementById("img-"+key);
+													e.src=something.concat(imagePath);
+													e.style.width="100px";
+													e.parentElement.href=something.concat(imagePath);
+											   }
+											document.getElementById("bns-"+key).style.display="block";
 	        		     }
 	        		    select.concat("</select>");
 					
@@ -244,11 +243,14 @@ let e=document.getElementById(featureId);
  
   new_desc=new_desc.concat("");
   new_desc=new_desc.concat(document.getElementById('opis_ns').value);
-  document.getElementById('NS-Chassis').innerHTML="No standard"
-  document.getElementById('NS-Chassis').style.backgroundColor="Salmon";
+  document.getElementById('NS-Chassis').value="No standard";
+  document.getElementById('NS-Chassis').style.display="block";
+//   document.getElementById('NS-Chassis').disabled = true;
+//   document.getElementById('NS-Chassis').style.backgroundColor="Salmon";
   document.getElementById(newId).value=new_desc;
-  document.getElementById(newId).style.backgroundColor="Salmon";
+//   document.getElementById(newId).style.backgroundColor="Salmon";
   document.getElementById(newId).style.display="block";
+//   document.getElementById(newId).disabled = true;
   document.getElementById(featureId).style.backgroundColor="Salmon";
   //e.options[e.selectedIndex].text=new_desc;
   //console.log(e.options[e.selectedIndex].text+' will change to '+new_desc);

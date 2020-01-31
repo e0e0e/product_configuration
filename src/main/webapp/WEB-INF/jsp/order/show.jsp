@@ -91,9 +91,11 @@ function hideChassis(){
 						</c:choose>
 				
 						<div class="col-1">
+						<c:if test="${feature.feature.imagePath!=''}">
 						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
 						<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50" onerror="imgError(this)">
 						</a>
+						</c:if>
 						</div>
 						
 						<c:if test="${feature.feature.price!='0.0'}">
@@ -112,9 +114,11 @@ function hideChassis(){
 						<div class="col-1 m-1">${feature.color.ral}<span class="glyphicon glyphicon-tint" style="color:${feature.color.hex};"></span></div>
 						<div class="col-1 m-1"></div>
 						<div class="col-1 m-1">
-						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
-						<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50" onerror="imgError(this)">
-						</a>
+						<c:if test="${feature.feature.imagePath!=''}">
+							<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
+							<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50" onerror="imgError(this)">
+							</a>
+						</c:if>
 						</div>
 						
 						<c:if test="${feature.feature.price!='0.0'}">
@@ -139,9 +143,11 @@ function hideChassis(){
 							</c:otherwise>
 						</c:choose>
 						<div class="col-1 m-1">
+						<c:if test="${feature.feature.imagePath!=''}">
 						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">						
 						<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50" onerror="imgError(this)">
 						</a>
+						</c:if>
 						</div>
 						
 						<c:if test="${feature.feature.price!='0.0'}">
