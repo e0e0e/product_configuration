@@ -48,10 +48,7 @@
 						class="btn btn-outline-info text-dark"
 						href="/feature/edit?productFeatureId=${configList.id}">${configList.name}
 							<span class="glyphicon glyphicon-edit text-dark"></span>
-					</a> <a
-						class="btn btn-outline-info text-dark"
-						href="/feature/removeProductFeature?productFeatureId=${configList.id}&productId=${configuration.id}"><span
-							class="glyphicon glyphicon-trash text-dark"></span></a> <a
+					</a>  <a
 						href="/feature/moveDown?productFeatureId=${configList.id}&productId=${configuration.id}"
 						class="btn btn-outline-info text-dark"> <span
 							class="glyphicon glyphicon-triangle-bottom"></span></a> <a

@@ -68,6 +68,9 @@ function hideChassis(){
 				href="/order/print?orderId=${order.id}">
 				<span class="glyphicon glyphicon-print text-light"></span>
 			</a>
+			<c:if test="${order.noStandard=='TRUE'}">
+			<span class="text-warning text-center" style="font-size:30px;">No standard order</span>
+			</c:if>
 			</div>
 		<div class="card-body">
 				<c:forEach
@@ -78,12 +81,13 @@ function hideChassis(){
 						<div class="chassis border-left  border-bottom  ml-5">
 						<div class="row p-1">
 						<div class="col-2"><div class="ml-5 p-2 bg-info text-light">${feature.productFeature.name}:</div></div>
-						<div class="col-3"><div class="ml-5">${feature.feature.name}</div>
+						<div class="col-3"><div class="ml-5">${feature.feature.name}
 						<c:if test="${feature.feature.noStandard=='TRUE'}">
 						<a class="btn btn-outline-info text-dark"
 						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}"><span
-						class="glyphicon glyphicon-edit text-dark"></span></a>
+						class="glyphicon glyphicon-edit text-danger"></span></a>
 						</c:if>
+						</div>
 						</div>
 						<div class="col-1">${feature.feature.index}</div>
 						<div class="col-1">${feature.feature.mIndex}</div>
@@ -114,7 +118,13 @@ function hideChassis(){
 						<div class="row border p-1">
 						<div class="col-2 bg-info text-light "><button class="btn btn-outline-secondry bg-light text-light p-1 m-1" onclick="hideChassis()"><span class="glyphicon glyphicon-menu-up text-dark"></span></button>
 						${feature.productFeature.name}:</div>
-						<div class="col-3 m-1">${feature.feature.name}</div>
+						<div class="col-3 m-1">${feature.feature.name}
+						<c:if test="${feature.feature.noStandard=='TRUE'}">
+						<a class="btn btn-outline-info text-dark"
+						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}"><span
+						class="glyphicon glyphicon-edit text-danger"></span></a>
+						</c:if>
+						</div>
 						<div class="col-1 m-1">${feature.feature.index}</div>
 						<div class="col-1 m-1">${feature.feature.mIndex}</div>
 						<div class="col-1 m-1">${feature.color.ral}<span class="glyphicon glyphicon-tint" style="color:${feature.color.hex};"></span></div>
@@ -137,7 +147,12 @@ function hideChassis(){
 						<c:otherwise>
 						<div class="row border-bottom m-1  p-0">
 						<div class="col-2 bg-info text-light p-1">${feature.productFeature.name}:</div>
-						<div class="col-3 m-1">${feature.feature.name}</div>
+						<div class="col-3 m-1">${feature.feature.name}
+						<c:if test="${feature.feature.noStandard=='TRUE'}">
+						<a class="btn btn-outline-info text-dark"
+						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}"><span
+						class="glyphicon glyphicon-edit text-danger"></span></a>
+						</c:if></div>
 						<div class="col-1 m-1">${feature.feature.index}</div>
 						<div class="col-1 m-1">${feature.feature.mIndex}</div>
 						<c:choose>

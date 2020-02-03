@@ -85,8 +85,9 @@
 		<div class="row border-bottom m-1">
 			<div class="col-2 m-1">${feature.productFeature.name}:</div>
 			<div class="col-4 m-1">${feature.feature.name}</div>
-			<div class="col-2 m-1">${feature.feature.index}</div>
-			<div class="col-2 m-1">${feature.feature.mIndex}</div>
+			<div class="col-1 m-1">${feature.feature.index}</div>
+			<div class="col-1 m-1">${feature.color.ral}<span class="glyphicon glyphicon-tint" style="color:${feature.color.hex};"></span></div>
+			<div class="col-1 m-1">${feature.feature.mIndex}</div>
 			<c:if test="${feature.feature.price!='0.0'}">
 				<div class="col-1 m-1">${feature.feature.price}</div>
 			</c:if>

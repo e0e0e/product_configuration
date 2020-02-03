@@ -7,9 +7,6 @@ import org.springframework.stereotype.Component;
 import pl.sda.pms.users.User;
 import pl.sda.pms.users.UserRepository;
 
-
-import java.util.Collections;
-
 @Component
 class DbUserDetailsService implements UserDetailsService {
 

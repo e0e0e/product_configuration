@@ -2,6 +2,7 @@ package pl.sda.pms.OrderFeature;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ public class OrderFeatureService {
 		return orderFeature2;
 	}
 
-	public List<OrderFeature> create(List<OrderFeature> orderList) {
+	public List<OrderFeature> create(List<OrderFeature> orderList, Boolean noStandard) {
 
 		List<OrderFeature> result = new ArrayList<>();
 		for (OrderFeature f : orderList) {
@@ -38,10 +39,9 @@ public class OrderFeatureService {
 			f.getProductFeature().setOrderFeature(f);
 		}
 
-		Double priceSum=result.stream()
-			.filter(x->x.getFeature().getPrice()!=null)
-			.mapToDouble(x->x.getFeature().getPrice()).sum();
-		
+		Double priceSum = result.stream().filter(x -> x.getFeature().getPrice() != null)
+				.mapToDouble(x -> x.getFeature().getPrice()).sum();
+
 		List<String> orderFeatureStringList = orderList.stream()
 				.map(x -> x.getFeature().getName() + ", " + x.getProductFeature().getName())
 				.collect(Collectors.toList());
@@ -62,6 +62,8 @@ public class OrderFeatureService {
 		ord.setOrderFeaturesStrings(orderFeatureStringList);
 		ord.setOrderFeatures(orderList);
 		ord.setPrice(priceSum);
+		ord.setNoStandard(noStandard);
+
 
 		orderRepository.save(ord);
 		return result;

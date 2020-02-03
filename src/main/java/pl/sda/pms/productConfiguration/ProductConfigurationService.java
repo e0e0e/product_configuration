@@ -297,11 +297,11 @@ public class ProductConfigurationService {
 
 					if (!formMap.containsKey(pF.getName())) {
 						formMap.put(pF.getName(),
-								pF.getFeature().stream().map(f ->new ShortFeature(f.getId(), f.getName(),f.getImagePath())).collect(Collectors.toList()));
+								pF.getFeature().stream().map(f ->new ShortFeature(f.getId(), f.getName(),f.getImagePath(),f.getIndex())).collect(Collectors.toList()));
 					} else {
 						List<ShortFeature> featureNames = formMap.get(pF.getName());
 
-						pF.getFeature().stream().filter(f -> !featureNames.contains(new ShortFeature(f.getId(), f.getName(),f.getImagePath())))
+						pF.getFeature().stream().filter(f -> !featureNames.contains(new ShortFeature(f.getId(), f.getName(),f.getImagePath(),f.getIndex())))
 								.forEach(f -> featureNames.add(new ShortFeature(f.getId(), f.getName())));
 					//	System.out.println(" ");
 					}

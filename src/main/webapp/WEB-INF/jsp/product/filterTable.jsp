@@ -21,11 +21,11 @@
 				id="myFilterForm"
 				method="post"
 				action="/filter/orderCreate">
-<div class="row border-bottom">
-<div class="col-2 m-1">Product Feature</div>
-<div class="col-5 m-1">Select</div>
+		<div class="row border-bottom">
+		<div class="col-2 m-1">Product Feature</div>
+		<div class="col-5 m-1">Select</div>
 
-</div>
+		</div>
 				
 					<c:forEach
 						var="configList"

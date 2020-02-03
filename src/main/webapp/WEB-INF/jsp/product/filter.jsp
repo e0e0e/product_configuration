@@ -77,10 +77,11 @@
 						<div class="col-1">
 							<div class="text-dark">
 								<a href="" target="_blank" class="rys">						
-						<img src="" alt="Flowers in Chania" width="50" id="img-${configList.name}" onerror="imgError(this)">
-						</a>	
-							
+								<img src="" alt="Flowers in Chania" width="50" id="img-${configList.name}" onerror="imgError(this)">
+								</a>	
 							</div>
+						</div>
+						<div class="col-1"  id="ind-${configList.name}">
 						</div>
 						</div>
 					</c:forEach>
@@ -170,6 +171,8 @@ something = "${imagesPath}";
 											   }
 											document.getElementById("bns-"+key).style.display="block";
 											document.getElementById("saveButton").style.display="block";
+											let ind=document.getElementById("ind-"+key);
+											ind.innerHTML=products[key][0].index;
 											
 	        		     }
 	        		    select.concat("</select>");

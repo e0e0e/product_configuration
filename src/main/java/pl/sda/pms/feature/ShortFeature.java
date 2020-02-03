@@ -10,6 +10,9 @@ public class ShortFeature {
 
 	private String name;
 	private String imagePath;
+	private String index;
+
+	
 
 
 
@@ -63,6 +66,13 @@ public class ShortFeature {
 		this.name = name;
 	}
 
+	public ShortFeature(Long id, String name, String imagePath, String index) {
+		this.id = id;
+		this.name = name;
+		this.imagePath = imagePath;
+		this.index = index;
+	}
+
 	public ShortFeature(Long id, String name, String imagePath) {
 		this.id = id;
 		this.name = name;
@@ -111,5 +121,11 @@ public class ShortFeature {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
+	public String getIndex() {
+		return this.index;
+	}
 
+	public void setIndex(String index) {
+		this.index = index;
+	}
 }

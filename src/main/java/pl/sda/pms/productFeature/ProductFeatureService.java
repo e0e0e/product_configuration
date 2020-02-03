@@ -22,16 +22,11 @@ import pl.sda.pms.productConfiguration.ProductConfigurationService;
 public class ProductFeatureService {
 
 	private final ProductFeatureRepository productFeatureRepository;
-	private  FeatureService featureService;
+	private final FeatureService featureService;
 
-	public ProductFeatureService(ProductFeatureRepository productFeatureRepository) {
+	public ProductFeatureService(ProductFeatureRepository productFeatureRepository, FeatureService featureService) {
 
 		this.productFeatureRepository = productFeatureRepository;
-
-	}
-
-	public void setFeatureService(FeatureService featureService) {
-
 		this.featureService = featureService;
 
 	}
@@ -88,14 +83,14 @@ public class ProductFeatureService {
 		}
 		try {
 			for (Long f : featureList) {
-
-				featuresToAddFeatures.add(featureService.findByID(f));
+				Feature feature = featureService.findByID(f);
+				featuresToAddFeatures.add(feature);
 			}
 			productFeature.setFeature(featuresToAddFeatures);
 
 		} catch (Exception e) {
 			System.out.println(
-					"product feature service edit, no new features in feature List, no problem" + e.getMessage());
+					"product feature service edit, no new features in feature List, no problem: " + e.getMessage());
 		}
 		List<Boolean> createdFeature = new ArrayList<>();
 
@@ -145,7 +140,7 @@ public class ProductFeatureService {
 		ProductFeature productFeature = productFeatureRepository.findById(productFeatureId).get();
 		productFeature.getFeature().remove(feature);
 		feature.getProductFeatureList().remove(productFeature);
-		featureService.save(feature);
+		// featureService.save(feature);
 		productFeatureRepository.save(productFeature);
 
 	}
@@ -188,10 +183,9 @@ public class ProductFeatureService {
 		try {
 			for (ProductFeature pf : productFeaturesByOrgynalName) {
 				try {
-				ProductConfiguration productConfiguration = pf.getProductConfiguration();
-				int position = pf.findPositionInProduct();
+					ProductConfiguration productConfiguration = pf.getProductConfiguration();
+					int position = pf.findPositionInProduct();
 
-				
 					ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
 							.sorted(Comparator.comparing(ProductFeature::findPositionInProduct))
 							.filter(x -> x.findPositionInProduct() > position).findFirst().get();
@@ -220,10 +214,9 @@ public class ProductFeatureService {
 		try {
 			for (ProductFeature pf : productFeaturesByOrgynalName) {
 				try {
-				ProductConfiguration productConfiguration = pf.getProductConfiguration();
-				int position = pf.findPositionInProduct();
+					ProductConfiguration productConfiguration = pf.getProductConfiguration();
+					int position = pf.findPositionInProduct();
 
-				
 					ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
 							.sorted(Comparator.comparing(ProductFeature::findPositionInProduct).reversed())
 							.filter(x -> x.findPositionInProduct() < position).findFirst().get();
@@ -269,11 +262,19 @@ public class ProductFeatureService {
 	}
 
 	public Collection<Feature> findFeaturesByProductFeatureName(String productFeatureName) {
-		List<ProductFeature> productFeatures=productFeatureRepository.findByName(productFeatureName);
-		Set<Feature> featuresInProductFeature=new HashSet<>();
-		productFeatures.stream().forEach(x->featuresInProductFeature.addAll(x.getFeature()));
-
+		List<ProductFeature> productFeatures = productFeatureRepository.findByName(productFeatureName);
+		Set<Feature> featuresInProductFeature = new HashSet<>();
+		productFeatures.stream().forEach(x -> featuresInProductFeature.addAll(x.getFeature()));
 
 		return featuresInProductFeature;
 	}
+
+	public Collection<Feature> findWithSameProductFeatue(Long featureId) {
+		Feature feature = featureService.findByID(featureId);
+		String productFeatureName = feature.getOrderFeatures().getProductFeature().getName();
+		Collection<Feature> features = findFeaturesByProductFeatureName(productFeatureName);
+
+		return features;
+	}
+
 }

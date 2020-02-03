@@ -47,8 +47,9 @@
 		$('.popover-dismiss').popover({
 			trigger : 'focus'
 		});
+		
 	});
-	
+
 function imgError(es)
 {
 	
@@ -59,10 +60,9 @@ es.parentElement.href=something.concat(imagePath);
 es.width="1";
 
 }
-	
+document.body.style.cursor = 'wait';	
 </script>
 <style>
-
 
 
 .popover {
@@ -100,7 +100,10 @@ padding:5% 5%;
 </style>
 </head>
 <body>
+<div id="load">
 
+</div>
+<div id="content" style="display:block;">
 	<%@include file="navigation.jsp"%>
 	<jsp:include page="${path}.jsp"></jsp:include>
 	<footer
@@ -115,5 +118,6 @@ padding:5% 5%;
 						href="http://www.flaticon.com/">www.flaticon.com</a></em></strong>
 		</p>
 	</footer>
+	</div>
 </body>
 </html>

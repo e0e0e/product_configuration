@@ -51,6 +51,20 @@ public class Ord {
 	private String client;
 	private Integer unitsToProduce;
 	private Integer revision = 0;
+	private Boolean noStandard;
+
+	public Boolean isNoStandard() {
+		return this.noStandard;
+	}
+
+	public Boolean getNoStandard() {
+		return this.noStandard;
+	}
+
+	public void setNoStandard(Boolean noStandard) {
+		this.noStandard = noStandard;
+	}
+
 	@ElementCollection
 	private List<String> orderFeaturesStrings = new ArrayList<>();
 

@@ -42,7 +42,7 @@ public class OrderFeatureController {
 						featureService.findByID(Long.parseLong(e.getValue()))))
 				.collect(Collectors.toList());
 
-		List<OrderFeature> orderFeatures = orderFeatureService.create(orderList);
+		List<OrderFeature> orderFeatures = orderFeatureService.create(orderList,false);
 
 		return "redirect:/orders/list";
 
@@ -50,12 +50,14 @@ public class OrderFeatureController {
 
 	@PostMapping("/filter/orderCreate")
 	public String orderCreationByFilter(@RequestParam Map<String, String> paramMap, Model model) {
-
+		Boolean noStandard=false;
 		Map<String, Feature> notStandardsMap = paramMap.entrySet().stream()
 				.filter(x -> (x.getKey().startsWith("nst-") && x.getValue() != ""))
 				.collect(Collectors.toMap(x -> x.getKey().replace("nst-", ""),
 						x -> featureService.createWithNameNoStandard("No standard: "+x.getValue().toString())));
-
+		if(notStandardsMap.size()>0){
+			noStandard=true;
+		}
 		notStandardsMap.entrySet().stream().filter(x -> paramMap.containsKey(x.getKey()))
 				.forEach(x -> paramMap.put(x.getKey(), x.getValue().getId().toString()));
 
@@ -65,7 +67,7 @@ public class OrderFeatureController {
 						featureService.findByID(Long.parseLong(e.getValue()))))
 				.collect(Collectors.toList());
 
-		List<OrderFeature> orderFeatures = orderFeatureService.create(orderList);
+		List<OrderFeature> orderFeatures = orderFeatureService.create(orderList,noStandard);
 
 		return "redirect:/orders/list";
 

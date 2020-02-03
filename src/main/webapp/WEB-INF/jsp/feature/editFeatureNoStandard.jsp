@@ -72,9 +72,9 @@
 			method="post"
 			action="/feature/existingFeatureChange?featureId=${param.featureId}&orderId=${orderId}">
 			<label>Features:</label><br />
-			<select name="existingFeatureId" calss="form-control w-100" class="custom-select" style="font-size: 14px;" size="5">
+			<select name="existingFeatureId" calss="form-control w-100" class="custom-select" style="font-size: 14px;" size="10">
 		<c:forEach var="exFeature" items="${existingFeatures}">
-		<option value="${exFeature.id}">${exFeature.name},  ${exFeature.price}, ${exFeature.imagePath}</option>
+		<option value="${exFeature.id}">${exFeature.name}____${exFeature.index}</option>
 
 		</c:forEach>
 		<select>

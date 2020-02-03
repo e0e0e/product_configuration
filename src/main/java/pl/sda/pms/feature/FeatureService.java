@@ -1,29 +1,19 @@
 package pl.sda.pms.feature;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
-
 import pl.sda.pms.OrderFeature.OrderFeatureController;
-import pl.sda.pms.order.Ord;
-import pl.sda.pms.productFeature.ProductFeatureRepository;
-import pl.sda.pms.productFeature.ProductFeatureService;
 
 @Service
 public class FeatureService {
 
 	private final FeatureRepository featureRepository;
-	private final ProductFeatureService productFeatureService;
 
-	public FeatureService(FeatureRepository featureRepository, ProductFeatureService productFeatureService) {
+	public FeatureService(FeatureRepository featureRepository) {
 		super();
 		this.featureRepository = featureRepository;
-		this.productFeatureService = productFeatureService;
+
 	}
 
 	public List<Feature> findAll() {
@@ -51,7 +41,8 @@ public class FeatureService {
 	}
 
 	public Feature findByID(Long id) {
-		return featureRepository.findById(id).get();
+		Feature feature = featureRepository.findById(id).get();
+		return feature;
 	}
 
 	public boolean saveChanges(String name, String description, String imagePath, String index, String price, Long id,
@@ -105,11 +96,4 @@ public class FeatureService {
 		featureRepository.deleteById(featureId);
 	}
 
-	public Collection<Feature> findWithSameProductFeatue(Long featureId) {
-		Feature feature = featureRepository.findById(featureId).get();
-		String productFeatureName = feature.getOrderFeatures().getProductFeature().getName();
-		Collection<Feature> features = productFeatureService.findFeaturesByProductFeatureName(productFeatureName);
-
-		return features;
-	}
 }

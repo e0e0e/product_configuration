@@ -20,10 +20,12 @@ import pl.sda.pms.productFeature.ProductFeatureService;
 public class FeatureController {
 	private final FeatureService featureService;
 	private final ProductFeatureService productFeatureService;
+	private final OrderFeatureService orderFeatureService;
 
-	public FeatureController(FeatureService featureService, ProductFeatureService productFeatureService) {
+	public FeatureController(FeatureService featureService, ProductFeatureService productFeatureService,OrderFeatureService orderFeatureService) {
 		this.featureService = featureService;
 		this.productFeatureService=productFeatureService;
+		this.orderFeatureService=orderFeatureService;
 	}
 
 
@@ -47,7 +49,7 @@ public class FeatureController {
 		// Collection<Feature> existingFeatures=featureService.findWithSameProductFeatue(featureId);
 		
 		model.addAttribute("feature", featureService.findByID(featureId));
-		model.addAttribute("existingFeatures", featureService.findWithSameProductFeatue(featureId));
+		model.addAttribute("existingFeatures", productFeatureService.findWithSameProductFeatue(featureId));
 		model.addAttribute("orderId", orderId);
 
 		model.addAttribute("title", "Show Features");
@@ -100,14 +102,15 @@ public class FeatureController {
 				
 		 Feature feature=featureService.findByID(existingFeatureId);
 		 Feature noStandardFeature=featureService.findByID(featureId);
-		 noStandardFeature.getOrderFeatures().setFeature(feature);
+		 OrderFeature orderFeature=noStandardFeature.getOrderFeatures();
+		 orderFeature.setFeature(feature);
 		 List<Ord> order = noStandardFeature.getOrderFeatures().getOrd();
 		 if(order.size()>1){
 			 model.addAttribute("errorMessage", "To may orders");
 			return "redirect:/feature/editFeatureNoStandard?featureId="+featureId+"&orderId="+orderId;
 		 }
 		 //order.get(0).findProductFeatureByFeature();
-		// orderFeatureService.save(orderFeature);
+		 orderFeatureService.save(orderFeature);
 		 //feature.get
 
 		//featureService.saveChanges(name,description,imagePath,index,price,featureId,mIndex);
@@ -154,7 +157,7 @@ public class FeatureController {
 				try {
 					featureService.deleteById(featureId);
 				} catch (Exception e) {
-					System.out.println("Delete feature failed, probably it is used in somewere: "+e.getMessage());
+					System.out.println("Delete feature failed, probably it is used in somewhere: "+e.getMessage());
 				}
 		
 
