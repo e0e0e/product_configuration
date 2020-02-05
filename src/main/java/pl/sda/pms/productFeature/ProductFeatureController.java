@@ -72,8 +72,10 @@ public class ProductFeatureController {
 	@GetMapping("/feature/delete")
 	public String deleteProductFeatures(@RequestParam Long productFeatureId, Model model) {
 
-		productFeatureService.delete(productFeatureId);
+		String productFeatureName=productFeatureService.findById(productFeatureId).getName();
 
+		productConfigurationService.removeProductFeatureByName(productFeatureName);
+		
 		return "redirect:/feature/list";
 	}
 

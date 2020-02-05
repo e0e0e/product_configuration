@@ -210,34 +210,31 @@ public class ProductConfigurationService {
 	public Map<String, List<ShortFeature>> productLiveSearch(String features) {
 		JSONObject obj = new JSONObject(features);
 
-		Map<String, Feature> filterMap = obj.toMap().entrySet().stream()
-		.filter(x->!x.getKey().startsWith("NS-"))
-		.collect(
-				Collectors.toMap(x -> x.getKey(), x -> featureService.findByID(Long.parseLong((String) x.getValue()))));
+		Map<String, Feature> filterMap = obj.toMap().entrySet().stream().filter(x -> !x.getKey().startsWith("NS-"))
+				.collect(Collectors.toMap(x -> x.getKey(),
+						x -> featureService.findByID(Long.parseLong((String) x.getValue()))));
 
 		List<ProductConfiguration> productList = getFilteredProducts(filterMap);
-		
-		
-//		System.out.println("---VVV---");
-//		productList.forEach(x -> System.out.println(x.getName()));
+
+		// System.out.println("---VVV---");
+		// productList.forEach(x -> System.out.println(x.getName()));
 
 		Map<String, List<ShortFeature>> formMap = getMApOfResultsForForm(productList);
-		
-		for(Entry<String, Feature> m:filterMap.entrySet()) {
-			List<ShortFeature> shortFeatureList=formMap.get(m.getKey());
-			
-			if(shortFeatureList!=null) {
-			for(ShortFeature sf:shortFeatureList) {
-				if(sf.getName().equals(m.getValue().getName())) {
-					sf.setSelected(true);
-				//	System.out.println(sf);
+
+		for (Entry<String, Feature> m : filterMap.entrySet()) {
+			List<ShortFeature> shortFeatureList = formMap.get(m.getKey());
+
+			if (shortFeatureList != null) {
+				for (ShortFeature sf : shortFeatureList) {
+					if (sf.getName().equals(m.getValue().getName())) {
+						sf.setSelected(true);
+						// System.out.println(sf);
+					}
+
 				}
-				
-			}}
-			
-			
+			}
+
 		}
-				
 
 		return formMap;
 	}
@@ -267,7 +264,7 @@ public class ProductConfigurationService {
 					return false;
 				}).collect(Collectors.toList());
 
-		//productConfigurations.forEach(x -> System.out.println(x.getName()));
+		// productConfigurations.forEach(x -> System.out.println(x.getName()));
 		List<ProductConfiguration> productList = new ArrayList<>();
 
 		for (ProductConfiguration pC : productConfigurations) {
@@ -297,13 +294,17 @@ public class ProductConfigurationService {
 
 					if (!formMap.containsKey(pF.getName())) {
 						formMap.put(pF.getName(),
-								pF.getFeature().stream().map(f ->new ShortFeature(f.getId(), f.getName(),f.getImagePath(),f.getIndex())).collect(Collectors.toList()));
+								pF.getFeature().stream().map(
+										f -> new ShortFeature(f.getId(), f.getName(), f.getImagePath(), f.getIndex()))
+										.collect(Collectors.toList()));
 					} else {
 						List<ShortFeature> featureNames = formMap.get(pF.getName());
 
-						pF.getFeature().stream().filter(f -> !featureNames.contains(new ShortFeature(f.getId(), f.getName(),f.getImagePath(),f.getIndex())))
+						pF.getFeature().stream()
+								.filter(f -> !featureNames.contains(
+										new ShortFeature(f.getId(), f.getName(), f.getImagePath(), f.getIndex())))
 								.forEach(f -> featureNames.add(new ShortFeature(f.getId(), f.getName())));
-					//	System.out.println(" ");
+						// System.out.println(" ");
 					}
 
 				}
@@ -315,6 +316,31 @@ public class ProductConfigurationService {
 
 	public ProductConfiguration findByName(String name) {
 		return productConfigurationRepository.findByName(name);
+	}
+
+	public void removeProductFeatureByName(String productFeatureName) {
+
+		// List<ProductConfiguration>
+		// productConfigurations=productConfigurationRepository.findAll();
+
+		// for(ProductConfiguration pC:productConfigurations){
+		// pC.getConfigurationList().stream().filter(x->x.getName().equals(productFeatureName)).forEach(x->System.out.println(x.getName()));
+		// pC.removeFromConfigurationListByName(productFeatureName);
+
+		// ProductConfiguration newProductConfiguration=
+		// productConfigurationRepository.save(pC);
+		// System.out.println("after:");
+		// newProductConfiguration.getConfigurationList().stream().filter(x->x.getName().equals(productFeatureName)).forEach(x->System.out.println(x.getName()));
+		// }
+		List<ProductFeature> pfs = productFeatureService.findAll();
+
+		for (ProductFeature p : pfs) {
+			if (p.getName().equals(productFeatureName)) {
+				p.removeProductConfiguration();
+				productFeatureService.save(p);
+			}
+		}
+
 	}
 
 }

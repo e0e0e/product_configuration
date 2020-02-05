@@ -139,6 +139,16 @@ public class ProductConfiguration{
 			return false;
 		return true;
 	}
+
+
+	public void removeFromConfigurationListByName(String productFeatureName) {
+		ProductFeature productFeature=configurationList.stream().filter(x->x.getName().equals(productFeatureName)).findFirst().get();
+		configurationList.remove(productFeature);
+
+	}
+
+
+
 	
 	
 
