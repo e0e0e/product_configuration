@@ -54,9 +54,13 @@ public class OrderController {
 	}
 
 	@GetMapping("/order/show")
-	public String listOrders(@RequestParam Long orderId, Model model) {
+	public String listOrders(@RequestParam Long orderId, @RequestParam(required = false) String errorMessage,
+			Model model) {
 
-		//model.addAttribute("order", orderService.findById(orderId));
+		
+		model.addAttribute("errorMessage",errorMessage);
+
+		
 		model.addAttribute("order", orderService.findByIdAndUpdatePrice(orderId));
 		model.addAttribute("aud", orderService.findByIdAud(orderId));
 		model.addAttribute("title", "List Orders");
@@ -176,6 +180,19 @@ public class OrderController {
 
 		return "redirect:/order/show?orderId=" + orderId;
 
+	}
+
+	@GetMapping("/save/product/noStandard")
+	public String saveNoStandardAsProduct(@RequestParam Long orderId, Model model) {
+		String errorMessage=null;
+
+		Ord order=orderService.findById(orderId);
+	
+		if(!order.hasStandardFeatures()){
+		errorMessage= "No feature can be no standard, change to existing or create new";
+		}
+
+		return "redirect:/order/show?orderId=" + orderId+"&errorMessage="+errorMessage;
 	}
 
 }

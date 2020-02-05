@@ -140,7 +140,8 @@ something = "${imagesPath}";
 
 											   }
 											document.getElementById("bns-"+key).style.display="block";
-
+											let ind=document.getElementById("ind-"+key);
+											ind.innerHTML=products[key][0].index;
 								
 								// es.parentElement.href=something.concat(imagePath);
 								// es.width="1";

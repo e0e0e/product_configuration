@@ -30,6 +30,13 @@
 			rows="4"
 			class="text-dark"
 			name="description">${feature.description}</textarea>
+			<br>
+				<input type="checkbox" name="noStandard" value="true"
+				<c:if test="${feature.noStandard=='true'}">
+				checked
+				</c:if>
+				>No standard
+				<br />
 		<br /> <label>Feature Image:</label> <br /> <input
 			type="text"
 			class="text-dark"

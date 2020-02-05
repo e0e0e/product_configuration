@@ -184,9 +184,9 @@ public class Ord {
 	}
 
 	public void removeAllOrderFeatures() {
-//    this.orderFeatures.clear();
-//    orderFeatures.forEach(x->x.getOrd().remove(this));
-//    
+		// this.orderFeatures.clear();
+		// orderFeatures.forEach(x->x.getOrd().remove(this));
+		//
 		List<OrderFeature> orderFeatures = this.getOrderFeatures();
 		orderFeatures.forEach(x -> x.getOrd().remove(this));
 	}
@@ -238,9 +238,19 @@ public class Ord {
 	}
 
 	public OrderFeature findByProductFeatureID(Long id) {
-		return orderFeatures.stream().filter(x->x.getProductFeature().getId().equals(id)).findFirst().get();
+		return orderFeatures.stream().filter(x -> x.getProductFeature().getId().equals(id)).findFirst().get();
 
-	
+	}
+
+	public Boolean hasStandardFeatures() {
+		for (OrderFeature of : orderFeatures) {
+			if (of.getFeature().getNoStandard() != null && of.getFeature().getNoStandard() == true) {
+				return false;
+			}
+
+		}
+
+		return true;
 	}
 
 }

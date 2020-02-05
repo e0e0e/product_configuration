@@ -38,6 +38,9 @@
 							href="/order/addMore?orderId=${order.id}">
 							<span class="glyphicon glyphicon-edit text-light"></span>
 						</a>
+						<c:if test="${order.noStandard=='TRUE'}">
+						<div class="float-right mt-2 text-warning  font-weight-bold">NS</div>
+						</c:if>
 					</div>
 					<div class="col-10">
 						<a

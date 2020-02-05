@@ -34,7 +34,11 @@ function hideChassis(){
 
 </script>
 <div>
+<c:if test="${errorMessage!=null && errorMessage!='null'}">
 
+			<p style="background-color: #B24C4C; position:fixed;z-index:9000; margin-left:40%" class="p-5">${errorMessage}</p>
+
+		</c:if>
 	<div class="card text-dark m-1">
 
 
@@ -44,13 +48,6 @@ function hideChassis(){
 				${order.lastModifiedDate}, Revision: ${order.revision}
 				<div>Price : ${order.price}</div>
 				</div>
-			<c:if test="${user.authorities=='[ADMIN]'}">
-			<a
-				class="btn btn-outline-secondary text-dark"
-				href="/order/delete?orderId=${order.id}">
-				<span class="glyphicon glyphicon-trash text-light"></span>
-			</a>
-			</c:if>
 			<a
 				class="btn btn-outline-secondary text-dark"
 				href="/order/edit?orderId=${order.id}">
@@ -69,7 +66,12 @@ function hideChassis(){
 				<span class="glyphicon glyphicon-print text-light"></span>
 			</a>
 			<c:if test="${order.noStandard=='TRUE'}">
-			<span class="text-warning text-center" style="font-size:30px;">No standard order</span>
+			<span class="text-warning text-center align-middle" style="font-size:30px;">No standard order</span>
+			<span class="float-right">
+			<a class="btn btn-outline-info text-dark btn-lg"
+						href="/save/product/noStandard?orderId=${order.id}"><span
+						class="glyphicon glyphicon-floppy-disk text-warning"></span></a>
+			</span>
 			</c:if>
 			</div>
 		<div class="card-body">

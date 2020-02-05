@@ -46,13 +46,14 @@ public class FeatureService {
 	}
 
 	public boolean saveChanges(String name, String description, String imagePath, String index, String price, Long id,
-			String mIndex) {
+			String mIndex, Boolean noStandard) {
 		Feature feature = featureRepository.findById(id).get();
 		feature.setName(name);
 		feature.setDescription(description);
 		feature.setImagePath(imagePath);
 		feature.setIndex(index);
 		feature.setmIndex(mIndex);
+		feature.setNoStandard(noStandard);
 
 		if (OrderFeatureController.isNumeric(price)) {
 			feature.setPrice(Double.parseDouble(price));

@@ -79,12 +79,16 @@ public class FeatureController {
 			@RequestParam String price,
 			@RequestParam Long featureId,
 			@RequestParam String mIndex,
+			@RequestParam(required = false) Boolean noStandard,
 			@RequestParam(required = false) Long orderId,
 			Model model) {
 				
 		model.addAttribute("feature", featureService.findByID(featureId));
+		if(noStandard==null){
+			noStandard=false;
+		}
 
-		featureService.saveChanges(name,description,imagePath,index,price,featureId,mIndex);
+		featureService.saveChanges(name,description,imagePath,index,price,featureId,mIndex,noStandard);
 		if(orderId!=null){
 			return "redirect:/order/show?orderId="+orderId;
 
