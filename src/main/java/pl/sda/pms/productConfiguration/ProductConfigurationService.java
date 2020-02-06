@@ -320,18 +320,7 @@ public class ProductConfigurationService {
 
 	public void removeProductFeatureByName(String productFeatureName) {
 
-		// List<ProductConfiguration>
-		// productConfigurations=productConfigurationRepository.findAll();
-
-		// for(ProductConfiguration pC:productConfigurations){
-		// pC.getConfigurationList().stream().filter(x->x.getName().equals(productFeatureName)).forEach(x->System.out.println(x.getName()));
-		// pC.removeFromConfigurationListByName(productFeatureName);
-
-		// ProductConfiguration newProductConfiguration=
-		// productConfigurationRepository.save(pC);
-		// System.out.println("after:");
-		// newProductConfiguration.getConfigurationList().stream().filter(x->x.getName().equals(productFeatureName)).forEach(x->System.out.println(x.getName()));
-		// }
+	
 		List<ProductFeature> pfs = productFeatureService.findAll();
 
 		for (ProductFeature p : pfs) {
@@ -341,6 +330,10 @@ public class ProductConfigurationService {
 			}
 		}
 
+	}
+
+	public List<ProductConfiguration> findAllContainingFeatureById(Long featureId) {
+		return productConfigurationRepository.findAllContainingFeatureById(featureId);
 	}
 
 }

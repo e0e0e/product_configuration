@@ -18,5 +18,9 @@ public interface ProductConfigurationRepository extends JpaRepository<ProductCon
 	ProductConfiguration findByName(String name);
 
 
+	@Query(value = "Select * from product_configuration  pc inner join PRODUCT_FEATURE pf ON pc.id=pf.product_configuration_id inner join PRODUCT_FEATURE_FEATURE pff on pff.product_feature_id=pf.id inner join feature f on f.id=pff.feature_id where f.id like ?1", nativeQuery = true)
+	List<ProductConfiguration> findAllContainingFeatureById(Long featureId);
+
+
 
 }

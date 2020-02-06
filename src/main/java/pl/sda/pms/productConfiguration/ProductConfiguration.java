@@ -18,6 +18,8 @@ import javax.persistence.OrderBy;
 
 import org.hibernate.envers.Audited;
 
+import pl.sda.pms.OrderFeature.OrderFeature;
+import pl.sda.pms.feature.Feature;
 import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
@@ -148,7 +150,19 @@ public class ProductConfiguration{
 	}
 
 
+	public Boolean findIfMatch(OrderFeature of){
+		for(ProductFeature pf:configurationList){
+			Feature feature=of.getFeature();
+			Collection<Feature> featuresInOrder=pf.getFeature();
+			if(featuresInOrder.contains(feature)){
+				return true;
+			};
+			
+		}
 
+
+		return false;
+	}
 	
 	
 

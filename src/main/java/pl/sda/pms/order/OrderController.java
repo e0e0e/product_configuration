@@ -19,6 +19,7 @@ import pl.sda.pms.color.Color;
 import pl.sda.pms.color.ColorService;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
+import pl.sda.pms.productConfiguration.ProductConfiguration;
 import pl.sda.pms.productConfiguration.ProductConfigurationService;
 import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.productFeature.ProductFeatureService;
@@ -57,10 +58,8 @@ public class OrderController {
 	public String listOrders(@RequestParam Long orderId, @RequestParam(required = false) String errorMessage,
 			Model model) {
 
-		
-		model.addAttribute("errorMessage",errorMessage);
+		model.addAttribute("errorMessage", errorMessage);
 
-		
 		model.addAttribute("order", orderService.findByIdAndUpdatePrice(orderId));
 		model.addAttribute("aud", orderService.findByIdAud(orderId));
 		model.addAttribute("title", "List Orders");
@@ -183,16 +182,30 @@ public class OrderController {
 	}
 
 	@GetMapping("/save/product/noStandard")
-	public String saveNoStandardAsProduct(@RequestParam Long orderId, Model model) {
-		String errorMessage=null;
+	public String saveNoStandardAsProduct(@RequestParam Long orderId) {
+		String errorMessage = null;
 
-		Ord order=orderService.findById(orderId);
-	
-		if(!order.hasStandardFeatures()){
-		errorMessage= "No feature can be no standard, change to existing or create new";
+		Ord order = orderService.findById(orderId);
+
+		if (!order.hasStandardFeatures()) {
+			errorMessage = "No feature can be no standard, change to existing or create new";
+		} else {
+			List<ProductConfiguration> matchingProducts = orderService.checkIfRealyNoStandard(order);
+			if (matchingProducts.size() > 0) {
+				errorMessage = "Configuration exists in '"
+						+ matchingProducts.stream().map(x -> x.getName()).collect(Collectors.joining("', '")) + "'";
+				order.setNoStandard(false);
+				orderService.save(order);
+			}else{
+
+				errorMessage ="Ready to save";
+
+				orderService.saveAsProduct(order);
+			}
+
 		}
 
-		return "redirect:/order/show?orderId=" + orderId+"&errorMessage="+errorMessage;
+		return "redirect:/order/show?orderId=" + orderId + "&errorMessage=" + errorMessage;
 	}
 
 }

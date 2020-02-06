@@ -26,6 +26,8 @@ import pl.sda.pms.color.Color;
 import pl.sda.pms.color.ColorService;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
+import pl.sda.pms.productConfiguration.ProductConfiguration;
+import pl.sda.pms.productConfiguration.ProductConfigurationService;
 import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.productFeature.ProductFeatureService;
 import pl.sda.pms.projects.Project;
@@ -41,15 +43,18 @@ public class OrderService {
 	private final ProductFeatureService productFeatureService;
 	private final FeatureService featureService;
 	private final ColorService colorService;
+	private final ProductConfigurationService productConfigurationService;
 
 	public OrderService(OrderRepository orderRepository, OrderFeatureService orderFeatureService,
-			ProductFeatureService productFeatureService, FeatureService featureService, ColorService colorService) {
+			ProductFeatureService productFeatureService, FeatureService featureService, ColorService colorService,
+			ProductConfigurationService productConfigurationService) {
 		super();
 		this.orderRepository = orderRepository;
 		this.orderFeatureService = orderFeatureService;
 		this.featureService = featureService;
 		this.productFeatureService = productFeatureService;
 		this.colorService = colorService;
+		this.productConfigurationService = productConfigurationService;
 	}
 
 	public void create(Ord order) {
@@ -138,8 +143,10 @@ public class OrderService {
 				.collect(Collectors.toMap(x -> x.getProductFeature().getName(), x -> x.getFeature()));
 
 		List<String> orderFeatureStringList = oldOrderFeatureList.stream()
-				.map(x -> x + ": " + (oldOrderFeatureMap.get(x).getOrderFeatures()==null? "n/a":oldOrderFeatureMap.get(x).getOrderFeatures().getFeature().getName()) + " -> "
-						+ newStringFeaturesMap.get(x).getName())
+				.map(x -> x + ": "
+						+ (oldOrderFeatureMap.get(x).getOrderFeatures() == null ? "n/a"
+								: oldOrderFeatureMap.get(x).getOrderFeatures().getFeature().getName())
+						+ " -> " + newStringFeaturesMap.get(x).getName())
 				.collect(Collectors.toList());
 
 		order.setOrderFeaturesStrings(orderFeatureStringList);
@@ -173,9 +180,11 @@ public class OrderService {
 	public void saveColor(Long orderId, Map<String, String> paramMapStart) {
 
 		Ord order = orderRepository.findById(orderId).get();
-		Map<String, String> paramMap=paramMapStart.entrySet().stream().filter(x->!x.getValue().equals("")).collect(Collectors.toMap(x->x.getKey(),x->x.getValue()));
+		Map<String, String> paramMap = paramMapStart.entrySet().stream().filter(x -> !x.getValue().equals(""))
+				.collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
 
-		order.getOrderFeatures().forEach(x->System.out.println(x.getProductFeature().getId()+" - "+x.getProductFeature().getName()));
+		order.getOrderFeatures().forEach(
+				x -> System.out.println(x.getProductFeature().getId() + " - " + x.getProductFeature().getName()));
 
 		Map<OrderFeature, Color> colorMap = paramMap.entrySet().stream()
 				.collect(Collectors.toMap(x -> order.findByProductFeatureID(Long.parseLong(x.getKey())),
@@ -187,18 +196,63 @@ public class OrderService {
 
 		});
 
-
 	}
 
 	public Object findByIdAndUpdatePrice(Long orderId) {
 
-		Ord order=orderRepository.findById(orderId).get();
-		Double price=order.getOrderFeatures().stream().filter(x->x.getFeature().getPrice()!=null)
-		.mapToDouble(x->x.getFeature().getPrice()).sum();
+		Ord order = orderRepository.findById(orderId).get();
+		Double price = order.getOrderFeatures().stream().filter(x -> x.getFeature().getPrice() != null)
+				.mapToDouble(x -> x.getFeature().getPrice()).sum();
 		order.setPrice(price);
-		Ord updatedOrder=orderRepository.save(order);
+		Ord updatedOrder = orderRepository.save(order);
 
 		return updatedOrder;
+	}
+
+	public List<ProductConfiguration> checkIfRealyNoStandard(Ord order) {
+
+		List<OrderFeature> orderFeatures = order.getOrderFeatures();
+		List<ProductConfiguration> productConfiguration = productConfigurationService.findAll();
+
+		List<ProductConfiguration> matchingProducts = new ArrayList<>();
+			
+		for(ProductConfiguration pc:productConfiguration){
+				Boolean match=false;
+				for (OrderFeature of : orderFeatures) {
+				
+				if(pc.findIfMatch(of)){
+					match=true;
+
+				}	else{
+					match=false;
+					break;
+				}
+			}
+			if(match!=false){
+
+				matchingProducts.add(pc);
+
+			}
+
+		}
+		System.out.println("Match find in :"+matchingProducts.size());
+		matchingProducts.forEach(x->System.out.println(x.getName()));
+	
+		System.out.println("End of matching");
+		return matchingProducts;
+	}
+
+	public void save(Ord order) {
+		orderRepository.save(order);
+	}
+
+	public void saveAsProduct(Ord order) {
+		List<OrderFeature> orderFeatures= order.getOrderFeatures();
+		Feature chassis=orderFeatures.stream().filter(x->x.getProductFeature().getName().equals("Chassis")).map(x->x.getFeature()).findFirst().get();
+		//List<ProductConfiguration> productConfigurations=productConfigurationService.findAllContainingFeatureById(chassis.getId());
+		ProductConfiguration productConfiguration=new ProductConfiguration();
+
+		
 	}
 
 }
