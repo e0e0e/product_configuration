@@ -194,11 +194,11 @@ public class OrderController {
 			if (matchingProducts.size() > 0) {
 				errorMessage = "Configuration exists in '"
 						+ matchingProducts.stream().map(x -> x.getName()).collect(Collectors.joining("', '")) + "'<br>No need to save new product Configuration";
+				// do not delete 2 lines below
 				//order.setNoStandard(false);
 				//orderService.save(order);
 			}else{
-
-				errorMessage ="Ready to save <br><a class='btn btn-outline-secondary text-light' href='/save/product/noStandardConfirmed?orderId="+orderId+"'>Confirm</a>";
+				errorMessage ="Ready to save <br><a class='btn btn-outline-light text-light bg-danger' href='/save/product/noStandardConfirmed?orderId="+orderId+"'>Confirm</a>";
 			}
 
 		}

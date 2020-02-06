@@ -1,7 +1,9 @@
 package pl.sda.pms.order;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -257,7 +259,9 @@ public class OrderService {
 				.map(x -> x.getFeature()).findFirst().get();
 
 		ProductConfiguration productConfiguration = new ProductConfiguration();
-		productConfiguration.setName(chassis.getName() + " new name");
+		
+		Date date = Calendar.getInstance().getTime();  
+		productConfiguration.setName(chassis.getName() + " - "+  date.toString());
 		ProductConfiguration newPc=productConfigurationService.save(productConfiguration);
 		
 		List<ProductFeature> productFeatures = new ArrayList<>();
