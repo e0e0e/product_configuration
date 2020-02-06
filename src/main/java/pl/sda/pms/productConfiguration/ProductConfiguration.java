@@ -163,6 +163,31 @@ public class ProductConfiguration{
 
 		return false;
 	}
+
+
+	public ProductFeature findProductFeatureByName(String name) {
+		for(ProductFeature pF:this.configurationList){
+			if(pF.getName().equals(name)){
+			return pF;
+			}
+		}
+		return null;
+	}
+
+
+	public void deleteConfigurationList() {
+		this.configurationList=null;
+	}
+
+
+	public void removeAllFeaturesFromList() {
+		for(ProductFeature pF:this.configurationList){
+		pF.setFeature(null);
+
+		}
+
+
+	}
 	
 	
 

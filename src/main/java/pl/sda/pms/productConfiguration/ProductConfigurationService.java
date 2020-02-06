@@ -9,27 +9,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.management.loading.PrivateClassLoader;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.xml.crypto.dsig.keyinfo.PGPData;
-
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.deser.std.MapEntryDeserializer;
-
-import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.feature.ShortFeature;
 import pl.sda.pms.productFeature.ProductFeature;
-import pl.sda.pms.productFeature.ProductFeatureRepository;
 import pl.sda.pms.productFeature.ProductFeatureService;
-import pl.sda.pms.projects.Project;
 
 @Service
 public class ProductConfigurationService {
@@ -130,8 +120,8 @@ public class ProductConfigurationService {
 
 	}
 
-	public void save(ProductConfiguration productConfiguration) {
-		productConfigurationRepository.save(productConfiguration);
+	public ProductConfiguration save(ProductConfiguration productConfiguration) {
+		return productConfigurationRepository.save(productConfiguration);
 
 	}
 
@@ -334,6 +324,37 @@ public class ProductConfigurationService {
 
 	public List<ProductConfiguration> findAllContainingFeatureById(Long featureId) {
 		return productConfigurationRepository.findAllContainingFeatureById(featureId);
+	}
+
+	public void updatePattern() {
+		
+		ProductConfiguration productConfiguration =findByName("pattern");
+		
+		List<ProductConfiguration> productConfigurations=productConfigurationRepository.findAll();
+		
+
+		for(ProductConfiguration pC:productConfigurations){
+			if(!pC.getName().equals("pattern")){
+				
+				for(ProductFeature pF:pC.getConfigurationList()){
+					
+					ProductFeature productFeature=productConfiguration.findProductFeatureByName(pF.getName());
+					if(productFeature.getFeature()==null){
+						productFeature.setFeature(new HashSet<>());
+					}
+						productFeature.getFeature().addAll(pF.getFeature());
+					
+					productFeatureService.save(productFeature);
+
+					
+				}
+			}else{
+				pC.removeAllFeaturesFromList();
+
+			}
+		}
+
+
 	}
 
 }

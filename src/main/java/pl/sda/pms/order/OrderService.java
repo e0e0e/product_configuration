@@ -2,6 +2,7 @@ package pl.sda.pms.order;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -27,6 +28,7 @@ import pl.sda.pms.color.ColorService;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
+import pl.sda.pms.productConfiguration.ProductConfigurationRepository;
 import pl.sda.pms.productConfiguration.ProductConfigurationService;
 import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.productFeature.ProductFeatureService;
@@ -215,29 +217,30 @@ public class OrderService {
 		List<ProductConfiguration> productConfiguration = productConfigurationService.findAll();
 
 		List<ProductConfiguration> matchingProducts = new ArrayList<>();
-			
-		for(ProductConfiguration pc:productConfiguration){
-				Boolean match=false;
-				for (OrderFeature of : orderFeatures) {
-				
-				if(pc.findIfMatch(of)){
-					match=true;
+		List<String> noMatch = new ArrayList<>();
 
-				}	else{
-					match=false;
+		for (ProductConfiguration pc : productConfiguration) {
+			Boolean match = false;
+			for (OrderFeature of : orderFeatures) {
+
+				if (pc.findIfMatch(of)) {
+					match = true;
+
+				} else {
+					match = false;
 					break;
 				}
 			}
-			if(match!=false){
+			if (match != false) {
 
 				matchingProducts.add(pc);
 
 			}
 
 		}
-		System.out.println("Match find in :"+matchingProducts.size());
-		matchingProducts.forEach(x->System.out.println(x.getName()));
-	
+		System.out.println("Match find in :" + matchingProducts.size());
+		matchingProducts.forEach(x -> System.out.println(x.getName()));
+
 		System.out.println("End of matching");
 		return matchingProducts;
 	}
@@ -246,13 +249,40 @@ public class OrderService {
 		orderRepository.save(order);
 	}
 
-	public void saveAsProduct(Ord order) {
-		List<OrderFeature> orderFeatures= order.getOrderFeatures();
-		Feature chassis=orderFeatures.stream().filter(x->x.getProductFeature().getName().equals("Chassis")).map(x->x.getFeature()).findFirst().get();
-		//List<ProductConfiguration> productConfigurations=productConfigurationService.findAllContainingFeatureById(chassis.getId());
-		ProductConfiguration productConfiguration=new ProductConfiguration();
+	public void saveAsProduct(Long orderId) {
+		Ord order = orderRepository.findById(orderId).get();
 
+		List<OrderFeature> orderFeatures = order.getOrderFeatures();
+		Feature chassis = orderFeatures.stream().filter(x -> x.getProductFeature().getName().equals("Chassis"))
+				.map(x -> x.getFeature()).findFirst().get();
+
+		ProductConfiguration productConfiguration = new ProductConfiguration();
+		productConfiguration.setName(chassis.getName() + " new name");
+		ProductConfiguration newPc=productConfigurationService.save(productConfiguration);
 		
+		List<ProductFeature> productFeatures = new ArrayList<>();
+
+		for (OrderFeature of : orderFeatures) {
+			ProductFeature productFeature = new ProductFeature();
+
+			productFeature.setColor(of.getProductFeature().getColor());
+			productFeature.setName(of.getProductFeature().getName());
+			productFeature.setDescription(of.getProductFeature().getDescription());
+			productFeature.setImagePath(of.getProductFeature().getImagePath());
+			productFeature.setParent(of.getProductFeature().getParent());
+			productFeature.setPosition(of.getProductFeature().getPosition());
+			productFeature.addFeatureToCollection(of.getFeature());
+			productFeature.setProductConfiguration(newPc);
+			ProductFeature newPF=productFeatureService.save(productFeature);
+			
+			productFeatures.add(newPF);
+
+		}
+
+		newPc.setConfigurationList(productFeatures);
+		
+		productConfigurationService.save(newPc);
+		System.out.println("ok");
 	}
 
 }

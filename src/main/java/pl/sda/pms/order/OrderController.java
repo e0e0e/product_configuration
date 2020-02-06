@@ -193,14 +193,12 @@ public class OrderController {
 			List<ProductConfiguration> matchingProducts = orderService.checkIfRealyNoStandard(order);
 			if (matchingProducts.size() > 0) {
 				errorMessage = "Configuration exists in '"
-						+ matchingProducts.stream().map(x -> x.getName()).collect(Collectors.joining("', '")) + "'";
-				order.setNoStandard(false);
-				orderService.save(order);
+						+ matchingProducts.stream().map(x -> x.getName()).collect(Collectors.joining("', '")) + "'<br>No need to save new product Configuration";
+				//order.setNoStandard(false);
+				//orderService.save(order);
 			}else{
 
-				errorMessage ="Ready to save";
-
-				orderService.saveAsProduct(order);
+				errorMessage ="Ready to save <br><a class='btn btn-outline-secondary text-light' href='/save/product/noStandardConfirmed?orderId="+orderId+"'>Confirm</a>";
 			}
 
 		}
@@ -208,4 +206,23 @@ public class OrderController {
 		return "redirect:/order/show?orderId=" + orderId + "&errorMessage=" + errorMessage;
 	}
 
+
+	@GetMapping("/save/product/noStandardConfirmed")
+	public String saveAsProduct(@RequestParam Long orderId) {
+		
+
+		orderService.saveAsProduct(orderId);
+		productConfigurationService.updatePattern();
+
+		return "redirect:/order/show?orderId=" + orderId;
+	}
+
+	@GetMapping("/update/pattern")
+	public String updateProductConfigurationPattern() {
+		
+
+		productConfigurationService.updatePattern();
+
+		return "redirect:/product/list?productId=8";
+	}
 }

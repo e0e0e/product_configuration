@@ -145,8 +145,8 @@ public class ProductFeatureService {
 
 	}
 
-	public void save(ProductFeature productFeature) {
-		productFeatureRepository.save(productFeature);
+	public ProductFeature save(ProductFeature productFeature) {
+		return productFeatureRepository.save(productFeature);
 
 	}
 

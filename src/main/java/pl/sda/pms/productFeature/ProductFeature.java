@@ -1,25 +1,19 @@
 package pl.sda.pms.productFeature;
 
+import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
 import org.hibernate.envers.Audited;
-
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
-import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
-import pl.sda.pms.users.User;
+
 
 @Entity
 @Audited
@@ -236,14 +230,18 @@ public class ProductFeature {
 	}
 
 	public void removeProductConfiguration() {
-		// ProductConfiguration productConfiguration=this.productConfiguration;
-
 		this.productConfiguration = null;
-//		productFeatureSet.remove(this);
+
 	}
 
-	public Feature getFeatureById(Long id) {
-		return this.feature.stream().filter(x -> x.getId().equals(id)).findFirst().get();
+	public void addFeatureToCollection(Feature feature) {
+
+		Set<Feature> featureSet= new HashSet<>();
+		featureSet.add(feature);
+		this.feature=featureSet;
+
 	}
+
+
 
 }
