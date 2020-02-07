@@ -163,6 +163,7 @@ public class ProductConfigurationController {
 	public String productDelete(@RequestParam Long productId, Model model) {
 
 		productConfigurationService.delete(productId);
+		productConfigurationService.updatePattern();
 
 		return "redirect:/product/show";
 
