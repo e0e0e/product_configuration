@@ -74,10 +74,13 @@ public class FeatureService {
 		return createdFeature.getId() != null;
 	}
 
-	public void save(Feature feature) {
-		featureRepository.save(feature);
+	public Feature save(Feature feature) {
+		
+		return featureRepository.save(feature);
 
 	}
+
+
 
 	public List<Feature> findNotUsed() {
 		return featureRepository.findNotUsed();

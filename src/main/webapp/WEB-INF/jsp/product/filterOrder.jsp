@@ -32,7 +32,7 @@
 								</c:if>
 								">${configList.name}</div>
 							<div class="col-4 m-1">
-								<select name="${configList.id}" id="${configList.name}" class="w-100 form-control"
+								<select name="${configList.id}" id="${configList.name}" class="w-100 custom-select" style="font-size:15px"
 									onchange='changeAction(this,${configList.id})'>
 									<option value="" selected disabled hidden>${order[configList.name]}</option>
 									<c:forEach var="feature" items="${configList.feature}">
@@ -102,7 +102,7 @@
 					checkIfChangedNames(products);
 				} else {
 					document.getElementById("error").innerHTML =
-						"No product found, refresh and search different configuration, or mak as not standard order";
+					"No product found, refresh and search different configuration, or mak as not standard order";
 					document.getElementById("error").style.color = "red";
 					document.getElementById("myFilterForm").style.backgroundColor = "orange";
 				}

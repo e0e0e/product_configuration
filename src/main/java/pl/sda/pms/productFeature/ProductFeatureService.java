@@ -15,6 +15,7 @@ import javassist.expr.NewArray;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.feature.Row;
+import pl.sda.pms.order.Ord;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
 import pl.sda.pms.productConfiguration.ProductConfigurationService;
 
@@ -269,13 +270,19 @@ public class ProductFeatureService {
 		return featuresInProductFeature;
 	}
 
-	public Collection<Feature> findWithSameProductFeatue(Long featureId) {
+	public Collection<Feature> findWithSameProductFeatue(Long featureId, Ord order) {
 		Feature feature = featureService.findByID(featureId);
-		String productFeatureName = feature.getOrderFeatures().getProductFeature().getName();
-		Collection<Feature> features = findFeaturesByProductFeatureName(productFeatureName);
+		
+		try {
+			String productFeatureName = order.findOrderFeatureByFeatyre(feature).getProductFeature().getName();
+			Collection<Feature> features = findFeaturesByProductFeatureName(productFeatureName);
+			return features;
+		} catch (Exception e) {
 
-		return features;
+			System.out.println("Feture is not in order Feature: " + e.getMessage());
+		}
+
+		return null;
 	}
-
 
 }

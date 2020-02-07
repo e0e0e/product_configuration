@@ -50,7 +50,7 @@
 									name="${configList.id}"
 									id="${configList.name}"
 									onchange='changeAction(this,${configList.id})'
-									class="w-100 form-control">
+									class="w-100 custom-select" style="font-size:15px">
 									<option
 										value=""
 										selected

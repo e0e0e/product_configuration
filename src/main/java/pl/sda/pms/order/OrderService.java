@@ -259,11 +259,11 @@ public class OrderService {
 				.map(x -> x.getFeature()).findFirst().get();
 
 		ProductConfiguration productConfiguration = new ProductConfiguration();
-		
-		Date date = Calendar.getInstance().getTime();  
-		productConfiguration.setName(chassis.getName() + " - "+  date.toString());
-		ProductConfiguration newPc=productConfigurationService.save(productConfiguration);
-		
+
+		Date date = Calendar.getInstance().getTime();
+		productConfiguration.setName(chassis.getName() + " - " + date.toString());
+		ProductConfiguration newPc = productConfigurationService.save(productConfiguration);
+
 		List<ProductFeature> productFeatures = new ArrayList<>();
 
 		for (OrderFeature of : orderFeatures) {
@@ -277,16 +277,33 @@ public class OrderService {
 			productFeature.setPosition(of.getProductFeature().getPosition());
 			productFeature.addFeatureToCollection(of.getFeature());
 			productFeature.setProductConfiguration(newPc);
-			ProductFeature newPF=productFeatureService.save(productFeature);
-			
+			ProductFeature newPF = productFeatureService.save(productFeature);
+
 			productFeatures.add(newPF);
 
 		}
 
 		newPc.setConfigurationList(productFeatures);
-		
+
 		productConfigurationService.save(newPc);
 		System.out.println("ok");
+	}
+
+	public void newFeatureToOrder(Feature newFeature, Feature oldFeature, Long orderId) {
+		newFeature.setNoStandard(true);
+		Feature nFeature = featureService.save(newFeature);
+		Ord orderToChange = findById(orderId);
+
+		OrderFeature orderFeature=orderToChange.findOrderFeatureByFeatyre(oldFeature);
+		orderFeature.setFeature(nFeature);
+		nFeature.setOrderFeatures(orderFeature);
+		featureService.save(nFeature);
+
+		//orderFeatureService.save(orderFeature);
+
+		orderToChange.setNoStandard(true);
+		save(orderToChange);
+
 	}
 
 }

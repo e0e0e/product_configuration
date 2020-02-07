@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.envers.Audited;
 
@@ -19,6 +21,7 @@ import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
 @Audited
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"name", "index"}))
 public class Feature {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

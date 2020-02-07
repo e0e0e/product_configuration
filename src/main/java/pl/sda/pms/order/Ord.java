@@ -253,4 +253,17 @@ public class Ord {
 		return true;
 	}
 
+	public OrderFeature findOrderFeatureByFeatyre(Feature oldFeature) {
+
+		for (OrderFeature of :this.orderFeatures) {
+			if (of.getFeature().equals(oldFeature)) {
+				return of;
+			}
+		}
+		
+		return null;
+	}
+
+
+
 }

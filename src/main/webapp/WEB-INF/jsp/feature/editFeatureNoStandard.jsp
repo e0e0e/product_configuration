@@ -20,7 +20,7 @@
 		<h1>Edit no sandard  Feature</h1>
 		<form
 			method="post"
-			action="/featureChange?userId=${loggedUser.id}&featureId=${param.featureId}&orderId=${orderId}">
+			action="/featureChange?userId=${loggedUser.id}&featureId=${param.featureId}&orderId=${orderId}&edit=${param.edit}">
 			<c:if test="${errorMessage!=null}">
 
 				<p style="background-color: red;">${errorMessage}</p>
@@ -38,7 +38,7 @@
 				class="text-dark"
 				name="description">${feature.description}</textarea>
 				<br>
-				<input type="checkbox" name="noStandard" value="false"
+				<input type="checkbox" name="noStandard" value="true"
 				<c:if test="${feature.noStandard=='true'}">
 				checked
 				</c:if>

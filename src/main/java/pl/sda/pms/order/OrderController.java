@@ -55,13 +55,14 @@ public class OrderController {
 	}
 
 	@GetMapping("/order/show")
-	public String listOrders(@RequestParam Long orderId, @RequestParam(required = false) String errorMessage,
-			Model model) {
+	public String showOrder(@RequestParam Long orderId, @RequestParam(required = false) String errorMessage,
+			@RequestParam(required = false) Boolean edit, Model model) {
 
 		model.addAttribute("errorMessage", errorMessage);
 
 		model.addAttribute("order", orderService.findByIdAndUpdatePrice(orderId));
 		model.addAttribute("aud", orderService.findByIdAud(orderId));
+		model.addAttribute("edit", edit);
 		model.addAttribute("title", "List Orders");
 		model.addAttribute("path", "order/show");
 		return "main";
@@ -191,14 +192,23 @@ public class OrderController {
 			errorMessage = "No feature can be no standard, change to existing or create new";
 		} else {
 			List<ProductConfiguration> matchingProducts = orderService.checkIfRealyNoStandard(order);
+			try {
+				matchingProducts.remove(productConfigurationService.findByName("pattern"));
+			} catch (Exception e) {
+				errorMessage = "No pattern exists with this feature";
+				System.out.println(errorMessage);
+			}
+
 			if (matchingProducts.size() > 0) {
 				errorMessage = "Configuration exists in '"
-						+ matchingProducts.stream().map(x -> x.getName()).collect(Collectors.joining("', '")) + "'<br>No need to save new product Configuration";
-				
+						+ matchingProducts.stream().map(x -> x.getName()).collect(Collectors.joining("', '"))
+						+ "'<br>No need to save new product Configuration";
+
 				order.setNoStandard(false);
 				orderService.save(order);
-			}else{
-				errorMessage ="Ready to save <br><a class='btn btn-outline-light text-light bg-danger' href='/save/product/noStandardConfirmed?orderId="+orderId+"'>Confirm</a>";
+			} else {
+				errorMessage = "Ready to save <br><a class='btn btn-outline-light text-light bg-danger' href='/save/product/noStandardConfirmed?orderId="
+						+ orderId + "'>Confirm</a>";
 			}
 
 		}
@@ -206,10 +216,8 @@ public class OrderController {
 		return "redirect:/order/show?orderId=" + orderId + "&errorMessage=" + errorMessage;
 	}
 
-
 	@GetMapping("/save/product/noStandardConfirmed")
 	public String saveAsProduct(@RequestParam Long orderId) {
-		
 
 		orderService.saveAsProduct(orderId);
 		productConfigurationService.updatePattern();
@@ -219,7 +227,6 @@ public class OrderController {
 
 	@GetMapping("/update/pattern")
 	public String updateProductConfigurationPattern() {
-		
 
 		productConfigurationService.updatePattern();
 

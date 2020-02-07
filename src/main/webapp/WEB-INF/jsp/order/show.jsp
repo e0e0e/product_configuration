@@ -54,6 +54,11 @@ function hideChassis(){
 				<span class="glyphicon glyphicon-edit text-light"></span>
 			</a>
 			<a
+				class="btn btn-outline-secondary text-dark"
+				href="/order/show?orderId=${order.id}&edit=true">
+				<span class="glyphicon glyphicon-gift text-light"></span>
+			</a>
+			<a
 				class="btn btn-outline-secondary text-light;"
 				href="/order/color/edit?orderId=${order.id}">
 				<i class="fa fa-paint-brush text-light"></i>
@@ -88,6 +93,11 @@ function hideChassis(){
 						<a class="btn btn-outline-info text-dark"
 						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}"><span
 						class="glyphicon glyphicon-edit text-danger"></span></a>
+						</c:if>
+						<c:if test="${edit=='TRUE'}">
+						<a class="btn btn-outline-info text-dark"
+						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}&edit=${edit}"><span
+						class="glyphicon glyphicon-gift text-warning"></span></a>
 						</c:if>
 						</div>
 						</div>
@@ -126,6 +136,11 @@ function hideChassis(){
 						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}"><span
 						class="glyphicon glyphicon-edit text-danger"></span></a>
 						</c:if>
+						<c:if test="${edit=='TRUE'}">
+						<a class="btn btn-outline-info text-dark"
+						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}&edit=${edit}"><span
+						class="glyphicon glyphicon-gift text-warning"></span></a>
+						</c:if>
 						</div>
 						<div class="col-1 m-1">${feature.feature.index}</div>
 						<div class="col-1 m-1">${feature.feature.mIndex}</div>
@@ -154,7 +169,13 @@ function hideChassis(){
 						<a class="btn btn-outline-info text-dark"
 						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}"><span
 						class="glyphicon glyphicon-edit text-danger"></span></a>
-						</c:if></div>
+						</c:if>
+						<c:if test="${edit=='TRUE'}">
+						<a class="btn btn-outline-info text-dark"
+						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}&edit=${edit}"><span
+						class="glyphicon glyphicon-gift text-warning"></span></a>
+						</c:if>
+						</div>
 						<div class="col-1 m-1">${feature.feature.index}</div>
 						<div class="col-1 m-1">${feature.feature.mIndex}</div>
 						<c:choose>
