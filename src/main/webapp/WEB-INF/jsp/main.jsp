@@ -60,7 +60,7 @@ es.parentElement.href=something.concat(imagePath);
 es.width="1";
 
 }
-document.body.style.cursor = 'wait';	
+	
 </script>
 <style>
 
