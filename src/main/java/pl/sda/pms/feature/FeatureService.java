@@ -48,6 +48,11 @@ public class FeatureService {
 	public boolean saveChanges(String name, String description, String imagePath, String index, String price, Long id,
 			String mIndex, Boolean noStandard) {
 		Feature feature = featureRepository.findById(id).get();
+
+		if (featureRepository.findByNameAndIndex(name,index)!=null){
+				throw new RuntimeException("There is already feature with same name and index, please use existing");
+		}
+
 		feature.setName(name);
 		feature.setDescription(description);
 		feature.setImagePath(imagePath);

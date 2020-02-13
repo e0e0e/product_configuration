@@ -21,7 +21,6 @@ import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
 @Audited
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"name", "index"}))
 public class Feature {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

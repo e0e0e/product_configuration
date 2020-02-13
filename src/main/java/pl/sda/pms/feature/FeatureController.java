@@ -2,6 +2,7 @@ package pl.sda.pms.feature;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.ErrorManager;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,14 +42,18 @@ public class FeatureController {
 	}
 
 	@GetMapping("/feature/editFeatureNoStandard")
-	public String editFeatureNoStandard(@RequestParam Long featureId, @RequestParam(required = false) Long orderId,
+	public String editFeatureNoStandard(@RequestParam Long featureId, 
+	@RequestParam(required = false) Long orderId,
+	@RequestParam(required = false) String errorMessage,
 			Model model) {
 
 		model.addAttribute("feature", featureService.findByID(featureId));
-		model.addAttribute("existingFeatures", productFeatureService.findWithSameProductFeatue(featureId,orderService.findById(orderId)));
+		model.addAttribute("existingFeatures",
+				productFeatureService.findWithSameProductFeatue(featureId, orderService.findById(orderId)));
 		model.addAttribute("orderId", orderId);
 
 		model.addAttribute("title", "Show Features");
+		model.addAttribute("errorMessage", errorMessage);
 		model.addAttribute("path", "feature/editFeatureNoStandard");
 		return "main";
 	}
@@ -70,13 +75,13 @@ public class FeatureController {
 			@RequestParam Long featureId, @RequestParam String mIndex,
 			@RequestParam(required = false) Boolean noStandard, @RequestParam(required = false) Long orderId,
 			@RequestParam(required = false) Boolean edit, Model model) {
-		
+
 		if (edit == null) {
 			edit = false;
 		}
 		if (edit) {
 			// price will not be changed becouse 0.0!
-			
+
 			Feature newFeature = new Feature(name, description, 0.0, imagePath, index, mIndex);
 			Feature oldFeature = featureService.findByID(featureId);
 			orderService.newFeatureToOrder(newFeature, oldFeature, orderId);
@@ -89,8 +94,14 @@ public class FeatureController {
 		if (noStandard == null) {
 			noStandard = false;
 		}
+		 
+		try {
+			featureService.saveChanges(name, description, imagePath, index, price, featureId, mIndex, noStandard);
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+			return "redirect:/feature/editFeatureNoStandard?featureId="+featureId+"&orderId="+orderId+"&errorMessage="+e.getLocalizedMessage();
+		}
 
-		featureService.saveChanges(name, description, imagePath, index, price, featureId, mIndex, noStandard);
 		if (orderId != null) {
 			return "redirect:/order/show?orderId=" + orderId;
 
