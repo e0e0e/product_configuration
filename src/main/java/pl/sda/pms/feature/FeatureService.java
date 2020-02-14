@@ -49,9 +49,9 @@ public class FeatureService {
 			String mIndex, Boolean noStandard) {
 		Feature feature = featureRepository.findById(id).get();
 
-		if (featureRepository.findByNameAndIndex(name,index)!=null){
-				throw new RuntimeException("There is already feature with same name and index, please use existing");
-		}
+		//  if (featureRepository.findByNameAndIndexDiffId(name,index,id)!=null){
+		//  		throw new RuntimeException("There is allready feature with same name and index and with different id, please use existing");
+		//  }
 
 		feature.setName(name);
 		feature.setDescription(description);
@@ -103,6 +103,12 @@ public class FeatureService {
 	public void deleteById(Long featureId) {
 
 		featureRepository.deleteById(featureId);
+	}
+
+	public void existsByNameAndIndex(String name, String index) {
+		if (featureRepository.findByNameAndIndex(name,index)!=null){
+			throw new RuntimeException("There is allready feature with same name and index, please use existing");
+		}
 	}
 
 }

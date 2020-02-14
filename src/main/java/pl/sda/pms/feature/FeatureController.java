@@ -81,7 +81,13 @@ public class FeatureController {
 		}
 		if (edit) {
 			// price will not be changed becouse 0.0!
-
+			try {
+				featureService.existsByNameAndIndex(name,index);
+			} catch (Exception e) {
+				System.out.println(e.getLocalizedMessage());
+				return "redirect:/feature/editFeatureNoStandard?featureId="+featureId+"&orderId="+orderId+"&errorMessage="+e.getLocalizedMessage();
+			}
+			
 			Feature newFeature = new Feature(name, description, 0.0, imagePath, index, mIndex);
 			Feature oldFeature = featureService.findByID(featureId);
 			orderService.newFeatureToOrder(newFeature, oldFeature, orderId);
@@ -123,7 +129,7 @@ public class FeatureController {
 			model.addAttribute("errorMessage", "Too many orders");
 			return "redirect:/feature/editFeatureNoStandard?featureId=" + featureId + "&orderId=" + orderId;
 		}
-		if (order.size() == 0) {
+		if (order.size() <= 1) {
 			Ord orderToChange = orderService.findById(orderId);
 			for (OrderFeature of : orderToChange.getOrderFeatures()) {
 				if (of.getFeature().equals(noStandardFeature)) {
@@ -136,6 +142,10 @@ public class FeatureController {
 			orderService.save(orderToChange);
 			return "redirect:/order/show?orderId=" + orderId;
 		}
+		// if(order.size()==1){
+
+
+		// }
 
 		orderFeatureService.save(orderFeature);
 
