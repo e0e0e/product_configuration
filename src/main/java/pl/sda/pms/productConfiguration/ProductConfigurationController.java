@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,7 +49,24 @@ public class ProductConfigurationController {
 		model.addAttribute("path", "product/add");
 		return "main";
 	}
+	
+	
+	@GetMapping("/product/getAll")
+	@ResponseBody
+	public List<ProductConfiguration> getAll(Model model) {
+		List<ProductConfiguration> productConfigurations = productConfigurationService.findAll();
 
+		return productConfigurations;
+	}
+	
+	@GetMapping("/product/showAll")
+	public String showAll(Model model) {
+		
+
+		model.addAttribute("title", "Show Features");
+		model.addAttribute("path", "product/showAll");
+		return "main";
+	}
 	@GetMapping("/product/listAll")
 	public String showFeatures(Model model) {
 

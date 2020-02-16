@@ -294,12 +294,12 @@ public class OrderService {
 		Feature nFeature = featureService.save(newFeature);
 		Ord orderToChange = findById(orderId);
 
-		OrderFeature orderFeature=orderToChange.findOrderFeatureByFeatyre(oldFeature);
+		OrderFeature orderFeature = orderToChange.findOrderFeatureByFeatyre(oldFeature);
 		orderFeature.setFeature(nFeature);
 		nFeature.setOrderFeatures(orderFeature);
 		featureService.save(nFeature);
 
-		//orderFeatureService.save(orderFeature);
+		// orderFeatureService.save(orderFeature);
 
 		orderToChange.setNoStandard(true);
 		save(orderToChange);

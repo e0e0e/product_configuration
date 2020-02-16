@@ -1,7 +1,7 @@
 <%@ taglib
 	prefix="c"
 	uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="container">
+<div class="container" id="content">
 	<%@include file="../featureNavigation.jsp"%>
 
 
@@ -13,6 +13,12 @@
 			class="btn btn-outline-secondary btn-lg m-2">
 			<span class="glyphicon glyphicon-plus text-dark"></span>
 		</a>
+		<a
+					href="/product/showAll"
+					class="btn btn-outline-dark text-light m-1">
+					${configuration.name}
+					<span class="glyphicon glyphicon-copy text-light"></span>
+				</a>
 		</c:if>
 	</h3>
 
@@ -30,6 +36,8 @@
 					${configuration.name}
 					<span class="glyphicon glyphicon-edit text-light"></span>
 				</a>
+				
+				
 				<c:if test="${user.authorities=='[ADMIN]'}">
 				<a
 					class="btn btn-outline-dark text-light m-1"

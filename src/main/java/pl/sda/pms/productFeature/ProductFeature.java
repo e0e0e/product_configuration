@@ -10,6 +10,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import org.hibernate.envers.Audited;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
@@ -67,12 +71,15 @@ public class ProductFeature {
 	}
 
 	@ManyToMany
+	@JsonIgnore
 	private Set<Feature> feature;
 
 	@ManyToOne
+	@JsonIgnore
 	private ProductConfiguration productConfiguration;
 
 	@OneToOne
+	@JsonIgnore
 	private OrderFeature orderFeature;
 
 	public OrderFeature getOrderFeature() {

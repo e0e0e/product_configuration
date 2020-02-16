@@ -18,59 +18,58 @@ import javax.persistence.OrderBy;
 
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
 @Audited
-public class ProductConfiguration{
-	
+public class ProductConfiguration {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(unique = true)
 	private String name;
-	
-	@OneToMany(mappedBy="productConfiguration", cascade = CascadeType.REMOVE)
+
+	@OneToMany(mappedBy = "productConfiguration", cascade = CascadeType.REMOVE)
+	@JsonIgnore
 	@OrderBy("position")
 	private List<ProductFeature> configurationList;
-	
+
 	public List<ProductFeature> getConfigurationList() {
 		return configurationList;
 	}
 
-
 	public void setConfigurationList(List<ProductFeature> configurationList) {
 		this.configurationList = configurationList;
 	}
+
 	public void moveDownInConfigurationList(ProductFeature productFeature) {
-		List<ProductFeature> configurationList =this.configurationList ;
-		int indexOf=configurationList.indexOf(productFeature);
-		Collections.swap(this.configurationList,indexOf,indexOf+1);
-		this.configurationList= configurationList;
-		
+		List<ProductFeature> configurationList = this.configurationList;
+		int indexOf = configurationList.indexOf(productFeature);
+		Collections.swap(this.configurationList, indexOf, indexOf + 1);
+		this.configurationList = configurationList;
+
 	}
-	
-	
 
 	public ProductConfiguration() {
 		super();
 	}
-	
 
 	public ProductConfiguration(String name) {
 		super();
 		this.name = name;
 	}
 
-
 	public ProductConfiguration(String name, List<ProductFeature> configurationList) {
 		super();
 		this.name = name;
 		this.configurationList = configurationList;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -88,33 +87,30 @@ public class ProductConfiguration{
 		this.name = name;
 	}
 
-
 	public void setConfigurationListByList(List<ProductFeature> feature) {
-		
-		LinkedList<ProductFeature> configurationSet=new LinkedList<ProductFeature>();
-		configurationSet.addAll(feature);
-		this.configurationList=configurationSet;
-		
-	}
 
+		LinkedList<ProductFeature> configurationSet = new LinkedList<ProductFeature>();
+		configurationSet.addAll(feature);
+		this.configurationList = configurationSet;
+
+	}
 
 	public void removeConfigurationList() {
 
-		this.configurationList=null;
+		this.configurationList = null;
 	}
 
 	@Override
 	public ProductConfiguration clone() {
 		ProductConfiguration user = null;
-	    try {
-	        user = (ProductConfiguration) super.clone();
-	    } catch (CloneNotSupportedException e) {
-	        
-	    }
-	    
-	    return user;
-	}
+		try {
+			user = (ProductConfiguration) super.clone();
+		} catch (CloneNotSupportedException e) {
 
+		}
+
+		return user;
+	}
 
 	@Override
 	public int hashCode() {
@@ -123,7 +119,6 @@ public class ProductConfiguration{
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -142,55 +137,46 @@ public class ProductConfiguration{
 		return true;
 	}
 
-
 	public void removeFromConfigurationListByName(String productFeatureName) {
-		ProductFeature productFeature=configurationList.stream().filter(x->x.getName().equals(productFeatureName)).findFirst().get();
+		ProductFeature productFeature = configurationList.stream().filter(x -> x.getName().equals(productFeatureName))
+				.findFirst().get();
 		configurationList.remove(productFeature);
 
 	}
 
-
-	public Boolean findIfMatch(OrderFeature of){
-		for(ProductFeature pf:configurationList){
-			Feature feature=of.getFeature();
-			Collection<Feature> featuresInOrder=pf.getFeature();
-			if(featuresInOrder.contains(feature)){
+	public Boolean findIfMatch(OrderFeature of) {
+		for (ProductFeature pf : configurationList) {
+			Feature feature = of.getFeature();
+			Collection<Feature> featuresInOrder = pf.getFeature();
+			if (featuresInOrder.contains(feature)) {
 				return true;
-			};
-			
-		}
+			}
+			;
 
+		}
 
 		return false;
 	}
 
-
 	public ProductFeature findProductFeatureByName(String name) {
-		for(ProductFeature pF:this.configurationList){
-			if(pF.getName().equals(name)){
-			return pF;
+		for (ProductFeature pF : this.configurationList) {
+			if (pF.getName().equals(name)) {
+				return pF;
 			}
 		}
 		return null;
 	}
 
-
 	public void deleteConfigurationList() {
-		this.configurationList=null;
+		this.configurationList = null;
 	}
 
-
 	public void removeAllFeaturesFromList() {
-		for(ProductFeature pF:this.configurationList){
-		pF.setFeature(null);
+		for (ProductFeature pF : this.configurationList) {
+			pF.setFeature(null);
 
 		}
 
-
 	}
-	
-	
 
-	
-	
 }
