@@ -2,6 +2,8 @@ package pl.sda.pms.color;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.envers.Audited;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -20,6 +22,7 @@ public class Color {
     private String name;
 
     @OneToOne
+    @JsonIgnore
     private OrderFeature orderFeature;
 
  

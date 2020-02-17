@@ -310,7 +310,6 @@ public class ProductConfigurationService {
 
 	public void removeProductFeatureByName(String productFeatureName) {
 
-	
 		List<ProductFeature> pfs = productFeatureService.findAll();
 
 		for (ProductFeature p : pfs) {
@@ -327,33 +326,71 @@ public class ProductConfigurationService {
 	}
 
 	public void updatePattern() {
-		
-		ProductConfiguration productConfiguration =findByName("pattern");
-		
-		List<ProductConfiguration> productConfigurations=productConfigurationRepository.findAll();
-		
 
-		for(ProductConfiguration pC:productConfigurations){
-			if(!pC.getName().equals("pattern")){
-				
-				for(ProductFeature pF:pC.getConfigurationList()){
-					
-					ProductFeature productFeature=productConfiguration.findProductFeatureByName(pF.getName());
-					if(productFeature.getFeature()==null){
+		ProductConfiguration productConfiguration = findByName("pattern");
+
+		List<ProductConfiguration> productConfigurations = productConfigurationRepository.findAll();
+
+		for (ProductConfiguration pC : productConfigurations) {
+			if (!pC.getName().equals("pattern")) {
+
+				for (ProductFeature pF : pC.getConfigurationList()) {
+
+					ProductFeature productFeature = productConfiguration.findProductFeatureByName(pF.getName());
+					if (productFeature.getFeature() == null) {
 						productFeature.setFeature(new HashSet<>());
 					}
-						productFeature.getFeature().addAll(pF.getFeature());
-					
+					productFeature.getFeature().addAll(pF.getFeature());
+
 					productFeatureService.save(productFeature);
 
-					
 				}
-			}else{
+			} else {
 				pC.removeAllFeaturesFromList();
 
 			}
 		}
 
+	}
+
+	public void importPorductConfigurations(List<ProductConfiguration> productConfigurations) {
+		for (ProductConfiguration pC : productConfigurations) {
+			Boolean existsProduct = productConfigurationRepository.existsById(pC.getId());
+			if (!existsProduct) {
+				List<ProductFeature> productFeatures=pC.getConfigurationList();
+				for(ProductFeature pf: productFeatures){
+					Set<Feature> features=pf.getFeature();
+
+					for(Feature f:features){
+						if(!featureService.existsById(f.getId())){
+							try {
+								Feature newFeature=featureService.save(f);
+							} catch (Exception e) {
+								System.out.println("did not saved feature"+" error: "+e.getLocalizedMessage());
+							}
+							
+						}
+					}
+
+					if(!productFeatureService.existsById(pf.getId())){
+						try {
+							productFeatureService.save(pf);
+						} catch (Exception e) {
+							System.out.println("did not saved product feature: "+pf.getName()+" error: "+e.getLocalizedMessage());
+						}
+					}
+
+				}
+				try {
+					productConfigurationRepository.save(pC);
+					System.out.println("saved product configuration: "+pC.getName());
+				} catch (Exception e) {
+					System.out.println("did not saved product Configuration: "+pC.getName()+" error: "+e.getLocalizedMessage());
+				}
+				
+			}
+
+		}
 
 	}
 

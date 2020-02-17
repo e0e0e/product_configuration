@@ -1,10 +1,17 @@
 package pl.sda.pms.order;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import org.apache.catalina.startup.LifecycleListenerRule;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -231,5 +238,22 @@ public class OrderController {
 		productConfigurationService.updatePattern();
 
 		return "redirect:/product/list?productId=8";
+	}
+
+	
+	@GetMapping("/export/orders")
+	public String export(Model model) throws IOException {
+		 FileWriter file=new FileWriter("orderExport.txt");
+		List<Ord> productConfigurations = orderService.findAll();
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+		String json = mapper.writeValueAsString(productConfigurations);
+		file.write(json);
+		file.close();
+		System.out.println("File writen.");
+		
+		return null;
 	}
 }

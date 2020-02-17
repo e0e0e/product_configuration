@@ -92,7 +92,7 @@ function hideChassis(){
 						<c:if test="${feature.feature.noStandard=='TRUE'}">
 						<a class="btn btn-outline-info text-dark"
 						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}"><span
-						class="glyphicon glyphicon-edit text-danger"></span></a>
+						class="glyphicon glyphicon-exclamation-sign text-danger"></span></a>
 						</c:if>
 						<c:if test="${edit=='TRUE'}">
 						<a class="btn btn-outline-info text-dark"
@@ -134,7 +134,7 @@ function hideChassis(){
 						<c:if test="${feature.feature.noStandard=='TRUE'}">
 						<a class="btn btn-outline-info text-dark"
 						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}"><span
-						class="glyphicon glyphicon-edit text-danger"></span></a>
+						class="glyphicon glyphicon-exclamation-sign text-danger"></span></a>
 						</c:if>
 						<c:if test="${edit=='TRUE'}">
 						<a class="btn btn-outline-info text-dark"
@@ -168,7 +168,7 @@ function hideChassis(){
 						<c:if test="${feature.feature.noStandard=='TRUE'}">
 						<a class="btn btn-outline-info text-dark"
 						href="/feature/editFeatureNoStandard?featureId=${feature.feature.id}&orderId=${order.id}"><span
-						class="glyphicon glyphicon-edit text-danger"></span></a>
+						class="glyphicon glyphicon-exclamation-sign text-danger"></span></a>
 						</c:if>
 						<c:if test="${edit=='TRUE'}">
 						<a class="btn btn-outline-info text-dark"

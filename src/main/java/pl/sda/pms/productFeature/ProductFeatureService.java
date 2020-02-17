@@ -272,7 +272,7 @@ public class ProductFeatureService {
 
 	public Collection<Feature> findWithSameProductFeatue(Long featureId, Ord order) {
 		Feature feature = featureService.findByID(featureId);
-		
+
 		try {
 			String productFeatureName = order.findOrderFeatureByFeatyre(feature).getProductFeature().getName();
 			Collection<Feature> features = findFeaturesByProductFeatureName(productFeatureName);
@@ -283,6 +283,10 @@ public class ProductFeatureService {
 		}
 
 		return null;
+	}
+
+	public Boolean existsById(Long id) {
+		return productFeatureRepository.existsById(id);
 	}
 
 }

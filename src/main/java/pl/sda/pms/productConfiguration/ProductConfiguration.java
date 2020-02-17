@@ -36,7 +36,6 @@ public class ProductConfiguration {
 	private String name;
 
 	@OneToMany(mappedBy = "productConfiguration", cascade = CascadeType.REMOVE)
-	@JsonIgnore
 	@OrderBy("position")
 	private List<ProductFeature> configurationList;
 

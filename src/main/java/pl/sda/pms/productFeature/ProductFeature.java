@@ -71,7 +71,6 @@ public class ProductFeature {
 	}
 
 	@ManyToMany
-	@JsonIgnore
 	private Set<Feature> feature;
 
 	@ManyToOne

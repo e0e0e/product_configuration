@@ -16,7 +16,7 @@ import org.hibernate.envers.Audited;
 import pl.sda.pms.color.Color;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.order.Ord;
-//import pl.sda.pms.order.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
@@ -30,6 +30,7 @@ public class OrderFeature {
 
 
 	@ManyToMany
+	@JsonIgnore
 	private List<Ord> ord;
 
 	@OneToOne

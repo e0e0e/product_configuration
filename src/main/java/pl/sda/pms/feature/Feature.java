@@ -14,6 +14,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.envers.Audited;
 
 import pl.sda.pms.OrderFeature.OrderFeature;
@@ -64,9 +66,11 @@ public class Feature {
 	}
 
 	@ManyToMany
+	@JsonIgnore
 	private Set<ProductFeature> productFeatureList;
 
 	@OneToOne
+	@JsonIgnore
 	private OrderFeature orderFeatures;
 
 	public OrderFeature getOrderFeatures() {

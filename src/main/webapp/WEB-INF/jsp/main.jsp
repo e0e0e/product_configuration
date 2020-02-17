@@ -98,6 +98,19 @@ padding:5% 5%;
   border: solid 1px #000000;
   z-index: 9999;
 }
+table, th , td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
 </style>
 </head>
 <body>

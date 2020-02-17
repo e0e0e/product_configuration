@@ -1,9 +1,21 @@
 package pl.sda.pms.productConfiguration;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
@@ -17,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
@@ -49,8 +60,7 @@ public class ProductConfigurationController {
 		model.addAttribute("path", "product/add");
 		return "main";
 	}
-	
-	
+
 	@GetMapping("/product/getAll")
 	@ResponseBody
 	public List<ProductConfiguration> getAll(Model model) {
@@ -58,15 +68,15 @@ public class ProductConfigurationController {
 
 		return productConfigurations;
 	}
-	
+
 	@GetMapping("/product/showAll")
 	public String showAll(Model model) {
-		
 
 		model.addAttribute("title", "Show Features");
 		model.addAttribute("path", "product/showAll");
 		return "main";
 	}
+
 	@GetMapping("/product/listAll")
 	public String showFeatures(Model model) {
 
@@ -165,17 +175,15 @@ public class ProductConfigurationController {
 
 	}
 
-	@PostMapping(value="/product/matching", consumes = "application/json", produces = "application/json")
+	@PostMapping(value = "/product/matching", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public Map<String, List<ShortFeature>> productLiveSearch(@RequestBody String features, Model model) {
-		 
-		Map<String, List<ShortFeature>> productMap= productConfigurationService.productLiveSearch(features);
+
+		Map<String, List<ShortFeature>> productMap = productConfigurationService.productLiveSearch(features);
 
 		return productMap;
 
 	}
-
-
 
 	@GetMapping("/product/delete")
 	public String productDelete(@RequestParam Long productId, Model model) {
@@ -194,6 +202,36 @@ public class ProductConfigurationController {
 
 		return "redirect:/product/show";
 
+	}
+
+	@GetMapping("/export/products")
+	public String exportProducts(Model model) throws IOException {
+		 FileWriter file=new FileWriter("productExport.txt");
+		List<ProductConfiguration> productConfigurations = productConfigurationService.findAll();
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+		String json = mapper.writeValueAsString(productConfigurations);
+		file.write(json);
+		file.close();
+		System.out.println("File writen.");
+		return null;
+	}
+
+	@GetMapping("/import/products")
+	public String importProducts(Model model) throws IOException {
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		FileReader fileReader=new FileReader("productExport.txt");
+		// JSONObject obj = new JSONObject(features);
+        //read json file and convert to customer object
+        ProductConfiguration[] pC=objectMapper.readValue(new File("productExport.txt"),ProductConfiguration[].class);
+		List<ProductConfiguration> productConfigurations=Arrays.asList(pC);
+		productConfigurationService.importPorductConfigurations(productConfigurations);
+
+		
+		return null;
 	}
 
 }
