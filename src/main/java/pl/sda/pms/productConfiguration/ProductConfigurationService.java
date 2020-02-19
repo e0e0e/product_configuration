@@ -431,4 +431,9 @@ public class ProductConfigurationService {
 
 	}
 
+	public void dropAllObjects() {
+
+		productConfigurationRepository.dropAllObjects();
+	}
+
 }

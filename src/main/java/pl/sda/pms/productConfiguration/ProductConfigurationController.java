@@ -1,9 +1,13 @@
 package pl.sda.pms.productConfiguration;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +21,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import org.h2.tools.RunScript;
+import org.h2.util.IOUtils;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +49,12 @@ public class ProductConfigurationController {
 	private final ProductConfigurationService productConfigurationService;
 	private final FeatureService featureService;
 	private final ProductFeatureService productFeatureService;
+	@Value("${spring.datasource.url}")
+	private String h2Url;
+	@Value("${spring.datasource.username}")
+	private String h2Username;
+	@Value("${spring.datasource.password}")
+	private String h2Password;
 
 	public ProductConfigurationController(ProductConfigurationService productConfigurationService,
 			FeatureService featureService, ProductFeatureService productFeatureService) {
@@ -93,7 +106,7 @@ public class ProductConfigurationController {
 	public String showOneFeature(Model model) {
 
 		// List<Object> oblistList=productConfigurationService.findAllById(3L);
-		List<ProductConfiguration> pc=productConfigurationService.findAll();
+		List<ProductConfiguration> pc = productConfigurationService.findAll();
 		model.addAttribute("configurations", productConfigurationService.findAll());
 
 		model.addAttribute("title", "Show Features");
@@ -205,30 +218,46 @@ public class ProductConfigurationController {
 	}
 
 	@GetMapping("/export/products")
-	public String exportProducts(Model model) throws IOException {
-		 FileWriter file=new FileWriter("productExport.txt");
-		List<ProductConfiguration> productConfigurations = productConfigurationService.findAll();
+	public String exportProducts(HttpServletResponse response, Model model){
 
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		try {
+			Charset charset=Charset.forName("UTF-8");
+		RunScript.execute(h2Url, h2Username, h2Password, "query.sql", charset, false);
+		System.out.println("File Exported.");
+		} catch (Exception e) {
+			System.out.println("Export failed: "+e.getLocalizedMessage());
+		}
 
-		String json = mapper.writeValueAsString(productConfigurations);
-		file.write(json);
-		file.close();
-		System.out.println("File writen.");
+		 try {
+        String filePathToBeServed = "db-dump.sql";
+        File fileToDownload = new File(filePathToBeServed);
+        InputStream inputStream = new FileInputStream(fileToDownload);
+        response.setContentType("application/force-download");
+        response.setHeader("Content-Disposition", "attachment; filename=db-dump.sql"); 
+        IOUtils.copy(inputStream, response.getOutputStream());
+        response.flushBuffer();
+        inputStream.close();
+    } catch (Exception e){
+        System.out.println("Request could not be completed at this moment. Please try again. Error: "+e.getLocalizedMessage());
+        
+    }
+		
 		return null;
 	}
 
 	@GetMapping("/import/products")
-	public String importProducts(Model model) throws IOException {
-		ObjectMapper objectMapper = new ObjectMapper();
+	public String importProducts(Model model) {
 
-		FileReader fileReader=new FileReader("productExport.txt");
-		// JSONObject obj = new JSONObject(features);
-        //read json file and convert to customer object
-        ProductConfiguration[] pC=objectMapper.readValue(new File("productExport.txt"),ProductConfiguration[].class);
-		List<ProductConfiguration> productConfigurations=Arrays.asList(pC);
-		productConfigurationService.importPorductConfigurations(productConfigurations);
+		
+		try {
+			Charset charset=Charset.forName("UTF-8");
+			productConfigurationService.dropAllObjects();
+			RunScript.execute(h2Url, h2Username, h2Password, "db-dump.sql", charset, false);
+			System.out.println("File imported.");
+		} catch (Exception e) {
+			System.out.println("Import failed: "+e.getLocalizedMessage());
+		}
+
 
 		
 		return null;
