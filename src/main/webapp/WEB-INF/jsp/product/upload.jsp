@@ -1,7 +1,7 @@
-<form:form method="POST" action="/uploadFile" enctype="multipart/form-data">
+<form method="POST" action="/uploadFile" enctype="multipart/form-data">
     <table>
         <tr>
-            <td><form:label path="file">Select a file to upload:</form:label></td>
+            <td><label >Select a file to upload:</label></td>
             </tr>
             <tr> <td><input type="file" name="file" /></td></tr>
         

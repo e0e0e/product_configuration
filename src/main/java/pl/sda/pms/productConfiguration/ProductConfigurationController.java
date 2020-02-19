@@ -2,12 +2,20 @@ package pl.sda.pms.productConfiguration;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +23,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -36,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
@@ -238,8 +248,9 @@ public class ProductConfigurationController {
 			response.flushBuffer();
 			inputStream.close();
 		} catch (Exception e) {
-			System.out.println("Request could not be completed at this moment. Please try again. Error: "
-					+ e.getLocalizedMessage());
+			System.out
+					.println("Request could not be completed at this moment. File not saved. Please try again. Error: "
+							+ e.getLocalizedMessage());
 
 		}
 
@@ -248,24 +259,59 @@ public class ProductConfigurationController {
 
 	@GetMapping("/import/products")
 	public String importProducts(Model model) {
+		try {
+			//importSql();
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
 
+		}
+		return "redirect:/product/show";
+	}
+
+	@PostMapping("/uploadFile")
+	public String uploadDbFileToServer(@RequestParam("file") MultipartFile file, HttpServletRequest request,
+			Model model) {
+
+		try {
+			String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss-"));
+			String fileName = date + file.getOriginalFilename();
+
+			String filePath = request.getServletContext().getRealPath("/");
+
+			File newFile = new File(filePath + "db-dump.sql");
+
+			file.transferTo(newFile);
+
+			System.out.println("File saved on server.");
+
+			importSql(request);
+
+			model.addAttribute("file", file);
+			model.addAttribute("title", "file details");
+			model.addAttribute("path", "product/fileUploadView");
+			return "main";
+		} catch (Exception e) {
+			System.out.println("File saved on server error: " + e.getMessage());
+			return "redirect:/upload/db";
+		}
+
+	}
+
+	public void importSql(HttpServletRequest request) throws IOException {
 		try {
 			Charset charset = Charset.forName("UTF-8");
 			productConfigurationService.dropAllObjects();
-			RunScript.execute(h2Url, h2Username, h2Password, "db-dump.sql", charset, false);
+			System.out.println("Databased droped.");
+			String filePath = request.getServletContext().getRealPath("/")+"db-dump.sql";
+			RunScript.execute(h2Url, h2Username, h2Password, "src/main/webapp/db-dump.sql", charset, false);
 			System.out.println("File imported.");
 		} catch (Exception e) {
 			System.out.println("Import failed: " + e.getLocalizedMessage());
 		}
-
-		return null;
 	}
-
 
 	@GetMapping("/upload/db")
 	public String uploadDb(Model model) {
-
-		
 
 		model.addAttribute("title", "Upload DB");
 		model.addAttribute("path", "product/upload");

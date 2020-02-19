@@ -19,10 +19,14 @@
 
 				<c:if test="${user.authorities=='[ADMIN]'}">
 					<li class="nav-item"><a class="nav-link text-warning font-weight-bold btn btn-outline-dark"
-							href="/export/products">Download DB</a></li>
+							href="/users/list"> Users</a> </li>
+					<li class="nav-item"><a class="nav-link text-warning font-weight-bold btn btn-outline-dark"
+							href="/export/products">DB <span
+								class="glyphicon glyphicon-floppy-save text-warning"></span></a></li>
 
 					<li class="nav-item"><a class="nav-link text-warning font-weight-bold btn btn-outline-dark"
-							href="/upload/db">Upload DB</a></li>
+							href="/upload/db">DB <span class="glyphicon glyphicon-floppy-open text-warning"></span></a>
+					</li>
 
 					<li class="nav-item"><a class="nav-link text-warning font-weight-bold btn btn-outline-dark"
 							href="/color/list">Colors</a></li>
