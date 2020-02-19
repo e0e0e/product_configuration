@@ -362,19 +362,45 @@ public class ProductConfigurationService {
 					Set<Feature> features=pf.getFeature();
 
 					for(Feature f:features){
-						if(!featureService.existsById(f.getId())){
-							try {
-								Feature newFeature=featureService.save(f);
-							} catch (Exception e) {
-								System.out.println("did not saved feature"+" error: "+e.getLocalizedMessage());
-							}
-							
+						try {
+							Feature existingFeature=featureService.findFeatureByNameAndIndex(f);
+						if(existingFeature!=null){
+							f.setId(existingFeature.getId());
+								f=existingFeature;
+
+						}else{
+							Feature newFeature=featureService.save(f);
+							 		f.setId(newFeature.getId());
+							 		f=newFeature;
+
 						}
+						} catch (Exception e) {
+							System.out.println("did not saved feature"+" error: "+e.getLocalizedMessage());
+						}
+						
+
+						// if(!featureService.existsById(f.getId())){
+						// 	try {
+						// 		Feature newFeature=featureService.save(f);
+						// 		f.setId(newFeature.getId());
+						// 		f=newFeature;
+						// 	} catch (Exception e) {
+						// 		System.out.println("did not saved feature"+" error: "+e.getLocalizedMessage());
+						// 	}
+							
+						// }
 					}
 
 					if(!productFeatureService.existsById(pf.getId())){
 						try {
-							productFeatureService.save(pf);
+							ProductFeature newProductFeature=productFeatureService.save(pf);
+							pf.setId(newProductFeature.getId());
+							pf=newProductFeature;
+
+							for(Feature newf:pf.getFeature()){
+
+								featureService.save(newf);
+							}
 						} catch (Exception e) {
 							System.out.println("did not saved product feature: "+pf.getName()+" error: "+e.getLocalizedMessage());
 						}
@@ -382,7 +408,18 @@ public class ProductConfigurationService {
 
 				}
 				try {
-					productConfigurationRepository.save(pC);
+					ProductConfiguration newProductConfiguration=productConfigurationRepository.save(pC);
+					pC.setId(newProductConfiguration.getId());
+					for(ProductFeature newPf:newProductConfiguration.getConfigurationList()){
+						newPf.setProductConfiguration(newProductConfiguration);
+						ProductFeature nextPf=productFeatureService.save(newPf);
+
+					}
+
+
+
+
+
 					System.out.println("saved product configuration: "+pC.getName());
 				} catch (Exception e) {
 					System.out.println("did not saved product Configuration: "+pC.getName()+" error: "+e.getLocalizedMessage());

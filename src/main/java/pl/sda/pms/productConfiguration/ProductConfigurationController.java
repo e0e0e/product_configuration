@@ -93,7 +93,7 @@ public class ProductConfigurationController {
 	public String showOneFeature(Model model) {
 
 		// List<Object> oblistList=productConfigurationService.findAllById(3L);
-
+		List<ProductConfiguration> pc=productConfigurationService.findAll();
 		model.addAttribute("configurations", productConfigurationService.findAll());
 
 		model.addAttribute("title", "Show Features");
@@ -156,7 +156,7 @@ public class ProductConfigurationController {
 	@GetMapping("/product/filter")
 	public String productFilter(Model model) {
 
-		model.addAttribute("configuration", productConfigurationService.findById(8L));
+		model.addAttribute("configuration", productConfigurationService.findByName("pattern"));
 
 		model.addAttribute("title", "Make new Order");
 		model.addAttribute("path", "product/filter");

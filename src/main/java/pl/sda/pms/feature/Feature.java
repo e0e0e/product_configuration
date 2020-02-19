@@ -72,6 +72,7 @@ public class Feature {
 	@OneToOne
 	@JsonIgnore
 	private OrderFeature orderFeatures;
+	
 
 	public OrderFeature getOrderFeatures() {
 		return orderFeatures;

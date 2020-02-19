@@ -180,6 +180,7 @@ something = "${imagesPath}";
 					
 	        		   }
 					   if(key!=null){
+						   console.log(key);
 	        		   document.getElementById(key).innerHTML=select;
 					   }
 					  

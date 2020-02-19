@@ -115,4 +115,10 @@ public class FeatureService {
 
 	}
 
+	public Feature findFeatureByNameAndIndex(Feature f) {
+		return 	featureRepository.findFeatureByNameAndIndex(f.getName(),f.getIndex());
+	}
+
+	
+
 }

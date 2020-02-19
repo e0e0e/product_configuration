@@ -21,11 +21,17 @@ public interface FeatureRepository extends JpaRepository<Feature, Long> {
 	@Query(value = "Select 1 from feature where name like ?1 and index like ?2 limit 1", nativeQuery = true)
 	Integer findByNameAndIndex(String name, String index);
 
+	@Query(value = "Select * from feature where name like ?1 and index like ?2 limit 1", nativeQuery = true)
+	Feature findFeatureByNameAndIndex(String name, String index);
+
 	@Query(value = "Select * from feature where name like ?1", nativeQuery = true)
 	List<Feature> findByName(String name);
 
 	@Query(value = "Select 1 from feature where ((name like ?1 and index like ?2) and id not like ?3) limit 1", nativeQuery = true)
 	Integer findByNameAndIndexDiffId(String name, String index,Long id);
+
+
+	
 	
 	
 }
