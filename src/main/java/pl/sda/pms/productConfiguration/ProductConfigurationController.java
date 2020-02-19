@@ -218,49 +218,58 @@ public class ProductConfigurationController {
 	}
 
 	@GetMapping("/export/products")
-	public String exportProducts(HttpServletResponse response, Model model){
+	public String exportProducts(HttpServletResponse response, Model model) {
 
 		try {
-			Charset charset=Charset.forName("UTF-8");
-		RunScript.execute(h2Url, h2Username, h2Password, "query.sql", charset, false);
-		System.out.println("File Exported.");
+			Charset charset = Charset.forName("UTF-8");
+			RunScript.execute(h2Url, h2Username, h2Password, "query.sql", charset, false);
+			System.out.println("File Exported.");
 		} catch (Exception e) {
-			System.out.println("Export failed: "+e.getLocalizedMessage());
+			System.out.println("Export failed: " + e.getLocalizedMessage());
 		}
 
-		 try {
-        String filePathToBeServed = "db-dump.sql";
-        File fileToDownload = new File(filePathToBeServed);
-        InputStream inputStream = new FileInputStream(fileToDownload);
-        response.setContentType("application/force-download");
-        response.setHeader("Content-Disposition", "attachment; filename=db-dump.sql"); 
-        IOUtils.copy(inputStream, response.getOutputStream());
-        response.flushBuffer();
-        inputStream.close();
-    } catch (Exception e){
-        System.out.println("Request could not be completed at this moment. Please try again. Error: "+e.getLocalizedMessage());
-        
-    }
-		
+		try {
+			String filePathToBeServed = "db-dump.sql";
+			File fileToDownload = new File(filePathToBeServed);
+			InputStream inputStream = new FileInputStream(fileToDownload);
+			response.setContentType("application/force-download");
+			response.setHeader("Content-Disposition", "attachment; filename=db-dump.sql");
+			IOUtils.copy(inputStream, response.getOutputStream());
+			response.flushBuffer();
+			inputStream.close();
+		} catch (Exception e) {
+			System.out.println("Request could not be completed at this moment. Please try again. Error: "
+					+ e.getLocalizedMessage());
+
+		}
+
 		return null;
 	}
 
 	@GetMapping("/import/products")
 	public String importProducts(Model model) {
 
-		
 		try {
-			Charset charset=Charset.forName("UTF-8");
+			Charset charset = Charset.forName("UTF-8");
 			productConfigurationService.dropAllObjects();
 			RunScript.execute(h2Url, h2Username, h2Password, "db-dump.sql", charset, false);
 			System.out.println("File imported.");
 		} catch (Exception e) {
-			System.out.println("Import failed: "+e.getLocalizedMessage());
+			System.out.println("Import failed: " + e.getLocalizedMessage());
 		}
 
+		return null;
+	}
+
+
+	@GetMapping("/upload/db")
+	public String uploadDb(Model model) {
 
 		
-		return null;
+
+		model.addAttribute("title", "Upload DB");
+		model.addAttribute("path", "product/upload");
+		return "main";
 	}
 
 }

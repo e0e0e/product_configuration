@@ -97,6 +97,7 @@ padding:5% 5%;
   border-radius: 10px;
   border: solid 1px #000000;
   z-index: 9999;
+  
 }
 table, th , td {
   border: 1px solid grey;
