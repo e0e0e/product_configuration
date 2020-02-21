@@ -17,8 +17,12 @@
 					href="/product/showAll"
 					class="btn btn-outline-dark text-light m-1">
 					${configuration.name}
-					<span class="glyphicon glyphicon-copy text-light"></span>
+					<span class="glyphicon glyphicon-th-list text-light"></span>
 				</a>
+
+				<a class="nav-link text-warning font-weight-bold btn btn-outline-dark"
+							href="/product/update">Pattern <span
+								class="glyphicon glyphicon-refresh text-warning"></span></a>
 		</c:if>
 	</h3>
 

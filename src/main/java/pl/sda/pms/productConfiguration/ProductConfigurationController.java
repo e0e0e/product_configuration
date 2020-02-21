@@ -218,6 +218,15 @@ public class ProductConfigurationController {
 
 	}
 
+	@GetMapping("/product/update")
+	public String paternUpdate() {
+
+		productConfigurationService.updatePattern();
+
+		return "redirect:/product/show";
+
+	}
+
 	@GetMapping("/product/copy")
 	public String productClone(@RequestParam Long productId, Model model) {
 

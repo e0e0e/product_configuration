@@ -20,6 +20,7 @@
 				<c:if test="${user.authorities=='[ADMIN]'}">
 					<li class="nav-item"><a class="nav-link text-warning font-weight-bold btn btn-outline-dark"
 							href="/users/list"> Users</a> </li>
+
 					<li class="nav-item"><a class="nav-link text-warning font-weight-bold btn btn-outline-dark"
 							href="/export/products">DB <span
 								class="glyphicon glyphicon-floppy-save text-warning"></span></a></li>
