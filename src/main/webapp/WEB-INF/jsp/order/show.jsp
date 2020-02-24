@@ -33,7 +33,7 @@ function hideChassis(){
 }
 
 </script>
-<div>
+<div style="min-width: 1000px;">
 <c:if test="${errorMessage!=null && errorMessage!='null'}">
 
 			<p style="background-color: #B24C4C; position:fixed;z-index:9000; margin-left:40%" class="p-5">${errorMessage}</p>

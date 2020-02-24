@@ -44,9 +44,9 @@ public class OrderFeatureService {
 		Double priceSum = result.stream().filter(x -> x.getFeature().getPrice() != null)
 				.mapToDouble(x -> x.getFeature().getPrice()).sum();
 
-		List<String> orderFeatureStringList = orderList.stream()
-				.map(x -> x.getFeature().getName() + ", " + x.getProductFeature().getName())
-				.collect(Collectors.toList());
+		// List<String> orderFeatureStringList = orderList.stream()
+		// 		.map(x -> x.getFeature().getName() + ", " + x.getProductFeature().getName())
+		// 		.collect(Collectors.toList());
 
 		Ord ord = new Ord();
 
@@ -61,7 +61,7 @@ public class OrderFeatureService {
 			}
 
 		});
-		ord.setOrderFeaturesStrings(orderFeatureStringList);
+		ord.setOrderFeaturesStringsMapByOrderFeatures(orderList);
 		ord.setOrderFeatures(orderList);
 		ord.setPrice(priceSum);
 		ord.setNoStandard(noStandard);

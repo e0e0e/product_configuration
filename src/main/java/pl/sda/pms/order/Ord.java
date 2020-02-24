@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,11 +23,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
+import org.json.JSONObject;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -65,8 +70,8 @@ public class Ord {
 		this.noStandard = noStandard;
 	}
 
-	@ElementCollection
-	private List<String> orderFeaturesStrings = new ArrayList<>();
+	@Column(length = 6000)
+	private String orderFeaturesStrings = null;
 
 	@ManyToMany(mappedBy = "ord")
 	private List<OrderFeature> orderFeatures;
@@ -121,7 +126,7 @@ public class Ord {
 	}
 
 	public Ord(Long id, String orderName, Double price, String client, Integer unitsToProduce, Integer revision,
-			List<String> orderFeaturesStrings, List<OrderFeature> orderFeatures, String createdBy, Date createdDate,
+			String orderFeaturesStrings, List<OrderFeature> orderFeatures, String createdBy, Date createdDate,
 			String lastModifiedBy, Date lastModifiedDate) {
 		super();
 		this.id = id;
@@ -213,11 +218,16 @@ public class Ord {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	public List<String> getOrderFeaturesStrings() {
+	public String getOrderFeaturesStrings() {
 		return orderFeaturesStrings;
 	}
 
-	public void setOrderFeaturesStrings(List<String> orderFeaturesStrings) {
+	public String getMapOfOrderFeaturesStrings() {
+
+		return orderFeaturesStrings;
+	}
+
+	public void setOrderFeaturesStrings(String orderFeaturesStrings) {
 		this.orderFeaturesStrings = orderFeaturesStrings;
 	}
 
@@ -255,15 +265,31 @@ public class Ord {
 
 	public OrderFeature findOrderFeatureByFeatyre(Feature oldFeature) {
 
-		for (OrderFeature of :this.orderFeatures) {
+		for (OrderFeature of : this.orderFeatures) {
 			if (of.getFeature().equals(oldFeature)) {
 				return of;
 			}
 		}
-		
+
 		return null;
 	}
 
+	public void setOrderFeaturesStringsMapByOrderFeatures(List<OrderFeature> orderList) {
 
+		Map<String, String> featuresMap = orderList.stream().sorted(
+				(o1, o2) -> o1.getProductFeature().getPosition().compareTo(o2.getProductFeature().getPosition()))
+				.collect(Collectors.toMap(x -> x.getProductFeature().getName(), x -> x.getFeature().getName()));
+
+		JSONObject jsonO = new JSONObject(featuresMap);
+		this.orderFeaturesStrings = jsonO.toString();
+	}
+
+	public List<String> getPositions() {
+		List<String> productFeatureNameList = this.orderFeatures.stream().map(x -> x.getProductFeature())
+				.sorted((o1, o2) -> o1.getPosition().compareTo(o2.getPosition())).map(x -> x.getName())
+				.collect(Collectors.toList());
+
+		return productFeatureNameList;
+	}
 
 }

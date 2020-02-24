@@ -2,7 +2,7 @@ package pl.sda.pms.order;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,17 +10,13 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import org.apache.catalina.startup.LifecycleListenerRule;
-import org.json.JSONObject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import pl.sda.pms.OrderFeature.OrderFeature;
-import pl.sda.pms.OrderFeature.OrderFeatureRepository;
 import pl.sda.pms.OrderFeature.OrderFeatureService;
 import pl.sda.pms.color.Color;
 import pl.sda.pms.color.ColorService;

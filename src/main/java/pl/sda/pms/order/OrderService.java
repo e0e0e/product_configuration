@@ -11,14 +11,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
+import org.hibernate.envers.query.criteria.AuditCriterion;
+import org.json.JSONObject;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +32,7 @@ import pl.sda.pms.OrderFeature.OrderFeatureController;
 import pl.sda.pms.OrderFeature.OrderFeatureService;
 import pl.sda.pms.color.Color;
 import pl.sda.pms.color.ColorService;
+import pl.sda.pms.config.CustomRevisionEntity;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
@@ -119,8 +125,10 @@ public class OrderService {
 			for (OrderFeature orf : orginalOrderFeatures) {
 				if (of.getProductFeature().getName().equals(orf.getProductFeature().getName())
 						&& !of.getFeature().getName().equals(orf.getFeature().getName())) {
-					System.out.println(of.getProductFeature().getName() + " -- " + orf.getProductFeature().getName());
-					System.out.println(of.getFeature().getName() + " -- " + orf.getFeature().getName());
+					// System.out.println(of.getProductFeature().getName() + " -- " +
+					// orf.getProductFeature().getName());
+					// System.out.println(of.getFeature().getName() + " -- " +
+					// orf.getFeature().getName());
 					newOrderFeatures.add(of);
 				}
 
@@ -146,19 +154,16 @@ public class OrderService {
 		Map<String, Feature> oldOrderFeatureMap = orginalOrderFeatures.stream()
 				.collect(Collectors.toMap(x -> x.getProductFeature().getName(), x -> x.getFeature()));
 
-		List<String> orderFeatureStringList = oldOrderFeatureList.stream()
-				.map(x -> x + ": "
-						+ (oldOrderFeatureMap.get(x).getOrderFeatures() == null ? "n/a"
-								: oldOrderFeatureMap.get(x).getOrderFeatures().getFeature().getName())
-						+ " -> " + newStringFeaturesMap.get(x).getName())
-				.collect(Collectors.toList());
-
-		order.setOrderFeaturesStrings(orderFeatureStringList);
+		order.setOrderFeaturesStringsMapByOrderFeatures(orginalOrderFeatures);
 
 		order.revisionUp();
-		Double priceList = orginalOrderFeatures.stream().mapToDouble(x -> x.getFeature().getPrice()).sum();
+		try {
+			Double priceList = orginalOrderFeatures.stream().mapToDouble(x -> x.getFeature().getPrice()).sum();
+			order.setPrice(priceList);
+		} catch (Exception e) {
+			System.out.println("Cant sum price: " + e.getLocalizedMessage());
+		}
 
-		order.setPrice(priceList);
 		order.setOrderFeatures(orginalOrderFeatures);
 		orderRepository.save(order);
 
@@ -176,7 +181,54 @@ public class OrderService {
 		@SuppressWarnings("unchecked")
 		List<Object> revisions = AuditReaderFactory.get(entityManager).createQuery()
 				.forRevisionsOfEntity(Ord.class, false, true).add(AuditEntity.id().eq(orderId)).getResultList();
-		revisions.remove(0);
+			
+		// revisions.remove(0);
+
+		List<String> listOfChanges = new ArrayList<>();
+		List<Map<String, String>> mapList = new ArrayList<>();
+		List<Date> dateList=new ArrayList<>();
+		
+		for (Object o : revisions) {
+			Object[] orderAud = (Object[]) o;
+			Ord order = (Ord) orderAud[0];
+			CustomRevisionEntity cu= (CustomRevisionEntity) orderAud[1];
+		
+			//orderAud[1].
+			System.out.println(cu.getRevisionDate());
+			try {
+				Map<String, String> result = new ObjectMapper().readValue(order.getOrderFeaturesStrings(), Map.class);
+				mapList.add(result);
+			} catch (Exception e) {
+				System.out.println("Error parsing JSON: " + e.getLocalizedMessage());
+			}
+
+		}
+		Ord currentOrder = orderRepository.findById(orderId).get();
+		List<String> nameList = currentOrder.getPositions();
+		List<String> changes = new ArrayList();
+
+		for (int i = 1; i < mapList.size(); i++) {
+			String change = "";
+			List<String> oldFeatureName = new ArrayList<>();
+			List<String> newFeatureName = new ArrayList<>();
+			for (int n = 0; n < nameList.size(); n++) {
+				if (!mapList.get(i).get(nameList.get(n)).equals(mapList.get(i - 1).get(nameList.get(n)))) {
+
+					System.out.println(
+							"<div class='col'>" + nameList.get(n) + ":  " + mapList.get(i - 1).get(nameList.get(n))
+									+ "</div><div class='col'>" + mapList.get(i).get(nameList.get(n)));
+					change = change.concat("<div class='row'><div class='col'>" + nameList.get(n)
+							+ "</div><div class='col'>" + mapList.get(i - 1).get(nameList.get(n))
+							+ "</div><div class='col'>" + mapList.get(i).get(nameList.get(n)) + "</div></div>");
+					oldFeatureName.add(mapList.get(i - 1).get(nameList.get(n)));
+					newFeatureName.add(mapList.get(i).get(nameList.get(n)));
+
+				}
+			}
+			changes.add(change);
+
+
+		}
 
 		return revisions;
 	}
@@ -248,6 +300,8 @@ public class OrderService {
 	}
 
 	public void save(Ord order) {
+
+		order.setOrderFeaturesStringsMapByOrderFeatures(order.getOrderFeatures());
 		orderRepository.save(order);
 	}
 

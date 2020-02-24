@@ -23,7 +23,7 @@
 					<label for="username">User name</label>
 				</div>
 				<div class="col-2">
-					<input type="text" id="username" name="username"  class="custom-select"/>
+					<input type="text" id="username" name="username"  class="form-control"/>
 				</div>
 			</div>
 			<div class="row justify-content-center m-1">
@@ -31,7 +31,7 @@
 					<label for="password">Password</label>
 				</div>
 				<div class="col-2">
-					<input type="password" id="password" name="password"  class="custom-select"/>
+					<input type="password" id="password" name="password"  class="form-control"/>
 				</div>
 			</div>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

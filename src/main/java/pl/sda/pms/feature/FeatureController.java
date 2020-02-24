@@ -125,6 +125,7 @@ public class FeatureController {
 		OrderFeature orderFeature = noStandardFeature.getOrderFeatures();
 		orderFeature.setFeature(feature);
 		List<Ord> order = noStandardFeature.getOrderFeatures().getOrd();
+
 		if (order.size() > 1) {
 			model.addAttribute("errorMessage", "Too many orders");
 			return "redirect:/feature/editFeatureNoStandard?featureId=" + featureId + "&orderId=" + orderId;
@@ -139,13 +140,11 @@ public class FeatureController {
 
 			}
 			orderToChange.setNoStandard(true);
+			
 			orderService.save(orderToChange);
 			return "redirect:/order/show?orderId=" + orderId;
 		}
-		// if(order.size()==1){
 
-
-		// }
 
 		orderFeatureService.save(orderFeature);
 
