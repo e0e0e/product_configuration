@@ -31,7 +31,7 @@ public class OrderFeatureService {
 
 	
 
-	public List<OrderFeature> create(List<OrderFeature> orderList, Boolean noStandard) {
+	public Ord create(List<OrderFeature> orderList, Boolean noStandard) {
 
 		List<OrderFeature> result = new ArrayList<>();
 		for (OrderFeature f : orderList) {
@@ -67,8 +67,8 @@ public class OrderFeatureService {
 		ord.setNoStandard(noStandard);
 
 
-		orderRepository.save(ord);
-		return result;
+		Ord order=orderRepository.save(ord);
+		return order;
 
 	}
 

@@ -1,11 +1,22 @@
 <%@ taglib
 	prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ page import = "java.io.*,java.util.*" %>
 <jsp:useBean id="now" class="java.util.Date" />
 <sec:authentication var="user" property="principal" scope="session" />
 <div>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+<%
+	String headerNames = request.getHeader("host");
+	if(headerNames.equals("localhost:8081")){
+		out.println("<nav class='navbar navbar-expand-lg navbar-dark bg-secondary'>");
+	}else{
+out.println("<nav class='navbar navbar-expand-lg navbar-dark bg-info'>");
+
+	}
+%>
+
+
 		<b class="navbar-brand">LD</b>
 
 		<button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse"
@@ -14,7 +25,7 @@
 		</button>
 		<div class="navbar-collapse collapse show" id="navbar11" style="">
 
-			<ul class="navbar-nav mr-auto bg-info">
+			<ul class="navbar-nav mr-auto ">
 
 
 				<c:if test="${user.authorities=='[ADMIN]'}">

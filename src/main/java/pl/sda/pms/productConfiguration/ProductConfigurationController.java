@@ -237,14 +237,19 @@ public class ProductConfigurationController {
 	}
 
 	@GetMapping("/export/products")
-	public String exportProducts(HttpServletResponse response, Model model) {
+	public String exportProducts(HttpServletResponse response, HttpServletRequest request, Model model) {
 
 		try {
 			Charset charset = Charset.forName("UTF-8");
-			RunScript.execute(h2Url, h2Username, h2Password, "query.sql", charset, false);
-			System.out.println("File Exported.");
+			RunScript.execute(h2Url, h2Username, h2Password, request.getServletContext().getRealPath("/")+"query.sql", charset, false);
+			System.out.println("File Exported to: "+request.getServletContext().getRealPath("/")+"query.sql");
 		} catch (Exception e) {
-			System.out.println("Export failed: " + e.getLocalizedMessage());
+			System.out.println(
+					"Export failed: " + request.getServletContext().getRealPath("/") + e.getLocalizedMessage());
+			// model.addAttribute("errorMessage", respons+e.getLocalizedMessage());
+			model.addAttribute("title", "Show Error");
+			model.addAttribute("path", "error/show");
+			return "main";
 		}
 
 		try {
@@ -260,6 +265,10 @@ public class ProductConfigurationController {
 			System.out
 					.println("Request could not be completed at this moment. File not saved. Please try again. Error: "
 							+ e.getLocalizedMessage());
+			model.addAttribute("errorMessage", e.getLocalizedMessage());
+			model.addAttribute("title", "Show Error");
+			model.addAttribute("path", "error/show");
+			return "main";
 
 		}
 
@@ -269,7 +278,7 @@ public class ProductConfigurationController {
 	@GetMapping("/import/products")
 	public String importProducts(Model model) {
 		try {
-			//importSql();
+			// importSql();
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 
@@ -293,7 +302,15 @@ public class ProductConfigurationController {
 
 			System.out.println("File saved on server.");
 
-			importSql(request);
+			try {
+				importSql(request);
+			} catch (Exception e) {
+				System.out.println("error uplading file: "+e.getLocalizedMessage());
+				model.addAttribute("errorMessage", e.getLocalizedMessage());
+				model.addAttribute("title", "Show Error");
+				model.addAttribute("path", "error/show");
+				return "main";
+			}
 
 			model.addAttribute("file", file);
 			model.addAttribute("title", "file details");
@@ -311,11 +328,12 @@ public class ProductConfigurationController {
 			Charset charset = Charset.forName("UTF-8");
 			productConfigurationService.dropAllObjects();
 			System.out.println("Databased droped.");
-			String filePath = request.getServletContext().getRealPath("/")+"db-dump.sql";
-			RunScript.execute(h2Url, h2Username, h2Password, "src/main/webapp/db-dump.sql", charset, false);
+			String filePath = request.getServletContext().getRealPath("/") + "db-dump.sql";
+			RunScript.execute(h2Url, h2Username, h2Password,filePath, charset, false);
 			System.out.println("File imported.");
 		} catch (Exception e) {
 			System.out.println("Import failed: " + e.getLocalizedMessage());
+
 		}
 	}
 

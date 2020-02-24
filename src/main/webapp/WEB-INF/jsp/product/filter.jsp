@@ -76,8 +76,8 @@
 						</div>
 						<div class="col-1">
 							<div class="text-dark">
-								<a href="" target="_blank" class="rys">						
-								<img src="" alt="Flowers in Chania" width="50" id="img-${configList.name}" onerror="imgError(this)">
+								<a href="${imagesPath}${configList.imagePath}" target="_blank" class="rys">						
+								<img src="${imagesPath}${configList.imagePath}" alt="Flowers in Chania" width="50" id="img-${configList.name}" onerror="imgError(this)" onload="onlina(this)">
 								</a>	
 							</div>
 						</div>

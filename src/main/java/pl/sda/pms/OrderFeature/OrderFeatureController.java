@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
+import pl.sda.pms.order.Ord;
 import pl.sda.pms.productConfiguration.ProductConfigurationService;
 import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.productFeature.ProductFeatureService;
@@ -42,7 +43,7 @@ public class OrderFeatureController {
 						featureService.findByID(Long.parseLong(e.getValue()))))
 				.collect(Collectors.toList());
 
-		List<OrderFeature> orderFeatures = orderFeatureService.create(orderList,false);
+		Ord order = orderFeatureService.create(orderList,false);
 
 		return "redirect:/orders/list";
 
@@ -51,6 +52,7 @@ public class OrderFeatureController {
 	@PostMapping("/filter/orderCreate")
 	public String orderCreationByFilter(@RequestParam Map<String, String> paramMap, Model model) {
 		Boolean noStandard=false;
+
 		Map<String, Feature> notStandardsMap = paramMap.entrySet().stream()
 				.filter(x -> (x.getKey().startsWith("nst-") && x.getValue() != ""))
 				.collect(Collectors.toMap(x -> x.getKey().replace("nst-", ""),
@@ -67,9 +69,9 @@ public class OrderFeatureController {
 						featureService.findByID(Long.parseLong(e.getValue()))))
 				.collect(Collectors.toList());
 
-		List<OrderFeature> orderFeatures = orderFeatureService.create(orderList,noStandard);
+		Ord order = orderFeatureService.create(orderList,noStandard);
 
-		return "redirect:/orders/list";
+		return "redirect:/order/addMore?orderId="+order.getId();
 
 	}
 
