@@ -198,12 +198,13 @@ public class ProductConfigurationService {
 	}
 
 	public List<ProductConfiguration> productSearch(Map<String, String> paramMap) {
+		Map<ProductFeature, Feature> filterMap =paramMap.entrySet().stream().filter(x->!x.getKey().startsWith("nst-"))
+		.collect(Collectors.toMap(x->productFeatureService.findByID(Long.parseLong(x.getKey())), x->featureService.findByID(Long.parseLong(x.getValue()))));
+		
 
 		
 		
-		// Map<String, Feature> filterMap = obj.toMap().entrySet().stream().filter(x -> !x.getKey().startsWith("NS-"))
-		// 		.collect(Collectors.toMap(x -> x.getKey(),
-		// 				x -> featureService.findByID(Long.parseLong((String) x.getValue()))));
+	
 		return null;
 	}
 
