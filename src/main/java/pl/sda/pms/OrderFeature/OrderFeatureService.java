@@ -61,11 +61,11 @@ public class OrderFeatureService {
 			}
 
 		});
-		ord.setOrderFeaturesStringsMapByOrderFeatures(orderList);
+		 
 		ord.setOrderFeatures(orderList);
 		ord.setPrice(priceSum);
 		ord.setNoStandard(noStandard);
-
+		ord.setOrderFeaturesStringsMapByOrderFeatures(orderList);
 
 		Ord order=orderRepository.save(ord);
 		return order;

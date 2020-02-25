@@ -208,6 +208,8 @@ public class OrderController {
 						+ "'<br>No need to save new product Configuration";
 
 				order.setNoStandard(false);
+				
+				// order.setOrderFeaturesStringsMapByOrderFeatures(order.getOrderFeatures());
 				orderService.save(order);
 			} else {
 				errorMessage = "Ready to save <br><a class='btn btn-outline-light text-light bg-danger' href='/save/product/noStandardConfirmed?orderId="

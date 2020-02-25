@@ -125,10 +125,7 @@ public class OrderService {
 			for (OrderFeature orf : orginalOrderFeatures) {
 				if (of.getProductFeature().getName().equals(orf.getProductFeature().getName())
 						&& !of.getFeature().getName().equals(orf.getFeature().getName())) {
-					// System.out.println(of.getProductFeature().getName() + " -- " +
-					// orf.getProductFeature().getName());
-					// System.out.println(of.getFeature().getName() + " -- " +
-					// orf.getFeature().getName());
+
 					newOrderFeatures.add(of);
 				}
 
@@ -154,7 +151,7 @@ public class OrderService {
 		Map<String, Feature> oldOrderFeatureMap = orginalOrderFeatures.stream()
 				.collect(Collectors.toMap(x -> x.getProductFeature().getName(), x -> x.getFeature()));
 
-		order.setOrderFeaturesStringsMapByOrderFeatures(orginalOrderFeatures);
+		// order.setOrderFeaturesStringsMapByOrderFeatures(orginalOrderFeatures);
 
 		order.revisionUp();
 		try {
@@ -164,7 +161,7 @@ public class OrderService {
 			System.out.println("Cant sum price: " + e.getLocalizedMessage());
 		}
 
-		order.setOrderFeatures(orginalOrderFeatures);
+		// order.setOrderFeatures(orginalOrderFeatures);
 		orderRepository.save(order);
 
 		newOrderFeaturesMap.entrySet().stream().forEach(x -> {
@@ -176,25 +173,22 @@ public class OrderService {
 
 	}
 
-	public List<Object> findByIdAud(Long orderId) {
+	public List<OrderAud> findByIdAud(Long orderId) {
 
 		@SuppressWarnings("unchecked")
 		List<Object> revisions = AuditReaderFactory.get(entityManager).createQuery()
 				.forRevisionsOfEntity(Ord.class, false, true).add(AuditEntity.id().eq(orderId)).getResultList();
-			
+
 		// revisions.remove(0);
 
-		List<String> listOfChanges = new ArrayList<>();
 		List<Map<String, String>> mapList = new ArrayList<>();
-		List<Date> dateList=new ArrayList<>();
-		
+		List<Date> dateList = new ArrayList<>();
+
 		for (Object o : revisions) {
 			Object[] orderAud = (Object[]) o;
 			Ord order = (Ord) orderAud[0];
-			CustomRevisionEntity cu= (CustomRevisionEntity) orderAud[1];
-		
-			//orderAud[1].
-			System.out.println(cu.getRevisionDate());
+			dateList.add(((CustomRevisionEntity) orderAud[1]).getRevisionDate());
+
 			try {
 				Map<String, String> result = new ObjectMapper().readValue(order.getOrderFeaturesStrings(), Map.class);
 				mapList.add(result);
@@ -205,32 +199,33 @@ public class OrderService {
 		}
 		Ord currentOrder = orderRepository.findById(orderId).get();
 		List<String> nameList = currentOrder.getPositions();
-		List<String> changes = new ArrayList();
+		List<OrderAud> orderAuds = new ArrayList<>();
 
 		for (int i = 1; i < mapList.size(); i++) {
-			String change = "";
-			List<String> oldFeatureName = new ArrayList<>();
-			List<String> newFeatureName = new ArrayList<>();
+
+			OrderAud orderAud = new OrderAud();
+
 			for (int n = 0; n < nameList.size(); n++) {
 				if (!mapList.get(i).get(nameList.get(n)).equals(mapList.get(i - 1).get(nameList.get(n)))) {
 
-					System.out.println(
-							"<div class='col'>" + nameList.get(n) + ":  " + mapList.get(i - 1).get(nameList.get(n))
-									+ "</div><div class='col'>" + mapList.get(i).get(nameList.get(n)));
-					change = change.concat("<div class='row'><div class='col'>" + nameList.get(n)
-							+ "</div><div class='col'>" + mapList.get(i - 1).get(nameList.get(n))
-							+ "</div><div class='col'>" + mapList.get(i).get(nameList.get(n)) + "</div></div>");
-					oldFeatureName.add(mapList.get(i - 1).get(nameList.get(n)));
-					newFeatureName.add(mapList.get(i).get(nameList.get(n)));
+					FeatureAud featureAud = new FeatureAud();
+					featureAud.setPfName(nameList.get(n));
+					featureAud.setOldFeature(mapList.get(i - 1).get(nameList.get(n)));
+					featureAud.setNewFeature(mapList.get(i).get(nameList.get(n)));
+
+					orderAud.addFeatureAud(featureAud);
+					
 
 				}
 			}
-			changes.add(change);
-
+			orderAud.setDate(dateList.get(i+1));
+			orderAud.setOrder((Ord) ((Object[]) revisions.get(i+1))[0]);
+			orderAuds.add(orderAud);
+			
 
 		}
 
-		return revisions;
+		return orderAuds;
 	}
 
 	public void saveColor(Long orderId, Map<String, String> paramMapStart) {
@@ -300,7 +295,7 @@ public class OrderService {
 	}
 
 	public void save(Ord order) {
-
+		order.revisionUp();
 		order.setOrderFeaturesStringsMapByOrderFeatures(order.getOrderFeatures());
 		orderRepository.save(order);
 	}

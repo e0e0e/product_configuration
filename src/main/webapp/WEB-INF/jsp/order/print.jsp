@@ -62,7 +62,11 @@
 		<div>Order name:${order.orderName}, Price:
 			${order.price}, Client Address: ${order.client}, Units:
 			${order.unitsToProduce} Created: ${order.createdDate}, Modified:
-			${order.lastModifiedDate}, Revision: ${order.revision}, LP. ${order.id} </div>
+			${order.lastModifiedDate}, Revision: ${order.revision}
+			<c:if test="${order.noStandard=='true'}">
+				<span>, NOT STANDARD</span>
+			</c:if>
+		</div>
 	</div>
 	<br />
 	<div class="row border m-1">
@@ -77,11 +81,12 @@
 		<div class="row border-bottom m-1">
 			<div class="col-2 m-1">${feature.productFeature.name}:</div>
 			<div class="col-5 m-1">
-			<c:if test="${feature.feature.noStandard=='true'}">
+				<c:if test="${feature.feature.noStandard=='true'}">
 					${feature.color.ral}<span class="glyphicon glyphicon-exclamation-sign"
 						style="color:${feature.color.hex};"></span>
 				</c:if>
-			${feature.feature.name}</div>
+				${feature.feature.name}
+			</div>
 			<div class="col-2 m-1">${feature.feature.index}</div>
 			<div class="col-1 m-1">
 				<c:if test="${feature.productFeature.color=='true'}">

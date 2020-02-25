@@ -103,6 +103,9 @@ public class FeatureController {
 		 
 		try {
 			featureService.saveChanges(name, description, imagePath, index, price, featureId, mIndex, noStandard);
+			Ord order=orderService.findById(orderId);
+			// order.setOrderFeaturesStringsMapByOrderFeatures(order.getOrderFeatures());
+			orderService.save(order);
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 			return "redirect:/feature/editFeatureNoStandard?featureId="+featureId+"&orderId="+orderId+"&errorMessage="+e.getLocalizedMessage();
@@ -140,7 +143,7 @@ public class FeatureController {
 
 			}
 			orderToChange.setNoStandard(true);
-			
+			// orderToChange.setOrderFeaturesStringsMapByOrderFeatures(orderToChange.getOrderFeatures());
 			orderService.save(orderToChange);
 			return "redirect:/order/show?orderId=" + orderId;
 		}
