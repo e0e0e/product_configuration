@@ -187,16 +187,27 @@ public class ProductConfigurationController {
 
 	}
 
-	@PostMapping("/product/search")
-	public String productSearch(@RequestParam Map<String, String> paramMap, Model model) {
+	@GetMapping("/product/search")
+	public String productSearch(Model model) {
 
-		model.addAttribute("configurations", productConfigurationService.findByForm(paramMap));
+		model.addAttribute("configuration", productConfigurationService.findByName("pattern"));
 
-		model.addAttribute("title", "Show Features");
-		model.addAttribute("path", "product/show");
+		model.addAttribute("title", "Make new Order");
+		model.addAttribute("path", "product/search");
 		return "main";
 
 	}
+
+	// @PostMapping("/product/search")
+	// public String productSearch(@RequestParam Map<String, String> paramMap, Model model) {
+
+	// 	model.addAttribute("configurations", productConfigurationService.findByForm(paramMap));
+
+	// 	model.addAttribute("title", "Show Features");
+	// 	model.addAttribute("path", "product/show");
+	// 	return "main";
+
+	// }
 
 	@PostMapping(value = "/product/matching", consumes = "application/json", produces = "application/json")
 	@ResponseBody
@@ -207,6 +218,16 @@ public class ProductConfigurationController {
 		return productMap;
 
 	}
+
+	@PostMapping("/search/products")
+	public String searchProducts(@RequestParam Map<String, String> paramMap, Model model) {
+		List<ProductConfiguration> products= productConfigurationService.productSearch(paramMap);
+
+		return null;
+
+	}
+
+
 
 	@GetMapping("/product/delete")
 	public String productDelete(@RequestParam Long productId, Model model) {

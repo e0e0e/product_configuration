@@ -197,6 +197,16 @@ public class ProductConfigurationService {
 		return filteredProductsConfigurations;
 	}
 
+	public List<ProductConfiguration> productSearch(Map<String, String> paramMap) {
+
+		
+		
+		// Map<String, Feature> filterMap = obj.toMap().entrySet().stream().filter(x -> !x.getKey().startsWith("NS-"))
+		// 		.collect(Collectors.toMap(x -> x.getKey(),
+		// 				x -> featureService.findByID(Long.parseLong((String) x.getValue()))));
+		return null;
+	}
+
 	public Map<String, List<ShortFeature>> productLiveSearch(String features) {
 		JSONObject obj = new JSONObject(features);
 
@@ -357,74 +367,72 @@ public class ProductConfigurationService {
 		for (ProductConfiguration pC : productConfigurations) {
 			Boolean existsProduct = productConfigurationRepository.existsById(pC.getId());
 			if (!existsProduct) {
-				List<ProductFeature> productFeatures=pC.getConfigurationList();
-				for(ProductFeature pf: productFeatures){
-					Set<Feature> features=pf.getFeature();
+				List<ProductFeature> productFeatures = pC.getConfigurationList();
+				for (ProductFeature pf : productFeatures) {
+					Set<Feature> features = pf.getFeature();
 
-					for(Feature f:features){
+					for (Feature f : features) {
 						try {
-							Feature existingFeature=featureService.findFeatureByNameAndIndex(f);
-						if(existingFeature!=null){
-							f.setId(existingFeature.getId());
-								f=existingFeature;
+							Feature existingFeature = featureService.findFeatureByNameAndIndex(f);
+							if (existingFeature != null) {
+								f.setId(existingFeature.getId());
+								f = existingFeature;
 
-						}else{
-							Feature newFeature=featureService.save(f);
-							 		f.setId(newFeature.getId());
-							 		f=newFeature;
+							} else {
+								Feature newFeature = featureService.save(f);
+								f.setId(newFeature.getId());
+								f = newFeature;
 
-						}
+							}
 						} catch (Exception e) {
-							System.out.println("did not saved feature"+" error: "+e.getLocalizedMessage());
+							System.out.println("did not saved feature" + " error: " + e.getLocalizedMessage());
 						}
-						
 
 						// if(!featureService.existsById(f.getId())){
-						// 	try {
-						// 		Feature newFeature=featureService.save(f);
-						// 		f.setId(newFeature.getId());
-						// 		f=newFeature;
-						// 	} catch (Exception e) {
-						// 		System.out.println("did not saved feature"+" error: "+e.getLocalizedMessage());
-						// 	}
-							
+						// try {
+						// Feature newFeature=featureService.save(f);
+						// f.setId(newFeature.getId());
+						// f=newFeature;
+						// } catch (Exception e) {
+						// System.out.println("did not saved feature"+" error:
+						// "+e.getLocalizedMessage());
+						// }
+
 						// }
 					}
 
-					if(!productFeatureService.existsById(pf.getId())){
+					if (!productFeatureService.existsById(pf.getId())) {
 						try {
-							ProductFeature newProductFeature=productFeatureService.save(pf);
+							ProductFeature newProductFeature = productFeatureService.save(pf);
 							pf.setId(newProductFeature.getId());
-							pf=newProductFeature;
+							pf = newProductFeature;
 
-							for(Feature newf:pf.getFeature()){
+							for (Feature newf : pf.getFeature()) {
 
 								featureService.save(newf);
 							}
 						} catch (Exception e) {
-							System.out.println("did not saved product feature: "+pf.getName()+" error: "+e.getLocalizedMessage());
+							System.out.println("did not saved product feature: " + pf.getName() + " error: "
+									+ e.getLocalizedMessage());
 						}
 					}
 
 				}
 				try {
-					ProductConfiguration newProductConfiguration=productConfigurationRepository.save(pC);
+					ProductConfiguration newProductConfiguration = productConfigurationRepository.save(pC);
 					pC.setId(newProductConfiguration.getId());
-					for(ProductFeature newPf:newProductConfiguration.getConfigurationList()){
+					for (ProductFeature newPf : newProductConfiguration.getConfigurationList()) {
 						newPf.setProductConfiguration(newProductConfiguration);
-						ProductFeature nextPf=productFeatureService.save(newPf);
+						ProductFeature nextPf = productFeatureService.save(newPf);
 
 					}
 
-
-
-
-
-					System.out.println("saved product configuration: "+pC.getName());
+					System.out.println("saved product configuration: " + pC.getName());
 				} catch (Exception e) {
-					System.out.println("did not saved product Configuration: "+pC.getName()+" error: "+e.getLocalizedMessage());
+					System.out.println("did not saved product Configuration: " + pC.getName() + " error: "
+							+ e.getLocalizedMessage());
 				}
-				
+
 			}
 
 		}

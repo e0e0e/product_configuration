@@ -11,7 +11,7 @@
 	<div id="rest"></div>
 	
 	<h3>
-		Configuration of order
+		Search for product matching criteria
 	</h3>
 
 
@@ -33,7 +33,7 @@
 			<form
 				id="myFilterForm"
 				method="post"
-				action="/filter/orderCreate">
+				action="/search/products">
 
 				
 					<c:forEach
@@ -46,8 +46,7 @@
 							</c:if>
 							">${configList.name}</div>
 							<div class="col-5 ">
-								<select required
-									name="${configList.id}"
+								<select 									name="${configList.id}"
 									id="${configList.name}"
 									onchange='changeAction(this,${configList.id})'
 									class="w-100 custom-select" style="font-size:15px">
@@ -77,7 +76,7 @@
 						<div class="col-1">
 							<div class="text-dark">
 								<a href="${imagesPath}${configList.imagePath}" target="_blank" class="rys">						
-								<img src="${imagesPath}${configList.imagePath}" alt="Flowers in Chania" width="50" id="img-${configList.name}" onerror="imgError(this)" >
+								<img src="${imagesPath}${configList.imagePath}" alt="Flowers in Chania" width="50" id="img-${configList.name}" onerror="imgError(this)">
 								</a>	
 							</div>
 						</div>
@@ -96,9 +95,9 @@
 	</div>
 
 
-
-</div>
 <div id="table"></div>
+</div>
+
 <script>
 function changeAction(val,da) {
 something = "${imagesPath}";
@@ -120,7 +119,7 @@ something = "${imagesPath}";
 	        		    	 if(products[key][k].selected==false){
 	        		    	 select=select.concat('<option value="'+products[key][k].id+'">'+products[key][k].name+'</option>');
 						
-        		    	 }else{
+;	        		    	 }else{
 	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected>'+products[key][k].name+'</option>'); 
 											let imagePath = products[key][k].imagePath;
 											let selected=document.getElementById(key);
@@ -180,7 +179,7 @@ something = "${imagesPath}";
 					
 	        		   }
 					   if(key!=null){
-						   console.log(key);
+					
 	        		   document.getElementById(key).innerHTML=select;
 					   }
 					  
@@ -197,8 +196,12 @@ something = "${imagesPath}";
 		// 			tableString=tableString.concat('</div');
 		// 	}
 	        	
-	    //   document.getElementById("table").innerHTML=tableString;
-	         }
+		//   document.getElementById("table").innerHTML=tableString;
+				//showFilteredProducts(products);
+			 }
+			 
+
+		 
 	    };
 	    
 	    document.getElementById("saveButton").style.display = 'block';
@@ -213,13 +216,32 @@ something = "${imagesPath}";
   		}
 
         let fString=JSON.stringify(arr);
-   		console.log(fString);
+  
 	    xhttp.open("POST", "/product/matching", true);
 	    xhttp.setRequestHeader("Content-type", "application/json");
 		xhttp.send(fString);
 	
 }
+function showFilteredProducts(products){
 
+		table = "<h1>Number of products matching: "+products.length+"</h1><div class='container-flux'>";
+
+
+			for (let key in products){
+				if(products.hasOwnProperty(key)){
+					table=table.concat("<div class='row'>");
+					table=table.concat("<div class='col-2 border bg-info text-light'>"+key+"</div>");
+					for (let k in products[key]){
+						table=table.concat("<div class='col-2 border'>"+products[key][k].name+"</div>");
+					}
+					table = table.concat("</div>");
+				}
+			}
+
+			table = table.concat("</div>");
+	
+		document.getElementById("table").innerHTML = table;
+}
  function notStandard(przycisk)
 {
 	var poczatek='';
@@ -240,7 +262,7 @@ something = "${imagesPath}";
       } else{
        if (wewnatrz!="Select"){
        //gdy nic nie byl zmienione
-	   console.log(selectedElement.options[selectedElement.selectedIndex].text);
+	//    console.log(selectedElement.options[selectedElement.selectedIndex].text);
        //poczatek=poczatek.concat(wewnatrz);
        poczatek=poczatek.concat(koniec);
       // alert(poczatek);
@@ -272,14 +294,22 @@ let featureId=document.getElementById('przekreslone2').getAttribute('value');
 let newId="NS-".concat(featureId);
 let e=document.getElementById(featureId);
 
+  //new_desc=new_desc.concat(", new description: ");
+
+ 
   new_desc=new_desc.concat("");
   new_desc=new_desc.concat(document.getElementById('opis_ns').value);
   document.getElementById('NS-Chassis').value="No standard";
   document.getElementById('NS-Chassis').style.display="block";
-
+//   document.getElementById('NS-Chassis').disabled = true;
+//   document.getElementById('NS-Chassis').style.backgroundColor="Salmon";
   document.getElementById(newId).value=new_desc;
+//   document.getElementById(newId).style.backgroundColor="Salmon";
   document.getElementById(newId).style.display="block";
+//   document.getElementById(newId).disabled = true;
   document.getElementById(featureId).style.backgroundColor="Salmon";
+  //e.options[e.selectedIndex].text=new_desc;
+  //console.log(e.options[e.selectedIndex].text+' will change to '+new_desc);
   document.getElementById('NS').innerHTML='';
 
 }
