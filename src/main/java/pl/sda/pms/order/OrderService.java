@@ -102,7 +102,6 @@ public class OrderService {
 
 		order.setUnitsToProduce(unitsToProduce);
 		order.setClient(client);
-		order.setOrderFeaturesStrings(null);
 		order.revisionUp();
 		orderRepository.save(order);
 
@@ -153,7 +152,7 @@ public class OrderService {
 
 		// order.setOrderFeaturesStringsMapByOrderFeatures(orginalOrderFeatures);
 
-		order.revisionUp();
+		
 		try {
 			Double priceList = orginalOrderFeatures.stream().mapToDouble(x -> x.getFeature().getPrice()).sum();
 			order.setPrice(priceList);
@@ -161,7 +160,9 @@ public class OrderService {
 			System.out.println("Cant sum price: " + e.getLocalizedMessage());
 		}
 
-		// order.setOrderFeatures(orginalOrderFeatures);
+		order.setOrderFeatures(orginalOrderFeatures);
+		order.setOrderFeaturesStringsMapByOrderFeatures(orginalOrderFeatures);
+		order.revisionUp();
 		orderRepository.save(order);
 
 		newOrderFeaturesMap.entrySet().stream().forEach(x -> {
@@ -218,8 +219,9 @@ public class OrderService {
 
 				}
 			}
-			orderAud.setDate(dateList.get(i+1));
-			orderAud.setOrder((Ord) ((Object[]) revisions.get(i+1))[0]);
+			orderAud.setDate(dateList.get(i));
+			orderAud.setOrder((Ord) ((Object[]) revisions.get(i))[0]);
+
 			orderAuds.add(orderAud);
 			
 
