@@ -198,14 +198,14 @@ public class ProductConfigurationService {
 	}
 
 	public List<ProductConfiguration> productSearch(Map<String, String> paramMap) {
-		Map<ProductFeature, Feature> filterMap =paramMap.entrySet().stream().filter(x->!x.getKey().startsWith("nst-"))
-		.collect(Collectors.toMap(x->productFeatureService.findByID(Long.parseLong(x.getKey())), x->featureService.findByID(Long.parseLong(x.getValue()))));
-		
+		Map<String, Feature> filterMap = paramMap.entrySet().stream()
+				.filter(x -> !x.getKey().startsWith("nst-"))
+				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())).getName(),
+						x -> featureService.findByID(Long.parseLong(x.getValue()))));
 
-		
-		
-	
-		return null;
+		List<ProductConfiguration> matchingProducts = getFilteredProducts(filterMap);
+
+		return matchingProducts;
 	}
 
 	public Map<String, List<ShortFeature>> productLiveSearch(String features) {
@@ -265,10 +265,11 @@ public class ProductConfigurationService {
 					return false;
 				}).collect(Collectors.toList());
 
-		// productConfigurations.forEach(x -> System.out.println(x.getName()));
+
 		List<ProductConfiguration> productList = new ArrayList<>();
 
 		for (ProductConfiguration pC : productConfigurations) {
+			 if(!pC.getName().equals("pattern")){
 			Integer resultNumber = 0;
 
 			for (ProductFeature pF : pC.getConfigurationList()) {
@@ -280,6 +281,7 @@ public class ProductConfigurationService {
 
 				productList.add(pC);
 			}
+		}
 		}
 		return productList;
 	}
@@ -388,18 +390,6 @@ public class ProductConfigurationService {
 						} catch (Exception e) {
 							System.out.println("did not saved feature" + " error: " + e.getLocalizedMessage());
 						}
-
-						// if(!featureService.existsById(f.getId())){
-						// try {
-						// Feature newFeature=featureService.save(f);
-						// f.setId(newFeature.getId());
-						// f=newFeature;
-						// } catch (Exception e) {
-						// System.out.println("did not saved feature"+" error:
-						// "+e.getLocalizedMessage());
-						// }
-
-						// }
 					}
 
 					if (!productFeatureService.existsById(pf.getId())) {

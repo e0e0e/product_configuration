@@ -88,7 +88,7 @@
 				<input
 					id="saveButton"
 					type="submit"
-					value="Save" class="m-4" style="display:none;">
+					value="Search" class="m-4" style="display:none;">
 			</form>
 		</div>
 		<div class="card-footer bg-info text-right text-light"></div>
@@ -209,7 +209,7 @@ something = "${imagesPath}";
   	  for (var i = 0; i < document.getElementById("myFilterForm").elements.length; i++) {
   		  let valueFromForm=document.getElementById("myFilterForm").elements[i].value;
   		
-  		  if(valueFromForm!="" && valueFromForm!='Save'){
+  		  if(valueFromForm!="" && valueFromForm!='Save' && valueFromForm!='Search'){
   			  arr[document.getElementById("myFilterForm").elements[i].id]=valueFromForm;
   	
   		  }

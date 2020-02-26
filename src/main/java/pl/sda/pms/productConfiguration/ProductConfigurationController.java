@@ -192,20 +192,22 @@ public class ProductConfigurationController {
 
 		model.addAttribute("configuration", productConfigurationService.findByName("pattern"));
 
-		model.addAttribute("title", "Make new Order");
+		model.addAttribute("title", "Search in products");
 		model.addAttribute("path", "product/search");
 		return "main";
 
 	}
 
 	// @PostMapping("/product/search")
-	// public String productSearch(@RequestParam Map<String, String> paramMap, Model model) {
+	// public String productSearch(@RequestParam Map<String, String> paramMap, Model
+	// model) {
 
-	// 	model.addAttribute("configurations", productConfigurationService.findByForm(paramMap));
+	// model.addAttribute("configurations",
+	// productConfigurationService.findByForm(paramMap));
 
-	// 	model.addAttribute("title", "Show Features");
-	// 	model.addAttribute("path", "product/show");
-	// 	return "main";
+	// model.addAttribute("title", "Show Features");
+	// model.addAttribute("path", "product/show");
+	// return "main";
 
 	// }
 
@@ -221,13 +223,15 @@ public class ProductConfigurationController {
 
 	@PostMapping("/search/products")
 	public String searchProducts(@RequestParam Map<String, String> paramMap, Model model) {
-		List<ProductConfiguration> products= productConfigurationService.productSearch(paramMap);
-
-		return null;
+		List<ProductConfiguration> products = productConfigurationService.productSearch(paramMap);
+		List<String> productFeaturesNames=products.get(0).getConfigurationList().stream().sorted((o1,o2)->o1.getPosition().compareTo(o2.getPosition())).map(x->x.getName()).collect(Collectors.toList());
+		model.addAttribute("columntitles", productFeaturesNames);
+		model.addAttribute("configurations", products);
+		model.addAttribute("title", "Filtered products");
+		model.addAttribute("path", "product/listfiltered");
+		return "main";
 
 	}
-
-
 
 	@GetMapping("/product/delete")
 	public String productDelete(@RequestParam Long productId, Model model) {
@@ -262,8 +266,9 @@ public class ProductConfigurationController {
 
 		try {
 			Charset charset = Charset.forName("UTF-8");
-			RunScript.execute(h2Url, h2Username, h2Password, request.getServletContext().getRealPath("/")+"query.sql", charset, false);
-			System.out.println("File Exported to: "+request.getServletContext().getRealPath("/")+"query.sql");
+			RunScript.execute(h2Url, h2Username, h2Password, request.getServletContext().getRealPath("/") + "query.sql",
+					charset, false);
+			System.out.println("File Exported to: " + request.getServletContext().getRealPath("/") + "query.sql");
 		} catch (Exception e) {
 			System.out.println(
 					"Export failed: " + request.getServletContext().getRealPath("/") + e.getLocalizedMessage());
@@ -326,7 +331,7 @@ public class ProductConfigurationController {
 			try {
 				importSql(request);
 			} catch (Exception e) {
-				System.out.println("error uplading file: "+e.getLocalizedMessage());
+				System.out.println("error uplading file: " + e.getLocalizedMessage());
 				model.addAttribute("errorMessage", e.getLocalizedMessage());
 				model.addAttribute("title", "Show Error");
 				model.addAttribute("path", "error/show");
@@ -350,7 +355,7 @@ public class ProductConfigurationController {
 			productConfigurationService.dropAllObjects();
 			System.out.println("Databased droped.");
 			String filePath = request.getServletContext().getRealPath("/") + "db-dump.sql";
-			RunScript.execute(h2Url, h2Username, h2Password,filePath, charset, false);
+			RunScript.execute(h2Url, h2Username, h2Password, filePath, charset, false);
 			System.out.println("File imported.");
 		} catch (Exception e) {
 			System.out.println("Import failed: " + e.getLocalizedMessage());
