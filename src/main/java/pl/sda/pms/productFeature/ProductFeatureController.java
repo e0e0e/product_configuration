@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.typesafe.config.Optional;
 
@@ -72,10 +74,10 @@ public class ProductFeatureController {
 	@GetMapping("/feature/delete")
 	public String deleteProductFeatures(@RequestParam Long productFeatureId, Model model) {
 
-		String productFeatureName=productFeatureService.findById(productFeatureId).getName();
+		String productFeatureName = productFeatureService.findById(productFeatureId).getName();
 
 		productConfigurationService.removeProductFeatureByName(productFeatureName);
-		
+
 		return "redirect:/feature/list";
 	}
 
@@ -126,10 +128,9 @@ public class ProductFeatureController {
 
 	@PostMapping("/productFeatureChange")
 	public String changeProductFeature(@RequestParam Long productFeatureId, @RequestParam String name,
-			@RequestParam String description,
-			 @RequestParam(required = false) String parent,
-			 @RequestParam(required = false) Boolean color,
-			@RequestParam String imagePath, @RequestParam(required = false) List<Long> featureList, Model model) {
+			@RequestParam String description, @RequestParam(required = false) String parent,
+			@RequestParam(required = false) Boolean color, @RequestParam String imagePath,
+			@RequestParam(required = false) List<Long> featureList, Model model) {
 
 		productFeatureService.findById(productFeatureId);
 		if (parent == null) {
@@ -138,7 +139,7 @@ public class ProductFeatureController {
 		if (color == null) {
 			color = false;
 		}
-		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList, parent,color);
+		productFeatureService.edit(productFeatureId, name, description, imagePath, featureList, parent, color);
 
 		return "redirect:/feature/list";
 	}
@@ -181,13 +182,10 @@ public class ProductFeatureController {
 	public String moveUpProductFeature(@RequestParam Long productFeatureId, @RequestParam Long productId, Model model) {
 
 		productFeatureService.moveUp(productFeatureId, productId);
-		
 
 		return "redirect:/product/moveList?productId=" + productId + "#anchor_" + productFeatureId;
 
 	}
-
-	
 
 	@GetMapping("/productFeature/unify")
 	public String unifyPosition() {
@@ -198,7 +196,6 @@ public class ProductFeatureController {
 
 	}
 
-
 	@GetMapping("/product/moveList")
 	public String showMoveList(Model model) {
 
@@ -208,4 +205,15 @@ public class ProductFeatureController {
 		model.addAttribute("path", "product/move");
 		return "main";
 	}
+
+	@PostMapping(value = "/find/featuresByPf", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public Collection<Feature> findFeaturesByPf(@RequestBody String productFeatureName, Model model) {
+
+		Collection<Feature> features = productFeatureService
+				.findFeaturesByProductFeatureName(productFeatureName);
+
+		return features;
+	}
+
 }

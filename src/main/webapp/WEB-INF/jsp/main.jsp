@@ -112,6 +112,10 @@ table tr:nth-child(odd) {
 table tr:nth-child(even) {
   background-color: #ffffff;
 }
+
+.bat:hover {
+  background-color: yellow;
+}
 </style>
 </head>
 <body>

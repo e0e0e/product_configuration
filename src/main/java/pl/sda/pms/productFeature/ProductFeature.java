@@ -18,7 +18,6 @@ import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
 
-
 @Entity
 @Audited
 public class ProductFeature {
@@ -33,7 +32,6 @@ public class ProductFeature {
 	private String parent;
 	private Boolean color;
 
-	
 	public Boolean isColor() {
 		return this.color;
 	}
@@ -46,22 +44,20 @@ public class ProductFeature {
 		this.color = color;
 	}
 
-
-
-
-
 	public Integer findPositionInProduct() {
 
 		try {
-		return	productConfiguration.getConfigurationList().indexOf(this);
+			return productConfiguration.getConfigurationList().indexOf(this);
 		} catch (Exception e) {
-			System.out.println("Product Feature , not in product: "+e.getMessage());
+			System.out.println("Product Feature , not in product: " + e.getMessage());
 		}
-		return	null;
+		return null;
 	}
+
 	public Integer getPosition() {
-		return	position;
+		return position;
 	}
+
 	public void setPosition(Integer position) {
 		this.position = position;
 	}
@@ -91,7 +87,7 @@ public class ProductFeature {
 
 	@Override
 	public String toString() {
-		return "ProductFeature [name=" + name + ", feature=" + feature +"]";
+		return "ProductFeature [name=" + name + ", feature=" + feature + "]";
 	}
 
 	public ProductConfiguration getProductConfiguration() {
@@ -105,6 +101,7 @@ public class ProductFeature {
 	public ProductFeature() {
 
 	}
+
 	public String getParent() {
 		return this.parent;
 	}
@@ -112,6 +109,7 @@ public class ProductFeature {
 	public void setParent(String parent) {
 		this.parent = parent;
 	}
+
 	public ProductFeature(String name, String description, String imagePath, Integer position) {
 		super();
 		this.name = name;
@@ -242,12 +240,21 @@ public class ProductFeature {
 
 	public void addFeatureToCollection(Feature feature) {
 
-		Set<Feature> featureSet= new HashSet<>();
+		Set<Feature> featureSet = new HashSet<>();
 		featureSet.add(feature);
-		this.feature=featureSet;
+		this.feature = featureSet;
 
 	}
 
+	public void addFeatureToFeatureSet(Feature feature) {
 
+		if (this.feature == null) {
+			Set<Feature> featureSet = new HashSet<>();
+			featureSet.add(feature);
+			this.feature = featureSet;
+		} else {
+			this.feature.add(feature);
+		}
+	}
 
 }

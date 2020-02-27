@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import pl.sda.pms.feature.Feature;
@@ -433,6 +434,35 @@ public class ProductConfigurationService {
 	public void dropAllObjects() {
 
 		productConfigurationRepository.dropAllObjects();
+	}
+
+	public void addFeatureToProducts(String productsAndPfName) {
+		
+		JSONObject obj = new JSONObject(productsAndPfName);
+		Long featureId=Long.parseLong(obj.get("featureId").toString());
+		JSONArray idArray = (JSONArray) obj.get("productsId");
+		List<Long> idList=idArray.toList().stream().map(x->Long.parseLong(x.toString())).collect(Collectors.toList());
+		String productFeatureName= obj.get("productFeatureName").toString();
+		List<ProductConfiguration> products=productConfigurationRepository.findAllById(idList);
+		
+		Feature feature=featureService.findByID(featureId);
+
+		addFeatureToProductsByPf(feature, products,productFeatureName);
+
+		System.out.println("gr");
+		
+	}
+
+	private void addFeatureToProductsByPf(Feature feature, List<ProductConfiguration> products,
+			String productFeatureName) {
+
+				products.stream().forEach(x->{
+					x.getConfigurationList().stream().filter(p->p.getName().equals(productFeatureName)).forEach(f->f.addFeatureToFeatureSet(feature));
+
+
+				});	
+
+
 	}
 
 }

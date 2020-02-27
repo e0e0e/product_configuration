@@ -64,7 +64,12 @@ public class OrderController {
 		model.addAttribute("errorMessage", errorMessage);
 
 		model.addAttribute("order", orderService.findByIdAndUpdatePrice(orderId));
-		model.addAttribute("aud", orderService.findByIdAud(orderId));
+		try{
+			model.addAttribute("aud", orderService.findByIdAud(orderId));
+		}catch(Exception e){
+			System.out.println(e.getLocalizedMessage());
+		}
+		
 		model.addAttribute("edit", edit);
 		model.addAttribute("title", "List Orders");
 		model.addAttribute("path", "order/show");

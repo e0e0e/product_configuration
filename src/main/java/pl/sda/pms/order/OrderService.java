@@ -11,9 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.management.RuntimeErrorException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -152,7 +154,6 @@ public class OrderService {
 
 		// order.setOrderFeaturesStringsMapByOrderFeatures(orginalOrderFeatures);
 
-		
 		try {
 			Double priceList = orginalOrderFeatures.stream().mapToDouble(x -> x.getFeature().getPrice()).sum();
 			order.setPrice(priceList);
@@ -184,16 +185,19 @@ public class OrderService {
 
 		List<Map<String, String>> mapList = new ArrayList<>();
 		List<Date> dateList = new ArrayList<>();
-
+		List<Ord> orderList=new ArrayList<>();
 		for (Object o : revisions) {
 			Object[] orderAud = (Object[]) o;
 			Ord order = (Ord) orderAud[0];
-			dateList.add(((CustomRevisionEntity) orderAud[1]).getRevisionDate());
+			
 
 			try {
 				Map<String, String> result = new ObjectMapper().readValue(order.getOrderFeaturesStrings(), Map.class);
 				mapList.add(result);
+				orderList.add(order);
+				dateList.add(((CustomRevisionEntity) orderAud[1]).getRevisionDate());
 			} catch (Exception e) {
+				
 				System.out.println("Error parsing JSON: " + e.getLocalizedMessage());
 			}
 
@@ -207,23 +211,29 @@ public class OrderService {
 			OrderAud orderAud = new OrderAud();
 
 			for (int n = 0; n < nameList.size(); n++) {
-				if (!mapList.get(i).get(nameList.get(n)).equals(mapList.get(i - 1).get(nameList.get(n)))) {
 
-					FeatureAud featureAud = new FeatureAud();
-					featureAud.setPfName(nameList.get(n));
-					featureAud.setOldFeature(mapList.get(i - 1).get(nameList.get(n)));
-					featureAud.setNewFeature(mapList.get(i).get(nameList.get(n)));
+				if (mapList.get(i).get(nameList.get(n)) != null) {
+					if (!mapList.get(i).get(nameList.get(n)).equals(mapList.get(i - 1).get(nameList.get(n)))) {
 
-					orderAud.addFeatureAud(featureAud);
-					
+						FeatureAud featureAud = new FeatureAud();
+						featureAud.setPfName(nameList.get(n));
+						featureAud.setOldFeature(mapList.get(i - 1).get(nameList.get(n)));
+						featureAud.setNewFeature(mapList.get(i).get(nameList.get(n)));
 
+						orderAud.addFeatureAud(featureAud);
+
+					}
+				} else {
+					throw new RuntimeException("Product feature name was changed so it will make problems");
 				}
-			}
-			orderAud.setDate(dateList.get(i));
-			orderAud.setOrder((Ord) ((Object[]) revisions.get(i))[0]);
 
+			}
+
+			orderAud.setDate(dateList.get(i));
+
+			orderAud.setOrder(orderList.get(i));
+			orderAud.setRevision(Long.parseLong(orderList.get(i).getRevision().toString()));
 			orderAuds.add(orderAud);
-			
 
 		}
 

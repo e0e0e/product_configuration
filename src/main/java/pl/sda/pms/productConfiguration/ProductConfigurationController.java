@@ -371,4 +371,15 @@ public class ProductConfigurationController {
 		return "main";
 	}
 
+	@PostMapping(value = "/add/feature/products", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public String addFeatureToProducts(@RequestBody String productsAndPfName,Model model) {
+
+
+		productConfigurationService.addFeatureToProducts(productsAndPfName);
+		// model.addAttribute("title", "Mve Product Features");
+		// model.addAttribute("path", "product");
+		return "redirect:/product/show";
+	}
+
 }
