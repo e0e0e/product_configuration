@@ -224,7 +224,9 @@ public class ProductConfigurationController {
 	@PostMapping("/search/products")
 	public String searchProducts(@RequestParam Map<String, String> paramMap, Model model) {
 		List<ProductConfiguration> products = productConfigurationService.productSearch(paramMap);
-		List<String> productFeaturesNames=products.get(0).getConfigurationList().stream().sorted((o1,o2)->o1.getPosition().compareTo(o2.getPosition())).map(x->x.getName()).collect(Collectors.toList());
+		List<String> productFeaturesNames = products.get(0).getConfigurationList().stream()
+				.sorted((o1, o2) -> o1.getPosition().compareTo(o2.getPosition())).map(x -> x.getName())
+				.collect(Collectors.toList());
 		model.addAttribute("columntitles", productFeaturesNames);
 		model.addAttribute("configurations", products);
 		model.addAttribute("title", "Filtered products");
@@ -373,13 +375,32 @@ public class ProductConfigurationController {
 
 	@PostMapping(value = "/add/feature/products", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public String addFeatureToProducts(@RequestBody String productsAndPfName,Model model) {
+	public String addFeatureToProducts(@RequestBody String productsAndPfName, Model model) {
+
+		try {
+			productConfigurationService.addFeatureToProducts(productsAndPfName);
+			return "Success, feature added";
+		} catch (Exception e) {
+			System.out.println("Error during adding feature to products: " + e.getLocalizedMessage());
+			return "Error during adding feature to products: " + e.getLocalizedMessage();
+		}
 
 
-		productConfigurationService.addFeatureToProducts(productsAndPfName);
-		// model.addAttribute("title", "Mve Product Features");
-		// model.addAttribute("path", "product");
-		return "redirect:/product/show";
+	}
+
+	@PostMapping(value = "/delete/feature/products", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public String deleteFeatureFromProducts(@RequestBody String productsAndPfName, Model model) {
+
+		try {
+			productConfigurationService.deleteFeatureFromProducts(productsAndPfName);
+			return "Success, feature deleted";
+		} catch (Exception e) {
+			System.out.println("Error during adding feature to products: " + e.getLocalizedMessage());
+			return "Error during deleting feature to products: " + e.getLocalizedMessage();
+		}
+
+
 	}
 
 }

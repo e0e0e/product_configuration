@@ -257,4 +257,12 @@ public class ProductFeature {
 		}
 	}
 
+	public void removeFeatureToFeatureSet(Feature feature) {
+		if(this.feature.contains(feature)){
+			this.feature.remove(feature);
+		}
+
+
+	}
+
 }

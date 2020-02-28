@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div id="message"
-	style="background-color: #bce9ff; position:fixed;z-index:9000;left:10%; top: 10%; width: 50%; height:500px; text-align:center;display:none;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
+	style="background-color: #bce9ff; position:fixed;z-index:9000;left:10%; top: 10%; width: 50%;  min-height:500px; text-align:center;display:none;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
 	class="rounded"></div>
 
 <div class="container-fluid" id="all">
@@ -22,14 +22,17 @@
 	</br>
 	<div class="bg-secondary text-white p-2" id="" name="" onclick="addFtoPFinProducts(this)">Add to All products in:
 		<span id="productFeature"></span></div>
-	<div id="feature" class="font-weight-bold bg-secondary" onclick="addFeature(this)">Add feature</div>
+	<div class="row">
+		<div id="feature" class="col font-weight-bold bg-secondary" onclick="addFeature(this)">Add feature</div>
+		<div id="feature" class="col font-weight-bold bg-warning" onclick="removeFeature(this)">Remove feature</div>
+	</div>
 	</br>
 	<div class="row d-flex flex-nowrap ">
 		<div class="col-1 border">
 			Product title
 		</div>
 		<c:forEach var="title" items="${columntitles}">
-			<div class="col-1 border" name="column" value="${title}">
+			<div class="col-1 border" name="column" value="${title}" att="1">
 				${title}
 			</div>
 		</c:forEach>
@@ -44,7 +47,7 @@
 				</div>
 				<c:forEach var="configList" items="${configuration.configurationList}">
 
-					<div class="col-1 border" name="column" value="${configList.name}">
+					<div class="col-1 border" name="column" id="" value="${configList.name}" att="0">
 						<%-- <a class="btn btn-outline-info text-dark"
 							href="/feature/edit?productFeatureId=${configList.id}">${configList.name} <span
 								class="glyphicon glyphicon-edit text-dark"></span></a> --%>
@@ -66,7 +69,7 @@
 
 									</c:when>
 									<c:otherwise> --%>
-								<p style="word-wrap:break-word">${feature.name}</p>
+								<p style="word-wrap:break-word" id="${feature.id}">${feature.name}</p>
 								<%-- </c:otherwise>
 								</c:choose> --%>
 
@@ -127,14 +130,55 @@
 
 	}
 
-	function addFtoPFinProducts(featureId) {
-		console.log(featureId);
+	function addFtoPFinProducts(featureId, featureName) {
+		console.log(featureName);
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 
 				// products = JSON.parse(this.responseText);
-				
+				alert(this.responseText);
+				goBack();
+				columns = document.getElementsByName("column");
+				columnsArray = Array.prototype.slice.call(columns, 0);
+				columnsPf = columnsArray.filter(function (x) {
+					return x.getAttribute("value") == productFeatureName;
+				});
+
+				for (col of columnsPf) {
+					let match = 0;
+					if (col.getAttribute("att") == 0) {
+						console.log(col.getAttribute("att"));
+						for (row of col.children) {
+
+							console.log(row.children[0].getAttribute("id") == featureId);
+
+							if (row.children[0].getAttribute("id") == featureId) {
+								console.log("match in: " + row.children[0].innerHTML);
+								match = 1;
+
+							}
+
+
+						}
+						if (match == 0) {
+							var para = document.createElement("P");
+							para.innerHTML = featureName;
+
+							para.classList.add("bg-warning");
+							para.classList.add("bg-warning");
+							para.classList.add("text-dark");
+							para.classList.add("m-1");
+							para.classList.add("p-1");
+							para.setAttribute("id", featureId);
+							col.appendChild(para);
+
+						}
+					}
+
+
+				}
+
 
 			}
 		};
@@ -162,6 +206,82 @@
 
 	}
 
+	function deleteFfromPFinProducts(featureId, featureName) {
+		console.log(featureName);
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+
+				// products = JSON.parse(this.responseText);
+				alert(this.responseText);
+				goBack();
+				columns = document.getElementsByName("column");
+				columnsArray = Array.prototype.slice.call(columns, 0);
+				columnsPf = columnsArray.filter(function (x) {
+					return x.getAttribute("value") == productFeatureName;
+				});
+
+				for (col of columnsPf) {
+					let match = 0;
+					if (col.getAttribute("att") == 0) {
+						console.log(col.getAttribute("att"));
+						for (row of col.children) {
+
+							console.log(row.children[0].getAttribute("id") == featureId);
+
+							if (row.children[0].getAttribute("id") == featureId) {
+								console.log("match in: " + row.children[0].innerHTML);
+								match = 1;
+
+							}
+
+
+						}
+						if (match == 0) {
+							var para = document.createElement("P");
+							para.innerHTML = featureName;
+
+							para.classList.add("bg-warning");
+							para.classList.add("bg-warning");
+							para.classList.add("text-dark");
+							para.classList.add("m-1");
+							para.classList.add("p-1");
+							para.setAttribute("id", featureId);
+							col.appendChild(para);
+
+						}
+					}
+
+
+				}
+
+
+			}
+		};
+
+
+
+		let arr = {};
+		let productsToChange = document.getElementsByName("product");
+		productsId = [];
+		productFeatureName = document.getElementById("productFeature").innerHTML;
+
+		for (var i = 0; i < productsToChange.length; i++) {
+			productsId.push(productsToChange[i].getAttribute('id'));
+		}
+
+		let jProductsId = JSON.stringify({
+			productsId,
+			productFeatureName,
+			featureId
+		});
+		console.log(jProductsId);
+		xhttp.open("POST", "/delete/feature/products", true);
+		xhttp.setRequestHeader("Content-type", "application/json");
+		xhttp.send(jProductsId);
+
+	}
+
 	function addFeature(input) {
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
@@ -169,16 +289,51 @@
 
 				features = JSON.parse(this.responseText);
 				message = "<h1 class='bat glyphicon glyphicon-arrow-left text-info' onclick='goBack()'></h1>";
-				message =message.concat("<h1>Select feature to add:</h1>");
+				message = message.concat("<h1>Select feature to add:</h1>");
 
 				for (f of features) {
-					message = message.concat("<div class='bat row border-bottom  border-light ml-5 mr-5 mt-2' onclick='addFtoPFinProducts(" + f["id"] + ")' id='feat-" + f["id"] + "'><div class='col'>" + f["name"] + "</div><div class='col'>" + f["index"] + "</div></div>");
+					message = message.concat(
+						"<div class='bat row border-bottom  border-light ml-5 mr-5 mt-2' onclick='addFtoPFinProducts(" +
+						f["id"] + ",\"" + f["name"] + "\")' id='feat-" + f["id"] + "'><div class='col'>" + f[
+							"name"] + "</div><div class='col'>" + f["index"] + "</div></div>");
 				}
 
 				let e = document.getElementById("message");
 				e.innerHTML = message;
 				e.style.display = "block";
-				document.getElementById("all").style.display="none";
+				document.getElementById("all").style.display = "none";
+			}
+		};
+
+		productFeatureName = document.getElementById("productFeature").innerHTML;
+		let jProductFeatureName = JSON.stringify(productFeatureName);
+		console.log(jProductFeatureName);
+		xhttp.open("POST", "/find/featuresByPf", true);
+		xhttp.setRequestHeader("Content-type", "application/json");
+		xhttp.send(productFeatureName);
+
+	}
+
+	function removeFeature(input) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+
+				features = JSON.parse(this.responseText);
+				message = "<h1 class='bat glyphicon glyphicon-arrow-left text-info' onclick='goBack()'></h1>";
+				message = message.concat("<h1>Select feature to remove:</h1>");
+
+				for (f of features) {
+					message = message.concat(
+						"<div class='bat row border-bottom  border-light ml-5 mr-5 mt-2' onclick='deleteFfromPFinProducts(" +
+						f["id"] + ",\"" + f["name"] + "\")' id='feat-" + f["id"] + "'><div class='col'>" + f[
+							"name"] + "</div><div class='col'>" + f["index"] + "</div></div>");
+				}
+
+				let e = document.getElementById("message");
+				e.innerHTML = message;
+				e.style.display = "block";
+				document.getElementById("all").style.display = "none";
 			}
 		};
 
@@ -192,10 +347,9 @@
 	}
 
 
-	
-	function goBack(){
-		document.getElementById("all").style.display="block";
-		document.getElementById("message").style.display="none";
+	function goBack() {
+		document.getElementById("all").style.display = "block";
+		document.getElementById("message").style.display = "none";
 
 
 	}

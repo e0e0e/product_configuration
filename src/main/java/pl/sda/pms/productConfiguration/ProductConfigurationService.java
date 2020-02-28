@@ -449,7 +449,7 @@ public class ProductConfigurationService {
 
 		addFeatureToProductsByPf(feature, products,productFeatureName);
 
-		System.out.println("gr");
+		System.out.println("added feature: "+ feature.getName()+" to: "+ productFeatureName);
 		
 	}
 
@@ -457,12 +457,48 @@ public class ProductConfigurationService {
 			String productFeatureName) {
 
 				products.stream().forEach(x->{
-					x.getConfigurationList().stream().filter(p->p.getName().equals(productFeatureName)).forEach(f->f.addFeatureToFeatureSet(feature));
+					x.getConfigurationList().stream().filter(p->p.getName().equals(productFeatureName)).forEach(f->{
+						
+						f.addFeatureToFeatureSet(feature);
+						productFeatureService.save(f);
+						
+					});
 
 
 				});	
 
 
+	}
+
+	public void deleteFeatureFromProducts(String productsAndPfName) {
+
+		JSONObject obj = new JSONObject(productsAndPfName);
+		Long featureId=Long.parseLong(obj.get("featureId").toString());
+		JSONArray idArray = (JSONArray) obj.get("productsId");
+		List<Long> idList=idArray.toList().stream().map(x->Long.parseLong(x.toString())).collect(Collectors.toList());
+		String productFeatureName= obj.get("productFeatureName").toString();
+		List<ProductConfiguration> products=productConfigurationRepository.findAllById(idList);
+		
+		Feature feature=featureService.findByID(featureId);
+
+		removeFeatureFromProductsByPf(feature, products,productFeatureName);
+
+		System.out.println("added feature: "+ feature.getName()+" to: "+ productFeatureName);
+	}
+
+	private void removeFeatureFromProductsByPf(Feature feature, List<ProductConfiguration> products,
+			String productFeatureName) {
+
+					products.stream().forEach(x->{
+						x.getConfigurationList().stream().filter(p->p.getName().equals(productFeatureName)).forEach(f->{
+							
+							f.removeFeatureToFeatureSet(feature);
+							productFeatureService.save(f);
+							
+						});
+	
+	
+					});	
 	}
 
 }
