@@ -258,10 +258,11 @@ public class ProductFeature {
 	}
 
 	public void removeFeatureToFeatureSet(Feature feature) {
-		if(this.feature.contains(feature)){
-			this.feature.remove(feature);
+		if (this.feature.size() > 1) {
+			if (this.feature.contains(feature)) {
+				this.feature.remove(feature);
+			}
 		}
-
 
 	}
 

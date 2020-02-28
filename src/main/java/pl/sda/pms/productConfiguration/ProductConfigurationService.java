@@ -483,7 +483,7 @@ public class ProductConfigurationService {
 
 		removeFeatureFromProductsByPf(feature, products,productFeatureName);
 
-		System.out.println("added feature: "+ feature.getName()+" to: "+ productFeatureName);
+		System.out.println("Deleted feature: "+ feature.getName()+" to: "+ productFeatureName);
 	}
 
 	private void removeFeatureFromProductsByPf(Feature feature, List<ProductConfiguration> products,

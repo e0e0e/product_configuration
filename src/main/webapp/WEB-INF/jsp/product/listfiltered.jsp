@@ -148,7 +148,6 @@
 				for (col of columnsPf) {
 					let match = 0;
 					if (col.getAttribute("att") == 0) {
-						console.log(col.getAttribute("att"));
 						for (row of col.children) {
 
 							console.log(row.children[0].getAttribute("id") == featureId);
@@ -162,16 +161,18 @@
 
 						}
 						if (match == 0) {
-							var para = document.createElement("P");
+							let newdiv=document.createElement("div");			
+							let para = document.createElement("P");
+							newdiv.appendChild(para);
 							para.innerHTML = featureName;
 
-							para.classList.add("bg-warning");
-							para.classList.add("bg-warning");
-							para.classList.add("text-dark");
-							para.classList.add("m-1");
-							para.classList.add("p-1");
+							newdiv.classList.add("bg-warning");
+							newdiv.classList.add("rounded");
+							newdiv.classList.add("text-dark");
+							newdiv.classList.add("m-1");
+							newdiv.classList.add("p-1");
 							para.setAttribute("id", featureId);
-							col.appendChild(para);
+							col.appendChild(newdiv);
 
 						}
 					}
@@ -205,59 +206,49 @@
 		xhttp.send(jProductsId);
 
 	}
+function deleteFfromPFinProducts(featureId, featureName) {
+	console.log(featureName);
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function () {
+		if (this.readyState == 4 && this.status == 200) {
 
-	function deleteFfromPFinProducts(featureId, featureName) {
-		console.log(featureName);
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
+			// products = JSON.parse(this.responseText);
+			alert(this.responseText);
+			goBack();
+			columns = document.getElementsByName("column");
+			columnsArray = Array.prototype.slice.call(columns, 0);
+			columnsPf = columnsArray.filter(function (x) {
+				return x.getAttribute("value") == productFeatureName;
+			});
 
-				// products = JSON.parse(this.responseText);
-				alert(this.responseText);
-				goBack();
-				columns = document.getElementsByName("column");
-				columnsArray = Array.prototype.slice.call(columns, 0);
-				columnsPf = columnsArray.filter(function (x) {
-					return x.getAttribute("value") == productFeatureName;
-				});
+			for (col of columnsPf) {
+				
+				if (col.getAttribute("att") == 0) {
+					console.log(col.getAttribute("att"));
+					for (row of col.children) {
+					console.log(row.children.length+" at");
 
-				for (col of columnsPf) {
-					let match = 0;
-					if (col.getAttribute("att") == 0) {
-						console.log(col.getAttribute("att"));
-						for (row of col.children) {
-
-							console.log(row.children[0].getAttribute("id") == featureId);
-
+						if (row.children.length > 0) {
 							if (row.children[0].getAttribute("id") == featureId) {
 								console.log("match in: " + row.children[0].innerHTML);
-								match = 1;
+								row.children[0].style.textDecoration = "line-through";
+								row.classList.remove("bg-info");
+								row.classList.add("bg-danger");
+								
 
 							}
 
-
-						}
-						if (match == 0) {
-							var para = document.createElement("P");
-							para.innerHTML = featureName;
-
-							para.classList.add("bg-warning");
-							para.classList.add("bg-warning");
-							para.classList.add("text-dark");
-							para.classList.add("m-1");
-							para.classList.add("p-1");
-							para.setAttribute("id", featureId);
-							col.appendChild(para);
-
 						}
 					}
-
-
+	
 				}
 
 
 			}
-		};
+
+
+		}
+	};
 
 
 
