@@ -108,6 +108,8 @@ public class ProductFeatureController {
 
 				ProductFeature productFeatureNew = productFeatureService.save(name, description, imagePath,
 						featureList);
+						Integer maxPf=x.getConfigurationList().stream().max((o1,o2)->o1.getPosition().compareTo(o2.getPosition())).get().getPosition();
+						 productFeatureNew.setPosition(maxPf+1);
 				productFeatureNew.setProductConfiguration(x);
 				productFeatureService.save(productFeatureNew);
 
