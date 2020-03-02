@@ -34,6 +34,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers("/users").permitAll()
                 .mvcMatchers("/users/list").hasAuthority("ADMIN")
+                .mvcMatchers("/auth/**").hasAuthority("ADMIN")
                .mvcMatchers("/h2/**").permitAll()
                 .mvcMatchers("/**").authenticated()
 //            .mvcMatchers("/project/**").authenticated()

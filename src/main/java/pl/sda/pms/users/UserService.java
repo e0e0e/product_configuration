@@ -102,4 +102,10 @@ public class UserService {
 //    userRepository.saveChanges(userId, login, password, email, username);
 
     }
+
+
+	public void changeAuthority(long userId, String authorities) {
+        userRepository.changeAuthority(userId,authorities);
+        
+	}
 }

@@ -39,4 +39,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query(value = "SELECT count(email) FROM user WHERE EMAIL like ?1 and id!=?2", nativeQuery = true)
     int isEmailTakenExcept(String email, long userId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE user set authorities=?2 where id like ?1", nativeQuery = true)
+	void changeAuthority(long userId, String authorities);
 }

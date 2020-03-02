@@ -113,6 +113,9 @@ table tr:nth-child(even) {
   background-color: #ffffff;
 }
 
+.line:hover {
+  background-color: #dddcd7;
+}
 .bat:hover {
   background-color: yellow;
   color:black;

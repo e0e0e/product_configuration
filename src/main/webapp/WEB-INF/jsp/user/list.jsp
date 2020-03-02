@@ -25,19 +25,17 @@
 
                     <div class="card-header bg-info text-left text-light">
                         <img class="img-circle bg-dark p-1 m-1 d-inline-block" src="${resourcePath}${user.avatar}"
-                             height="40" width="40"/>
+                            height="40" width="40" />
                         <div class="d-inline-block">${user.username}</div>
                     </div>
 
                     <div class="card-body ">
 
-                            <%--                    <h5 class="card-title">Services Title 1</h5>--%>
-
-                        <p class="card-text text-left">login:${user.login}  </p>
-                        <br/>
-                        <p class="card-text text-left">email: ${user.email}  </p>
-                        <br/>
-                        <p class="card-text text-left">In projects: ${user.toString()}  </p>
+                        <p class="card-text text-left">login:${user.login} </p>
+                        <br />
+                        <p class="card-text text-left">email: ${user.email} </p>
+                        <br />
+                        <p class="card-text text-left">Authorities: ${user.authorities} </p>
 
                     </div>
 
@@ -45,12 +43,10 @@
 
                         <a href="/user/delete?userId=${user.id}" class="btn btn-outline-light btn-sm">
                             <span class="glyphicon glyphicon-trash"></span></a>
-                            <%--                        <a href="/participant?projectId=${project.id}" class="btn btn-outline-light btn-sm">--%>
-                            <%--                            <span class="glyphicon glyphicon-plus"></span></a>--%>
-                        <a href="/user/edit?userId=${user.id}" class="btn btn-outline-light btn-sm">
-                            <span class="glyphicon glyphicon-edit"></span></a>
-                            <%--                        <div class="btn btn-outline-light btn-sm">--%>
-                            <%--                                ${project.showUsersInProject()}</div>--%>
+
+                        <a href="/auth/user/edit?userId=${user.id}" class="btn btn-outline-light btn-sm">Give Authority
+                            <span class="glyphicon glyphicon-user"></span></a>
+
 
                     </div>
 

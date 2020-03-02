@@ -1,6 +1,5 @@
 package pl.sda.pms.users;
 
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -29,7 +28,6 @@ public class UsersController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-
     public UsersController(UserService userService) {
         this.userService = userService;
     }
@@ -47,11 +45,8 @@ public class UsersController {
     }
 
     @PostMapping("/users")
-    public String addUser(@RequestParam String password,
-                          @RequestParam String email,
-                          @RequestParam String login,
-                          @RequestParam String username,
-                          Model model) {
+    public String addUser(@RequestParam String password, @RequestParam String email, @RequestParam String login,
+            @RequestParam String username, Model model) {
         try {
             boolean result = userService.create(login, passwordEncoder.encode(password), email, username);
             model.addAttribute("createUserResult", result);
@@ -66,8 +61,7 @@ public class UsersController {
     }
 
     @GetMapping("user/delete")
-    public String deleteUser(@RequestParam long userId,
-                             Model model) {
+    public String deleteUser(@RequestParam long userId, Model model) {
 
         userService.delete(userId);
         model.addAttribute("users", userService.findAll());
@@ -77,8 +71,7 @@ public class UsersController {
     }
 
     @GetMapping("/user/edit")
-    public String editUser(@RequestParam long userId,
-                           Model model) {
+    public String editUser(@RequestParam long userId, Model model) {
         try {
             model.addAttribute("user", userService.findById(userId));
         } catch (Exception e) {
@@ -90,30 +83,24 @@ public class UsersController {
     }
 
     @GetMapping("saveChangedUser")
-    public String saveChangedUser(@RequestParam String password,
-                                  @RequestParam String email,
-                                  @RequestParam String login,
-                                  @RequestParam String username,
-                                  @RequestParam long userId,
-                                  Model model){
+    public String saveChangedUser(@RequestParam String password, @RequestParam String email, @RequestParam String login,
+            @RequestParam String username, @RequestParam long userId, Model model) {
 
-//        try {
-//            userService.saveChanges(userId,login, passwordEncoder.encode(password), email, username);
-//
-//
-//        } catch (Exception e) {
-//
-//
-//        }
+        // try {
+        // userService.saveChanges(userId,login, passwordEncoder.encode(password),
+        // email, username);
+        //
+        //
+        // } catch (Exception e) {
+        //
+        //
+        // }
 
         model.addAttribute("users", userService.findAll());
         model.addAttribute("title", "User List");
         model.addAttribute("path", "user/list");
         return "main";
     }
-
-
-
 
     @GetMapping("users/list")
     public String listUsers(Model model) {
@@ -135,8 +122,7 @@ public class UsersController {
 
     @GetMapping("/userProfile")
     public String MyProfile(@RequestParam(required = false) Long userId,
-                            @RequestParam(required = false) String username,
-                            Model model) {
+            @RequestParam(required = false) String username, Model model) {
 
         if (username != null) {
             model.addAttribute("user", userService.findUserByname(username));
@@ -152,7 +138,6 @@ public class UsersController {
     public String showAvatars(Model model) throws IOException {
         Set<String> filesList = listFilesUsingFileWalk("src/main/webapp/resources/images/icons/png/");
 
-
         model.addAttribute("fileList", filesList);
         model.addAttribute("title", "Avatars");
         model.addAttribute("path", "user/avatars");
@@ -160,11 +145,8 @@ public class UsersController {
     }
 
     @GetMapping("/users/addAvatars")
-    public String addAvatar(@RequestParam String image,
-                            @RequestParam long userId,
-                            HttpServletResponse response,
-                            HttpServletRequest request,
-                            Model model) {
+    public String addAvatar(@RequestParam String image, @RequestParam long userId, HttpServletResponse response,
+            HttpServletRequest request, Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
@@ -176,11 +158,26 @@ public class UsersController {
 
     public Set<String> listFilesUsingFileWalk(String dir) throws IOException {
         try (Stream<Path> stream = Files.walk(Paths.get(dir))) {
-            return stream
-                    .filter(file -> !Files.isDirectory(file))
-                    .map(Path::getFileName)
-                    .map(Path::toString)
+            return stream.filter(file -> !Files.isDirectory(file)).map(Path::getFileName).map(Path::toString)
                     .collect(Collectors.toSet());
         }
     }
+
+    @GetMapping("/auth/user/edit")
+    public String showAuthoritiesForm(@RequestParam long userId, Model model) {
+
+        model.addAttribute("user", userService.findById(userId));
+        model.addAttribute("title", "User Authorities");
+        model.addAttribute("path", "user/authoriti");
+        return "main";
+    }
+
+    @PostMapping("/auth/user/save")
+    public String changeAuthorities(@RequestParam Long userId, @RequestParam String authorities, Model model) {
+
+        userService.changeAuthority(userId,authorities);
+
+        return "redirect:/users/list";
+    }
+
 }

@@ -45,9 +45,11 @@
 				${order.lastModifiedDate}, Revision: ${order.revision}
 				<div>Price : ${order.price}</div>
 			</div>
+			<c:if test="${user.authorities=='[ADMIN]'}">
 			<a class="btn btn-outline-secondary text-dark" href="/order/edit?orderId=${order.id}">
-				<span class="glyphicon glyphicon-edit text-light"></span>
+				<span class="glyphicon glyphicon-edit text-warning"></span>
 			</a>
+			</c:if>
 			<a class="btn btn-outline-secondary text-dark" href="/order/show?orderId=${order.id}&edit=true">
 				<span class="glyphicon glyphicon-gift text-light"></span>
 			</a>

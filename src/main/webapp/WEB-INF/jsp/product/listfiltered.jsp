@@ -26,7 +26,7 @@
 		<div id="feature" class="col font-weight-bold bat m-2 p-3 border" onclick="removeFeature(this)">Remove feature</div>
 	</div>
 	</br>
-	<div class="row d-flex flex-nowrap no-gutters">
+	<div class="row d-flex flex-nowrap no-gutters p-1">
 		<div class="col-1 border">
 			Product title
 		</div>
@@ -39,38 +39,18 @@
 	</div>
 	<c:forEach var="configuration" items="${configurations}">
 		<div class="">
-			<div class="row d-flex flex-nowrap no-gutters">
+			<div class="row  line d-flex flex-nowrap no-gutters p-1">
 				<div class="col-1  border-light my-auto pt-4 pb-4">
-					<p style="word-wrap:break-word;" name="product" id="${configuration.id}">${configuration.name}
+					<p style="word-wrap:break-word;" name="product" id="${configuration.id}" >${configuration.name}
 					</p>
 				</div>
 				<c:forEach var="configList" items="${configuration.configurationList}">
 
 					<div class="col-1 border" name="column" id="" value="${configList.name}" att="0">
-						<%-- <a class="btn btn-outline-info text-dark"
-							href="/feature/edit?productFeatureId=${configList.id}">${configList.name} <span
-								class="glyphicon glyphicon-edit text-dark"></span></a> --%>
-
-
 
 						<c:forEach var="feature" items="${configList.feature}">
 							<div class="bg-info text-light m-1 p-1 rounded">
-								<%-- <c:choose>
-								<c:when test="${user.authorities=='[ADMIN]'}">
-									<p style="word-wrap:break-word">${feature.name}</p>
-										<a class="btn btn-outline-info text-dark"
-											href="/feature/editFeature?featureId=${feature.id}"><span
-												class="glyphicon glyphicon-edit text-dark"  ></span></a>
-
-										<a class="btn btn-outline-info text-dark"
-											href="/feature/removeFeature?featureId=${feature.id}&productFeatureId=${configList.id}"><span
-												class="glyphicon glyphicon-trash text-dark"></span></a>
-
-									</c:when>
-									<c:otherwise> --%>
-								<p style="word-wrap:break-word" id="${feature.id}">${feature.name}</p>
-								<%-- </c:otherwise>
-								</c:choose> --%>
+								<p style="word-wrap:break-word" id="${feature.id}">${feature.name}<div class="text-right">${feature.index}</div></p>
 
 							</div>
 						</c:forEach>

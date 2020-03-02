@@ -42,7 +42,7 @@
 						<div class="row">
 							<div class="col-2 col-form-label 
 							<c:if test="${configList.parent!='Chassis'}">
-							bg-info text-light
+							bg-secondary text-light
 							</c:if>
 							">${configList.name}</div>
 							<div class="col-5 ">
