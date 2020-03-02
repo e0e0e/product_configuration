@@ -5,7 +5,7 @@
 		<c:set var = "default" value = "default.png"/>
 
 	<div id="NS"></div>
-<div class="container-fluid">
+<div class="container-fluid" id="all"  style="min-width: 1000px;">
 	<%@include file="../featureNavigation.jsp"%>
 
 	<div id="rest"></div>

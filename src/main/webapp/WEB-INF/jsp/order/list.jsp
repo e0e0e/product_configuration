@@ -4,7 +4,7 @@
 <%@ taglib
 	prefix="fmt"
 	uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div class="container">
+<div class="container-fluid" id="all"  style="min-width: 1000px;">
 	<%@include file="../featureNavigation.jsp"%>
 
 

@@ -4,30 +4,29 @@
 	style="background-color: #bce9ff; position:fixed;z-index:9000;left:10%; top: 10%; width: 50%;  min-height:500px; text-align:center;display:none;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
 	class="rounded"></div>
 
-<div class="container-fluid" id="all">
+<div class="container-fluid" id="all"  style="min-width: 1000px;">
 	<%@include file="../featureNavigation.jsp"%>
 
 
 	<h3>Products matching search criteria</h3>
 	<div class="row bg-info text-white" id="shortcuts">
 		<c:forEach var="title" items="${columntitles}">
-			<div class="col border" id="${title}" name="short" onclick="hideRest(this)">
+			<div class="col bat border" id="${title}" name="short" onclick="hideRest(this)">
 				${title}
 			</div>
 		</c:forEach>
 
 	</div>
 	</br>
-	<div class="bg-secondary text-white p-2" id="${title}" name="short" onclick="showAll(this)">Show all</div>
-	</br>
-	<div class="bg-secondary text-white p-2" id="" name="" onclick="addFtoPFinProducts(this)">Add to All products in:
-		<span id="productFeature"></span></div>
-	<div class="row">
-		<div id="feature" class="col font-weight-bold bg-secondary" onclick="addFeature(this)">Add feature</div>
-		<div id="feature" class="col font-weight-bold bg-warning" onclick="removeFeature(this)">Remove feature</div>
+	<div class="bg-secondary text-white m-2 p-2 text-center" id="" name="" >Edit in All products in:
+		<span id="productFeature" class=" font-weight-bold"></span></div>
+	<div class="row m-2 text-center">
+		<div id="${title}" class="col font-weight-bold bat m-2 p-3 border"  name="short" onclick="showAll(this)">Show all</div>
+		<div id="feature" class="col font-weight-bold bat m-2 p-3 border" onclick="addFeature(this)">Add feature</div>
+		<div id="feature" class="col font-weight-bold bat m-2 p-3 border" onclick="removeFeature(this)">Remove feature</div>
 	</div>
 	</br>
-	<div class="row d-flex flex-nowrap ">
+	<div class="row d-flex flex-nowrap no-gutters">
 		<div class="col-1 border">
 			Product title
 		</div>
@@ -40,7 +39,7 @@
 	</div>
 	<c:forEach var="configuration" items="${configurations}">
 		<div class="">
-			<div class="row d-flex flex-nowrap ">
+			<div class="row d-flex flex-nowrap no-gutters">
 				<div class="col-1  border-light my-auto pt-4 pb-4">
 					<p style="word-wrap:break-word;" name="product" id="${configuration.id}">${configuration.name}
 					</p>
@@ -222,13 +221,10 @@ function deleteFfromPFinProducts(featureId, featureName) {
 			});
 
 			for (col of columnsPf) {
-				
 				if (col.getAttribute("att") == 0) {
-					console.log(col.getAttribute("att"));
 					for (row of col.children) {
-					console.log(row.children.length+" at");
 
-						if (row.children.length > 0) {
+						if (col.childElementCount > 1) {
 							if (row.children[0].getAttribute("id") == featureId) {
 								console.log("match in: " + row.children[0].innerHTML);
 								row.children[0].style.textDecoration = "line-through";

@@ -20,12 +20,12 @@ out.println("<nav class='navbar navbar-expand-lg navbar-dark bg-info'>");
 	<b class="navbar-brand">LD</b>
 
 	<button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse"
-		data-target="#navbar11" aria-expanded="true">
+		data-target="#navbar11" aria-expanded="false">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	<div class="navbar-collapse collapse show" id="navbar11" style="">
+	<div class="navbar-collapse collapse" id="navbar11" style="">
 
-		<ul class="navbar-nav mr-auto ">
+		<ul class="navbar-nav m-auto ">
 
 
 			<c:if test="${user.authorities=='[ADMIN]'}">

@@ -5,7 +5,7 @@
 		<c:set var = "default" value = "default.png"/>
 
 	<div id="NS"></div>
-<div class="container-fluid">
+<div class="container-fluid" id="all"  style="min-width: 1000px;">
 	<%@include file="../featureNavigation.jsp"%>
 
 	<div id="rest"></div>
@@ -23,7 +23,7 @@
 		<div class="col-2 m-1">Product Feature</div>
 		<div class="col-5 m-1">Select</div>
 		<div class="col-1 m-1"></div>
-		<div class="col-2 m-">NS details</div>
+		<%-- <div class="col-2 m-">NS details</div> --%>
 
 		</div>
 		</div>
@@ -138,7 +138,7 @@ something = "${imagesPath}";
 													e.parentElement.href=something.concat(imagePath);
 
 											   }
-											document.getElementById("bns-"+key).style.display="block";
+											// document.getElementById("bns-"+key).style.display="block";
 											let ind=document.getElementById("ind-"+key);
 											ind.innerHTML=products[key][0].index;
 								
@@ -169,7 +169,7 @@ something = "${imagesPath}";
 													e.parentElement.href=something.concat(imagePath);
 
 											   }
-											document.getElementById("bns-"+key).style.display="block";
+											// document.getElementById("bns-"+key).style.display="block";
 											document.getElementById("saveButton").style.display="block";
 											let ind=document.getElementById("ind-"+key);
 											ind.innerHTML=products[key][0].index;
