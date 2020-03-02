@@ -8,8 +8,9 @@
 	<%@include file="../featureNavigation.jsp"%>
 
 	<h1>Edit Feature</h1>
-	<sec:authentication
-		var="loggedUser"
+		<c:set var="imagesPath" value="http://konfigurator.viberti.pl/imagesLd/" />
+		<c:set var="default" value="default.png" />
+		<sec:authentication var="loggedUser"
 		property="principal" />
 	<form
 		method="post"
@@ -31,7 +32,7 @@
 			class="text-dark"
 			name="description">${feature.description}</textarea>
 			<br>
-				<input type="checkbox" name="noStandard" value="true"
+				<input type="checkbox" name="noStandard" value="true" size="100"
 				<c:if test="${feature.noStandard=='true'}">
 				checked
 				</c:if>
@@ -42,6 +43,8 @@
 			class="text-dark"
 			name="imagePath"
 			value="${feature.imagePath}"><br /> <label>Price:</label><br />
+			<a href=${imagesPath}${feature.imagePath} target="_blank" class="rys">
+		<img src=${imagesPath}${feature.imagePath} alt="Flowers in Chania" width="200" onerror="imgError(this)"></a><br><br>
 		<input
 			type="text"
 			class="text-dark"
@@ -51,12 +54,14 @@
 			type="text"
 			class="text-dark"
 			name="index"
+			size="100"
 			value="${feature.index}"><br />
 			<label>Index M:</label><br />
 		<input
 			type="text"
 			class="text-dark"
 			name="mIndex"
+			size="100"
 			value="${feature.mIndex}"><br /> <br>
 			<input
 			type="submit"

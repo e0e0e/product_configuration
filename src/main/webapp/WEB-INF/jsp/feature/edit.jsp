@@ -11,9 +11,9 @@
 	<%@include file="../featureNavigation.jsp"%>
 
 	<h1>Edit Product Feature</h1>
-	<sec:authentication
-		var="loggedUser"
-		property="principal" />
+	<sec:authentication var="loggedUser" property="principal" />
+	<c:set var="imagesPath" value="http://konfigurator.viberti.pl/imagesLd/" />
+	<c:set var="default" value="default.png" />
 	<form
 		method="post"
 		action="/productFeatureChange?userId=${loggedUser.id}&productFeatureId=${param.productFeatureId}">
@@ -57,6 +57,8 @@
 			name="imagePath"
 			value="${productFeature.imagePath}">
 		<br />
+		<a href=${imagesPath}${productFeature.imagePath} target="_blank" class="rys">
+		<img src=${imagesPath}${productFeature.imagePath} alt="Flowers in Chania" width="200" onerror="imgError(this)"></a>
 		<br />
 		<label>Current feature List:</label>
 		<br />
