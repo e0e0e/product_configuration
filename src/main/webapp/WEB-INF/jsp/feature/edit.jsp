@@ -57,7 +57,7 @@
 			name="imagePath"
 			value="${productFeature.imagePath}">
 		<br />
-		<a href=${imagesPath}${productFeature.imagePath} target="_blank" class="rys">
+		<a href=${imagesPath}${productFeature.imagePath} target="_blank" class="rys float-right">
 		<img src=${imagesPath}${productFeature.imagePath} alt="Flowers in Chania" width="200" onerror="imgError(this)"></a>
 		<br />
 		<label>Current feature List:</label>

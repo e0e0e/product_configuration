@@ -43,7 +43,7 @@
 			class="text-dark"
 			name="imagePath"
 			value="${feature.imagePath}"><br /> <label>Price:</label><br />
-			<a href=${imagesPath}${feature.imagePath} target="_blank" class="rys">
+			<a href=${imagesPath}${feature.imagePath} target="_blank" class="rys float-right">
 		<img src=${imagesPath}${feature.imagePath} alt="Flowers in Chania" width="200" onerror="imgError(this)"></a><br><br>
 		<input
 			type="text"
