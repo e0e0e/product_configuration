@@ -1,9 +1,17 @@
 package pl.sda.pms.feature;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.ErrorManager;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -46,10 +54,8 @@ public class FeatureController {
 	}
 
 	@GetMapping("/feature/editFeatureNoStandard")
-	public String editFeatureNoStandard(@RequestParam Long featureId, 
-	@RequestParam(required = false) Long orderId,
-	@RequestParam(required = false) String errorMessage,
-			Model model) {
+	public String editFeatureNoStandard(@RequestParam Long featureId, @RequestParam(required = false) Long orderId,
+			@RequestParam(required = false) String errorMessage, Model model) {
 
 		model.addAttribute("feature", featureService.findByID(featureId));
 		model.addAttribute("existingFeatures",
@@ -86,12 +92,13 @@ public class FeatureController {
 		if (edit) {
 			// price will not be changed becouse 0.0!
 			try {
-				featureService.existsByNameAndIndex(name,index);
+				featureService.existsByNameAndIndex(name, index);
 			} catch (Exception e) {
 				System.out.println(e.getLocalizedMessage());
-				return "redirect:/feature/editFeatureNoStandard?featureId="+featureId+"&orderId="+orderId+"&errorMessage="+e.getLocalizedMessage();
+				return "redirect:/feature/editFeatureNoStandard?featureId=" + featureId + "&orderId=" + orderId
+						+ "&errorMessage=" + e.getLocalizedMessage();
 			}
-			
+
 			Feature newFeature = new Feature(name, description, 0.0, imagePath, index, mIndex);
 			Feature oldFeature = featureService.findByID(featureId);
 			orderService.newFeatureToOrder(newFeature, oldFeature, orderId);
@@ -104,16 +111,17 @@ public class FeatureController {
 		if (noStandard == null) {
 			noStandard = false;
 		}
-		 
+
 		try {
 			featureService.saveChanges(name, description, imagePath, index, price, featureId, mIndex, noStandard);
 			if (orderId != null) {
-			Ord order=orderService.findById(orderId);
-			orderService.save(order);
+				Ord order = orderService.findById(orderId);
+				orderService.save(order);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
-			return "redirect:/feature/editFeatureNoStandard?featureId="+featureId+"&orderId="+orderId+"&errorMessage="+e.getLocalizedMessage();
+			return "redirect:/feature/editFeatureNoStandard?featureId=" + featureId + "&orderId=" + orderId
+					+ "&errorMessage=" + e.getLocalizedMessage();
 		}
 
 		if (orderId != null) {
@@ -153,7 +161,6 @@ public class FeatureController {
 			return "redirect:/order/show?orderId=" + orderId;
 		}
 
-
 		orderFeatureService.save(orderFeature);
 
 		return "redirect:/order/show?orderId=" + orderId;
@@ -179,31 +186,60 @@ public class FeatureController {
 	}
 
 	@GetMapping("/delete/feature")
-	public String  deleteEditedFeature(@RequestParam Long featureId, @RequestParam Long temp, Model model) {
+	public String deleteEditedFeature(@RequestParam Long featureId, @RequestParam Long temp, Model model) {
 		try {
 			featureService.deleteById(featureId);
 		} catch (Exception e) {
-			model.addAttribute("errorMessage", "Delete feature failed, probably it is used in somewhere, can't delete if it is used in product definition.");
-				model.addAttribute("title", "Show Error");
-				model.addAttribute("path", "error/show");
-				return "main";
-	
+			model.addAttribute("errorMessage",
+					"Delete feature failed, probably it is used in somewhere, can't delete if it is used in product definition.");
+			model.addAttribute("title", "Show Error");
+			model.addAttribute("path", "error/show");
+			return "main";
+
 		}
 
 		return "redirect:/feature/show#anchor_" + temp;
 	}
 
-
-	
-
 	@GetMapping("/feature/saveImageName")
-	public String saveImageName(@RequestParam String imagePath,
-	 @RequestParam Long featureId) {
+	public String saveImageName(@RequestParam String imagePath, @RequestParam Long featureId) {
 
-		featureService.saveImagePath(featureId,imagePath);
+		featureService.saveImagePath(featureId, imagePath);
 
 		return "redirect:/feature/show";
 	}
 
+	@GetMapping("/feature/pdf")
+	public ResponseEntity<byte[]> searchPDF(@RequestParam Long featureId, Model model) {
+
+		Feature feature = featureService.findByID(featureId);
+		List<File> files = featureService.searchPDF(feature.getIndex());
+
+		byte[] pdfContents = null;
+
+		HttpHeaders headers = new HttpHeaders();
+		
+		headers.setContentType(MediaType.parseMediaType("application/pdf"));
+		Path filename = Paths.get(files.get(0).toString());
+		try {
+			pdfContents = Files.readAllBytes(filename);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	
+		headers.add("Content-Disposition", "inline; filename=file://///wielton.corp/s-it-new/QAD_PDF/pdf/R287-K237100.pdf");
+	
+		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdfContents, headers, HttpStatus.OK);
+		return response;
+
+
+
+		// model.addAttribute("files", files);
+
+		// model.addAttribute("title", "PDF links");
+		// model.addAttribute("path", "feature/pdfList");
+		// return "main";
+	}
+
 }

@@ -156,7 +156,7 @@ public class UsersController {
         return "redirect:/userProfile?userId=" + userId;
     }
 
-    public Set<String> listFilesUsingFileWalk(String dir) throws IOException {
+    public static Set<String> listFilesUsingFileWalk(String dir) throws IOException {
         try (Stream<Path> stream = Files.walk(Paths.get(dir))) {
             return stream.filter(file -> !Files.isDirectory(file)).map(Path::getFileName).map(Path::toString)
                     .collect(Collectors.toSet());

@@ -24,7 +24,7 @@
 			<a name="anchor_${temp}"></a>
 			<div class="row">
 				<div class="col-2 border-bottom m-1">${feature.name}</div>
-				<div class="col-2 border-bottom m-1">${feature.index}</div>
+				<div class="col-2 border-bottom m-1">${feature.index} <a href="/feature/pdf?featureId=${feature.id}">pdf?</a></div>
 				<div class="col-2 border-bottom m-1">
 					<a href=${imagesPath}${feature.imagePath} target="_blank" class="rys float-right">
 						<img src=${imagesPath}${feature.imagePath} alt="Flowers in Chania" width="150"

@@ -1,9 +1,15 @@
 package pl.sda.pms.feature;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.stereotype.Service;
 import pl.sda.pms.OrderFeature.OrderFeatureController;
+import pl.sda.pms.users.UsersController;
 
 @Service
 public class FeatureService {
@@ -116,14 +122,37 @@ public class FeatureService {
 	}
 
 	public Feature findFeatureByNameAndIndex(Feature f) {
-		return 	featureRepository.findFeatureByNameAndIndex(f.getName(),f.getIndex());
+		return featureRepository.findFeatureByNameAndIndex(f.getName(), f.getIndex());
 	}
 
 	public void saveImagePath(Long featureId, String imagePath) {
 
-		Feature feature=featureRepository.findById(featureId).get();
+		Feature feature = featureRepository.findById(featureId).get();
 		feature.setImagePath(imagePath);
 		featureRepository.save(feature);
+	}
+
+	public List<File> searchPDF(String index) {
+		
+		// String path="\\wielton.corp\s-it-new\QAD_PDF\pdf";
+		try {
+			//Set<String> filesList = UsersController.listFilesUsingFileWalk("\\\\wielton.corp\\s-it-new\\QAD_PDF\\pdf");
+			index=index.replace("-W6", "");
+			index=index.replace("-W2", "");
+
+			String searchIndex=index;
+			File dir = new File("\\\\wielton.corp\\s-it-new\\QAD_PDF\\pdf");
+			File[] filesArray = dir.listFiles((dir1, name) -> name.endsWith(searchIndex+".pdf"));
+			List<File> files=new ArrayList<>(Arrays.asList(filesArray));
+			
+			return files;
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 	
