@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 
 
@@ -79,13 +80,14 @@ public class ImageController {
 		return res;
 	}
 
-	// @RequestMapping(value = "/image/saveCanvasImageToFtp", method = RequestMethod.POST)
-	// @ResponseBody
 	@PostMapping(value = "/image/saveCanvasImageToFtp", produces = "application/json")
 	@ResponseBody
-	public String saveCanvasImageToFtp(@RequestParam(value = "imageBase64", defaultValue = "") String imageBase64, @RequestParam String featureName) {
+	public String saveCanvasImageToFtp(@RequestParam(value = "imageBase64", defaultValue = "") String imageBase64, @RequestParam String featureId) {
+		Feature feature=featureService.findByID(Long.parseLong(featureId));
 
-		String imagePath=imageService.saveToFtp(imageBase64,featureName);
+		String imagePath=imageService.saveToFtp(imageBase64,feature.getName());
+
+		featureService.saveImagePath(feature.getId(), imagePath);
 		return imagePath;
 	}
 

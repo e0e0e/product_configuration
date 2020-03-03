@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <div class="container bg-info" >
-	<div id="info" value="${feature.id}" class="text-center m-2">
+	<div id="info" value="${feature.id}" class="text-center m-3">
 		Focus this tab and press
 		<kbd>CTRL</kbd>
 		+
@@ -9,22 +9,37 @@
 		. The image on your clipboard will be rendered on the canvas !
 	</div>
 	<div class="text-center">
-    
-    <div class="row bg-secondary text-light">
-    <div class="col" id="featureName" value="${feature.name}">
-    ${feature.name}
-    </div>
-    <div class="col">
-    ${feature.index}
-    </div>
-     <div class="col">
-    ${feature.imagePath}
-    </div>
-     <div class="col" id="fileName">
 
+     <div class="row bg-secondary text-light">
+         <div class="col">
+             Name
+         </div>
+         <div class="col">
+             Index
+         </div>
+         <div class="col">
+             Old image name
+         </div>
+         <div class="col">
+             New image name
+         </div>
+     </div>
+
+    <div class="row bg-secondary text-light">
+        <div class="col" id="featureName" value="${feature.name}">
+            ${feature.name}
+        </div>
+        <div class="col">
+            ${feature.index}
+        </div>
+        <div class="col">
+            ${feature.imagePath}
+        </div>
+        <div class="col" id="fileName">
+
+        </div>
     </div>
-    </div>
-	<div><button onclick="saveCanvasImage()" id="saveButton">Save to ftp</button></div>
+	<div class="m-4"><button onclick="saveCanvasImage()" id="saveButton">Save image to feature</button></div>
 
 	<image id="theimage"></image>
 		<canvas class="p-2 m-2" style="border: 1px solid grey; width: 80%"
@@ -41,14 +56,13 @@ function saveCanvasImage(){
     let imageData = myCanvas.toDataURL();
     let featureId=document.getElementById("info").getAttribute("value");
     let  featureName=document.getElementById("featureName").getAttribute("value");
-    console.log(featureName);
-    // document.getElementById("mycanvas").style.display="none";
-    // document.getElementById("saveButton").style.display="none";
+document.getElementById("info").innerHTML="Wait";
+    document.getElementById("saveButton").style.display="none";
     
 
     $.ajax({
         url:'/image/saveCanvasImageToFtp',
-        data:{imageBase64: imageData, featureName: featureName},
+        data:{imageBase64: imageData, featureId: featureId},
         type: 'post',
         dataType: 'text',
         timeout: 10000,
@@ -62,9 +76,8 @@ function saveCanvasImage(){
                  console.log("No file saved?");
                
             }else{
-                console.log("<a href='/feature/saveImageName?imagePath="+fileName+"&featureId="+featureId+">Save?</a>");
                 document.getElementById("fileName").innerHTML=fileName;
-              document.getElementById("info").innerHTML="<a class='bg-warning m-2 p-2' href='/feature/saveImageName?imagePath="+fileName+"&featureId="+featureId+"'>Save?</a>";
+                document.getElementById("info").innerHTML="Image saved to feature";
             }
         }
     });

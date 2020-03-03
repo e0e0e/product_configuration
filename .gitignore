@@ -424,3 +424,4 @@ $RECYCLE.BIN/
 
 .vscode/
 db-dump.sql
+src/main/resources/application.properties

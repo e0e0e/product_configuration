@@ -29,10 +29,10 @@
 		>No standard
 		<br />
 		<br /> <label>Feature Image:</label>
-		<a class="nav-link text-warning font-weight-bold btn btn-outline-dark" href="/image/get?featureId=${feature.id}">image<span
+		<a class="nav-link text-warning font-weight-bold btn btn-outline-dark"  href="/image/get?featureId=${feature.id}">image<span
 				class="glyphicon glyphicon-plus text-warning"></span></a>
 		<br />
-		<input type="text" class="text-dark" name="imagePath" value="${feature.imagePath}"><br />
+		<input type="text" class="text-dark" name="imagePath" size="100" value="${feature.imagePath}"><br />
 		<label>Price:</label><br />
 		<a href=${imagesPath}${feature.imagePath} target="_blank" class="rys float-right">
 			<img src=${imagesPath}${feature.imagePath} alt="Flowers in Chania" width="200"
