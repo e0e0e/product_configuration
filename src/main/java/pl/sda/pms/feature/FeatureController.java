@@ -6,11 +6,13 @@ import java.util.logging.ErrorManager;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.OrderFeature.OrderFeatureService;
@@ -177,16 +179,31 @@ public class FeatureController {
 	}
 
 	@GetMapping("/delete/feature")
-	public String deleteEditedFeature(@RequestParam Long featureId, @RequestParam Long temp, Model model) {
+	public String  deleteEditedFeature(@RequestParam Long featureId, @RequestParam Long temp, Model model) {
 		try {
 			featureService.deleteById(featureId);
 		} catch (Exception e) {
-			System.out.println("Delete feature failed, probably it is used in somewhere: " + e.getMessage());
+			model.addAttribute("errorMessage", "Delete feature failed, probably it is used in somewhere, can't delete if it is used in product definition.");
+				model.addAttribute("title", "Show Error");
+				model.addAttribute("path", "error/show");
+				return "main";
+	
 		}
 
 		return "redirect:/feature/show#anchor_" + temp;
 	}
 
+
+	
+
+	@GetMapping("/feature/saveImageName")
+	public String saveImageName(@RequestParam String imagePath,
+	 @RequestParam Long featureId) {
+
+		featureService.saveImagePath(featureId,imagePath);
+
+		return "redirect:/feature/show";
+	}
 
 	
 }

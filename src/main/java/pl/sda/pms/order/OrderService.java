@@ -246,8 +246,8 @@ public class OrderService {
 		Map<String, String> paramMap = paramMapStart.entrySet().stream().filter(x -> !x.getValue().equals(""))
 				.collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
 
-		order.getOrderFeatures().forEach(
-				x -> System.out.println(x.getProductFeature().getId() + " - " + x.getProductFeature().getName()));
+		// order.getOrderFeatures().forEach(
+		// 		x -> System.out.println(x.getProductFeature().getId() + " - " + x.getProductFeature().getName()));
 
 		Map<OrderFeature, Color> colorMap = paramMap.entrySet().stream()
 				.collect(Collectors.toMap(x -> order.findByProductFeatureID(Long.parseLong(x.getKey())),

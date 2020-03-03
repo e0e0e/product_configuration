@@ -37,8 +37,10 @@
 				</c:if>
 				>No standard
 				<br />
-				<br /> <label>Feature Image:</label> <br /> <input type="text" class="text-dark" name="imagePath"
-					value="${feature.imagePath}"><br /> <label>Price:</label><br />
+				<br /> <label>Feature Image:</label>
+				<br />
+				<input type="text" class="text-dark" name="imagePath" value="${feature.imagePath}"><br />
+				<label>Price:</label><br />
 				<input type="text" class="text-dark" name="price" value="${feature.price}"><br />
 				<label>Index:</label><br />
 				<input type="text" class="text-dark" name="index" value="${feature.index}"><br />

@@ -119,6 +119,13 @@ public class FeatureService {
 		return 	featureRepository.findFeatureByNameAndIndex(f.getName(),f.getIndex());
 	}
 
+	public void saveImagePath(Long featureId, String imagePath) {
+
+		Feature feature=featureRepository.findById(featureId).get();
+		feature.setImagePath(imagePath);
+		featureRepository.save(feature);
+	}
+
 	
 
 }

@@ -41,6 +41,8 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+	<script src="/resources/js/canvas2image.js"></script>
 
 <script>
 	$(document).ready(function() {

@@ -21,18 +21,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pl.sda.pms.feature.FeatureService;
+
+
 @Controller
 public class ImageController {
 	private final ImageService imageService;
+	private final FeatureService featureService;
 
-	public ImageController(ImageService imageService) {
+	public ImageController(ImageService imageService,FeatureService featureService) {
 		this.imageService = imageService;
+		this.featureService = featureService;
 
 	}
 
 	@GetMapping("/image/get")
-	public String getImage(Model model) {
+	public String getImage(@RequestParam(required =false) Long featureId,
+	 Model model) {
 
+		model.addAttribute("feature", featureService.findByID(featureId));
 		model.addAttribute("title", "Get image");
 		model.addAttribute("path", "image/getImage");
 		return "main";
@@ -72,12 +79,14 @@ public class ImageController {
 		return res;
 	}
 
-	@RequestMapping(value = "/image/saveCanvasImageToFtp", method = RequestMethod.POST)
+	// @RequestMapping(value = "/image/saveCanvasImageToFtp", method = RequestMethod.POST)
+	// @ResponseBody
+	@PostMapping(value = "/image/saveCanvasImageToFtp", produces = "application/json")
 	@ResponseBody
-	public void saveCanvasImageToFtp(@RequestParam(value = "imageBase64", defaultValue = "") String imageBase64) {
+	public String saveCanvasImageToFtp(@RequestParam(value = "imageBase64", defaultValue = "") String imageBase64, @RequestParam String featureName) {
 
-		imageService.saveToFtp(imageBase64);
-
+		String imagePath=imageService.saveToFtp(imageBase64,featureName);
+		return imagePath;
 	}
 
 	@GetMapping("/image/list")
