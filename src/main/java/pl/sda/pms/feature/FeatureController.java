@@ -227,19 +227,12 @@ public class FeatureController {
 			e.printStackTrace();
 		}
 	
-		headers.add("Content-Disposition", "inline; filename=file://///wielton.corp/s-it-new/QAD_PDF/pdf/R287-K237100.pdf");
+		headers.add("Content-Disposition", "inline; filename="+filename);
 	
 		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdfContents, headers, HttpStatus.OK);
 		return response;
 
-
-
-		// model.addAttribute("files", files);
-
-		// model.addAttribute("title", "PDF links");
-		// model.addAttribute("path", "feature/pdfList");
-		// return "main";
 	}
 
 }
