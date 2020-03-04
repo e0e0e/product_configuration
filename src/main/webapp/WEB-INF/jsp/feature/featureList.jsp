@@ -8,6 +8,7 @@
 </c:if>
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
+	<%@ page import="pl.sda.pms.feature.Feature" %>
 	<div>
 		<a href="/feature/add" style="float: left;"> <span class="glyphicon glyphicon-plus text-dark"></span></a>
 	</div>
@@ -24,7 +25,17 @@
 			<a name="anchor_${temp}"></a>
 			<div class="row">
 				<div class="col-2 border-bottom m-1">${feature.name}</div>
-				<div class="col-2 border-bottom m-1">${feature.index} <a href="/feature/pdf?featureId=${feature.id}">pdf?</a></div>
+				<div class="col-2 border-bottom m-1">${feature.index} <%
+				String headerNames = request.getHeader("host");
+
+				Feature featureId =(Feature) pageContext.findAttribute("feature");
+
+					if(headerNames.equals("localhost:8081")){
+						out.println("<a href='/feature/pdf?featureId="+featureId.getId()+"'> <i class='fa fa-file-pdf-o' aria-hidden='true'></i></a>");
+					}
+				%>
+				
+				</div>
 				<div class="col-2 border-bottom m-1">
 					<a href=${imagesPath}${feature.imagePath} target="_blank" class="rys float-right">
 						<img src=${imagesPath}${feature.imagePath} alt="Flowers in Chania" width="150"

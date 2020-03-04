@@ -129,7 +129,7 @@ public class FeatureController {
 
 		}
 
-		return "redirect:/feature/list";
+		return "redirect:/feature/show";
 	}
 
 	@PostMapping("/feature/existingFeatureChange")
@@ -209,8 +209,23 @@ public class FeatureController {
 		return "redirect:/feature/show";
 	}
 
+	@GetMapping("/featureOpen/pdf")
+	public String searchPDF(@RequestParam Long featureId, Model model) {
+
+		Feature feature = featureService.findByID(featureId);
+		List<File> files = featureService.searchPDF(feature.getIndex());
+
+		
+		model.addAttribute("files", files);
+
+		model.addAttribute("title", "PDF links");
+		model.addAttribute("path", "feature/pdfList");
+		return "main";
+	}
+
+
 	@GetMapping("/feature/pdf")
-	public ResponseEntity<byte[]> searchPDF(@RequestParam Long featureId, Model model) {
+	public ResponseEntity<byte[]> openPDF(@RequestParam Long featureId, Model model) {
 
 		Feature feature = featureService.findByID(featureId);
 		List<File> files = featureService.searchPDF(feature.getIndex());
@@ -234,5 +249,6 @@ public class FeatureController {
 		return response;
 
 	}
+
 
 }

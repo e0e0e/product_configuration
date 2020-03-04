@@ -11,7 +11,7 @@
 	if(headerNames.equals("localhost:8081")){
 		out.println("<nav class='navbar navbar-expand-lg navbar-dark bg-secondary'>");
 	}else{
-out.println("<nav class='navbar navbar-expand-lg navbar-dark bg-info'>");
+		out.println("<nav class='navbar navbar-expand-lg navbar-dark bg-info'>");
 
 	}
 %>
