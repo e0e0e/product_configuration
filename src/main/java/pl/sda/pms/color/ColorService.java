@@ -15,12 +15,24 @@ public class ColorService {
 	}
 
 
-	public void create(String name, String ral, String hex) {
+	public void create(String name, String ral, String hex, String type) {
 		Color color=new Color();
 
 		color.setName(name);
 		color.setRal(ral);
 		color.setHex(hex);
+		color.setType(type);
+
+		colorRepository.save(color);
+
+	}
+	public void edit(Long colorId,String name, String ral, String hex, String type) {
+		Color color=colorRepository.findById(colorId).get();
+
+		color.setName(name);
+		color.setRal(ral);
+		color.setHex(hex);
+		color.setType(type);
 
 		colorRepository.save(color);
 

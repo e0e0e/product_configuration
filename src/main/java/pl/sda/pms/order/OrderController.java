@@ -104,7 +104,7 @@ public class OrderController {
 		Map<String, Feature> orderMap = order.getOrderFeatures().stream()
 				.filter(x -> (x.getProductFeature().getColor() != null && x.getProductFeature().getColor() != false))
 				.collect(Collectors.toMap(fp -> fp.getProductFeature().getName(), f -> f.getFeature()));
-		List<Color> colors = colorService.findAll();
+		List<Color> colors = colorService.findAll().stream().sorted((o1,o2)->o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
 
 		model.addAttribute("orderFeatures", orderFeatures);
 		model.addAttribute("orderMap", orderMap);

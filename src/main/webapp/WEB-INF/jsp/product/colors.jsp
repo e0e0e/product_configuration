@@ -17,7 +17,7 @@
 		<div class="row">
 <div class="col-2 m-1">Product Feature</div>
 <div class="col-4 m-1">Selected</div>
-<div class="col-2 m-1">Color RAL</div>
+<div class="col-4 m-1">Color RAL</div>
 
 </div>
 		
@@ -42,11 +42,11 @@
                             <div class="col-2 m-1">${configList.productFeature.name}</div>
                                 <div class="col-4 m-1" id="${configList.productFeature.name}">${configList.feature.name}</div>
                                 
-                                <div class="col-2 m-1">
+                                <div class="col-4 m-1">
                                     <select name="${configList.productFeature.id}" class="text-dark" value="${configList.color.id}">
                                      <option value="" selected>${configList.color.ral}</option>
                                         <c:forEach var="color" items="${colors}">
-                                        <option value="${color.id}" style="background-color:${color.hex}; text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">${color.ral}</option>
+                                        <option value="${color.id}" style="background-color:${color.hex}; text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;">${color.name} - ${color.type}</option>
                                         </c:forEach>
                                     </select>
                                 </div>

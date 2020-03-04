@@ -15,20 +15,26 @@ import pl.sda.pms.OrderFeature.OrderFeature;
 public class Color {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
     private String Ral;
     private String Hex;
     private String name;
+    private String type;
 
     @OneToOne
     @JsonIgnore
     private OrderFeature orderFeature;
 
- 
-
-
     public Color() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Long getId() {
