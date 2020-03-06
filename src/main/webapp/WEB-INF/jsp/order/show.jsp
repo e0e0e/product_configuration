@@ -97,7 +97,7 @@
 								<div class="col-1">${feature.feature.mIndex}</div>
 								<c:choose>
 									<c:when test="${feature.productFeature.color==true}">
-										<div class="col-1 m-1">${feature.color.ral}<span
+										<div class="col-1 m-1">${feature.color.type}<span
 												class="glyphicon glyphicon-tint"
 												style="color:${feature.color.hex};"></span></div>
 									</c:when>
@@ -142,7 +142,7 @@
 							</div>
 							<div class="col-1 m-1">${feature.feature.index}</div>
 							<div class="col-1 m-1">${feature.feature.mIndex}</div>
-							<div class="col-1 m-1">${feature.color.ral}<span class="glyphicon glyphicon-tint"
+							<div class="col-1 m-1">${feature.color.type}<span class="glyphicon glyphicon-tint"
 									style="color:${feature.color.hex};"></span></div>
 							<div class="col-1 m-1"></div>
 							<div class="col-1 m-1">
@@ -180,7 +180,7 @@
 				<div class="col-1 m-1">${feature.feature.mIndex}</div>
 				<c:choose>
 					<c:when test="${feature.productFeature.color==true}">
-						<div class="col-1 m-1">${feature.color.ral}<span class="glyphicon glyphicon-tint"
+						<div class="col-1 m-1">${feature.color.type}<span class="glyphicon glyphicon-tint"
 								style="color:${feature.color.hex};"></span></div>
 					</c:when>
 					<c:otherwise>

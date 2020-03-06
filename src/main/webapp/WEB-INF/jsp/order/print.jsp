@@ -73,7 +73,7 @@
 		<div class="col-2 m-1"></div>
 		<div class="col-5 m-1"></div>
 		<div class="col-2 m-1">Indeks</div>
-		<div class="col-1 m-1">Ral color</div>
+		<div class="col-1 m-1">Color</div>
 		<div class="col-1 m-1">Price</div>
 	</div>
 
@@ -82,7 +82,7 @@
 			<div class="col-2 m-1">${feature.productFeature.name}:</div>
 			<div class="col-5 m-1">
 				<c:if test="${feature.feature.noStandard=='true'}">
-					${feature.color.ral}<span class="glyphicon glyphicon-exclamation-sign"
+					<span class="glyphicon glyphicon-exclamation-sign"
 						style="color:${feature.color.hex};"></span>
 				</c:if>
 				${feature.feature.name}
@@ -90,7 +90,7 @@
 			<div class="col-2 m-1">${feature.feature.index}</div>
 			<div class="col-1 m-1">
 				<c:if test="${feature.productFeature.color=='true'}">
-					${feature.color.ral}<span class="glyphicon glyphicon-tint"
+					${feature.color.type}<span class="glyphicon glyphicon-tint"
 						style="color:${feature.color.hex};"></span>
 				</c:if>
 			</div>
