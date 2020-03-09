@@ -7,13 +7,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
 import org.springframework.stereotype.Service;
 import pl.sda.pms.OrderFeature.OrderFeatureController;
+import pl.sda.pms.order.Ord;
 import pl.sda.pms.users.UsersController;
 
 @Service
 public class FeatureService {
 
+	@PersistenceContext
+	EntityManager entityManager;
+	
 	private final FeatureRepository featureRepository;
 
 	public FeatureService(FeatureRepository featureRepository) {
@@ -152,6 +161,23 @@ public class FeatureService {
 			e.printStackTrace();
 		}
 		
+		return null;
+	}
+
+	public List<String> findOldName(String featureName) {
+
+		List<Feature> featuresList = featureRepository.findByName(featureName);
+		List<Object> revisions =new ArrayList<>();
+
+
+		for(Feature f:featuresList){
+		@SuppressWarnings("unchecked")
+		List<Object> revisions0 = AuditReaderFactory.get(entityManager).createQuery()
+				.forRevisionsOfEntity(Feature.class, false, true).add(AuditEntity.id().eq(f.getId())).getResultList();
+				revisions.addAll(revisions0);
+		}
+		
+
 		return null;
 	}
 

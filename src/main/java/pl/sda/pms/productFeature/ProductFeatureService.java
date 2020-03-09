@@ -6,9 +6,15 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
 import org.springframework.stereotype.Service;
 
 import javassist.expr.NewArray;
@@ -21,6 +27,9 @@ import pl.sda.pms.productConfiguration.ProductConfigurationService;
 
 @Service
 public class ProductFeatureService {
+
+	@PersistenceContext
+	EntityManager entityManager;
 
 	private final ProductFeatureRepository productFeatureRepository;
 	private final FeatureService featureService;
@@ -287,6 +296,22 @@ public class ProductFeatureService {
 
 	public Boolean existsById(Long id) {
 		return productFeatureRepository.existsById(id);
+	}
+
+	public List<String> findOldName(String featureName) {
+
+		List<ProductFeature> productFeaturesList = productFeatureRepository.findByName(featureName);
+
+		ProductFeature pf = productFeaturesList.get(0);
+		@SuppressWarnings("unchecked")
+		List<ProductFeature> revisions = AuditReaderFactory.get(entityManager).createQuery()
+				.forRevisionsOfEntity(ProductFeature.class, true, true).add(AuditEntity.id().eq(pf.getId()))
+				.getResultList();
+
+		Set<String> result = revisions.stream().map(x -> x.getName()).collect(Collectors.toSet());
+		result.remove(featureName);
+
+		return null;
 	}
 
 }

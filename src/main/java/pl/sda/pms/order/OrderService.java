@@ -185,11 +185,10 @@ public class OrderService {
 
 		List<Map<String, String>> mapList = new ArrayList<>();
 		List<Date> dateList = new ArrayList<>();
-		List<Ord> orderList=new ArrayList<>();
+		List<Ord> orderList = new ArrayList<>();
 		for (Object o : revisions) {
 			Object[] orderAud = (Object[]) o;
 			Ord order = (Ord) orderAud[0];
-			
 
 			try {
 				Map<String, String> result = new ObjectMapper().readValue(order.getOrderFeaturesStrings(), Map.class);
@@ -197,7 +196,7 @@ public class OrderService {
 				orderList.add(order);
 				dateList.add(((CustomRevisionEntity) orderAud[1]).getRevisionDate());
 			} catch (Exception e) {
-				
+
 				System.out.println("Error parsing JSON: " + e.getLocalizedMessage());
 			}
 
@@ -205,6 +204,15 @@ public class OrderService {
 		Ord currentOrder = orderRepository.findById(orderId).get();
 		List<String> nameList = currentOrder.getPositions();
 		List<OrderAud> orderAuds = new ArrayList<>();
+
+		// Set<OrderFeature> of = new HashSet<>();
+		// for (Ord o : orderList) {
+		// Set<OrderFeature> orderPorducts=new HashSet<>();
+		// orderPorducts = o.getOrderFeatures().stream()
+		// .filter(x ->
+		// !nameList.contains(x.getProductFeature().getName())).collect(Collectors.toSet());
+		// of.addAll(orderPorducts);
+		// }
 
 		for (int i = 1; i < mapList.size(); i++) {
 
@@ -224,7 +232,25 @@ public class OrderService {
 
 					}
 				} else {
-					throw new RuntimeException("Product feature name was changed so it will make problems");
+					Set<String> mapKeySet = new HashSet<>();
+					//Set<String> oldMapKeySet = new HashSet<>();
+					mapKeySet.addAll(mapList.get(i).keySet());
+					//oldMapKeySet.addAll(mapList.get(i - 1).keySet());
+
+					mapKeySet.removeAll(nameList);
+
+					for (String oldName : mapKeySet) {
+						if (!mapList.get(i).get(oldName).equals(mapList.get(i - 1).get(oldName))) {
+							FeatureAud featureAud = new FeatureAud();
+							featureAud.setPfName(oldName);
+							featureAud.setOldFeature(mapList.get(i - 1).get(oldName));
+							featureAud.setNewFeature(mapList.get(i).get(oldName));
+
+							orderAud.addFeatureAud(featureAud);
+						}
+					}
+
+					System.out.println("Product feature name was changed so it will make problems");
 				}
 
 			}
@@ -247,7 +273,8 @@ public class OrderService {
 				.collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
 
 		// order.getOrderFeatures().forEach(
-		// 		x -> System.out.println(x.getProductFeature().getId() + " - " + x.getProductFeature().getName()));
+		// x -> System.out.println(x.getProductFeature().getId() + " - " +
+		// x.getProductFeature().getName()));
 
 		Map<OrderFeature, Color> colorMap = paramMap.entrySet().stream()
 				.collect(Collectors.toMap(x -> order.findByProductFeatureID(Long.parseLong(x.getKey())),
