@@ -118,6 +118,9 @@ table tr:nth-child(even) {
 .line:hover {
   background-color: #dddcd7;
 }
+select{
+    font-family:"Courier New", Courier, monospace
+}
 .bat:hover {
   background-color: yellow;
   color:black;

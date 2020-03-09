@@ -4,6 +4,7 @@
 <%@ taglib
 	prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	<div id="cloud" style="display:none;"></div>
 <div class="container">
 	<%@include file="../featureNavigation.jsp"%>
 	<c:if test="${errorMessage!=null}">
@@ -55,10 +56,10 @@
 			<h1>Select existing Feature</h1>
 			<form method="post" action="/feature/existingFeatureChange?featureId=${param.featureId}&orderId=${orderId}">
 				<label>Features:</label><br />
-				<select name="existingFeatureId" calss="form-control w-100" class="custom-select"
+				<select name="existingFeatureId" id="existingFeatureId" calss="form-control w-100" class="custom-select"
 					style="font-size: 14px;" size="10">
 					<c:forEach var="exFeature" items="${existingFeatures}">
-						<option value="${exFeature.id}">${exFeature.name}____${exFeature.index}</option>
+						<option value="${exFeature.id}">${exFeature.name}_${exFeature.index}</option>
 
 					</c:forEach>
 					<select>
@@ -68,3 +69,33 @@
 		</div>
 	</div>
 </div>
+
+<script>
+
+var spacesToAdd = 5;
+var biggestLength = 0;
+
+$("#existingFeatureId option").each(function(){
+var len = $(this).text().length;
+    if(len > biggestLength){
+        biggestLength = len;
+    }
+});
+var padLength = biggestLength + spacesToAdd;
+$("#existingFeatureId option").each(function(){
+    var parts = $(this).text().split('_');
+    var strLength = parts[0].length;
+    for(var x=0; x<(padLength-strLength); x++){
+        parts[0] = parts[0]+' '; 
+    }
+    $(this).text(parts[0].replace(/ /g, '\u00a0')+parts[1]).text;
+});
+
+$('option').hover(function(){
+    
+	document.getElementById("cloud").innerHTML=$(this).text();
+	document.getElementById("cloud").style.display="block";
+
+
+});
+</script>
