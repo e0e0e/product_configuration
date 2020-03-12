@@ -186,7 +186,7 @@ public class ImageService {
 					.parseBase64Binary(imageBase64.replaceAll("data:image/.+;base64,", ""));
 			BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(decodedBytes));
 			String fileWithSpaces=featureName+"_"+(new Date().getTime()) + ".png";
-			String fileName=fileWithSpaces.replace(" ", "_");
+			String fileName=fileWithSpaces.replaceAll("[\u0001-\u001f<>:\"/\\\\|?*\u007f\\+\\s+]+", "_");
 			String firstRemoteFile = "/imagesLd/" + fileName;
 
 			System.out.println("Start uploading first file");
@@ -199,6 +199,12 @@ public class ImageService {
 			if (done) {
 				System.out.println("The first file is uploaded successfully.");
 				return fileName;
+			}else{
+				if (ftpClient.isConnected()) {
+					ftpClient.logout();
+					ftpClient.disconnect();
+				}
+				System.out.println("Upload Failed");
 			}
 
 

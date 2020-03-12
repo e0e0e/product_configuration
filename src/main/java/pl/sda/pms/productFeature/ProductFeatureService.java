@@ -272,7 +272,7 @@ public class ProductFeatureService {
 	}
 
 	public Collection<Feature> findFeaturesByProductFeatureName(String productFeatureName) {
-		List<ProductFeature> productFeatures = productFeatureRepository.findByName(productFeatureName);
+		List<ProductFeature> productFeatures = productFeatureRepository.findAllByName(productFeatureName);
 		Set<Feature> featuresInProductFeature = new HashSet<>();
 		productFeatures.stream().forEach(x -> featuresInProductFeature.addAll(x.getFeature()));
 
