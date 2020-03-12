@@ -1,5 +1,7 @@
 package pl.sda.pms.order;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,6 +45,8 @@ import pl.sda.pms.productConfiguration.ProductConfigurationService;
 import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.productFeature.ProductFeatureService;
 import pl.sda.pms.projects.Project;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 @Service
 public class OrderService {
@@ -250,7 +254,7 @@ public class OrderService {
 						}
 					}
 
-					System.out.println("Product feature name was changed so it will make problems");
+					System.out.println("Product feature name was changed between order versions");
 				}
 
 			}
@@ -391,6 +395,20 @@ public class OrderService {
 
 		orderToChange.setNoStandard(true);
 		save(orderToChange);
+
+	}
+
+	public void readMatrix() {
+
+		try {
+			FileInputStream fis=new FileInputStream(new File("C:\\LD Orders _MATRIX MASTER v.xlsx"));  
+			HSSFWorkbook wb=new HSSFWorkbook(fis);   
+
+
+
+		} catch (Exception e) {
+			System.out.println("excel fire read error: "+e.getLocalizedMessage());
+		}
 
 	}
 

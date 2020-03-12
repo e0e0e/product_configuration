@@ -1,5 +1,7 @@
 package pl.sda.pms.order;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -258,5 +260,17 @@ public class OrderController {
 		System.out.println("File writen.");
 		
 		return null;
+	}
+
+
+	@GetMapping("/matrix")
+	public void getMatrix(Model model) {
+
+		orderService.readMatrix();
+	
+		
+
+		
+
 	}
 }
