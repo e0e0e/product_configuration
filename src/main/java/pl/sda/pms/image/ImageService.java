@@ -128,7 +128,7 @@ public class ImageService {
 			printNames(files2);
 
 		} catch (IOException ex) {
-			System.out.println("Oops! Something wrong happened");
+			System.out.println("Oops! Something wrong happened 0");
 			ex.printStackTrace();
 		} finally {
 			try {
@@ -189,11 +189,15 @@ public class ImageService {
 			String fileName=fileWithSpaces.replaceAll("[\u0001-\u001f<>:\"/\\\\|?*\u007f\\+\\s+]+", "_");
 			String firstRemoteFile = "/imagesLd/" + fileName;
 
-			System.out.println("Start uploading first file");
+			System.out.println("Start uploading first file: "+firstRemoteFile);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			System.out.println("Start writing");
 			 ImageIO.write(bufferedImage, "png", outputStream);
+			 System.out.println("Start inputStream");
 			 InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+			 System.out.println("Start storFile");
 			boolean done = ftpClient.storeFile(firstRemoteFile, inputStream);
+			System.out.println("Start closing");
 	            inputStream.close();
 			bufferedImage.flush();
 			if (done) {
@@ -211,6 +215,8 @@ public class ImageService {
 		} catch (IOException ex) {
 			System.out.println("Oops! Something wrong happened");
 			ex.printStackTrace();
+			throw new RuntimeException("Oops! Something wrong happened, when uploading image to FTP.");
+			
 		} finally {
 			// logs out and disconnects from server
 			try {

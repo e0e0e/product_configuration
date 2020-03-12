@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="temp" value="1" />
-<c:set var="imagesPath" value="http://konfigurator.viberti.pl/imagesLd/" />
+<c:set var="imagesPath" value="C://imagesLd//" />
 <c:set var="default" value="default.png" />
 
 <c:if test="${param.errorMessage!=null}">
