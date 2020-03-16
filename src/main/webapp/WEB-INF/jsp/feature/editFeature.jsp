@@ -34,8 +34,8 @@
 		<br />
 		<input type="text" class="text-dark" name="imagePath" size="100" value="${feature.imagePath}"><br />
 		<label>Price:</label><br />
-		<a href=${imagesPath}${feature.imagePath} target="_blank" class="rys float-right">
-			<img src=${imagesPath}${feature.imagePath} alt="Flowers in Chania" width="200"
+		<a href="/im/${feature.imagePath}" target="_blank" class="rys float-right">
+			<img src="/im/${feature.imagePath}" alt="Flowers in Chania" width="200"
 				onerror="imgError(this)"></a><br><br>
 		<input type="text" class="text-dark" name="price" value="${feature.price}"><br /> <label>Index:</label><br />
 		<input type="text" class="text-dark" name="index" size="100" value="${feature.index}"><br />

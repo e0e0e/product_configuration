@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="temp" value="1" />
-<c:set var="imagesPath" value="C://imagesLd//" />
 <c:set var="default" value="default.png" />
 
 <c:if test="${param.errorMessage!=null}">
@@ -37,8 +36,8 @@
 				
 				</div>
 				<div class="col-2 border-bottom m-1">
-					<a href=${imagesPath}${feature.imagePath} target="_blank" class="rys float-right">
-						<img src=${imagesPath}${feature.imagePath} alt="Flowers in Chania" width="150"
+					<a href="/im/${feature.imagePath}" target="_blank" class="rys float-right">
+						<img src="/im/${feature.imagePath}" alt="Flowers in Chania" width="150"
 							onerror="imgError(this)"></a>
 
 				</div>

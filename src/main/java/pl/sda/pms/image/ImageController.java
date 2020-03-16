@@ -104,6 +104,30 @@ public class ImageController {
 
 	}
 
+	@PostMapping(value = "/image/saveCanvasImageToHDD", produces = "application/json")
+	@ResponseBody
+	public String saveCanvasImageToHDD(@RequestParam(value = "imageBase64", defaultValue = "") String imageBase64,
+			HttpServletRequest request, @RequestParam String featureId) {
+		Feature feature = featureService.findByID(Long.parseLong(featureId));
+		try {
+
+			String filePath = getImagePath(request);
+			String imagePath = imageService.saveToHDD(imageBase64, feature.getName(), filePath);
+			featureService.saveImagePath(feature.getId(), imagePath);
+			return imagePath;
+		} catch (Exception e) {
+			System.out.println("Error:" + e.getLocalizedMessage());
+		}
+
+		return null;
+
+	}
+
+	private String getImagePath(HttpServletRequest request) {
+		String filePath0 = request.getServletContext().getRealPath("/");
+		return filePath0.replace("pm\\src\\main\\webapp\\", "").replace("ROOT\\", "");
+	}
+
 	@GetMapping("/image/list")
 	public String readFtp(Model model) throws Exception {
 		FTPFile[] imageList = imageService.readFtp();
@@ -128,22 +152,33 @@ public class ImageController {
 
 	// }
 
-	@GetMapping(value = "/im1", produces = MediaType.IMAGE_PNG_VALUE)
-	public @ResponseBody byte[] getImageWithMediaType(HttpServletRequest request) throws IOException {
+	@GetMapping(value = "/im/{imagePath}", produces = MediaType.IMAGE_PNG_VALUE)
+	public @ResponseBody byte[] getImageWithMediaType(@PathVariable String imagePath, HttpServletRequest request)
+			throws IOException {
 		BufferedImage originalImage = null;
-		String filePath0 = request.getServletContext().getRealPath("/");
-		String filePath = filePath0.replace("pm\\src\\main\\webapp\\", "");
+		String filePath = getImagePath(request);
+		File f = new File(filePath + "imagesLd\\" + imagePath);
+		if (f.exists() && f.canRead()) {
+			try {
 
-		originalImage = ImageIO.read(new File(filePath + "imagesLd\\73.png"));
+				originalImage = ImageIO.read(f);
 
+			} catch (Exception e) {
+				System.out.println("No file found error: "+e.getLocalizedMessage());
+				return null;
+			}
+		}else{
+			originalImage = ImageIO.read(new File(filePath + "imagesLd\\0.png"));
+
+		}
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(originalImage, "png", baos);
 		baos.flush();
 		byte[] imageInByte = baos.toByteArray();
 		baos.close();
 
-
 		return imageInByte;
+
 	}
 
 }

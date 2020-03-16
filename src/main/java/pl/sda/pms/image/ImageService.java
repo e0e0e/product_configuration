@@ -231,6 +231,42 @@ public class ImageService {
 		return null;
 	}
 
+	public String saveToHDD(String imageBase64, String featureName, String folderPath) {
+
+		try {
+
+			byte[] decodedBytes = DatatypeConverter.parseBase64Binary(imageBase64.replaceAll("data:image/.+;base64,", ""));
+			BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(decodedBytes));
+			String fileWithSpaces=featureName+"_"+(new Date().getTime()) + ".png";
+			String fileName=fileWithSpaces.replaceAll("[\u0001-\u001f<>:\"/\\\\|?*\u007f\\+\\s+]+", "_");
+			String firstRemoteFile = "/imagesLd/" + fileName;
+
+			
+
+			System.out.println(folderPath+"Start uploading first file: "+firstRemoteFile);
+	
+			System.out.println("Start writing");
+			File outputfile = new File(folderPath+ "/imagesLd/" + fileName);
+			 ImageIO.write(bufferedImage, "png", outputfile);
+			 System.out.println("File uploaded");
+			 return fileName;
+
+			
+
+
+		} catch (IOException ex) {
+			System.out.println("Oops! Something wrong happened");
+			ex.printStackTrace();
+			throw new RuntimeException("Oops! Something wrong happened, when uploading image to HDD.");
+			
+		} 
+			// logs out and disconnects from server
+			
+
+		
+	}
+
+
 	private static void printFileDetails(FTPFile[] files) {
 		DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for (FTPFile file : files) {

@@ -108,9 +108,9 @@
 
 								<div class="col-1">
 									<c:if test="${feature.feature.imagePath!=''}">
-										<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">
-											<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania"
-												width="50" onerror="imgError(this)">
+										<a href="/im/${feature.feature.imagePath}" target="_blank" class="rys">
+											<img src="/im/${feature.feature.imagePath}" alt="Flowers in Chania"
+												width="100" onerror="imgError(this)">
 										</a>
 									</c:if>
 								</div>
@@ -144,12 +144,11 @@
 							<div class="col-1 m-1">${feature.feature.mIndex}</div>
 							<div class="col-1 m-1">${feature.color.type}<span class="glyphicon glyphicon-tint"
 									style="color:${feature.color.hex};"></span></div>
-							<div class="col-1 m-1"></div>
 							<div class="col-1 m-1">
 								<c:if test="${feature.feature.imagePath!=''}">
-									<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">
-										<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania"
-											width="50" onerror="imgError(this)">
+									<a href="/im/${feature.feature.imagePath}" target="_blank" class="rys">
+										<img src="/im/${feature.feature.imagePath}" alt="Flowers in Chania"
+											width="100" onerror="imgError(this)">
 									</a>
 								</c:if>
 							</div>
@@ -189,8 +188,8 @@
 				</c:choose>
 				<div class="col-1 m-1">
 					<c:if test="${feature.feature.imagePath!=''}">
-						<a href=${imagesPath}${feature.feature.imagePath} target="_blank" class="rys">
-							<img src=${imagesPath}${feature.feature.imagePath} alt="Flowers in Chania" width="50"
+						<a href="/im/${feature.feature.imagePath}" target="_blank" class="rys">
+							<img src="/im/${feature.feature.imagePath}" alt="Flowers in Chania" width="100"
 								onerror="imgError(this)">
 						</a>
 					</c:if>

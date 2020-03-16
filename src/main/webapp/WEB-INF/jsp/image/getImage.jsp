@@ -61,7 +61,7 @@ document.getElementById("info").innerHTML="Wait";
     
 
     $.ajax({
-        url:'/image/saveCanvasImageToFtp',
+        url:'/image/saveCanvasImageToHDD',
         data:{imageBase64: imageData, featureId: featureId},
         type: 'post',
         dataType: 'text',

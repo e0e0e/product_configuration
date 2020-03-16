@@ -349,14 +349,19 @@ public class ProductConfigurationService {
 			if (!pC.getName().equals("pattern")) {
 
 				for (ProductFeature pF : pC.getConfigurationList()) {
-
-					ProductFeature productFeature = productConfiguration.findProductFeatureByName(pF.getName());
+					try {
+						ProductFeature productFeature = productConfiguration.findProductFeatureByName(pF.getName());
 					if (productFeature.getFeature() == null) {
 						productFeature.setFeature(new HashSet<>());
 					}
 					productFeature.getFeature().addAll(pF.getFeature());
 
 					productFeatureService.save(productFeature);
+					} catch (Exception e) {
+						System.out.println("Update pattern error: "+e.getLocalizedMessage()+" ther is no Product feature with name: "+pF.getName() +" in pattern, but in: "+pC.getName());
+					}
+
+					
 
 				}
 			} else {

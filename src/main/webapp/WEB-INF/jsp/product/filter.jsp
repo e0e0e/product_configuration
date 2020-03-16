@@ -1,7 +1,7 @@
 <%@ taglib
 	prefix="c"
 	uri="http://java.sun.com/jsp/jstl/core"%>
-		<c:set var = "imagesPath" value = "http://konfigurator.viberti.pl/imagesLd/"/>
+		<c:set var = "imagesPath" value = "/im/"/>
 		<c:set var = "default" value = "default.png"/>
 
 	<div id="NS"></div>
@@ -76,8 +76,8 @@
 						</div>
 						<div class="col-1">
 							<div class="text-dark">
-								<a href="${imagesPath}${configList.imagePath}" target="_blank" class="rys">						
-								<img src="${imagesPath}${configList.imagePath}" alt="Flowers in Chania" width="50" id="img-${configList.name}" onerror="imgError(this)" >
+								<a href="/im/${configList.imagePath}" target="_blank" class="rys">						
+								<img src="/im/${configList.imagePath}" alt="Flowers in Chania" width="50" id="img-${configList.name}" onerror="imgError(this)" >
 								</a>	
 							</div>
 						</div>
