@@ -199,8 +199,7 @@ public class ProductConfigurationService {
 	}
 
 	public List<ProductConfiguration> productSearch(Map<String, String> paramMap) {
-		Map<String, Feature> filterMap = paramMap.entrySet().stream()
-				.filter(x -> !x.getKey().startsWith("nst-"))
+		Map<String, Feature> filterMap = paramMap.entrySet().stream().filter(x -> !x.getKey().startsWith("nst-"))
 				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())).getName(),
 						x -> featureService.findByID(Long.parseLong(x.getValue()))));
 
@@ -266,23 +265,27 @@ public class ProductConfigurationService {
 					return false;
 				}).collect(Collectors.toList());
 
-
 		List<ProductConfiguration> productList = new ArrayList<>();
 
 		for (ProductConfiguration pC : productConfigurations) {
-			 if(!pC.getName().equals("pattern")){
-			Integer resultNumber = 0;
+			if (!pC.getName().equals("pattern")) {
+				Integer resultNumber = 0;
 
-			for (ProductFeature pF : pC.getConfigurationList()) {
-				if (pF.getFeature().contains(filterMap.get(pF.getName()))) {
-					resultNumber++;
+				for (ProductFeature pF : pC.getConfigurationList()) {
+					Set<String> pFNameSet = new HashSet<>();
+					pFNameSet.addAll(pF.getFeature().stream().map(x -> x.getName()).collect(Collectors.toSet()));
+
+					if (filterMap.get(pF.getName()) != null) {
+						if (pFNameSet.contains(filterMap.get(pF.getName()).getName())) {
+							resultNumber++;
+						}
+					}
+				}
+				if (resultNumber == filterMap.size()) {
+
+					productList.add(pC);
 				}
 			}
-			if (resultNumber == filterMap.size()) {
-
-				productList.add(pC);
-			}
-		}
 		}
 		return productList;
 	}
@@ -351,17 +354,17 @@ public class ProductConfigurationService {
 				for (ProductFeature pF : pC.getConfigurationList()) {
 					try {
 						ProductFeature productFeature = productConfiguration.findProductFeatureByName(pF.getName());
-					if (productFeature.getFeature() == null) {
-						productFeature.setFeature(new HashSet<>());
-					}
-					productFeature.getFeature().addAll(pF.getFeature());
+						if (productFeature.getFeature() == null) {
+							productFeature.setFeature(new HashSet<>());
+						}
+						productFeature.getFeature().addAll(pF.getFeature());
 
-					productFeatureService.save(productFeature);
+						productFeatureService.save(productFeature);
 					} catch (Exception e) {
-						System.out.println("Update pattern error: "+e.getLocalizedMessage()+" ther is no Product feature with name: "+pF.getName() +" in pattern, but in: "+pC.getName());
+						System.out.println("Update pattern error: " + e.getLocalizedMessage()
+								+ " ther is no Product feature with name: " + pF.getName() + " in pattern, but in: "
+								+ pC.getName());
 					}
-
-					
 
 				}
 			} else {
@@ -442,68 +445,67 @@ public class ProductConfigurationService {
 	}
 
 	public void addFeatureToProducts(String productsAndPfName) {
-		
+
 		JSONObject obj = new JSONObject(productsAndPfName);
-		Long featureId=Long.parseLong(obj.get("featureId").toString());
+		Long featureId = Long.parseLong(obj.get("featureId").toString());
 		JSONArray idArray = (JSONArray) obj.get("productsId");
-		List<Long> idList=idArray.toList().stream().map(x->Long.parseLong(x.toString())).collect(Collectors.toList());
-		String productFeatureName= obj.get("productFeatureName").toString();
-		List<ProductConfiguration> products=productConfigurationRepository.findAllById(idList);
-		
-		Feature feature=featureService.findByID(featureId);
+		List<Long> idList = idArray.toList().stream().map(x -> Long.parseLong(x.toString()))
+				.collect(Collectors.toList());
+		String productFeatureName = obj.get("productFeatureName").toString();
+		List<ProductConfiguration> products = productConfigurationRepository.findAllById(idList);
 
-		addFeatureToProductsByPf(feature, products,productFeatureName);
+		Feature feature = featureService.findByID(featureId);
 
-		System.out.println("added feature: "+ feature.getName()+" to: "+ productFeatureName);
-		
+		addFeatureToProductsByPf(feature, products, productFeatureName);
+
+		System.out.println("added feature: " + feature.getName() + " to: " + productFeatureName);
+
 	}
 
 	private void addFeatureToProductsByPf(Feature feature, List<ProductConfiguration> products,
 			String productFeatureName) {
 
-				products.stream().forEach(x->{
-					x.getConfigurationList().stream().filter(p->p.getName().equals(productFeatureName)).forEach(f->{
-						
-						f.addFeatureToFeatureSet(feature);
-						productFeatureService.save(f);
-						
-					});
+		products.stream().forEach(x -> {
+			x.getConfigurationList().stream().filter(p -> p.getName().equals(productFeatureName)).forEach(f -> {
 
+				f.addFeatureToFeatureSet(feature);
+				productFeatureService.save(f);
 
-				});	
+			});
 
+		});
 
 	}
 
 	public void deleteFeatureFromProducts(String productsAndPfName) {
 
 		JSONObject obj = new JSONObject(productsAndPfName);
-		Long featureId=Long.parseLong(obj.get("featureId").toString());
+		Long featureId = Long.parseLong(obj.get("featureId").toString());
 		JSONArray idArray = (JSONArray) obj.get("productsId");
-		List<Long> idList=idArray.toList().stream().map(x->Long.parseLong(x.toString())).collect(Collectors.toList());
-		String productFeatureName= obj.get("productFeatureName").toString();
-		List<ProductConfiguration> products=productConfigurationRepository.findAllById(idList);
-		
-		Feature feature=featureService.findByID(featureId);
+		List<Long> idList = idArray.toList().stream().map(x -> Long.parseLong(x.toString()))
+				.collect(Collectors.toList());
+		String productFeatureName = obj.get("productFeatureName").toString();
+		List<ProductConfiguration> products = productConfigurationRepository.findAllById(idList);
 
-		removeFeatureFromProductsByPf(feature, products,productFeatureName);
+		Feature feature = featureService.findByID(featureId);
 
-		System.out.println("Deleted feature: "+ feature.getName()+" to: "+ productFeatureName);
+		removeFeatureFromProductsByPf(feature, products, productFeatureName);
+
+		System.out.println("Deleted feature: " + feature.getName() + " to: " + productFeatureName);
 	}
 
 	private void removeFeatureFromProductsByPf(Feature feature, List<ProductConfiguration> products,
 			String productFeatureName) {
 
-					products.stream().forEach(x->{
-						x.getConfigurationList().stream().filter(p->p.getName().equals(productFeatureName)).forEach(f->{
-							
-							f.removeFeatureToFeatureSet(feature);
-							productFeatureService.save(f);
-							
-						});
-	
-	
-					});	
+		products.stream().forEach(x -> {
+			x.getConfigurationList().stream().filter(p -> p.getName().equals(productFeatureName)).forEach(f -> {
+
+				f.removeFeatureToFeatureSet(feature);
+				productFeatureService.save(f);
+
+			});
+
+		});
 	}
 
 }

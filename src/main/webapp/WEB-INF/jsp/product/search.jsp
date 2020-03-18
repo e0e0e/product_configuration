@@ -102,106 +102,113 @@
 function changeAction(val,da) {
 something = "${imagesPath}";
 	 var xhttp = new XMLHttpRequest();
-	    xhttp.onreadystatechange = function() {
-	         if (this.readyState == 4 && this.status == 200) {
-	        	 
-	        	 products=JSON.parse(this.responseText);
-	        	
-	        	 
-	        	 for (let key in products){
-	        		 let select='<option value="" selected disabled hidden>Select</option>';
-	        		   if(products.hasOwnProperty(key)){
+	    xhttp.onreadystatechange = function () {
+	    	if (this.readyState == 4 && this.status == 200) {
 
-	        		    if(products[key].length>1){	        		   
-	        		     for (let k in products[key]){
-	        		    	
-	        		    	
-	        		    	 if(products[key][k].selected==false){
-	        		    	 select=select.concat('<option value="'+products[key][k].id+'">'+products[key][k].name+'</option>');
-						
-;	        		    	 }else{
-	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected>'+products[key][k].name+'</option>'); 
-											let imagePath = products[key][k].imagePath;
-											let selected=document.getElementById(key);
-											 if(selected.style.backgroundColor!=="salmon"){
-												selected.style.backgroundColor="PaleGreen";
-											}
-											   if(imagePath!==''){
-													let e=document.getElementById("img-"+key);
-													e.src=something.concat(imagePath);
-													e.style.width="100px";
-													e.parentElement.href=something.concat(imagePath);
-											   }else{
-													let e=document.getElementById("img-"+key);
-													e.src=something.concat('0.png');
-													e.style.width="1px";
-													e.parentElement.href=something.concat(imagePath);
-
-											   }
-											// document.getElementById("bns-"+key).style.display="block";
-											let ind=document.getElementById("ind-"+key);
-											ind.innerHTML=products[key][0].index;
-								
-								// es.parentElement.href=something.concat(imagePath);
-								// es.width="1";
+	    		products = JSON.parse(this.responseText);
 
 
-	        		    	 }
-	        	 	
-	        		    	 }
-							 
-	        		     }else{
-	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected>'+products[key][0].name+'</option>');  
-							 				let selected=document.getElementById(key);
-											 if(selected.style.backgroundColor!=="salmon"){
-												selected.style.backgroundColor="PaleGreen";
-											}
-											let e=document.getElementById("img-"+key);
-							 				let imagePath = products[key][0].imagePath;
-											   if(imagePath!==''){
-													
-													e.src=something.concat(imagePath);
-													e.style.width="100px";
-													e.parentElement.href=something.concat(imagePath);
-											   }else{
-													e.src=something.concat('0.png');
-													e.style.width="1px";
-													e.parentElement.href=something.concat(imagePath);
+	    		for (let key in products) {
+	    			let select = '<option value="" selected disabled hidden>Select</option>';
+	    			if (products.hasOwnProperty(key)) {
 
-											   }
-											// document.getElementById("bns-"+key).style.display="block";
-											document.getElementById("saveButton").style.display="block";
-											let ind=document.getElementById("ind-"+key);
-											ind.innerHTML=products[key][0].index;
-											
-	        		     }
-	        		    select.concat("</select>");
-					
-	        		   }
-					   if(key!=null){
-					
-	        		   document.getElementById(key).innerHTML=select;
-					   }
-					  
-					}
-			
-		// 	tableString="";
-	    //      for (let key in products){
-		// 		  tableString=tableString.concat('<div class="row">');
-		// 			if(products[key].length>1){	        		   
-	    //     		     for (let k in products[key]){
-		// 					 tableString=tableString.concat('<div class="col">'+products[key][k].name+'</div>');
-		// 				 }
-		// 			}
-		// 			tableString=tableString.concat('</div');
-		// 	}
-	        	
-		//   document.getElementById("table").innerHTML=tableString;
-				//showFilteredProducts(products);
-			 }
-			 
+	    				if (products[key].length > 1) {
+	    					for (let k in products[key]) {
 
-		 
+
+	    						if (products[key][k].selected == false) {
+	    							select = select.concat('<option value="' + products[key][k].id + '">' + products[key][k].name + '</option>');
+
+	    							;
+	    						} else {
+	    							select = select.concat('<option value="' + products[key][k].id + '" selected>' + products[key][k].name + '</option>');
+	    							if (document.getElementById(key) != null) {
+	    								let imagePath = products[key][k].imagePath;
+	    								let selected = document.getElementById(key);
+	    								if (selected.style.backgroundColor !== "salmon") {
+	    									selected.style.backgroundColor = "PaleGreen";
+	    								}
+	    								if (imagePath !== '') {
+	    									let e = document.getElementById("img-" + key);
+	    									e.src = something.concat(imagePath);
+	    									e.style.width = "100px";
+	    									e.parentElement.href = something.concat(imagePath);
+	    								} else {
+	    									let e = document.getElementById("img-" + key);
+	    									e.src = something.concat('0.png');
+	    									e.style.width = "1px";
+	    									e.parentElement.href = something.concat(imagePath);
+
+	    								}
+	    								// document.getElementById("bns-"+key).style.display="block";
+	    								let ind = document.getElementById("ind-" + key);
+	    								ind.innerHTML = products[key][0].index;
+
+	    								// es.parentElement.href=something.concat(imagePath);
+	    								// es.width="1";
+	    							}
+	    						}
+
+	    					}
+
+	    				} else {
+	    					select = select.concat('<option value="' + products[key][0].id + '" selected>' + products[key][0].name + '</option>');
+	    					if (document.getElementById(key) != null) {
+	    						let selected = document.getElementById(key);
+	    						if (selected.style.backgroundColor !== "salmon") {
+	    							selected.style.backgroundColor = "PaleGreen";
+	    						}
+	    						let e = document.getElementById("img-" + key);
+	    						let imagePath = products[key][0].imagePath;
+	    						if (imagePath !== '') {
+
+	    							e.src = something.concat(imagePath);
+	    							e.style.width = "100px";
+	    							e.parentElement.href = something.concat(imagePath);
+	    						} else {
+	    							e.src = something.concat('0.png');
+	    							e.style.width = "1px";
+	    							e.parentElement.href = something.concat(imagePath);
+
+	    						}
+	    						// document.getElementById("bns-"+key).style.display="block";
+	    						document.getElementById("saveButton").style.display = "block";
+	    						let ind = document.getElementById("ind-" + key);
+	    						ind.innerHTML = products[key][0].index;
+	    					}
+
+	    				}
+	    				select.concat("</select>");
+
+	    			}
+	    			if (key != null) {
+	    				console.log(key);
+	    				if (document.getElementById(key) != null) {
+	    					document.getElementById(key).innerHTML = select;
+
+	    				}
+
+	    			}
+
+	    		}
+
+	    		// 	tableString="";
+	    		//      for (let key in products){
+	    		// 		  tableString=tableString.concat('<div class="row">');
+	    		// 			if(products[key].length>1){	        		   
+	    		//     		     for (let k in products[key]){
+	    		// 					 tableString=tableString.concat('<div class="col">'+products[key][k].name+'</div>');
+	    		// 				 }
+	    		// 			}
+	    		// 			tableString=tableString.concat('</div');
+	    		// 	}
+
+	    		//   document.getElementById("table").innerHTML=tableString;
+	    		//showFilteredProducts(products);
+	    	}
+
+
+
 	    };
 	    
 	    document.getElementById("saveButton").style.display = 'block';

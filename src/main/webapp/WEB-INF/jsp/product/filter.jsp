@@ -123,10 +123,13 @@ something = "${imagesPath}";
         		    	 }else{
 	        		    		 select=select.concat('<option value="'+products[key][k].id+'" selected>'+products[key][k].name+'</option>'); 
 											let imagePath = products[key][k].imagePath;
-											let selected=document.getElementById(key);
+											
+											if(document.getElementById(key)!=null){
+												let selected=document.getElementById(key);
 											 if(selected.style.backgroundColor!=="salmon"){
 												selected.style.backgroundColor="PaleGreen";
 											}
+										
 											   if(imagePath!==''){
 													let e=document.getElementById("img-"+key);
 													e.src=something.concat(imagePath);
@@ -145,7 +148,7 @@ something = "${imagesPath}";
 								
 								// es.parentElement.href=something.concat(imagePath);
 								// es.width="1";
-
+	}
 
 	        		    	 }
 	        	 	
@@ -153,10 +156,13 @@ something = "${imagesPath}";
 							 
 	        		     }else{
 	        		    	 select=select.concat('<option value="'+products[key][0].id+'" selected>'+products[key][0].name+'</option>');  
-							 				let selected=document.getElementById(key);
-											 if(selected.style.backgroundColor!=="salmon"){
-												selected.style.backgroundColor="PaleGreen";
-											}
+											 
+											 if (document.getElementById(key) != null) {
+												 let selected=document.getElementById(key);
+											 	if (selected.style.backgroundColor !== "salmon") {
+											 		selected.style.backgroundColor = "PaleGreen";
+											 	}
+											
 											let e=document.getElementById("img-"+key);
 							 				let imagePath = products[key][0].imagePath;
 											   if(imagePath!==''){
@@ -174,14 +180,19 @@ something = "${imagesPath}";
 											document.getElementById("saveButton").style.display="block";
 											let ind=document.getElementById("ind-"+key);
 											ind.innerHTML=products[key][0].index;
+											 }
 											
 	        		     }
 	        		    select.concat("</select>");
 					
 	        		   }
-					   if(key!=null){
-						   console.log(key);
-	        		   document.getElementById(key).innerHTML=select;
+					   if (key != null) {
+					   	console.log(key);
+					   	if (document.getElementById(key) != null) {
+					   		document.getElementById(key).innerHTML = select;
+
+					   	}
+
 					   }
 					  
 					}
