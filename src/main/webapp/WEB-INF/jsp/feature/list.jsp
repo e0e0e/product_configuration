@@ -8,6 +8,7 @@
 		<a href="/feature/addProductFeature">
 			<span class="glyphicon glyphicon-plus text-dark"></span>
 		</a>
+		
 	</div>
 
 	<c:forEach
@@ -29,6 +30,10 @@
 				class="btn btn-outline-secondry text-light"
 				href="/feature/delete?productFeatureId=${feature.id}">
 					<span class="glyphicon glyphicon-trash text-light  m-2"></span>
+				</a>
+				<a href="/productFeature/delete/notUsed?productFeatureId=${feature.id}"
+				class="btn btn-outline-secondry text-light">
+					Remove All with same name not used<span class="glyphicon glyphicon-trash text-dark"></span>
 				</a>
 				<span class="float-right m-2">included in product: ${feature.productConfiguration.name}</span>
 				

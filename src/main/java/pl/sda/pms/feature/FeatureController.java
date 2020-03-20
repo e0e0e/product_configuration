@@ -82,7 +82,8 @@ public class FeatureController {
 	@PostMapping("/featureChange")
 	public String saveEditedFeature(@RequestParam String name, @RequestParam String description,
 			@RequestParam String imagePath, @RequestParam String index, @RequestParam String price,
-			@RequestParam Long featureId, @RequestParam String mIndex,
+			@RequestParam Long featureId,
+			@RequestParam String mIndex,
 			@RequestParam(required = false) Boolean noStandard, @RequestParam(required = false) Long orderId,
 			@RequestParam(required = false) Boolean edit, Model model) {
 
@@ -248,6 +249,16 @@ public class FeatureController {
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdfContents, headers, HttpStatus.OK);
 		return response;
 
+	}
+
+
+
+	@GetMapping(value = "/feature/aud", produces = "application/json")
+	@ResponseBody
+	public List<Feature> getAudFeature(@RequestParam Long featureId) {
+		
+		
+		return featureService.getAuds(featureId);
 	}
 
 

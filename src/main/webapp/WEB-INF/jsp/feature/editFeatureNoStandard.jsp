@@ -64,7 +64,7 @@
 			<h1>Select existing Feature</h1>
 			<form method="post" action="/feature/existingFeatureChange?featureId=${param.featureId}&orderId=${orderId}">
 				<label>Features:</label><br />
-				<select name="existingFeatureId" id="existingFeatureId" calss="form-control w-100" class="custom-select"
+				<select name="existingFeatureId" id="existingFeatureId" calss="form-control w-100" class="custom-select" 
 					style="font-size: 14px; font-family: monospace;" size="10">
 					<c:forEach var="exFeature" items="${existingFeatures}">
 						<option value="${exFeature.id}" index="${exFeature.index}" fName="${exFeature.name}">${exFeature.name}_${exFeature.index}</option>
@@ -118,4 +118,8 @@
 
 
 	});
+
+	function selectChange(){
+	alert("1");
+	}
 </script>

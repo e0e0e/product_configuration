@@ -44,9 +44,14 @@
 				<div class="col-2 border-bottom m-1">
 					<a class="btn btn-outline-info text-dark" href="/feature/editFeature?featureId=${feature.id}"><span
 							class="glyphicon glyphicon-edit text-dark"></span></a>
-					<a class="btn btn-outline-info text-dark"
+
+							<a class="btn btn-outline-info text-dark" href="/feature/aud?featureId=${feature.id}"><span
+							class="glyphicon glyphicon-time text-dark"></span></a>
+
+												<a class="btn btn-outline-info text-dark"
 						href="/delete/feature?featureId=${feature.id}&temp=${temp}"><span
 							class="glyphicon glyphicon-trash text-dark"></span></a>
+							
 				</div>
 
 

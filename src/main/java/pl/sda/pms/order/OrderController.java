@@ -7,11 +7,11 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +24,7 @@ import pl.sda.pms.color.Color;
 import pl.sda.pms.color.ColorService;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
+import pl.sda.pms.productConfiguration.PorductConfiguration;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
 import pl.sda.pms.productConfiguration.ProductConfigurationService;
 import pl.sda.pms.productFeature.ProductFeature;
@@ -66,12 +67,12 @@ public class OrderController {
 		model.addAttribute("errorMessage", errorMessage);
 
 		model.addAttribute("order", orderService.findByIdAndUpdatePrice(orderId));
-		try{
+		try {
 			model.addAttribute("aud", orderService.findByIdAud(orderId));
-		}catch(Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
-		
+
 		model.addAttribute("edit", edit);
 		model.addAttribute("title", "List Orders");
 		model.addAttribute("path", "order/show");
@@ -95,6 +96,28 @@ public class OrderController {
 
 	}
 
+	@GetMapping("/order/ifNewProductFeatures")
+	public String updateIfNewProductFeatures(@RequestParam Long orderId, Model model) {
+
+		Ord order = orderService.findById(orderId);
+		ProductConfiguration productConfiguration = productConfigurationService.findByName("pattern");
+		Set<String> orderFeaturesListNames=order.getOrderFeatures().stream().map(x->x.getProductFeature().getName()).collect(Collectors.toSet());
+		Set<String> productFeaturesListNames = productConfiguration.getConfigurationList().stream()
+				.map(x -> x.getName()).collect(Collectors.toSet());
+
+		productFeaturesListNames.removeAll(orderFeaturesListNames);
+
+		List<ProductFeature> productFeatures=productFeaturesListNames.stream().map(x->productConfiguration.findProductFeatureByName(x)).collect(Collectors.toList());
+
+		
+		model.addAttribute("orderId", orderId);
+		model.addAttribute("productFeatures", productFeatures);
+		model.addAttribute("title", "Edit Order PFs");
+		model.addAttribute("path", "order/update");
+		return "main";
+
+	}
+
 	@GetMapping("/order/color/edit")
 	public String orderColorEdit(@RequestParam Long orderId, Model model) {
 		Ord order = orderService.findById(orderId);
@@ -106,7 +129,8 @@ public class OrderController {
 		Map<String, Feature> orderMap = order.getOrderFeatures().stream()
 				.filter(x -> (x.getProductFeature().getColor() != null && x.getProductFeature().getColor() != false))
 				.collect(Collectors.toMap(fp -> fp.getProductFeature().getName(), f -> f.getFeature()));
-		List<Color> colors = colorService.findAll().stream().sorted((o1,o2)->o1.getName().compareTo(o2.getName())).collect(Collectors.toList());
+		List<Color> colors = colorService.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
+				.collect(Collectors.toList());
 
 		model.addAttribute("orderFeatures", orderFeatures);
 		model.addAttribute("orderMap", orderMap);
@@ -215,7 +239,7 @@ public class OrderController {
 						+ "'<br>No need to save new product Configuration";
 
 				order.setNoStandard(false);
-				
+
 				// order.setOrderFeaturesStringsMapByOrderFeatures(order.getOrderFeatures());
 				orderService.save(order);
 			} else {
@@ -245,10 +269,9 @@ public class OrderController {
 		return "redirect:/product/list?productId=8";
 	}
 
-	
 	@GetMapping("/export/orders")
 	public String export(Model model) throws IOException {
-		 FileWriter file=new FileWriter("orderExport.txt");
+		FileWriter file = new FileWriter("orderExport.txt");
 		List<Ord> productConfigurations = orderService.findAll();
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -258,19 +281,28 @@ public class OrderController {
 		file.write(json);
 		file.close();
 		System.out.println("File writen.");
-		
+
 		return null;
 	}
 
-
 	@GetMapping("/matrix")
-	public void getMatrix(Model model) {
+	public String getMatrix(@RequestParam Long orderId, Model model) {
 
-		orderService.readMatrix();
-	
-		
+		orderService.readMatrix(orderService.findById(orderId));
 
-		
-
+		return "redirect:/order/show?orderId=" + orderId;
 	}
+
+	
+
+	@PostMapping("/order/newPf")
+	public String updateOrderWithPf(@RequestParam Map<String, String> paramMap,@RequestParam String orderId, Model model) {
+
+
+		orderService.saveProductOrderChangesAllParamMap(paramMap, orderId);
+	
+
+		return "redirect:/order/show?orderId=" + orderId;
+	}
+	
 }

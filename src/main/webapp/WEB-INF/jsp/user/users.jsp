@@ -41,15 +41,17 @@
 
 <form method="post" action="/users">
 
-    <label>Login:</label><br/>
-    <input type="text"  class="text-dark" name="login" value="${param.login}"><br/>
-    <label>Email:</label><br/>
-    <input type="email"  class="text-dark" name="email" value="${param.email}"><br/>
+    <%-- <label>Login:</label><br/>
+    <input type="text"  class="text-dark" name="login" value="${param.login}"><br/> --%>
+    <label>Email :</label><br/>
+    <input type="email" id="email" class="text-dark" name="email" value="${param.email}"><br/>
     <label>Password:</label><br/>
     <input type="password" class="text-dark" name="password"><br/>
-    <label>User Name:</label><br/>
-    <input type="text"  class="text-dark" name="username" value="${param.username}"><br/>
-    <input type="submit" class="text-dark" value="Dodaj">
+    <label>Confirm password:</label><br/>
+    <input type="password" class="text-dark" name="passwordConfirm"><br/>
+    <label>Your Login will be first part of email (before @):</label><br/>
+    <h1 id="login"></h1>
+    <input type="submit" class="text-dark" value="Dodaj"> 
 
 
 </form>
@@ -58,3 +60,12 @@
 </c:if>
 </body>
 </html>
+
+<script>
+$(document).ready(function(){
+  $("#email").change(function(){
+    let e=document.getElementById("email").value;
+    document.getElementById("login").innerHTML=e.split("@")[0];
+  });
+});
+</script>

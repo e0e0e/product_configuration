@@ -16,9 +16,12 @@ import org.hibernate.envers.query.AuditEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+
+import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
 import pl.sda.pms.feature.ShortFeature;
+import pl.sda.pms.order.Ord;
 import pl.sda.pms.productFeature.ProductFeature;
 import pl.sda.pms.productFeature.ProductFeatureService;
 
@@ -362,7 +365,7 @@ public class ProductConfigurationService {
 						productFeatureService.save(productFeature);
 					} catch (Exception e) {
 						System.out.println("Update pattern error: " + e.getLocalizedMessage()
-								+ " ther is no Product feature with name: " + pF.getName() + " in pattern, but in: "
+								+ " ther is no Product feature with name: " + pF.getName() + " in pattern: "
 								+ pC.getName());
 					}
 
@@ -507,5 +510,28 @@ public class ProductConfigurationService {
 
 		});
 	}
+
+	public void removeProductFeatureByNameIfNotUsed(String productFeatureName) {
+		List<ProductFeature> pfs = productFeatureService.findAll();
+
+		for (ProductFeature p : pfs) {
+			if (p.getName().equals(productFeatureName)) {
+				if(p.getProductConfiguration()==null){
+					try{
+						productFeatureService.remove(p);
+
+					} catch (Exception e) {
+						System.out.println("Deleted product features failed: "+e.getLocalizedMessage());
+					}
+					
+
+				}
+
+			}
+		}
+
+	}
+
+
 
 }

@@ -42,6 +42,10 @@
 						href="/upload/db">DB <span class="glyphicon glyphicon-floppy-open text-warning"></span></a>
 				</li>
 
+				<li class="nav-item"><a class="nav-link text-warning font-weight-bold btn btn-outline-dark"
+						href="/upload/matrix">Matrix <span class="glyphicon glyphicon-floppy-open text-warning"></span></a>
+				</li>
+
 
 				<li class="nav-item"><a class="nav-link text-warning font-weight-bold btn btn-outline-dark"
 						href="/feature/show">Features</a></li>

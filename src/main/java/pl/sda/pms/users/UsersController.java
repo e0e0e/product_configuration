@@ -45,19 +45,29 @@ public class UsersController {
     }
 
     @PostMapping("/users")
-    public String addUser(@RequestParam String password, @RequestParam String email, @RequestParam String login,
-            @RequestParam String username, Model model) {
-        try {
-            boolean result = userService.create(login, passwordEncoder.encode(password), email, username);
-            model.addAttribute("createUserResult", result);
-            List<User> users = userService.findAll();
-            model.addAttribute("users", users);
+    public String addUser(@RequestParam String password, @RequestParam String passwordConfirm,
+            @RequestParam String email, Model model) {
+        if (password.equals(passwordConfirm) && password.length()>5) {
+            try {
+                String login = email.split("@")[0];
+                String username = email.split("@")[0];
+                boolean result = userService.create(login, passwordEncoder.encode(password), email, username);
+                model.addAttribute("createUserResult", result);
+                List<User> users = userService.findAll();
+                model.addAttribute("users", users);
 
-            return "redirect:/";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getLocalizedMessage());
+                return "redirect:/";
+            } catch (Exception e) {
+                model.addAttribute("errorMessage", e.getLocalizedMessage());
+                return "user/users";
+            }
+
+        } else {
+            model.addAttribute("errorMessage","Different passwords, or passwort shorter than 6 letters");
             return "user/users";
+
         }
+
     }
 
     @GetMapping("user/delete")
@@ -175,7 +185,7 @@ public class UsersController {
     @PostMapping("/auth/user/save")
     public String changeAuthorities(@RequestParam Long userId, @RequestParam String authorities, Model model) {
 
-        userService.changeAuthority(userId,authorities);
+        userService.changeAuthority(userId, authorities);
 
         return "redirect:/users/list";
     }

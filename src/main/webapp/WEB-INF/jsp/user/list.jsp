@@ -31,8 +31,7 @@
 
                     <div class="card-body ">
 
-                        <p class="card-text text-left">login:${user.login} </p>
-                        <br />
+                         <br />
                         <p class="card-text text-left">email: ${user.email} </p>
                         <br />
                         <p class="card-text text-left">Authorities: ${user.authorities} </p>

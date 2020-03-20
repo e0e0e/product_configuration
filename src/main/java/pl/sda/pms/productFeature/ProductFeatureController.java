@@ -81,6 +81,16 @@ public class ProductFeatureController {
 		return "redirect:/feature/list";
 	}
 
+	@GetMapping("/productFeature/delete/notUsed")
+	public String deleteProductFeaturesNotUsed(@RequestParam Long productFeatureId, Model model) {
+
+		String productFeatureName = productFeatureService.findById(productFeatureId).getName();
+
+		productConfigurationService.removeProductFeatureByNameIfNotUsed(productFeatureName);
+
+		return "redirect:/feature/list";
+	}
+
 	@GetMapping("/feature/copy")
 	public String copyProductFeatures(@RequestParam Long productFeatureId, Model model) {
 

@@ -25,10 +25,10 @@ public class User {
     @Column(unique = true)
     private String username;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private Set<Project> projects;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private Set<Task> tasks;
 
     @ManyToMany

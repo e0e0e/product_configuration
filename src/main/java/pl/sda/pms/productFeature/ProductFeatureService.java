@@ -314,4 +314,8 @@ public class ProductFeatureService {
 		return null;
 	}
 
+	public void remove(ProductFeature p) {
+		productFeatureRepository.delete(p);
+	}
+
 }

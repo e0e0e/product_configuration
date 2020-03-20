@@ -57,9 +57,27 @@ public class Ord {
 	private Integer unitsToProduce;
 	private Integer revision = 0;
 	private Boolean noStandard;
+	private String link;
+	private String plOrder;
 
 	public Boolean isNoStandard() {
 		return this.noStandard;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public String getPlOrder() {
+		return plOrder;
+	}
+
+	public void setPlOrder(String plOrder) {
+		this.plOrder = plOrder;
 	}
 
 	public Boolean getNoStandard() {
@@ -290,6 +308,24 @@ public class Ord {
 				.collect(Collectors.toList());
 
 		return productFeatureNameList;
+	}
+
+	public ProductFeature findProductFeatureByPfName(String productFeatureName) {
+
+		for (OrderFeature oF : this.orderFeatures) {
+			System.out.println(oF.getProductFeature().getName());
+			try {
+				if (oF.getProductFeature().getName().equals(productFeatureName)) {
+					System.out.println(oF.getProductFeature().getName());
+					return oF.getProductFeature();
+				}
+			} catch (Exception e) {
+				System.out.println(e.getLocalizedMessage());
+			}
+
+		}
+
+		return null;
 	}
 
 }

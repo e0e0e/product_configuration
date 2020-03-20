@@ -357,6 +357,45 @@ public class ProductConfigurationController {
 
 	}
 
+	@PostMapping("/uploadMatrix")
+	public String uploadMatrixFileToServer(@RequestParam("file") MultipartFile file, HttpServletRequest request,
+			Model model) {
+
+		try {
+			// String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss-"));
+			// String fileName = date + file.getOriginalFilename();
+
+			// String filePath = request.getServletContext().getRealPath("/");
+
+			// File newFile2 = new File(filePath + "db-dump.sql");
+			File newFile = new File("C:\\LD\\tomcat\\webapps\\sp\\LD Orders _MATRIX MASTER v.xlsx");
+			
+			file.transferTo(newFile);
+
+			System.out.println("File saved on server.");
+
+			try {
+				//importSql(request);
+			} catch (Exception e) {
+				System.out.println("error uplading file: " + e.getLocalizedMessage());
+				model.addAttribute("errorMessage", e.getLocalizedMessage());
+				model.addAttribute("title", "Show Error");
+				model.addAttribute("path", "error/show");
+				return "main";
+			}
+
+			model.addAttribute("file", file);
+			model.addAttribute("title", "file details");
+			model.addAttribute("path", "product/fileUploadView");
+			return "main";
+		} catch (Exception e) {
+			System.out.println("File saved on server error: " + e.getMessage());
+			return "redirect:/upload/matrix";
+		}
+
+	}
+
+
 	public void importSql(HttpServletRequest request) throws IOException {
 		try {
 			Charset charset = Charset.forName("UTF-8");
@@ -376,6 +415,14 @@ public class ProductConfigurationController {
 
 		model.addAttribute("title", "Upload DB");
 		model.addAttribute("path", "product/upload");
+		return "main";
+	}
+
+	@GetMapping("/upload/matrix")
+	public String uploadMatrix(Model model) {
+
+		model.addAttribute("title", "Upload matrix");
+		model.addAttribute("path", "matrix/upload");
 		return "main";
 	}
 

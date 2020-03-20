@@ -1,10 +1,12 @@
 package pl.sda.pms.feature;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,22 +14,30 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.productFeature.ProductFeature;
 
 @Entity
 @Audited
+@EntityListeners(AuditingEntityListener.class)
 public class Feature {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-//	@Column(unique = true)
+	// @Column(unique = true)
 	private String name;
 	private String description;
 	private Double price;
@@ -35,6 +45,39 @@ public class Feature {
 	private String index;
 	private String mIndex;
 	private Boolean noStandard;
+	private String konfigurator;
+
+	@CreatedBy
+	@Column(name = "created_by")
+	private String createdBy;
+
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+
+	@LastModifiedBy
+	@Column(name = "last_modified_by")
+	private String lastModifiedBy;
+
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastModifiedDate;
+
+	public Date getLastModifiedDate() {
+		return this.lastModifiedDate;
+	}
+
+	public String getKonfigurator() {
+		return konfigurator;
+	}
+
+	public void setKonfigurator(String konfigurator) {
+		this.konfigurator = konfigurator;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
 
 	public Boolean isNoStandard() {
 		return this.noStandard;
@@ -58,12 +101,53 @@ public class Feature {
 	}
 
 
+
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return this.createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getLastModifiedBy() {
+		return this.lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
 	
+
 	@Override
 	public String toString() {
-		return "Feature [name=" + name + ", description=" + description + ", productFeatureList=" + productFeatureList
-				+ "]";
+		return "{" +
+			" id='" + getId() + "'" +
+			", name='" + getName() + "'" +
+			", description='" + getDescription() + "'" +
+			", price='" + getPrice() + "'" +
+			", imagePath='" + getImagePath() + "'" +
+			", index='" + getIndex() + "'" +
+			", mIndex='" + getMIndex() + "'" +
+			", noStandard='" + isNoStandard() + "'" +
+			", createdBy='" + getCreatedBy() + "'" +
+			", createdDate='" + getCreatedDate() + "'" +
+			", lastModifiedBy='" + getLastModifiedBy() + "'" +
+			", productFeatureList='" + getProductFeatureList() + "'" +
+			", orderFeatures='" + getOrderFeatures() + "'" +
+			"}";
 	}
+
+
+
 
 	@ManyToMany
 	@JsonIgnore
@@ -101,6 +185,25 @@ public class Feature {
 		this.imagePath = imagePath;
 		this.index = index;
 		this.mIndex = mIndex;
+	}
+
+
+
+	public Feature(Long id, String name, String description, Double price, String imagePath, String index, String mIndex, Boolean noStandard, String createdBy, Date createdDate, String lastModifiedBy, Date lastModifiedDate, Set<ProductFeature> productFeatureList, OrderFeature orderFeatures) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.imagePath = imagePath;
+		this.index = index;
+		this.mIndex = mIndex;
+		this.noStandard = noStandard;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.lastModifiedBy = lastModifiedBy;
+		this.lastModifiedDate = lastModifiedDate;
+		this.productFeatureList = productFeatureList;
+		this.orderFeatures = orderFeatures;
 	}
 
 	public Feature(String name, String description) {

@@ -40,10 +40,11 @@
 
 
 		<div class="card-header bg-info text-left text-light">
-			<div>LP. ${order.id}, Order name: ${order.orderName}, Client Address: ${order.client}, Units:
+			<div>LP. ${order.id}, Order name: ${order.orderName}, Client: ${order.client}, Units:
 				${order.unitsToProduce} Created: ${order.createdDate}, Modified:
 				${order.lastModifiedDate}, Revision: ${order.revision}
-				<div>Price : ${order.price}</div>
+				<div>Price : ${order.price}</div>				
+				<div>Pl order number: ${order.plOrder}</div>
 			</div>
 			<c:if test="${user.authorities=='[ADMIN]'}">
 			<a class="btn btn-outline-secondary text-dark" href="/order/edit?orderId=${order.id}">
@@ -53,11 +54,16 @@
 			<a class="btn btn-outline-secondary text-dark" href="/order/show?orderId=${order.id}&edit=true">
 				<span class="glyphicon glyphicon-gift text-light"></span>
 			</a>
-			<a class="btn btn-outline-secondary text-light;" href="/order/color/edit?orderId=${order.id}">
+			<a class="btn btn-outline-secondary text-light" href="/order/color/edit?orderId=${order.id}">
 				<i class="fa fa-paint-brush text-light"></i>
 			</a>
-
-
+			<a class="btn btn-outline-secondary text-light" href="/matrix?orderId=${order.id}">
+				<i class="glyphicon glyphicon-magnet text-light"></i>
+			</a>
+			<c:if test="${order.link!=null}">
+				<a class="btn btn-outline-secondary text-light" href="${order.link}" target="_blank">Sherpoint</a>
+			</c:if>
+			<a class="btn btn-outline-secondary text-light" href="/order/ifNewProductFeatures?orderId=${order.id}">Update</a>
 			<a class="btn btn-outline-secondary text-light" href="/order/print?orderId=${order.id}">
 				<span class="glyphicon glyphicon-print text-light"></span>
 			</a>
@@ -220,7 +226,7 @@
 	<c:forEach var="ordAud" items="${aud}">
 		<div class="row border bg-secondary text-light">
 			<div class="col ">Order name: ${ordAud.order.orderName},
-				Price: ${ordAud.order.price}, Client Address: ${ordAud.order.client}, Units:
+				Price: ${ordAud.order.price}, Client: ${ordAud.order.client}, Units:
 				${ordAud.order.unitsToProduce}
 				, Modified by: ${ordAud.order.lastModifiedBy}
 				, revision: ${ordAud.order.revision}

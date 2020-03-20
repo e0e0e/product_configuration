@@ -9,7 +9,7 @@
 <body style='margin: 50px;'>
 
 	<div class="container bg-info text-center ">
-		<h2>Login:</h2>
+		<h2>Login or email:</h2>
 
 		<form action="/my-login" method="post">
 			<c:if test="${param.error != null}">

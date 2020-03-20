@@ -181,6 +181,21 @@ public class FeatureService {
 		return null;
 	}
 
+	public List<Feature> getAuds(Long featureId) {
+
+	
+		@SuppressWarnings("unchecked")
+		List<Feature> featuresAud = AuditReaderFactory.get(entityManager).createQuery()
+				.forRevisionsOfEntity(Feature.class, true, true).add(AuditEntity.id().eq(featureId)).getResultList();
+		
+
+		
+
+		return featuresAud;
+
+
+	}
+
 	
 
 }
