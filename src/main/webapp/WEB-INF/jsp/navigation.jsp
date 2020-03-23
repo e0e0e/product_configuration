@@ -26,7 +26,9 @@
 	<div class="navbar-collapse collapse" id="navbar11" style="">
 
 		<ul class="navbar-nav m-auto ">
-
+			<li class="nav-item"><a class="nav-link text-light font-weight-bold btn btn-outline-dark" href="/help">Help <span
+						class="glyphicon glyphicon-question-sign text-light"></span></a>
+			</li>
 
 			<c:if test="${user.authorities=='[ADMIN]'}">
 				<li class="nav-item"><a class="nav-link text-warning font-weight-bold btn btn-outline-dark"

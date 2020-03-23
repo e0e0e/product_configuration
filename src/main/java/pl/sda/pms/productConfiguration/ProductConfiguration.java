@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.productFeature.ProductFeature;
+import pl.sda.pms.productFeature.ProductFeatureService;
 
 @Entity
 @Audited
@@ -159,7 +160,7 @@ public class ProductConfiguration {
 
 	public ProductFeature findProductFeatureByName(String name) {
 		for (ProductFeature pF : this.configurationList) {
-			if (pF.getName().equals(name)) {
+			if (pF.getName().toLowerCase().equals(name.toLowerCase())) {
 				return pF;
 			}
 		}
@@ -176,6 +177,22 @@ public class ProductConfiguration {
 
 		}
 
+	}
+
+	public void removePFfromListById(ProductFeature pF) {
+
+		this.configurationList.remove(pF);
+
+	}
+
+	public ProductFeature findPFByName(String pF) {
+
+		List<ProductFeature>  configuration=this.configurationList;
+
+		ProductFeature productFeature=configuration.stream().filter(x->x.getName().equals(pF)).findFirst().get();
+
+
+		return productFeature;
 	}
 
 }

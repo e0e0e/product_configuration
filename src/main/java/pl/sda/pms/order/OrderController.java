@@ -101,9 +101,9 @@ public class OrderController {
 
 		Ord order = orderService.findById(orderId);
 		ProductConfiguration productConfiguration = productConfigurationService.findByName("pattern");
-		Set<String> orderFeaturesListNames=order.getOrderFeatures().stream().map(x->x.getProductFeature().getName()).collect(Collectors.toSet());
+		Set<String> orderFeaturesListNames=order.getOrderFeatures().stream().map(x->x.getProductFeature().getName().toLowerCase()).collect(Collectors.toSet());
 		Set<String> productFeaturesListNames = productConfiguration.getConfigurationList().stream()
-				.map(x -> x.getName()).collect(Collectors.toSet());
+				.map(x -> x.getName().toLowerCase()).collect(Collectors.toSet());
 
 		productFeaturesListNames.removeAll(orderFeaturesListNames);
 

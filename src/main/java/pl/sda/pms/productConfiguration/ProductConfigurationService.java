@@ -516,14 +516,13 @@ public class ProductConfigurationService {
 
 		for (ProductFeature p : pfs) {
 			if (p.getName().equals(productFeatureName)) {
-				if(p.getProductConfiguration()==null){
-					try{
+				if (p.getProductConfiguration() == null) {
+					try {
 						productFeatureService.remove(p);
 
 					} catch (Exception e) {
-						System.out.println("Deleted product features failed: "+e.getLocalizedMessage());
+						System.out.println("Deleted product features failed: " + e.getLocalizedMessage());
 					}
-					
 
 				}
 
@@ -532,6 +531,19 @@ public class ProductConfigurationService {
 
 	}
 
+	public void removeProductFeatureFromAll(Long productFeatureId) {
+		List<ProductConfiguration> product = productConfigurationRepository.findAll();
+		String pF=productFeatureService.findByID(productFeatureId).getName();
 
+		product.stream().forEach(x->{
+			ProductFeature productFeature=x.findPFByName(pF);
+			productFeature.removeProductConfiguration();
+			
+			
+			productConfigurationRepository.save(x);
+		});
+		
+
+	}
 
 }

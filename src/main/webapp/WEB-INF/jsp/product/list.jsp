@@ -41,6 +41,7 @@
 					var="configList"
 					items="${configuration.configurationList}">
 					<a name="anchor_${configList.id}"></a>
+					
 					<li>
 					<c:choose>
 					<c:when test="${user.authorities=='[ADMIN]'}">

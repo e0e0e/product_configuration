@@ -454,4 +454,12 @@ public class ProductConfigurationController {
 
 	}
 
+	@GetMapping("/help")
+	public String toHelp(Model model) {
+
+		model.addAttribute("title", "Help");
+		model.addAttribute("path", "help");
+		return "main";
+	}
+
 }

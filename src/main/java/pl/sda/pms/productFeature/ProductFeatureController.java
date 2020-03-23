@@ -91,6 +91,16 @@ public class ProductFeatureController {
 		return "redirect:/feature/list";
 	}
 
+
+	@GetMapping("/productFeature/removeFromAll")
+	public String deleteProductFeaturesFromAll(@RequestParam Long productFeatureId, Model model) {
+
+		
+		productConfigurationService.removeProductFeatureFromAll(productFeatureId);
+
+		return "redirect:/feature/list";
+	}
+
 	@GetMapping("/feature/copy")
 	public String copyProductFeatures(@RequestParam Long productFeatureId, Model model) {
 
@@ -176,7 +186,7 @@ public class ProductFeatureController {
 		productFeature.removeProductConfiguration();
 		productFeatureService.save(productFeature);
 
-		return "redirect:/product/list?productId=" + productId;
+		return "redirect:/product/moveList";
 
 	}
 
@@ -189,6 +199,8 @@ public class ProductFeatureController {
 		return "redirect:/product/moveList?productId=" + productId + "#anchor_" + productFeatureId;
 
 	}
+
+
 
 	@GetMapping("/feature/moveUp")
 	public String moveUpProductFeature(@RequestParam Long productFeatureId, @RequestParam Long productId, Model model) {

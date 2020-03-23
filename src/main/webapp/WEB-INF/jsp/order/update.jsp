@@ -17,8 +17,9 @@
 
 <div>
     <form id="myFilterForm" method="post" action="/order/newPf?orderId=${orderId}">
-
+    
         <c:forEach var="productFeature" items="${productFeatures}">
+        <label>${productFeature.name}</label>
             <select name="${productFeature.id}" class="text-dark" value="${configList.color.id}">
                 <option value="" selected></option>
                 <c:forEach var="feature" items="${productFeature.feature}">
@@ -30,7 +31,7 @@
 
 
         </c:forEach>
-
+        <br>
         <input id="saveButton" type="submit" value="Save">
     </form>
 

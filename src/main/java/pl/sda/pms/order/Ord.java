@@ -37,6 +37,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javassist.expr.NewArray;
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.productFeature.ProductFeature;
@@ -326,6 +327,30 @@ public class Ord {
 		}
 
 		return null;
+	}
+
+	public void addAllOrderFeatures(List<OrderFeature> orderFeaturesToAdd) {
+		if (this.orderFeatures == null) {
+			List<OrderFeature> orderFeatures = new ArrayList<>();
+			orderFeatures.addAll(orderFeaturesToAdd);
+
+			this.orderFeatures = orderFeatures;
+		} else {
+			this.orderFeatures.addAll(orderFeaturesToAdd);
+		}
+
+	}
+
+	public OrderFeature findOrderFeatureByPfName(String pFName) {
+		for (OrderFeature oF : this.orderFeatures) {
+			if (oF.getProductFeature().getName().equals(pFName)) {
+				return oF;
+
+			}
+
+		}
+		return null;
+
 	}
 
 }

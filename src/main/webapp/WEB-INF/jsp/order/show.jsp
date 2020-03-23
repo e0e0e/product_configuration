@@ -50,6 +50,9 @@
 			<a class="btn btn-outline-secondary text-dark" href="/order/edit?orderId=${order.id}">
 				<span class="glyphicon glyphicon-edit text-warning"></span>
 			</a>
+			<a class="btn btn-outline-secondary text-light" href="/matrix?orderId=${order.id}">
+				<i class="glyphicon glyphicon-magnet text-warning"></i>
+			</a>
 			</c:if>
 			<a class="btn btn-outline-secondary text-dark" href="/order/show?orderId=${order.id}&edit=true">
 				<span class="glyphicon glyphicon-gift text-light"></span>
@@ -57,9 +60,7 @@
 			<a class="btn btn-outline-secondary text-light" href="/order/color/edit?orderId=${order.id}">
 				<i class="fa fa-paint-brush text-light"></i>
 			</a>
-			<a class="btn btn-outline-secondary text-light" href="/matrix?orderId=${order.id}">
-				<i class="glyphicon glyphicon-magnet text-light"></i>
-			</a>
+			
 			<c:if test="${order.link!=null}">
 				<a class="btn btn-outline-secondary text-light" href="${order.link}" target="_blank">Sherpoint</a>
 			</c:if>

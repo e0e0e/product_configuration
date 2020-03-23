@@ -1,5 +1,6 @@
 package pl.sda.pms.OrderFeature;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -113,6 +114,18 @@ public class OrderFeature {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, ord, feature, productFeature, color);
+	}
+
+	public void addOrd(Ord order) {
+
+		if(this.ord==null){
+			List<Ord> ord=new ArrayList<>();
+			ord.add(order);
+			this.ord=ord;
+		}else{
+
+			this.ord.add(order);
+		}
 	}
 
 }

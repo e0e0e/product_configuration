@@ -77,8 +77,8 @@ public class OrderFeatureService {
 		return orderFeatureRepository.findById(id).get();
 	}
 
-	public void save(OrderFeature orderFeature) {
-		orderFeatureRepository.save(orderFeature);
+	public OrderFeature save(OrderFeature orderFeature) {
+		return 	orderFeatureRepository.save(orderFeature);
 
 	}
 

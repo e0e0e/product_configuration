@@ -34,7 +34,7 @@
 					var="configList"
 					items="${configuration.configurationList}">
 					<a name="anchor_${configList.id}"></a>
-					<li>
+					<li class="greybat">
 					<c:choose>
 					<c:when test="${user.authorities=='[ADMIN]'}">
 					<a
@@ -48,7 +48,10 @@
 							class="glyphicon glyphicon-triangle-bottom"></span></a> <a
 						href="/feature/moveUp?productFeatureId=${configList.id}&productId=${configuration.id}"
 						class="btn btn-outline-info text-dark"> <span
-							class="glyphicon glyphicon-triangle-top"></span></a></li>
+							class="glyphicon glyphicon-triangle-top"></span></a>
+							<a class="btn btn-outline-info text-dark float-right kubel" href="/feature/removeProductFeature?productFeatureId=${configList.id}&productId=${configuration.id}"><span
+					class="glyphicon glyphicon-trash text-dark"></span></a>
+							</li>
 					
 					</c:when>
 					<c:otherwise>
@@ -60,12 +63,9 @@
 				</c:forEach>
 			</ul>
 		</div>
-		<div class="card-footer bg-info text-right text-light">
-			<div>created by:</div>
-
-		</div>
 	</div>
 
 
 
 </div>
+

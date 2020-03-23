@@ -125,6 +125,60 @@ table tr:nth-child(even) {
   background-color: yellow;
   color:black;
 }
+.greybat:hover {
+  background-color: LightGray;
+  color:black;
+}
+.opis {
+    font-size: 20px;
+    margin: 20px;
+    padding: 20px;
+    width: auto;
+}
+#toc_container {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: 1px solid #aaa;
+    display: table;
+    font-size: 20px;
+    margin-bottom: 1em;
+    padding: 20px;
+    width: auto;
+}
+
+.toc_title {
+    font-weight: 700;
+    text-align: center;
+}
+
+#toc_container li, #toc_container ul, #toc_container ul li{
+    list-style: outside none none !important;
+}
+
+.helpimg {
+  border: 4px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 80%;
+}
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: lightblue;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+#myBtn:hover {
+  background-color: #555;
+}
 </style>
 </head>
 <body>

@@ -185,71 +185,21 @@ public class OrderService {
 
 	public void saveProductOrderChangesAllParamMap(Map<String, String> paramMap, String orderId) {
 		Ord order = orderRepository.findById(Long.parseLong(orderId)).get();
-		List<OrderFeature> orginalOrderFeatures = order.getOrderFeatures();
+		paramMap.remove("orderId");
+		List<OrderFeature> orderFeature = order.getOrderFeatures();
+		List<OrderFeature> orderFeaturesToAdd = paramMap.entrySet().stream()
+				.map(e -> new OrderFeature(productFeatureService.findById(Long.parseLong(e.getKey())),
+						featureService.findByID(Long.parseLong(e.getValue()))))
+				.map(x -> orderFeatureService.save(x)).collect(Collectors.toList());
 
-		Map<ProductFeature, Feature> newOrderFeaturesMapToFilter = paramMap.entrySet().stream()
-				.filter(x -> OrderFeatureController.isNumeric(x.getKey()))
-				.collect(Collectors.toMap(x -> productFeatureService.findByID(Long.parseLong(x.getKey())),
-						x -> featureService.findByID(Long.parseLong(x.getValue()))));
+				orderFeaturesToAdd.forEach(x->x.addOrd(order));
 
-		List<OrderFeature> newOrderFeaturesToFilter = newOrderFeaturesMapToFilter.entrySet().stream()
-				.map(x -> new OrderFeature(x.getKey(), x.getValue())).collect(Collectors.toList());
-
-		List<OrderFeature> newOrderFeatures = new ArrayList<>();
-		for (OrderFeature of : newOrderFeaturesToFilter) {
-	
-					Feature feature=of.getFeature();
-					// feature.setOrderFeatures(of);
-					
-					// Feature newFeature=featureService.save(feature);
-					// of.setFeature(newFeature);
-					newOrderFeatures.add(of);
-					
-				
-
-			
-		}
-
-		Map<ProductFeature, Feature> newOrderFeaturesMap = newOrderFeatures.stream()
-				.collect(Collectors.toMap(x -> x.getProductFeature(), x -> x.getFeature()));
-
-		// for (OrderFeature of : newOrderFeatures) {
-		// 	orginalOrderFeatures.stream()
-		// 			.filter(x -> x.getProductFeature().getName().equals(of.getProductFeature().getName()))
-		// 			.collect(Collectors.toList()).get(0).setFeature(of.getFeature());
-
-		// }
-
-		// Map<String, Feature> newStringFeaturesMap = newOrderFeaturesMap.entrySet().stream()
-		// 		.collect(Collectors.toMap(x -> x.getKey().getName(), x -> x.getValue()));
-
-		// List<String> oldOrderFeatureList = newOrderFeaturesMap.entrySet().stream().map(x -> x.getKey().getName())
-		// 		.collect(Collectors.toList());
-
-		// Map<String, Feature> oldOrderFeatureMap = orginalOrderFeatures.stream()
-		// 		.collect(Collectors.toMap(x -> x.getProductFeature().getName(), x -> x.getFeature()));
-
-		// order.setOrderFeaturesStringsMapByOrderFeatures(orginalOrderFeatures);
-		orginalOrderFeatures.addAll(newOrderFeatures);
-		try {
-			Double priceList = orginalOrderFeatures.stream().mapToDouble(x -> x.getFeature().getPrice()).sum();
-			order.setPrice(priceList);
-		} catch (Exception e) {
-			System.out.println("Cant sum price: " + e.getLocalizedMessage());
-		}
-
-		order.setOrderFeatures(orginalOrderFeatures);
-		order.setOrderFeaturesStringsMapByOrderFeatures(orginalOrderFeatures);
+		order.addAllOrderFeatures(orderFeaturesToAdd);
+		order.setOrderFeaturesStringsMapByOrderFeatures(order.getOrderFeatures());
 		order.revisionUp();
 		Ord newOrder=orderRepository.save(order);
-		newOrder.findProductFeatureByPfName("Konfigurator code");
 
-		newOrderFeaturesMap.entrySet().stream().forEach(x -> {
-			OrderFeature orderFeature = x.getKey().getOrderFeature();
-			orderFeature.setFeature(x.getValue());
-			orderFeatureService.save(orderFeature);
-
-		});
+		System.out.println("adf");
 
 	}
 
@@ -328,7 +278,8 @@ public class OrderService {
 						}
 					}
 
-					System.out.println("Product feature name was changed between order versions");
+					// System.out.println("Product feature name was changed between order
+					// versions");
 				}
 
 			}
@@ -485,18 +436,19 @@ public class OrderService {
 			for (int rowIndex = 0; rowIndex < sheet.getLastRowNum(); rowIndex++) {
 				XSSFRow row = sheet.getRow(rowIndex);
 				if (row != null && row.getCell(2).getStringCellValue().trim().equals(nameToSearch.trim())) {
-					System.out.println(row.getCell(2).getStringCellValue()+" in row "+ row.getCell(2).getReference());
-					System.out.println("link: "+row.getCell(2).getHyperlink().getAddress());
+					System.out
+							.println(row.getCell(2).getStringCellValue() + " in row " + row.getCell(2).getReference());
+					System.out.println("link: " + row.getCell(2).getHyperlink().getAddress());
 					order.setLink(row.getCell(2).getHyperlink().getAddress());
 					order.setPlOrder(row.getCell(1).getStringCellValue());
 					order.setClient(row.getCell(6).getStringCellValue());
 					order.setUnitsToProduce(Integer.parseInt(row.getCell(7).getRawValue()));
-					
+
 					orderRepository.save(order);
 					break;
 				}
 			}
-		
+
 			if (file.isFile() && file.exists()) {
 				System.out.println("MATRIX open");
 			} else {
