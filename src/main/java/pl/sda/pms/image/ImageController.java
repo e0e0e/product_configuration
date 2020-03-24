@@ -125,7 +125,7 @@ public class ImageController {
 
 	private String getImagePath(HttpServletRequest request) {
 		String filePath0 = request.getServletContext().getRealPath("/");
-		return filePath0.replace("pm\\src\\main\\webapp\\", "").replace("ROOT\\", "");
+		return filePath0.replace("pm\\src\\main\\webapp\\", "").replace("ROOT\\", "").replace("pm/src/main/webapp/", "");
 	}
 
 	@GetMapping("/image/list")
@@ -157,7 +157,7 @@ public class ImageController {
 			throws IOException {
 		BufferedImage originalImage = null;
 		String filePath = getImagePath(request);
-		File f = new File(filePath + "imagesLd\\" + imagePath);
+		File f = new File(filePath + "imagesLd"+File.separator + imagePath);
 		if (f.exists() && f.canRead()) {
 			try {
 
@@ -168,7 +168,7 @@ public class ImageController {
 				return null;
 			}
 		}else{
-			originalImage = ImageIO.read(new File(filePath + "imagesLd\\0.png"));
+			originalImage = ImageIO.read(new File(filePath + "imagesLd"+File.separator +"0.png"));
 
 		}
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();

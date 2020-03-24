@@ -49,15 +49,18 @@
 						class="btn btn-outline-info text-dark"
 						href="/feature/edit?productFeatureId=${configList.id}">${configList.name}
 							<span class="glyphicon glyphicon-edit text-dark"></span>
-					</a>  <a
+					</a> 
+					</c:when>
+					<c:when test="${user.authorities=='[ADMIN0]'}">
+					 <a
 						href="/feature/moveDown?productFeatureId=${configList.id}&productId=${configuration.id}"
 						class="btn btn-outline-info text-dark"> <span
 							class="glyphicon glyphicon-triangle-bottom"></span></a> <a
 						href="/feature/moveUp?productFeatureId=${configList.id}&productId=${configuration.id}"
 						class="btn btn-outline-info text-dark"> <span
 							class="glyphicon glyphicon-triangle-top"></span></a></li>
-					
 					</c:when>
+					
 					<c:otherwise>
 					<div class="btn btn-outline-info text-dark">${configList.name}</div>
 					</c:otherwise>

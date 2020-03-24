@@ -5,7 +5,7 @@
 
 	<form method="post" action="/color/change?colorId=${color.id}">
 
-<h3> Create Color: </h3>
+<h3> Edit Color: </h3>
 		<div>
 			<label>Name:</label>
 		</div>
