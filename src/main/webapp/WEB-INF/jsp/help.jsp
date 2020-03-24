@@ -60,10 +60,27 @@
 			<ul>
 				<li><a href="#Sewenth_Sub_Point_1">7.1 Dodanie cechy
 						produktu.</a></li>
-				<li><a href="#Sewenth_Sub_Point_2">7.2 Edycja cechy
+				<li><a href="#Sewenth_Sub_Point_2">7.2 Zmiana kolejności
+						cech produktu</a></li>
+				<li><a href="#Sewenth_Sub_Point_3">7.3 Edycja cechy
 						produktu</a></li>
+				<li><a href="#Sewenth_Sub_Point_4">7.4 Uzupełnianie
+						zamówień o nowe cechy produktu</a></li>
 
 			</ul>
+			<li><a href="#Eight_Point_Header">8. Opcja (cecha), Feature</a></li>
+			<ul>
+				<li><a href="#Eighth_Sub_Point_1">8.1 Edycja opcji</a></li>
+				<li><a href="#Eighth_Sub_Point_2">8.2 Tworzenie nowej opcji</a></li>
+			</ul>
+
+			<li><a href="#Ninth_Point_Header">9. Edycja wielu produktów,
+					MultiEdit</a></li>
+			<ul>
+				<li><a href="#Ninth_Sub_Point_1">8.1 Edycja opcji</a></li>
+				<li><a href="#Ninth_Sub_Point_2">8.1 Tworzenie nowej opcji</a></li>
+			</ul>
+
 		</ul>
 	</div>
 
@@ -194,7 +211,7 @@
 		<div>
 			<h2 id="Third_Sub_Point_2">3.2 Zmiana nazwy zamówienia</h2>
 
-			<div class="opis">Aby zmienić nazwwe zamówienia należy kliknąć
+			<div class="opis">Aby zmienić nazwę zamówienia należy kliknąć
 				na symbol edycji w lini odpowiedniego zamówienia.</div>
 			<img
 				class="helpimg"
@@ -700,21 +717,208 @@
 				alt="Flowers in Chania"
 				onerror="imgError(this)">
 
-			<div class="opis">Wówczas przejdziemy do formularza, przy
-				użyciu którego możemy zdefiniować nową cechę produktu. Nowa cecha
-				produktu będzie dodana do każdego już zdefiniowanego produktu.
-				Poniżej przykład tworzenia cechy "Document Box", wpisujemy nazwę i
-				wybieramy w dolnym menu opcję które chcemy aby były dostępne dla tej
-				cechy. Opcję jak tutaj "Standard document box" i "Document box" nalezy zdefiniować wcześniej.
-				Po wypełnieniu formularza klikamy "Save"</div>
+			<div class="opis">
+				Wówczas przejdziemy do formularza, przy użyciu którego możemy
+				zdefiniować nową cechę produktu. Nowa cecha produktu będzie dodana
+				do każdego już zdefiniowanego produktu. Poniżej przykład tworzenia
+				cechy "Document Box", wpisujemy nazwę i wybieramy w dolnym menu
+				opcje, które chcemy aby były dostępne dla tej cechy. Opcję jak tutaj
+				"Standard document box" i "Document box" należy zdefiniować
+				wcześniej (
+				<a href="#Eighth_Sub_Point_2">8.1 Tworzenie nowej opcji</a>
+				). Po wypełnieniu formularza klikamy "Save"
+			</div>
 
 			<img
 				class="helpimg"
 				src="/im/pf2.png"
 				alt="Flowers in Chania"
 				onerror="imgError(this)">
+
+			<div class="opis">
+				Po dodaniu nowej cechy, jak przejdziemy do tworzenia nowego
+				zamówienia, cecha powinna być dostępna na samym dole. Należy
+				pamiętac, że ta nowa cecha nie zostanie dodana do skonfigurowanych
+				już zamówień, w każdym zamówieniu trzeba je wybrać indywidualnie
+				poprzez przycisk "update" (
+				<a href="#Sewenth_Sub_Point_4">7.4 Uzupełnianie zamówień o nowe
+					cechy produktu</a>
+				).
+			</div>
+
+			<img
+				class="helpimg"
+				src="/im/pf3.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
+		</div>
+
+		<div>
+			<h2 id="Sewenth_Sub_Point_2">7.2 Zmiana kolejności cech produktu</h2>
+			<div class="opis">Czasem może być konieczność zmiany kolejności
+				cech produktu. Czyli np. jak po stworzeniu nowej cechy, pojawia się
+				ona na samym końcu, jeśli chcemy np. żeby była ta cecha piąta od
+				końca to przechodzimy do linka "PF Move" w menu górnym. Pojawi się
+				lista wszystkich cech w aktualnej kolejności.</div>
+
+			<img
+				class="helpimg"
+				src="/im/pf4.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
+
+			<div class="opis">Szukamy odpowiedniej cechy, w tym przypadku
+				jedziemy na sam dół i klikamy strzałkę skierowaną do góry.</div>
+
+			<img
+				class="helpimg"
+				src="/im/pf5.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
+
+
+			<div class="opis">Po kliknięciu strzałki strona musi się
+				przeładować, a cecha przesunie się o jedną pozycję do góry. Jeśli
+				cecha ma być piąta od końca musimy powtórzyć operację aż do
+				uzyskania oczekiwanego efektu.</div>
+
+			<img
+				class="helpimg"
+				src="/im/pf6.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
+
+		</div>
+
+		<div>
+			<h2 id="Sewenth_Sub_Point_3">7.3 Edycja cechy produktu</h2>
+
+			<div class="opis">W celu edycji cechy przechodzimy do linka "PF
+				Move" w menu górnym. Pojawi się lista wszystkich cech w aktualnej
+				kolejności. Aby skasować cechę skonfigurowana we wszystkich
+				produktach klikamy na kosz z prawej strony. W celu edycji np. nazwy
+				klikamy na nazwe cechy z symbolem edycji</div>
+
+			<img
+				class="helpimg"
+				src="/im/pf4.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
+
+			<div class="opis">Wówczas przechodzimy do menu podobnego jak
+				przy tworzeniu cechy, możemy zmienić nazwę i kliknąć przycisk
+				"Save". Nazwa zostanie zmieniona również na już istniejacych
+				zamówieniach.</div>
+
+			<img
+				class="helpimg"
+				src="/im/pf7.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
+
+		</div>
+		<div>
+			<h2 id="Sewenth_Sub_Point_4">7.4 Uzupełnianie zamówień o nowe
+				cechy produktu</h2>
+
+			<div class="opis">Gdy stworzymy nową cechę prodyktu, nie doda
+				się z automatu do skonfigurowanych już zamówień. Jeśli chcemy
+				uzupełnić już istniejące zamówienie o tą cechę należy przejść do
+				widoku szczegółowego zamówienia. I kliknąć na przycisk "update"</div>
+
+			<img
+				class="helpimg"
+				src="/im/pf8.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
+			<div class="opis">Pokarze się wówczas formularz z opcjami które
+				nie sa zdefiniowane w danym zamówieniu, należy wybrać odpowiednią i
+				kliknąc "Save". W zamówieniu zostanie uzupelniona ta cecha.</div>
+
+			<img
+				class="helpimg"
+				src="/im/pf9.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
 		</div>
 	</div>
+	<div>
+		<h2 id="Eight_Point_Header">8. Opcja (cecha), Feature</h2>
+
+		<div class="opis">Listę wszystkich opcji można znaleźć pod
+			linkiem "Features" w menu górnym. Aby edytowań nalezy wybrać ikone po
+			prawej z symbolem edycji. Symbol zegarka pokazuje zmiany jakie były
+			wprowadzone do danej opcji. Zmiany te są w formie pliku JSON, jego
+			wyświetlanie zależy od przeglądarki lub wtyczek w niej
+			zainstalowanych. Kosz na śmieci służy do kasowania. Skasować da się
+			jedynie opcje, które nie są nigdzie użyte.</div>
+
+		<img
+			class="helpimg"
+			src="/im/f1.png"
+			alt="Flowers in Chania"
+			onerror="imgError(this)">
+
+		<div>
+			<h2 id="Eighth_Sub_Point_1">8.1 Edycja opcji</h2>
+			<div class="opis">
+				Edycja jest bardzo podobna do
+				<a href="#Forth_Sub_Point_1">4.1 Edycja niestandardowej opcji</a>
+				, można także zmienić obraz jak w punkcie
+				<a href="#Forth_Sub_Point_2">4.2 Edycja obrazu opcji</a>
+				. Aby znależć daną opcję np. w celu edycji można ją wyszukać
+				wciskajac Ctrl+F i wpisując jej nazwę.
+			</div>
+
+			<img
+				class="helpimg"
+				src="/im/f2.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
+		</div>
+		<div>
+			<h2 id="Eighth_Sub_Point_2">8.2 Tworzenie nowej opcji</h2>
+
+			<div class="opis">
+				Tworzenie nowej opcji jest przydatne np. w przypadku gdy chcemy
+				dodać nową cechę produktu
+				<a href="#Sewenth_Sub_Point_1">7.1 Dodanie cechy produktu.</a>
+				. W tym celu klikamy przycisk "F+" w menu górnym. Formularz wygląda
+				jak niżej, na tym etapie nie można dodać obrazka, jedynie wpisać
+				nazewę pliku znajdującego się już na serwerze. Aby dodać obraz
+				poprzez wklejenie nalezy edytować ponownie daną opcję.
+			</div>
+
+			<img
+				class="helpimg"
+				src="/im/f3.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
+
+		</div>
+
+	</div>
+	<div>
+		<h2 id="Ninth_Point_Header">9. Edycja wielu produktów, MultiEdit</h2>
+		<div class="opis">W celu ułatwienia edycji i przeglądania już
+			skonfigurowanych produktów można użyć funkcji Multiedit do której
+			link znajduje się w menu górnym. Po kliknięciu w link ukaże się
+			formularz podobny do tego przy tworzeniu zamówienia, ale służy do
+			filtrowania produktów wg wybranych opcji. Czyli jeżeli wybierzemy w
+			cesze koła rozmiar 385/65 R22,5 to po przefiltrowaniu dostaniemy
+			jedynie te produkty, w których są takie koła dostępne. Co umożliwi
+			nam np. uzupełnienie nowego rodzaju opony dla wszystkich produktów
+			jednocześnie.</div>
+
+		<img
+			class="helpimg"
+			src="/im/multi1.png"
+			alt="Flowers in Chania"
+			onerror="imgError(this)">
+
+
+	</div>
+
 </div>
 <script>
 	//Get the button

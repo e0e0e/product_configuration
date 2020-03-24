@@ -29,7 +29,7 @@
 
 				Feature featureId =(Feature) pageContext.findAttribute("feature");
 
-					if(headerNames.equals("localhost:8081")){
+					if(headerNames.equals("nolocalhost:8081")){
 						out.println("<a href='/feature/pdf?featureId="+featureId.getId()+"'> <i class='fa fa-file-pdf-o' aria-hidden='true'></i></a>");
 					}
 				%>
