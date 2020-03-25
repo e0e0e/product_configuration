@@ -60,10 +60,14 @@ public class Ord {
 	private Boolean noStandard;
 	private String link;
 	private String plOrder;
+	
+	private Status rs=Status.TO_DO;
+	private Status documentation=Status.TO_DO;
+	private Status qad=Status.TO_DO;
+	private Status production=Status.TO_DO;
 
-	public Boolean isNoStandard() {
-		return this.noStandard;
-	}
+
+	
 
 	public String getLink() {
 		return link;
@@ -351,6 +355,93 @@ public class Ord {
 		}
 		return null;
 
+	}
+
+	public Boolean isNoStandard() {
+		return this.noStandard;
+	}
+
+	public Status getRs() {
+		return this.rs;
+	}
+
+	public void setRs(Status rs) {
+		this.rs = rs;
+	}
+
+	public Status getDocumentation() {
+		return this.documentation;
+	}
+
+	public void setDocumentation(Status documentation) {
+		this.documentation = documentation;
+	}
+
+	public Status getQad() {
+		return this.qad;
+	}
+
+	public void setQad(Status qad) {
+		this.qad = qad;
+	}
+
+	public Status getProduction() {
+		return this.production;
+	}
+
+	public void setProduction(Status production) {
+		this.production = production;
+	}
+
+	public Status chengStatusToNext(String task) {
+
+		switch (task){
+			case "rs":
+			this.rs=this.rs.next();
+			return this.rs;
+		
+
+			case "documentation":
+			this.documentation=this.documentation.next();
+			return this.documentation;
+	
+
+			case "qad":
+			this.qad=this.qad.next();
+			return this.qad;
+
+			case "production":
+			this.production=this.production.next();
+			return this.production;
+
+		}
+		return null;
+
+	}
+
+	public Status chengStatusToPrevious(String task) {
+
+		switch (task){
+			case "rs":
+			this.rs=this.rs.previous();
+			return this.rs;
+
+			case "documentation":
+			this.documentation=this.documentation.previous();
+			return this.documentation;
+
+			case "qad":
+			this.qad=this.qad.previous();
+			return this.qad;
+
+			case "production":
+			this.production=this.production.previous();
+			return this.production;
+			
+
+
+		}
+		return null;
 	}
 
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -192,12 +193,12 @@ public class OrderService {
 						featureService.findByID(Long.parseLong(e.getValue()))))
 				.map(x -> orderFeatureService.save(x)).collect(Collectors.toList());
 
-				orderFeaturesToAdd.forEach(x->x.addOrd(order));
+		orderFeaturesToAdd.forEach(x -> x.addOrd(order));
 
 		order.addAllOrderFeatures(orderFeaturesToAdd);
 		order.setOrderFeaturesStringsMapByOrderFeatures(order.getOrderFeatures());
 		order.revisionUp();
-		Ord newOrder=orderRepository.save(order);
+		Ord newOrder = orderRepository.save(order);
 
 		System.out.println("adf");
 
@@ -458,6 +459,32 @@ public class OrderService {
 		} catch (Exception e) {
 			System.out.println("excel file not found: " + e.getLocalizedMessage());
 		}
+
+	}
+
+	public Ord changeStatus(String orderGiven) {
+		JSONObject obj = new JSONObject(orderGiven);
+
+		Map<String, String> orderTask = obj.toMap().entrySet().stream()
+				.collect(Collectors.toMap(x -> x.getKey().toString(), x -> x.getValue().toString()));
+
+		Long orderId = Long.parseLong(orderTask.get("orderId"));
+		Status status = Status.valueOf(orderTask.get("status"));
+		String task = orderTask.get("task");
+		Boolean next = (orderTask.get("next") == "1");
+
+		Ord order = orderRepository.findById(orderId).get();
+		if (next) {
+			order.chengStatusToNext(task);
+		} else {
+			order.chengStatusToPrevious(task);
+		}
+
+		Ord newOrder = orderRepository.save(order);
+
+		Map<String,String> resultMap=new HashMap<>();
+		resultMap.put(task,order.getRs().toString());
+		return newOrder;
 
 	}
 

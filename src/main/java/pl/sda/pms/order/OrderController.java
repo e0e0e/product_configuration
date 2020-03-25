@@ -17,7 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import pl.sda.pms.OrderFeature.OrderFeature;
 import pl.sda.pms.OrderFeature.OrderFeatureService;
 import pl.sda.pms.color.Color;
@@ -101,15 +104,16 @@ public class OrderController {
 
 		Ord order = orderService.findById(orderId);
 		ProductConfiguration productConfiguration = productConfigurationService.findByName("pattern");
-		Set<String> orderFeaturesListNames=order.getOrderFeatures().stream().map(x->x.getProductFeature().getName().toLowerCase()).collect(Collectors.toSet());
+		Set<String> orderFeaturesListNames = order.getOrderFeatures().stream()
+				.map(x -> x.getProductFeature().getName().toLowerCase()).collect(Collectors.toSet());
 		Set<String> productFeaturesListNames = productConfiguration.getConfigurationList().stream()
 				.map(x -> x.getName().toLowerCase()).collect(Collectors.toSet());
 
 		productFeaturesListNames.removeAll(orderFeaturesListNames);
 
-		List<ProductFeature> productFeatures=productFeaturesListNames.stream().map(x->productConfiguration.findProductFeatureByName(x)).collect(Collectors.toList());
+		List<ProductFeature> productFeatures = productFeaturesListNames.stream()
+				.map(x -> productConfiguration.findProductFeatureByName(x)).collect(Collectors.toList());
 
-		
 		model.addAttribute("orderId", orderId);
 		model.addAttribute("productFeatures", productFeatures);
 		model.addAttribute("title", "Edit Order PFs");
@@ -293,16 +297,22 @@ public class OrderController {
 		return "redirect:/order/show?orderId=" + orderId;
 	}
 
-	
-
 	@PostMapping("/order/newPf")
-	public String updateOrderWithPf(@RequestParam Map<String, String> paramMap,@RequestParam String orderId, Model model) {
-
+	public String updateOrderWithPf(@RequestParam Map<String, String> paramMap, @RequestParam String orderId,
+			Model model) {
 
 		orderService.saveProductOrderChangesAllParamMap(paramMap, orderId);
-	
 
 		return "redirect:/order/show?orderId=" + orderId;
 	}
-	
+
+	@PostMapping(value = "/order/status/", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public String orderStatusChange(@RequestBody String order,
+			Model model) {
+
+				orderService.changeStatus(order);
+		return null;
+	}
+
 }

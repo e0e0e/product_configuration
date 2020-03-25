@@ -76,7 +76,25 @@
 							class="glyphicon glyphicon-floppy-disk text-warning"></span></a>
 				</span>
 			</c:if>
-		</div>
+
+			<br>
+			RS: <a class="btn btn-outline-info text-dark" href="/order/status/?orderId=${order.id}&status=${order.rs}"><span
+					class="glyphicon glyphicon glyphicon-chevron-left text-light"></span name="${order.id}"></a><span>${order.rs}</span><a
+				class="btn btn-outline-info text-dark" href="/order/status/?orderId=${order.id}&status=${order.rs}&task=rs"><span
+					class="glyphicon glyphicon glyphicon-chevron-right text-light"></span></a>
+			<br>
+			QAD: <a class="btn btn-outline-info text-dark" href="/order/status/?orderId=${order.id}&status=${order.qad}"><span
+					class="glyphicon glyphicon glyphicon-chevron-left text-light"></span></a> </span name="${order.id}">${order.qad}</span><a
+				class="btn btn-outline-info text-dark" href="/order/status/?orderId=${order.id}&status=${order.qad}&task=qad"><span
+					class="glyphicon glyphicon glyphicon-chevron-right text-light"></span></a>
+
+
+RS: <span class="glyphicon glyphicon glyphicon-chevron-left text-light" onclick="changeStatus('${order.id}','${order.rs}','rs',0)"><span></span name="${order.id}">${order.rs}</span>
+<span class="glyphicon glyphicon glyphicon-chevron-right text-light" onclick="changeStatus('${order.id}','${order.rs}','rs',1)"><span>
+			<br>
+
+
+			</div>
 		<div class="card-body">
 			<c:forEach var="feature" items="${order.orderFeatures}">
 				<c:choose>
@@ -246,18 +264,34 @@
 		</c:forEach>
 
 
-		<%-- <div class="col-2">
-				<fmt:formatDate
-					type="date"
-					value="${order[1].revisionDate}"
-					pattern="yyyy-MM-dd, HH:mm" />
-			</div>
 
-			<div class="col-2">${order[1].username}</div>
-		</div>
-		<div>LP. ${order[0].id}, Order name: ${order[0].orderName},
-			Price: ${order[0].price}, Client Address: ${order[0].client}, Units:
-			${order[0].unitsToProduce}</div> --%>
 	</c:forEach>
 
 </div>
+
+<script>
+function changeStatus(orderId,status, task, next) {
+	 var xhttp = new XMLHttpRequest();
+	    xhttp.onreadystatechange = function() {
+	         if (this.readyState == 4 && this.status == 200) {
+	        	 
+	        	 products=JSON.parse(this.responseText);
+	        	
+	        	   }
+	    };
+	    
+
+	    let arr={};
+
+		arr["orderId"]=orderId;
+		arr["status"]=status;
+		arr["task"]=task;
+		arr["next"]=next;
+        let fString=JSON.stringify(arr);
+   		console.log(fString);
+	    xhttp.open("POST", "/order/status/", true);
+	    xhttp.setRequestHeader("Content-type", "application/json");
+		xhttp.send(fString);
+	
+}
+</script>

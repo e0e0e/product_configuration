@@ -18,6 +18,7 @@
 				<div class="col text-center">LP.</div>
 				<div class="col text-center">Order name</div>
 				<div class="col text-center">Order PL</div>
+				<div class="col text-center">Progress</div>
 				<div class="col text-center">Date</div>
 				<div class="col text-center">Revision</div>
 				<div class="col-1"></div>
@@ -50,7 +51,9 @@
 							<div class="row">
 								<div class="col">${order.id}</div>
 								<div class="col">${order.orderName}</div>
+								
 								<div class="col">${order.plOrder}</div>
+								<div class="col">${order.rs} ${order.documentation} ${order.qad} ${order.production}</div>
 								<div class="col">
 									<fmt:formatDate
 										type="date"
