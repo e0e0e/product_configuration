@@ -275,7 +275,8 @@ function changeStatus(orderId,status, task, next) {
 	    xhttp.onreadystatechange = function() {
 	         if (this.readyState == 4 && this.status == 200) {
 	        	 
-	        	 products=JSON.parse(this.responseText);
+				 products=JSON.parse(this.responseText);
+				 console.log(products);
 	        	
 	        	   }
 	    };

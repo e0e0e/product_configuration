@@ -10,7 +10,7 @@ public enum Status {
         return vals[(this.ordinal()+1) % vals.length];
     }
 	public Status previous() {
-		return vals[(this.ordinal()-1) % vals.length];
+		return vals[Math.abs((this.ordinal()-1) % vals.length)];
 	}
 
 

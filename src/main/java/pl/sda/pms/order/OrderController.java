@@ -308,11 +308,11 @@ public class OrderController {
 
 	@PostMapping(value = "/order/status/", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public String orderStatusChange(@RequestBody String order,
+	public Status orderStatusChange(@RequestBody String order,
 			Model model) {
 
-				orderService.changeStatus(order);
-		return null;
+			Status status=	orderService.changeStatus(order);
+		return status;
 	}
 
 }

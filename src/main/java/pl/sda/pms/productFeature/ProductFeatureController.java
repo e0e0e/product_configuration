@@ -194,7 +194,7 @@ public class ProductFeatureController {
 	public String moveDownProductFeature(@RequestParam Long productFeatureId, @RequestParam Long productId,
 			Model model) {
 
-		productFeatureService.moveDown(productFeatureId, productId);
+		productConfigurationService.moveDown(productFeatureId, productId);
 
 		return "redirect:/product/moveList?productId=" + productId + "#anchor_" + productFeatureId;
 
@@ -205,7 +205,7 @@ public class ProductFeatureController {
 	@GetMapping("/feature/moveUp")
 	public String moveUpProductFeature(@RequestParam Long productFeatureId, @RequestParam Long productId, Model model) {
 
-		productFeatureService.moveUp(productFeatureId, productId);
+		productConfigurationService.moveUp(productFeatureId, productId);
 
 		return "redirect:/product/moveList?productId=" + productId + "#anchor_" + productFeatureId;
 
@@ -214,9 +214,9 @@ public class ProductFeatureController {
 	@GetMapping("/productFeature/unify")
 	public String unifyPosition() {
 
-		productFeatureService.unifyPosition();
+		productConfigurationService.unifyPosition();
 
-		return null;
+		return "redirect:/product/show";
 
 	}
 

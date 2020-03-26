@@ -462,29 +462,26 @@ public class OrderService {
 
 	}
 
-	public Ord changeStatus(String orderGiven) {
+	public Status changeStatus(String orderGiven) {
 		JSONObject obj = new JSONObject(orderGiven);
 
 		Map<String, String> orderTask = obj.toMap().entrySet().stream()
 				.collect(Collectors.toMap(x -> x.getKey().toString(), x -> x.getValue().toString()));
 
 		Long orderId = Long.parseLong(orderTask.get("orderId"));
-		Status status = Status.valueOf(orderTask.get("status"));
+		// Status status = Status.valueOf(orderTask.get("status"));
 		String task = orderTask.get("task");
 		Boolean next = (orderTask.get("next") == "1");
-
+		Status status=null;
 		Ord order = orderRepository.findById(orderId).get();
 		if (next) {
-			order.chengStatusToNext(task);
+			status=order.chengStatusToNext(task);
 		} else {
-			order.chengStatusToPrevious(task);
+			status=order.chengStatusToPrevious(task);
 		}
 
 		Ord newOrder = orderRepository.save(order);
-
-		Map<String,String> resultMap=new HashMap<>();
-		resultMap.put(task,order.getRs().toString());
-		return newOrder;
+		return status;
 
 	}
 

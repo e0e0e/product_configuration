@@ -185,91 +185,9 @@ public class ProductFeatureService {
 
 	}
 
-	public void moveDown(Long productFeatureId, Long productId) {
 
-		ProductFeature productFeature = productFeatureRepository.findById(productFeatureId).get();
-		List<ProductFeature> productFeaturesByOrgynalName = productFeatureRepository
-				.findByName(productFeature.getName());
-		try {
-			for (ProductFeature pf : productFeaturesByOrgynalName) {
-				try {
-					ProductConfiguration productConfiguration = pf.getProductConfiguration();
-					int position = pf.findPositionInProduct();
 
-					ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
-							.sorted(Comparator.comparing(ProductFeature::findPositionInProduct))
-							.filter(x -> x.findPositionInProduct() > position).findFirst().get();
 
-					pf.setPosition(nextProductFeature.findPositionInProduct());
-					nextProductFeature.setPosition(position);
-
-					productFeatureRepository.save(nextProductFeature);
-					productFeatureRepository.save(pf);
-				} catch (Exception e) {
-					System.out.println("product feature Service productFeature last in product: " + e.getMessage());
-				}
-
-			}
-		} catch (Exception e) {
-			System.out.println("move down: " + e.getMessage());
-		}
-
-	}
-
-	public void moveUp(Long productFeatureId, Long productId) {
-
-		ProductFeature productFeature = productFeatureRepository.findById(productFeatureId).get();
-		List<ProductFeature> productFeaturesByOrgynalName = productFeatureRepository
-				.findByName(productFeature.getName());
-		try {
-			for (ProductFeature pf : productFeaturesByOrgynalName) {
-				try {
-					ProductConfiguration productConfiguration = pf.getProductConfiguration();
-					int position = pf.findPositionInProduct();
-
-					ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
-							.sorted(Comparator.comparing(ProductFeature::findPositionInProduct).reversed())
-							.filter(x -> x.findPositionInProduct() < position).findFirst().get();
-
-					pf.setPosition(nextProductFeature.findPositionInProduct());
-					nextProductFeature.setPosition(position);
-
-					productFeatureRepository.save(nextProductFeature);
-					productFeatureRepository.save(pf);
-				} catch (Exception e) {
-					System.out.println("product feature Service productFeature last in product: " + e.getMessage());
-				}
-
-			}
-		} catch (Exception e) {
-			System.out.println("move Up: " + e.getMessage());
-		}
-
-	}
-
-	public void unifyPosition() {
-
-		List<ProductFeature> productFeatures = productFeatureRepository.findAll();
-
-		Set<String> nameSet = productFeatures.stream().map(pf -> pf.getName()).collect(Collectors.toSet());
-
-		for (String name : nameSet) {
-			List<ProductFeature> pfList = productFeatureRepository.findByName(name);
-
-			try {
-
-				Integer positionDefault = pfList.stream().filter(x -> x.getProductConfiguration() != null).findFirst()
-						.get().findPositionInProduct();
-				pfList.stream().forEach(pf -> {
-					pf.setPosition(positionDefault);
-					productFeatureRepository.save(pf);
-				});
-			} catch (Exception e) {
-				System.out.println("Product Feature Service probably not used in product " + e.getMessage());
-			}
-
-		}
-	}
 
 	public Collection<Feature> findFeaturesByProductFeatureName(String productFeatureName) {
 		List<ProductFeature> productFeatures = productFeatureRepository.findAllByName(productFeatureName);
@@ -316,6 +234,15 @@ public class ProductFeatureService {
 
 	public void remove(ProductFeature p) {
 		productFeatureRepository.delete(p);
+	}
+
+	public List<ProductFeature> findAllByName(String name) {
+		
+		return productFeatureRepository.findAllByName(name);
+	}
+
+	public List<ProductFeature> findByName(String name) {
+		return productFeatureRepository.findByName(name);
 	}
 
 }

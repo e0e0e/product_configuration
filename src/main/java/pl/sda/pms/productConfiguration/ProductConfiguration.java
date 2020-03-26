@@ -187,12 +187,17 @@ public class ProductConfiguration {
 
 	public ProductFeature findPFByName(String pF) {
 
-		List<ProductFeature>  configuration=this.configurationList;
+		List<ProductFeature> configuration = this.configurationList;
 
-		ProductFeature productFeature=configuration.stream().filter(x->x.getName().equals(pF)).findFirst().get();
-
+		ProductFeature productFeature = configuration.stream().filter(x -> x.getName().equals(pF)).findFirst().get();
 
 		return productFeature;
+	}
+
+	public Integer findPFPositionByName(String name) {
+
+		return this.configurationList.stream().filter(x -> x.getName().equals(name)).map(x -> x.getPosition())
+				.findFirst().get();
 	}
 
 }

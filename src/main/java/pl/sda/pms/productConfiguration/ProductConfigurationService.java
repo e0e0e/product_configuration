@@ -1,6 +1,7 @@
 package pl.sda.pms.productConfiguration;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -544,6 +545,104 @@ public class ProductConfigurationService {
 		});
 		
 
+	}
+
+
+	public void moveDown(Long productFeatureId, Long productId) {
+
+		ProductFeature productFeature = productFeatureService.findById(productFeatureId);
+		List<ProductFeature> productFeaturesByOrgynalName = productFeatureService
+				.findAllByName(productFeature.getName());
+		try {
+			for (ProductFeature pf : productFeaturesByOrgynalName) {
+				try {
+					ProductConfiguration productConfiguration = pf.getProductConfiguration();
+					int position = pf.findPositionInProduct();
+
+					ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
+							.sorted(Comparator.comparing(ProductFeature::findPositionInProduct))
+							.filter(x -> x.findPositionInProduct() > position).findFirst().get();
+
+					pf.setPosition(nextProductFeature.findPositionInProduct());
+					nextProductFeature.setPosition(position);
+
+					productFeatureService.save(nextProductFeature);
+					productFeatureService.save(pf);
+				} catch (Exception e) {
+					System.out.println("product feature Service productFeature last in product: " + e.getMessage());
+				}
+
+			}
+		} catch (Exception e) {
+			System.out.println("move down: " + e.getMessage());
+		}
+
+	}
+
+	public void moveUp(Long productFeatureId, Long productId) {
+		
+		ProductFeature productFeature = productFeatureService.findById(productFeatureId);
+		List<ProductFeature> productFeaturesByOrgynalName = productFeatureService
+				.findAllByName(productFeature.getName());
+		try {
+			for (ProductFeature pf : productFeaturesByOrgynalName) {
+				try {
+					ProductConfiguration productConfiguration = pf.getProductConfiguration();
+					int position = pf.findPositionInProduct();
+
+					ProductFeature nextProductFeature = productConfiguration.getConfigurationList().stream()
+							.sorted(Comparator.comparing(ProductFeature::findPositionInProduct).reversed())
+							.filter(x -> x.findPositionInProduct() < position).findFirst().get();
+
+					pf.setPosition(nextProductFeature.findPositionInProduct());
+					nextProductFeature.setPosition(position);
+
+					productFeatureService.save(nextProductFeature);
+					productFeatureService.save(pf);
+				} catch (Exception e) {
+					System.out.println("product feature Service productFeature last in product: " + e.getMessage());
+				}
+
+			}
+		} catch (Exception e) {
+			System.out.println("move Up: " + e.getMessage());
+		}
+
+	}
+
+	public void unifyPosition() {
+		ProductConfiguration pattern=productConfigurationRepository.findByName("pattern");
+
+		List<ProductFeature> productFeatures = productFeatureService.findAll();
+
+		Set<String> nameSet = productFeatures.stream().map(pf -> pf.getName()).collect(Collectors.toSet());
+
+		for (String name : nameSet) {
+			List<ProductFeature> pfList = productFeatureService.findAllByName(name);
+
+			try {
+
+				if(pfList.stream().filter(x -> x.getProductConfiguration() != null).findFirst().isPresent()){
+				Integer positionDefault = pfList.stream().filter(x -> x.getProductConfiguration() != null).findFirst()
+						.get().findPositionInProduct();
+				Integer positionDefaultInPc=pattern.findPFPositionByName(name);
+					if(name.equals("Configurator")){
+
+						System.out.println("af");
+					}
+				pfList.stream().forEach(pf -> {
+					pf.setPosition(positionDefault);
+					productFeatureService.save(pf);
+				});
+			}else{
+				System.out.println("Product Feature Service probably not used in product: err0 ");
+
+			}
+			} catch (Exception e) {
+				System.out.println("Product Feature Service probably not used in product " + e.getMessage());
+			}
+
+		}
 	}
 
 }
