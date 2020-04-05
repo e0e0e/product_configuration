@@ -308,11 +308,16 @@ public class OrderController {
 
 	@PostMapping(value = "/order/status/", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public Status orderStatusChange(@RequestBody String order,
+	public String[] orderStatusChange(@RequestBody String order,
 			Model model) {
 
 			Status status=	orderService.changeStatus(order);
-		return status;
+			String[] res=new String[2];
+			res[0]=status.toString();
+			res[1]=status.getKolor();
+			
+			
+		return res;
 	}
 
 }

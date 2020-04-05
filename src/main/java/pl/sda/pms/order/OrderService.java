@@ -469,18 +469,29 @@ public class OrderService {
 				.collect(Collectors.toMap(x -> x.getKey().toString(), x -> x.getValue().toString()));
 
 		Long orderId = Long.parseLong(orderTask.get("orderId"));
-		// Status status = Status.valueOf(orderTask.get("status"));
+		Status oryginalStatus;
+		if (orderTask.get("status").equals("")) {
+			oryginalStatus = Status.TO_DO;
+
+		} else {
+			oryginalStatus = Status.valueOf(orderTask.get("status"));
+		}
 		String task = orderTask.get("task");
-		Boolean next = (orderTask.get("next") == "1");
-		Status status=null;
+		Boolean next = (orderTask.get("next").contentEquals("1"));
+		Status status = null;
 		Ord order = orderRepository.findById(orderId).get();
 		if (next) {
-			status=order.chengStatusToNext(task);
+			status = order.chengStatusToNext(task);
 		} else {
-			status=order.chengStatusToPrevious(task);
+			status = order.chengStatusToPrevious(task);
 		}
 
-		Ord newOrder = orderRepository.save(order);
+		if (!oryginalStatus.equals(status)) {
+			Ord newOrder = orderRepository.save(order);
+			// return newOrder;
+
+		}
+
 		return status;
 
 	}

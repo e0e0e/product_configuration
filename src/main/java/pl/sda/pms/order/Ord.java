@@ -60,14 +60,11 @@ public class Ord {
 	private Boolean noStandard;
 	private String link;
 	private String plOrder;
-	
-	private Status rs=Status.TO_DO;
-	private Status documentation=Status.TO_DO;
-	private Status qad=Status.TO_DO;
-	private Status production=Status.TO_DO;
 
-
-	
+	private Status rs = Status.TO_DO;
+	private Status documentation = Status.TO_DO;
+	private Status qad = Status.TO_DO;
+	private Status production = Status.TO_DO;
 
 	public String getLink() {
 		return link;
@@ -395,23 +392,33 @@ public class Ord {
 
 	public Status chengStatusToNext(String task) {
 
-		switch (task){
-			case "rs":
-			this.rs=this.rs.next();
+		switch (task) {
+		case "rs":
+			if (this.rs == null) {
+				this.rs=Status.TO_DO;
+			}
+			this.rs = this.rs.next();
 			return this.rs;
-		
 
-			case "documentation":
-			this.documentation=this.documentation.next();
+		case "documentation":
+			if (this.documentation == null) {
+				this.documentation=Status.TO_DO;
+			}
+			this.documentation = this.documentation.next();
 			return this.documentation;
-	
 
-			case "qad":
-			this.qad=this.qad.next();
+		case "qad":
+			if (this.qad == null) {
+				this.qad=Status.TO_DO;
+			}
+			this.qad = this.qad.next();
 			return this.qad;
 
-			case "production":
-			this.production=this.production.next();
+		case "production":
+			if (this.production == null) {
+				this.production=Status.TO_DO;
+			}
+			this.production = this.production.next();
 			return this.production;
 
 		}
@@ -421,24 +428,34 @@ public class Ord {
 
 	public Status chengStatusToPrevious(String task) {
 
-		switch (task){
-			case "rs":
-			this.rs=this.rs.previous();
+		switch (task) {
+		case "rs":
+			if (this.rs == null) {
+				this.rs=Status.TO_DO;
+			}
+			this.rs = this.rs.previous();
 			return this.rs;
 
-			case "documentation":
-			this.documentation=this.documentation.previous();
+		case "documentation":
+			if (this.documentation == null) {
+				this.documentation=Status.TO_DO;
+			}
+			this.documentation = this.documentation.previous();
 			return this.documentation;
 
-			case "qad":
-			this.qad=this.qad.previous();
+		case "qad":
+			if (this.qad == null) {
+				this.qad=Status.TO_DO;
+			}
+			this.qad = this.qad.previous();
 			return this.qad;
 
-			case "production":
-			this.production=this.production.previous();
+		case "production":
+			if (this.production == null) {
+				this.production=Status.TO_DO;
+			}
+			this.production = this.production.previous();
 			return this.production;
-			
-
 
 		}
 		return null;

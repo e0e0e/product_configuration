@@ -10,8 +10,8 @@
 	</h3>
 	<a
 				href="/productFeature/unify"
-				class="btn btn-outline-dark text-secondary bg-info m-1">
-				If Product feetures are not in same order in diffrent product- press me</a>
+				class="btn btn-outline-dark text-light bg-info m-1">
+				If Product features are not in same order in different product- press me</a>
 
 
 	<div class="card text-dark bg-light m-1">
