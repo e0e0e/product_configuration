@@ -221,8 +221,6 @@ public class ProductConfigurationService {
 
 		List<ProductConfiguration> productList = getFilteredProducts(filterMap);
 
-		// System.out.println("---VVV---");
-		// productList.forEach(x -> System.out.println(x.getName()));
 
 		Map<String, List<ShortFeature>> formMap = getMApOfResultsForForm(productList);
 
@@ -233,7 +231,6 @@ public class ProductConfigurationService {
 				for (ShortFeature sf : shortFeatureList) {
 					if (sf.getName().equals(m.getValue().getName())) {
 						sf.setSelected(true);
-						// System.out.println(sf);
 					}
 
 				}
@@ -315,7 +312,6 @@ public class ProductConfigurationService {
 								.filter(f -> !featureNames.contains(
 										new ShortFeature(f.getId(), f.getName(), f.getImagePath(), f.getIndex())))
 								.forEach(f -> featureNames.add(new ShortFeature(f.getId(), f.getName())));
-						// System.out.println(" ");
 					}
 
 				}

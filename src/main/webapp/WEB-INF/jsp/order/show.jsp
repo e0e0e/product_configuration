@@ -106,74 +106,75 @@
 					</a>
 				</span>
 			</c:if>
-			<div class="m-3">
+			<div class="row">
 				<div
-					id="arrow_left_rs_${order.id}"
-					class="d-inline glyphicon glyphicon glyphicon-chevron-left text-light btn btn-outline-warning m-2"
-					id="arrow_left_${order.id}"
-					onclick="changeStatus('${order.id}','rs',0)"></div>
-				<div
-					class="d-inline rounded-pill p-2"
+					class="ml-5 mr-5 p-3 col rounded-pill text-center"
 					id="status_rs_${order.id}"
 					style="background-color:${order.rs.kolor}"
-					value="${order.rs}">RS</div>
-				<div
-					id="arrow_right_rs_${order.id}"
-					class="d-inline glyphicon glyphicon glyphicon-chevron-right text-light btn btn-outline-warning m-2"
-					onclick="changeStatus('${order.id}','rs',1)"></div>
-			</div>
+					value="${order.rs}">
+					<div
+						id="arrow_left_rs_${order.id}"
+						class="d-inline glyphicon glyphicon glyphicon-chevron-left text-light btn btn-outline-warning m-2"
+						id="arrow_left_${order.id}"
+						onclick="changeStatus('${order.id}','rs',0)"></div>
+					<div class="d-inline rounded-pill p-2">RS</div>
+					<div
+						id="arrow_right_rs_${order.id}"
+						class="d-inline glyphicon glyphicon glyphicon-chevron-right text-light btn btn-outline-warning m-2"
+						onclick="changeStatus('${order.id}','rs',1)"></div>
+				</div>
 
-			<div class="m-3">
 				<div
-					id="arrow_left_documentation_${order.id}"
-					class="d-inline glyphicon glyphicon glyphicon-chevron-left text-light btn btn-outline-warning m-2"
-					id="arrow_left_${order.id}"
-					onclick="changeStatus('${order.id}','documentation',0)"></div>
-				<div
-					class="d-inline rounded-pill p-2"
 					id="status_documentation_${order.id}"
-					style="background-color:${order.documentation.kolor}"
-					value="${order.documentation}">DOC</div>
+					class="ml-5 mr-5 p-3 col rounded-pill text-center"
+					value="${order.documentation}"
+					style="background-color:${order.documentation.kolor}">
+					<div
+						id="arrow_left_documentation_${order.id}"
+						class="d-inline glyphicon glyphicon glyphicon-chevron-left text-light btn btn-outline-warning m-2"
+						id="arrow_left_${order.id}"
+						onclick="changeStatus('${order.id}','documentation',0)"></div>
+					<div class="d-inline  p-2">DOC</div>
+					<div
+						id="arrow_right_documentation_${order.id}"
+						class="d-inline glyphicon glyphicon glyphicon-chevron-right text-light btn btn-outline-warning m-2"
+						onclick="changeStatus('${order.id}','documentation',1)"></div>
+				</div>
 				<div
-					id="arrow_right_documentation_${order.id}"
-					class="d-inline glyphicon glyphicon glyphicon-chevron-right text-light btn btn-outline-warning m-2"
-					onclick="changeStatus('${order.id}','documentation',1)"></div>
-			</div>
-			<div class="m-3">
-				<div
-					id="arrow_left_qad_${order.id}"
-					class="d-inline glyphicon glyphicon glyphicon-chevron-left text-light btn btn-outline-warning m-2"
-					id="arrow_left_${order.id}"
-					onclick="changeStatus('${order.id}','qad',0)"></div>
-				<div
-					class="d-inline rounded-pill p-2"
+					class="ml-5 mr-5 p-3 col rounded-pill text-center"
 					id="status_qad_${order.id}"
 					style="background-color:${order.qad.kolor}"
-					value="${order.qad}">QAD</div>
-				<div
-					id="arrow_right_qad_${order.id}"
-					class="d-inline glyphicon glyphicon glyphicon-chevron-right text-light btn btn-outline-warning m-2"
-					onclick="changeStatus('${order.id}','qad',1)"></div>
-			</div>
+					value="${order.qad}">
+					<div
+						id="arrow_left_qad_${order.id}"
+						class="d-inline glyphicon glyphicon glyphicon-chevron-left text-light btn btn-outline-warning m-2"
+						id="arrow_left_${order.id}"
+						onclick="changeStatus('${order.id}','qad',0)"></div>
+					<div class="d-inline rounded-pill p-2">QAD</div>
+					<div
+						id="arrow_right_qad_${order.id}"
+						class="d-inline glyphicon glyphicon glyphicon-chevron-right text-light btn btn-outline-warning m-2"
+						onclick="changeStatus('${order.id}','qad',1)"></div>
+				</div>
 
-			<div class="m-3">
 				<div
-					id="arrow_left_production_${order.id}"
-					class="d-inline glyphicon glyphicon glyphicon-chevron-left text-light btn btn-outline-warning m-2"
-					id="arrow_left_${order.id}"
-					onclick="changeStatus('${order.id}','production',0)"></div>
-				<div
-					class="d-inline rounded-pill p-2"
+					class="ml-5 mr-5  p-3 col rounded-pill text-center"
 					id="status_production_${order.id}"
 					style="background-color:${order.production.kolor}"
-					value="${order.production}">PRO</div>
-				<div
-					id="arrow_right_production_${order.id}"
-					class="d-inline glyphicon glyphicon glyphicon-chevron-right text-light btn btn-outline-warning m-2"
-					onclick="changeStatus('${order.id}','production',1)"></div>
+					value="${order.production}">
+					<div
+						id="arrow_left_production_${order.id}"
+						class="d-inline glyphicon glyphicon glyphicon-chevron-left text-light btn btn-outline-warning m-2"
+						id="arrow_left_${order.id}"
+						onclick="changeStatus('${order.id}','production',0)"></div>
+					<div class="d-inline rounded-pill p-2">PRO</div>
+					<div
+						id="arrow_right_production_${order.id}"
+						class="d-inline glyphicon glyphicon glyphicon-chevron-right text-light btn btn-outline-warning m-2"
+						onclick="changeStatus('${order.id}','production',1)"></div>
+				</div>
+
 			</div>
-
-
 		</div>
 		<div class="card-body">
 			<c:forEach

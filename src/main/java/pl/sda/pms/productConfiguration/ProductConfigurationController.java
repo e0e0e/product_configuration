@@ -220,6 +220,8 @@ public class ProductConfigurationController {
 		return productMap;
 
 	}
+	
+
 
 	@PostMapping("/search/products")
 	public String searchProducts(@RequestParam Map<String, String> paramMap, Model model) {
@@ -461,5 +463,7 @@ public class ProductConfigurationController {
 		model.addAttribute("path", "help");
 		return "main";
 	}
+	
+
 
 }

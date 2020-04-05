@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +27,7 @@ import pl.sda.pms.color.Color;
 import pl.sda.pms.color.ColorService;
 import pl.sda.pms.feature.Feature;
 import pl.sda.pms.feature.FeatureService;
+import pl.sda.pms.feature.ShortFeature;
 import pl.sda.pms.productConfiguration.PorductConfiguration;
 import pl.sda.pms.productConfiguration.ProductConfiguration;
 import pl.sda.pms.productConfiguration.ProductConfigurationService;
@@ -55,9 +56,32 @@ public class OrderController {
 	}
 
 	@GetMapping("/orders/list")
-	public String listOrders(Model model) {
+	public String listOrders(@RequestParam(required = false) String filter, Model model) {
 
-		model.addAttribute("orders", orderService.findAll());
+		if (filter != null) {
+			switch (filter) {
+			case "rs":
+				model.addAttribute("orders", orderService.findRsToMake());
+				break; 
+			case "docToMake":
+				model.addAttribute("orders", orderService.findDocToMake());
+				break; 
+			case "qadToMake":
+				model.addAttribute("orders", orderService.findQadToMake());
+				break; 
+			case "toProduction":
+				model.addAttribute("orders", orderService.findToProduction());
+				break; 
+			case "inProduction":
+				model.addAttribute("orders", orderService.findInProduction());
+				break; 
+			default:
+				model.addAttribute("orders", orderService.findAll());
+
+			}
+		} else {
+			model.addAttribute("orders", orderService.findAll());
+		}
 		model.addAttribute("title", "List Orders");
 		model.addAttribute("path", "order/list");
 		return "main";
@@ -308,16 +332,40 @@ public class OrderController {
 
 	@PostMapping(value = "/order/status/", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public String[] orderStatusChange(@RequestBody String order,
-			Model model) {
+	public String[] orderStatusChange(@RequestBody String order, Model model) {
 
-			Status status=	orderService.changeStatus(order);
-			String[] res=new String[2];
-			res[0]=status.toString();
-			res[1]=status.getKolor();
-			
-			
+		Status status = orderService.changeStatus(order);
+		String[] res = new String[2];
+		res[0] = status.toString();
+		res[1] = status.getKolor();
+
 		return res;
+	}
+
+	@PostMapping("/order/matching/status")
+	public String productSearchStatus(@RequestParam(required = false) Boolean chechR,
+			@RequestParam(required = false) Boolean chechQ, @RequestParam(required = false) Boolean chechD,
+			@RequestParam(required = false) Boolean chechP, Model model) {
+
+		Integer rs = chechR != null ? 3 : 2;
+		Integer doc = chechD != null ? 3 : 2;
+		Integer qad = chechQ != null ? 3 : 2;
+		Integer prod = chechP != null ? 3 : 2;
+
+		List<Ord> ordersList = orderService.ordersByStatus(rs, doc, qad, prod);
+		Map<String, Boolean> chechboxesMap = new HashMap<String, Boolean>();
+
+		chechboxesMap.put("chechR", chechR != null);
+		chechboxesMap.put("chechD", chechD != null);
+		chechboxesMap.put("chechQ", chechQ != null);
+		chechboxesMap.put("chechP", chechP != null);
+
+		model.addAttribute("orders", ordersList);
+		model.addAttribute("boxes", chechboxesMap);
+		model.addAttribute("title", "List Orders");
+		model.addAttribute("path", "order/list");
+		return "main";
+
 	}
 
 }

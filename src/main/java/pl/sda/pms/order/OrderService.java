@@ -487,13 +487,44 @@ public class OrderService {
 		}
 
 		if (!oryginalStatus.equals(status)) {
-			Ord newOrder = orderRepository.save(order);
-			// return newOrder;
+			orderRepository.save(order);
 
 		}
 
 		return status;
 
+	}
+
+	public List<Ord> ordersByStatus(Integer rs, Integer doc, Integer qad, Integer prod) {
+
+		List<Ord> ordersList = orderRepository.findByStatus(rs, doc, qad, prod);
+
+		return ordersList;
+	}
+
+	public List<Ord> findRsToMake() {
+
+		return orderRepository.findRsToMake();
+	}
+
+	public List<Ord> findInProd() {
+		return orderRepository.findInProd();
+	}
+
+	public List<Ord> findDocToMake() {
+		return orderRepository.findDocToMake();
+	}
+
+	public List<Ord> findQadToMake() {
+		return orderRepository.findQadToMake();
+	}
+
+	public List<Ord> findToProduction() {
+		return orderRepository.findToProduction();
+	}
+
+	public List<Ord> findInProduction() {
+		return orderRepository.findInProduction();
 	}
 
 }

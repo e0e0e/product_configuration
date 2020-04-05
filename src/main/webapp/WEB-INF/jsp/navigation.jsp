@@ -74,7 +74,7 @@
 
 
 			<li class="nav-item"><a class="nav-link text-light font-weight-bold btn btn-outline-dark"
-					href="/orders/list">Orders</a></li>
+					href="/orders/list?filter=all">Orders</a></li>
 
 			<li class="nav-item"><a class="nav-link text-light font-weight-bold btn btn-outline-dark"
 					href="/product/filter">
