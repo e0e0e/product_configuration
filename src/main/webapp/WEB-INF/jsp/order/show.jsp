@@ -374,6 +374,21 @@
 				${ordAud.order.unitsToProduce} , Modified by:
 				${ordAud.order.lastModifiedBy} , revision: ${ordAud.order.revision}
 				, date: ${ordAud.date}
+				<c:catch var="e">
+					<span
+						class="m-2 p-2 rounded-pill"
+						style="background-color:${ordAud.order.rs.kolor}">R</span>
+						<span
+						class="m-2 p-2 rounded-pill"
+						style="background-color:${ordAud.order.documentation.kolor}">D</span>
+						<span
+						class="m-2 p-2 rounded-pill"
+						style="background-color:${ordAud.order.qad.kolor}">Q</span>
+						<span
+						class="m-2 p-2 rounded-pill"
+						style="background-color:${ordAud.order.production.kolor}">P</span>
+	<c:if test = "${e != null}"> ${e} </c:if>
+				</c:catch>
 				<c:if test="${ordAud.order.noStandard=='true'}">
 					<span class="text-warning">, NOT STANDARD</span>
 				</c:if>

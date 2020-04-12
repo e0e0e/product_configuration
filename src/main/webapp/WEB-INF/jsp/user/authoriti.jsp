@@ -16,7 +16,7 @@
 
         <form method="post" action="/auth/user/save?userId=${user.id}">
 
-            <label>User Authority (ADMIN,KONSTRUKTOR):</label><br/>
+            <label>User Authority (ADMIN):</label><br/>
             <input type="text"  class="text-dark" name="authorities" value="${user.authorities}" size="150"><br/>
             <input type="submit" class="text-dark mt-5" value="Save">
 

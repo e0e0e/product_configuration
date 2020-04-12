@@ -99,6 +99,13 @@
 						informacji dla zamówienia z Matrixa</a></li>
 			</ul>
 
+			<li><a href="#Twelfth_Point_Header">12. Użytkownik</a></li>
+			<ul>
+				<li><a href="#Twelfth_Sub_Point_1">12.1 Nadanie dostępu
+						admina</a></li>
+
+			</ul>
+
 
 		</ul>
 	</div>
@@ -378,6 +385,20 @@
 			<img
 				class="helpimg"
 				src="/im/status.png"
+				alt="Flowers in Chania"
+				onerror="imgError(this)">
+
+
+			<div class="opis">Aby zmienić status zamówienia należy wejść w
+				widok szczegółowy zamówienia. U góry widoczne sa kolorowe przyciski
+				z napisami: "RS", "Doc" itd. Aby zmienic status należy przy
+				odpowiednim statusie nacisnąć na szczałkę. Szczałka w prawo zmienia
+				status na kolejny w procesie, czyli zmienia ze statusu do zrobienia
+				na status zrobione tzn. z koloru zótego na czerwony.</div>
+
+			<img
+				class="helpimg"
+				src="/im/status2.png"
 				alt="Flowers in Chania"
 				onerror="imgError(this)">
 		</div>
@@ -1181,6 +1202,40 @@
 				</div>
 
 			</div>
+
+		</div>
+
+		<div>
+			<h2 id="Twelfth_Point_Header">12. Użytkownik</h2>
+
+			<div>
+				<h2 id="Twelfth_Sub_Point_1">12.1 Nadanie uprawnień admina</h2>
+
+				<div class="opis">Nadać uprawnienia admina może jedynie użytkownik,
+					który posiada już dostep "ADMIN". W tym celu należy kliknąć w
+					przycisk "Users" w menu górnym. Przejdziemy wówczas do listy
+					użytkowników. W karcie użytkownika możemy zobaczyć jakie
+					uprawnienia ma dany użytkownik. Aby zmienic uprawnienia dla danego
+					użytkownika należy kliknąc w przycisk "Give authority"na karcie
+					danego użytkownika.</div>
+				<img
+					class="helpimg"
+					src="/im/admin.png"
+					alt="Flowers in Chania"
+					onerror="imgError(this)">
+				<div class="opis">Przejdziemy do formularza gdzie możemy nadać
+					uprawnienia. Aby nadać uprawnienia aministratora należy wpisać
+					słowo "ADMIN" zwracając uwage na wielkość liter. Jeśli chcemy
+					zabrać uprawnienia to usunamy wszystko i klikamy zapisz.</div>
+				<img
+					class="helpimg"
+					src="/im/admin3.png"
+					alt="Flowers in Chania"
+					onerror="imgError(this)">
+
+
+			</div>
+
 
 		</div>
 
