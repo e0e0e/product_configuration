@@ -125,7 +125,7 @@ public class ImageController {
 
 	private String getImagePath(HttpServletRequest request) {
 		String filePath0 = request.getServletContext().getRealPath("/");
-		return filePath0.replace("pm\\src\\main\\webapp\\", "").replace("ROOT\\", "").replace("pm/src/main/webapp/", "");
+		return filePath0.replace("product_configuration\\src\\main\\webapp\\", "").replace("ROOT\\", "").replace("product_configuration/src/main/webapp/", "");
 	}
 
 	@GetMapping("/image/list")
