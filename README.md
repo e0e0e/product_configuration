@@ -1,7 +1,5 @@
 # Product Configurator
-> It is servis that allows creating many configuration of product that we are producing.
-I allows to create order of product with many options that we can configure.
-It is possible to track progress of each order.
+> Create, configure, process,produce.
 ## Table of contents
 * [General info](#general-info)
 * [Screenshots](#screenshots)
@@ -13,8 +11,9 @@ It is possible to track progress of each order.
 * [Contact](#contact)
 
 ## General info
-Project allows creating project and tasks that will be planed in time.
-Tasks have different status depending on progress that can be change as project progress. 
+It is servis that allows creating many configuration of product for production.
+I allows to create order of product with many options that we can configure.
+It is possible to track progress of each order.
 
 ## Screenshots
 ![Example screenshot](./img/screenshot_1.png)
