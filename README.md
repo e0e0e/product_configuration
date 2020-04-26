@@ -1,5 +1,7 @@
-# PMS
-> It is servis that allows managing projects.
+# Product Configurator
+> It is servis that allows creating many configuration of product that we are producing.
+I allows to create order of product with many options that we can configure.
+It is possible to track progress of each order.
 ## Table of contents
 * [General info](#general-info)
 * [Screenshots](#screenshots)
@@ -21,6 +23,7 @@ Tasks have different status depending on progress that can be change as project 
 * Java 8
 * Spring
 * HTML
+* JS
 
 ## Setup
 Make war file, put in on server.
@@ -28,20 +31,20 @@ Database is H2, as in application.properties is defined.
 When run you can create new user.
 
 ## Features
-List of features ready and TODOs for future development
-* creating projects/sprints/tasks/user
-* progress managing in sprints
+List of features
+* creating products with many avalible options
+* posibility to edit created product
+* creating order based on created product
+* processing no standard orders
+* tacking progress od order
 
-To-do list:
-* sending invitation to new user
-* limit access of specific function to proper users 
-* add history of changes of tasks progress
+Description of all functions: [link](https://drive.google.com/file/d/19Zh4HRJ8_HrQRvFSHc4BWmVR94GdGbzZ/view?usp=sharing)
 
 ## Status
-Project is:  in progress
+Project is:  finished
 
 ## Inspiration
-Project was made at the end of Java from scratch course, that I took in Software Development Academy.
+I made it to help processing orders in company I worked for.
 
 ## Contact
 Created by szkop.grzegorz@gmail.com - feel free to contact me!
